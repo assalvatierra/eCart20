@@ -137,6 +137,11 @@
     <Compile Include="Areas\Admin\Controllers\StoreDetailsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserDetailsController.cs" />
     <Compile Include="Areas\Admin\Models\AdminDBContext.cs" />
+    <Compile Include="Areas\Shopper\Controllers\CartDetailsController.cs" />
+    <Compile Include="Areas\Shopper\Controllers\StoreDetailsController.cs" />
+    <Compile Include="Areas\Shopper\Controllers\StoreItemsController.cs" />
+    <Compile Include="Areas\Shopper\Controllers\UserDetailsController.cs" />
+    <Compile Include="Areas\Shopper\Models\ShopperContext.cs" />
     <Compile Include="Areas\Shopper\ShopperAreaRegistration.cs" />
     <Compile Include="Areas\Store\Controllers\CartDetailsController.cs" />
     <Compile Include="Areas\Store\Controllers\ItemMastersController.cs" />
@@ -146,6 +151,8 @@
     <Compile Include="Areas\Store\Controllers\StorePickupPointsController.cs" />
     <Compile Include="Areas\Store\Models\StoreContext.cs" />
     <Compile Include="Areas\Store\StoreAreaRegistration.cs" />
+    <Compile Include="Controllers\StoreDetailsController.cs" />
+    <Compile Include="Controllers\UserDetailsController.cs" />
     <Compile Include="Models\CartDetail.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
@@ -236,6 +243,12 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="img\placeholders\image-placeholder.png" />
+    <Content Include="img\placeholders\item-placeholder.png" />
+    <Content Include="img\placeholders\placeholder-images-product-2.png" />
+    <Content Include="img\placeholders\placeholder-images-product-3_large.png" />
+    <Content Include="img\placeholders\shopping-cart-colour-thumbnail.png" />
+    <Content Include="img\store\storefront.png" />
     <Content Include="Models\ecartdb.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ecartdb.Context.cs</LastGenOutput>
@@ -334,11 +347,40 @@
     <Content Include="Areas\Store\Views\ItemMasters\Details.cshtml" />
     <Content Include="Areas\Store\Views\ItemMasters\Edit.cshtml" />
     <Content Include="Areas\Store\Views\ItemMasters\Index.cshtml" />
+    <Content Include="Areas\Shopper\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Shopper\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Shopper\Views\CartDetails\Create.cshtml" />
+    <Content Include="Areas\Shopper\Views\CartDetails\Delete.cshtml" />
+    <Content Include="Areas\Shopper\Views\CartDetails\Details.cshtml" />
+    <Content Include="Areas\Shopper\Views\CartDetails\Edit.cshtml" />
+    <Content Include="Areas\Shopper\Views\CartDetails\Index.cshtml" />
+    <Content Include="Areas\Shopper\Views\StoreDetails\Create.cshtml" />
+    <Content Include="Areas\Shopper\Views\StoreDetails\Delete.cshtml" />
+    <Content Include="Areas\Shopper\Views\StoreDetails\Details.cshtml" />
+    <Content Include="Areas\Shopper\Views\StoreDetails\Edit.cshtml" />
+    <Content Include="Areas\Shopper\Views\StoreDetails\Index.cshtml" />
+    <Content Include="Areas\Shopper\Views\StoreItems\Create.cshtml" />
+    <Content Include="Areas\Shopper\Views\StoreItems\Delete.cshtml" />
+    <Content Include="Areas\Shopper\Views\StoreItems\Details.cshtml" />
+    <Content Include="Areas\Shopper\Views\StoreItems\Edit.cshtml" />
+    <Content Include="Areas\Shopper\Views\StoreItems\Index.cshtml" />
+    <Content Include="Areas\Shopper\Views\UserDetails\Create.cshtml" />
+    <Content Include="Areas\Shopper\Views\UserDetails\Delete.cshtml" />
+    <Content Include="Areas\Shopper\Views\UserDetails\Details.cshtml" />
+    <Content Include="Areas\Shopper\Views\UserDetails\Edit.cshtml" />
+    <Content Include="Areas\Shopper\Views\UserDetails\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -359,11 +401,26 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\StoreDetails\Create.cshtml" />
+    <Content Include="Views\StoreDetails\Delete.cshtml" />
+    <Content Include="Views\StoreDetails\Details.cshtml" />
+    <Content Include="Views\StoreDetails\Edit.cshtml" />
+    <Content Include="Views\StoreDetails\Index.cshtml" />
+    <Content Include="Views\Home\AboutHow.cshtml" />
+    <Content Include="Views\UserDetails\Create.cshtml" />
+    <Content Include="Views\UserDetails\Delete.cshtml" />
+    <Content Include="Views\UserDetails\Details.cshtml" />
+    <Content Include="Views\UserDetails\Edit.cshtml" />
+    <Content Include="Views\UserDetails\Index.cshtml" />
+    <Content Include="Views\StoreDetails\ItemList.cshtml" />
+    <Content Include="Views\UserDetails\Login.cshtml" />
+    <Content Include="Views\StoreDetails\Login.cshtml" />
+    <Content Include="Views\StoreDetails\Register.cshtml" />
+    <Content Include="Views\UserDetails\Register.cshtml" />
+    <Content Include="Views\StoreDetails\StoreList.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Shopper\Controllers\" />
-    <Folder Include="Areas\Shopper\Models\" />
-    <Folder Include="Areas\Shopper\Views\Shared\" />
+    <Folder Include="Data\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>

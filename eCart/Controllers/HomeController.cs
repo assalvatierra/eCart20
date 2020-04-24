@@ -20,6 +20,13 @@ namespace eCart.Controllers
             return View();
         }
 
+        public ActionResult AboutHow()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return View();
+        }
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

@@ -22,3 +22,34 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+/* Store Listings */
+.store-item{
+    padding:5px;
+}
+
+
+.store-item:hover {
+    border: 1px solid lightgray;
+}
+
+
+.item-list {
+    width: 190px;
+    height: 250px;
+    padding: 5px;
+    margin:2px;
+}
+
+.item-list img {
+    width: 100% ;
+
+}
+.item-list:hover {
+    border: 1px solid lightgray;
+}
+
+.item-desc{
+    position:relative;
+}
