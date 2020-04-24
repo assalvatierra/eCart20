@@ -27,7 +27,20 @@ namespace eCart.Areas.Admin.Models
         public virtual DbSet<ItemCategory> ItemCategories { get; set; }
         public virtual DbSet<ItemCatGroup> ItemCatGroups { get; set; }
 
+        public System.Data.Entity.DbSet<eCart.Models.StoreStatus> StoreStatus { get; set; }
 
+        public System.Data.Entity.DbSet<eCart.Models.StoreCategory> StoreCategories { get; set; }
 
+        public System.Data.Entity.DbSet<eCart.Models.UserStatus> UserStatus { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.ItemMaster> ItemMasters { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.CartDetail> CartDetails { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.CartStatus> CartStatus { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.StorePickupPoint> StorePickupPoints { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.StorePickupPartner> StorePickupPartners { get; set; }
     }
 }

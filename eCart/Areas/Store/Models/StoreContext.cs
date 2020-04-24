@@ -32,5 +32,13 @@ namespace eCart.Areas.Store.Models
         public System.Data.Entity.DbSet<eCart.Models.MasterCity> MasterCities { get; set; }
 
         public System.Data.Entity.DbSet<eCart.Models.MasterArea> MasterAreas { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.CartDetail> CartDetails { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.CartStatus> CartStatus { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.UserDetail> UserDetails { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.ItemMaster> ItemMasters { get; set; }
     }
 }
