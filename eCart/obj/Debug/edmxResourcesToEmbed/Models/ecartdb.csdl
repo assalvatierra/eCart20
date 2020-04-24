@@ -1,0 +1,672 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ecartdb" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="ecartdbContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="UserDetails" EntityType="ecartdb.UserDetail" />
+    <EntitySet Name="StoreDetails" EntityType="ecartdb.StoreDetail" />
+    <EntitySet Name="UserStatus" EntityType="ecartdb.UserStatus" />
+    <AssociationSet Name="UserStatusUserDetail" Association="ecartdb.UserStatusUserDetail">
+      <End Role="UserStatus" EntitySet="UserStatus" />
+      <End Role="UserDetail" EntitySet="UserDetails" />
+    </AssociationSet>
+    <EntitySet Name="StoreStatus" EntityType="ecartdb.StoreStatus" />
+    <AssociationSet Name="StoreStatusStoreDetail" Association="ecartdb.StoreStatusStoreDetail">
+      <End Role="StoreStatus" EntitySet="StoreStatus" />
+      <End Role="StoreDetail" EntitySet="StoreDetails" />
+    </AssociationSet>
+    <EntitySet Name="StoreCategories" EntityType="ecartdb.StoreCategory" />
+    <AssociationSet Name="StoreCategoryStoreDetail" Association="ecartdb.StoreCategoryStoreDetail">
+      <End Role="StoreCategory" EntitySet="StoreCategories" />
+      <End Role="StoreDetail" EntitySet="StoreDetails" />
+    </AssociationSet>
+    <EntitySet Name="MasterCities" EntityType="ecartdb.MasterCity" />
+    <EntitySet Name="MasterAreas" EntityType="ecartdb.MasterArea" />
+    <AssociationSet Name="MasterCityStoreDetail" Association="ecartdb.MasterCityStoreDetail">
+      <End Role="MasterCity" EntitySet="MasterCities" />
+      <End Role="StoreDetail" EntitySet="StoreDetails" />
+    </AssociationSet>
+    <AssociationSet Name="MasterCityMasterBarangay" Association="ecartdb.MasterCityMasterBarangay">
+      <End Role="MasterCity" EntitySet="MasterCities" />
+      <End Role="MasterBarangay" EntitySet="MasterAreas" />
+    </AssociationSet>
+    <AssociationSet Name="MasterCityUserDetail" Association="ecartdb.MasterCityUserDetail">
+      <End Role="MasterCity" EntitySet="MasterCities" />
+      <End Role="UserDetail" EntitySet="UserDetails" />
+    </AssociationSet>
+    <EntitySet Name="ItemMasters" EntityType="ecartdb.ItemMaster" />
+    <EntitySet Name="ItemCategories" EntityType="ecartdb.ItemCategory" />
+    <EntitySet Name="ItemMasterCategories" EntityType="ecartdb.ItemMasterCategory" />
+    <AssociationSet Name="ItemCategoryStoreItemCategory" Association="ecartdb.ItemCategoryStoreItemCategory">
+      <End EntitySet="ItemCategories" Role="ItemCategory" />
+      <End EntitySet="ItemMasterCategories" Role="StoreItemCategory" />
+    </AssociationSet>
+    <AssociationSet Name="ItemMasterItemMasterCategory" Association="ecartdb.ItemMasterItemMasterCategory">
+      <End Role="ItemMaster" EntitySet="ItemMasters" />
+      <End Role="ItemMasterCategory" EntitySet="ItemMasterCategories" />
+    </AssociationSet>
+    <EntitySet Name="StoreItems" EntityType="ecartdb.StoreItem" />
+    <AssociationSet Name="ItemMasterStoreItem" Association="ecartdb.ItemMasterStoreItem">
+      <End Role="ItemMaster" EntitySet="ItemMasters" />
+      <End Role="StoreItem" EntitySet="StoreItems" />
+    </AssociationSet>
+    <AssociationSet Name="StoreDetailStoreItem" Association="ecartdb.StoreDetailStoreItem">
+      <End Role="StoreDetail" EntitySet="StoreDetails" />
+      <End Role="StoreItem" EntitySet="StoreItems" />
+    </AssociationSet>
+    <EntitySet Name="CartDetails" EntityType="ecartdb.CartDetail" />
+    <AssociationSet Name="UserDetailCartDetail" Association="ecartdb.UserDetailCartDetail">
+      <End Role="UserDetail" EntitySet="UserDetails" />
+      <End Role="CartDetail" EntitySet="CartDetails" />
+    </AssociationSet>
+    <AssociationSet Name="StoreDetailCartDetail" Association="ecartdb.StoreDetailCartDetail">
+      <End Role="StoreDetail" EntitySet="StoreDetails" />
+      <End Role="CartDetail" EntitySet="CartDetails" />
+    </AssociationSet>
+    <EntitySet Name="CartItems" EntityType="ecartdb.CartItem" />
+    <AssociationSet Name="CartDetailCartItem" Association="ecartdb.CartDetailCartItem">
+      <End Role="CartDetail" EntitySet="CartDetails" />
+      <End Role="CartItem" EntitySet="CartItems" />
+    </AssociationSet>
+    <AssociationSet Name="StoreItemCartItem" Association="ecartdb.StoreItemCartItem">
+      <End Role="StoreItem" EntitySet="StoreItems" />
+      <End Role="CartItem" EntitySet="CartItems" />
+    </AssociationSet>
+    <AssociationSet Name="MasterAreaUserDetail" Association="ecartdb.MasterAreaUserDetail">
+      <End Role="MasterArea" EntitySet="MasterAreas" />
+      <End Role="UserDetail" EntitySet="UserDetails" />
+    </AssociationSet>
+    <AssociationSet Name="MasterAreaStoreDetail" Association="ecartdb.MasterAreaStoreDetail">
+      <End Role="MasterArea" EntitySet="MasterAreas" />
+      <End Role="StoreDetail" EntitySet="StoreDetails" />
+    </AssociationSet>
+    <EntitySet Name="CartStatus" EntityType="ecartdb.CartStatus" />
+    <EntitySet Name="CartHistories" EntityType="ecartdb.CartHistory" />
+    <AssociationSet Name="CartStatusCartDetail" Association="ecartdb.CartStatusCartDetail">
+      <End Role="CartStatus" EntitySet="CartStatus" />
+      <End Role="CartDetail" EntitySet="CartDetails" />
+    </AssociationSet>
+    <AssociationSet Name="CartStatusCartHistory" Association="ecartdb.CartStatusCartHistory">
+      <End Role="CartStatus" EntitySet="CartStatus" />
+      <End Role="CartHistory" EntitySet="CartHistories" />
+    </AssociationSet>
+    <AssociationSet Name="CartDetailCartHistory" Association="ecartdb.CartDetailCartHistory">
+      <End Role="CartDetail" EntitySet="CartDetails" />
+      <End Role="CartHistory" EntitySet="CartHistories" />
+    </AssociationSet>
+    <EntitySet Name="CartItemStatus" EntityType="ecartdb.CartItemStatus" />
+    <AssociationSet Name="CartItemStatusCartItem" Association="ecartdb.CartItemStatusCartItem">
+      <End Role="CartItemStatus" EntitySet="CartItemStatus" />
+      <End Role="CartItem" EntitySet="CartItems" />
+    </AssociationSet>
+    <EntitySet Name="ItemCatGroups" EntityType="ecartdb.ItemCatGroup" />
+    <AssociationSet Name="ItemCatGroupItemCategory" Association="ecartdb.ItemCatGroupItemCategory">
+      <End Role="ItemCatGroup" EntitySet="ItemCatGroups" />
+      <End Role="ItemCategory" EntitySet="ItemCategories" />
+    </AssociationSet>
+    <EntitySet Name="StorePickupPoints" EntityType="ecartdb.StorePickupPoint" />
+    <AssociationSet Name="StoreDetailStorePickupPoint" Association="ecartdb.StoreDetailStorePickupPoint">
+      <End Role="StoreDetail" EntitySet="StoreDetails" />
+      <End Role="StorePickupPoint" EntitySet="StorePickupPoints" />
+    </AssociationSet>
+    <EntitySet Name="StorePickupPartners" EntityType="ecartdb.StorePickupPartner" />
+    <AssociationSet Name="StorePickupPointStorePickupPartner" Association="ecartdb.StorePickupPointStorePickupPartner">
+      <End Role="StorePickupPoint" EntitySet="StorePickupPoints" />
+      <End Role="StorePickupPartner" EntitySet="StorePickupPartners" />
+    </AssociationSet>
+    <AssociationSet Name="StoreDetailStorePickupPartner" Association="ecartdb.StoreDetailStorePickupPartner">
+      <End Role="StoreDetail" EntitySet="StoreDetails" />
+      <End Role="StorePickupPartner" EntitySet="StorePickupPartners" />
+    </AssociationSet>
+    <AssociationSet Name="StorePickupPointCartDetail" Association="ecartdb.StorePickupPointCartDetail">
+      <End Role="StorePickupPoint" EntitySet="StorePickupPoints" />
+      <End Role="CartDetail" EntitySet="CartDetails" />
+    </AssociationSet>
+    <EntitySet Name="StorePickupStatus" EntityType="ecartdb.StorePickupStatus" />
+    <AssociationSet Name="StorePickupStatusStorePickupPoint" Association="ecartdb.StorePickupStatusStorePickupPoint">
+      <End Role="StorePickupStatus" EntitySet="StorePickupStatus" />
+      <End Role="StorePickupPoint" EntitySet="StorePickupPoints" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UserDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="20" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" />
+    <Property Name="Address" Type="String" Nullable="true" MaxLength="150" />
+    <Property Name="Email" Type="String" Nullable="true" MaxLength="30" />
+    <Property Name="Mobile" Type="String" Nullable="false" MaxLength="20" />
+    <Property Name="Remarks" Type="String" Nullable="true" MaxLength="50" />
+    <NavigationProperty Name="UserStatu" Relationship="ecartdb.UserStatusUserDetail" FromRole="UserDetail" ToRole="UserStatus" />
+    <Property Name="UserStatusId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="MasterCity" Relationship="ecartdb.MasterCityUserDetail" FromRole="UserDetail" ToRole="MasterCity" />
+    <Property Name="MasterCityId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CartDetails" Relationship="ecartdb.UserDetailCartDetail" FromRole="UserDetail" ToRole="CartDetail" />
+    <NavigationProperty Name="MasterArea" Relationship="ecartdb.MasterAreaUserDetail" FromRole="UserDetail" ToRole="MasterArea" />
+    <Property Name="MasterAreaId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StoreDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LoginId" Type="String" Nullable="false" MaxLength="20" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="150" />
+    <Property Name="Remarks" Type="String" Nullable="false" MaxLength="80" />
+    <NavigationProperty Name="StoreStatu" Relationship="ecartdb.StoreStatusStoreDetail" FromRole="StoreDetail" ToRole="StoreStatus" />
+    <Property Name="StoreStatusId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="StoreCategory" Relationship="ecartdb.StoreCategoryStoreDetail" FromRole="StoreDetail" ToRole="StoreCategory" />
+    <Property Name="StoreCategoryId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="MasterCity" Relationship="ecartdb.MasterCityStoreDetail" FromRole="StoreDetail" ToRole="MasterCity" />
+    <Property Name="MasterCityId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="StoreItems" Relationship="ecartdb.StoreDetailStoreItem" FromRole="StoreDetail" ToRole="StoreItem" />
+    <NavigationProperty Name="CartDetails" Relationship="ecartdb.StoreDetailCartDetail" FromRole="StoreDetail" ToRole="CartDetail" />
+    <NavigationProperty Name="MasterArea" Relationship="ecartdb.MasterAreaStoreDetail" FromRole="StoreDetail" ToRole="MasterArea" />
+    <Property Name="MasterAreaId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="StorePickupPoints" Relationship="ecartdb.StoreDetailStorePickupPoint" FromRole="StoreDetail" ToRole="StorePickupPoint" />
+    <NavigationProperty Name="StorePickupPartners" Relationship="ecartdb.StoreDetailStorePickupPartner" FromRole="StoreDetail" ToRole="StorePickupPartner" />
+  </EntityType>
+  <EntityType Name="UserStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="15" />
+    <NavigationProperty Name="UserDetails" Relationship="ecartdb.UserStatusUserDetail" FromRole="UserStatus" ToRole="UserDetail" />
+  </EntityType>
+  <Association Name="UserStatusUserDetail">
+    <End Type="ecartdb.UserStatus" Role="UserStatus" Multiplicity="1" />
+    <End Type="ecartdb.UserDetail" Role="UserDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserDetail">
+        <PropertyRef Name="UserStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="StoreStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="10" />
+    <NavigationProperty Name="StoreDetails" Relationship="ecartdb.StoreStatusStoreDetail" FromRole="StoreStatus" ToRole="StoreDetail" />
+  </EntityType>
+  <Association Name="StoreStatusStoreDetail">
+    <End Type="ecartdb.StoreStatus" Role="StoreStatus" Multiplicity="1" />
+    <End Type="ecartdb.StoreDetail" Role="StoreDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreDetail">
+        <PropertyRef Name="StoreStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="StoreCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="20" />
+    <Property Name="SortOrder" Type="String" Nullable="false" />
+    <NavigationProperty Name="StoreDetails" Relationship="ecartdb.StoreCategoryStoreDetail" FromRole="StoreCategory" ToRole="StoreDetail" />
+  </EntityType>
+  <Association Name="StoreCategoryStoreDetail">
+    <End Type="ecartdb.StoreCategory" Role="StoreCategory" Multiplicity="1" />
+    <End Type="ecartdb.StoreDetail" Role="StoreDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreDetail">
+        <PropertyRef Name="StoreCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="MasterCity">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="30" />
+    <NavigationProperty Name="StoreDetails" Relationship="ecartdb.MasterCityStoreDetail" FromRole="MasterCity" ToRole="StoreDetail" />
+    <NavigationProperty Name="MasterBarangays" Relationship="ecartdb.MasterCityMasterBarangay" FromRole="MasterCity" ToRole="MasterBarangay" />
+    <NavigationProperty Name="UserDetails" Relationship="ecartdb.MasterCityUserDetail" FromRole="MasterCity" ToRole="UserDetail" />
+  </EntityType>
+  <EntityType Name="MasterArea">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="30" />
+    <NavigationProperty Name="MasterCity" Relationship="ecartdb.MasterCityMasterBarangay" FromRole="MasterBarangay" ToRole="MasterCity" />
+    <Property Name="MasterCityId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="UserDetails" Relationship="ecartdb.MasterAreaUserDetail" FromRole="MasterArea" ToRole="UserDetail" />
+    <NavigationProperty Name="StoreDetails" Relationship="ecartdb.MasterAreaStoreDetail" FromRole="MasterArea" ToRole="StoreDetail" />
+  </EntityType>
+  <Association Name="MasterCityStoreDetail">
+    <End Type="ecartdb.MasterCity" Role="MasterCity" Multiplicity="1" />
+    <End Type="ecartdb.StoreDetail" Role="StoreDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MasterCity">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreDetail">
+        <PropertyRef Name="MasterCityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MasterCityMasterBarangay">
+    <End Type="ecartdb.MasterCity" Role="MasterCity" Multiplicity="1" />
+    <End Type="ecartdb.MasterArea" Role="MasterBarangay" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MasterCity">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MasterBarangay">
+        <PropertyRef Name="MasterCityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MasterCityUserDetail">
+    <End Type="ecartdb.MasterCity" Role="MasterCity" Multiplicity="1" />
+    <End Type="ecartdb.UserDetail" Role="UserDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MasterCity">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserDetail">
+        <PropertyRef Name="MasterCityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ItemMaster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="80" />
+    <NavigationProperty Name="ItemMasterCategories" Relationship="ecartdb.ItemMasterItemMasterCategory" FromRole="ItemMaster" ToRole="ItemMasterCategory" />
+    <NavigationProperty Name="StoreItems" Relationship="ecartdb.ItemMasterStoreItem" FromRole="ItemMaster" ToRole="StoreItem" />
+  </EntityType>
+  <EntityType Name="ItemCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="20" />
+    <NavigationProperty Name="StoreItemCategories" Relationship="ecartdb.ItemCategoryStoreItemCategory" FromRole="ItemCategory" ToRole="StoreItemCategory" />
+    <Property Name="SortOrder" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ItemCatGroup" Relationship="ecartdb.ItemCatGroupItemCategory" FromRole="ItemCategory" ToRole="ItemCatGroup" />
+    <Property Name="ItemCatGroupId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ItemMasterCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="ItemCategory" Relationship="ecartdb.ItemCategoryStoreItemCategory" FromRole="StoreItemCategory" ToRole="ItemCategory" />
+    <Property Name="ItemCategoryId" Nullable="false" Type="Int32" />
+    <NavigationProperty Name="ItemMaster" Relationship="ecartdb.ItemMasterItemMasterCategory" FromRole="ItemMasterCategory" ToRole="ItemMaster" />
+    <Property Name="ItemMasterId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="ItemCategoryStoreItemCategory">
+    <End Type="ecartdb.ItemCategory" Multiplicity="1" Role="ItemCategory" />
+    <End Type="ecartdb.ItemMasterCategory" Multiplicity="*" Role="StoreItemCategory" />
+    <ReferentialConstraint>
+      <Principal Role="ItemCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreItemCategory">
+        <PropertyRef Name="ItemCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ItemMasterItemMasterCategory">
+    <End Type="ecartdb.ItemMaster" Role="ItemMaster" Multiplicity="1" />
+    <End Type="ecartdb.ItemMasterCategory" Role="ItemMasterCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ItemMasterCategory">
+        <PropertyRef Name="ItemMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="StoreItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="ItemMaster" Relationship="ecartdb.ItemMasterStoreItem" FromRole="StoreItem" ToRole="ItemMaster" />
+    <Property Name="ItemMasterId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="StoreDetail" Relationship="ecartdb.StoreDetailStoreItem" FromRole="StoreItem" ToRole="StoreDetail" />
+    <Property Name="StoreDetailId" Type="Int32" Nullable="false" />
+    <Property Name="UnitPrice" Type="Decimal" Nullable="false" />
+    <NavigationProperty Name="CartItems" Relationship="ecartdb.StoreItemCartItem" FromRole="StoreItem" ToRole="CartItem" />
+  </EntityType>
+  <Association Name="ItemMasterStoreItem">
+    <End Type="ecartdb.ItemMaster" Role="ItemMaster" Multiplicity="1" />
+    <End Type="ecartdb.StoreItem" Role="StoreItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreItem">
+        <PropertyRef Name="ItemMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StoreDetailStoreItem">
+    <End Type="ecartdb.StoreDetail" Role="StoreDetail" Multiplicity="1" />
+    <End Type="ecartdb.StoreItem" Role="StoreItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreItem">
+        <PropertyRef Name="StoreDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CartDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="UserDetail" Relationship="ecartdb.UserDetailCartDetail" FromRole="CartDetail" ToRole="UserDetail" />
+    <Property Name="UserDetailId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="StoreDetail" Relationship="ecartdb.StoreDetailCartDetail" FromRole="CartDetail" ToRole="StoreDetail" />
+    <Property Name="StoreDetailId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CartItems" Relationship="ecartdb.CartDetailCartItem" FromRole="CartDetail" ToRole="CartItem" />
+    <NavigationProperty Name="CartStatu" Relationship="ecartdb.CartStatusCartDetail" FromRole="CartDetail" ToRole="CartStatus" />
+    <Property Name="CartStatusId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CartHistories" Relationship="ecartdb.CartDetailCartHistory" FromRole="CartDetail" ToRole="CartHistory" />
+    <NavigationProperty Name="StorePickupPoint" Relationship="ecartdb.StorePickupPointCartDetail" FromRole="CartDetail" ToRole="StorePickupPoint" />
+    <Property Name="StorePickupPointId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="UserDetailCartDetail">
+    <End Type="ecartdb.UserDetail" Role="UserDetail" Multiplicity="1" />
+    <End Type="ecartdb.CartDetail" Role="CartDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartDetail">
+        <PropertyRef Name="UserDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StoreDetailCartDetail">
+    <End Type="ecartdb.StoreDetail" Role="StoreDetail" Multiplicity="1" />
+    <End Type="ecartdb.CartDetail" Role="CartDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartDetail">
+        <PropertyRef Name="StoreDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CartItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="CartDetail" Relationship="ecartdb.CartDetailCartItem" FromRole="CartItem" ToRole="CartDetail" />
+    <Property Name="CartDetailId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="StoreItem" Relationship="ecartdb.StoreItemCartItem" FromRole="CartItem" ToRole="StoreItem" />
+    <Property Name="StoreItemId" Type="Int32" Nullable="false" />
+    <Property Name="ItemQty" Type="Decimal" Nullable="false" />
+    <NavigationProperty Name="CartItemStatu" Relationship="ecartdb.CartItemStatusCartItem" FromRole="CartItem" ToRole="CartItemStatus" />
+    <Property Name="ItemOrder" Type="String" Nullable="false" />
+    <Property Name="CartItemStatusId" Type="Int32" Nullable="false" />
+    <Property Name="Remarks1" Type="String" Nullable="true" MaxLength="80" />
+    <Property Name="Remarks2" Type="String" Nullable="true" MaxLength="80" />
+  </EntityType>
+  <Association Name="CartDetailCartItem">
+    <End Type="ecartdb.CartDetail" Role="CartDetail" Multiplicity="1" />
+    <End Type="ecartdb.CartItem" Role="CartItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CartDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartItem">
+        <PropertyRef Name="CartDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StoreItemCartItem">
+    <End Type="ecartdb.StoreItem" Role="StoreItem" Multiplicity="1" />
+    <End Type="ecartdb.CartItem" Role="CartItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreItem">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartItem">
+        <PropertyRef Name="StoreItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MasterAreaUserDetail">
+    <End Type="ecartdb.MasterArea" Role="MasterArea" Multiplicity="1" />
+    <End Type="ecartdb.UserDetail" Role="UserDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MasterArea">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserDetail">
+        <PropertyRef Name="MasterAreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MasterAreaStoreDetail">
+    <End Type="ecartdb.MasterArea" Role="MasterArea" Multiplicity="1" />
+    <End Type="ecartdb.StoreDetail" Role="StoreDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MasterArea">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreDetail">
+        <PropertyRef Name="MasterAreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CartStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="10" />
+    <NavigationProperty Name="CartDetails" Relationship="ecartdb.CartStatusCartDetail" FromRole="CartStatus" ToRole="CartDetail" />
+    <NavigationProperty Name="CartHistories" Relationship="ecartdb.CartStatusCartHistory" FromRole="CartStatus" ToRole="CartHistory" />
+  </EntityType>
+  <EntityType Name="CartHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="CartStatu" Relationship="ecartdb.CartStatusCartHistory" FromRole="CartHistory" ToRole="CartStatus" />
+    <Property Name="CartStatusId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CartDetail" Relationship="ecartdb.CartDetailCartHistory" FromRole="CartHistory" ToRole="CartDetail" />
+    <Property Name="CartDetailId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="20" />
+    <Property Name="dtStatus" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <Association Name="CartStatusCartDetail">
+    <End Type="ecartdb.CartStatus" Role="CartStatus" Multiplicity="1" />
+    <End Type="ecartdb.CartDetail" Role="CartDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CartStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartDetail">
+        <PropertyRef Name="CartStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CartStatusCartHistory">
+    <End Type="ecartdb.CartStatus" Role="CartStatus" Multiplicity="1" />
+    <End Type="ecartdb.CartHistory" Role="CartHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CartStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartHistory">
+        <PropertyRef Name="CartStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CartDetailCartHistory">
+    <End Type="ecartdb.CartDetail" Role="CartDetail" Multiplicity="1" />
+    <End Type="ecartdb.CartHistory" Role="CartHistory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CartDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartHistory">
+        <PropertyRef Name="CartDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CartItemStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="10" />
+    <NavigationProperty Name="CartItems" Relationship="ecartdb.CartItemStatusCartItem" FromRole="CartItemStatus" ToRole="CartItem" />
+  </EntityType>
+  <Association Name="CartItemStatusCartItem">
+    <End Type="ecartdb.CartItemStatus" Role="CartItemStatus" Multiplicity="1" />
+    <End Type="ecartdb.CartItem" Role="CartItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CartItemStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartItem">
+        <PropertyRef Name="CartItemStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ItemCatGroup">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="20" />
+    <NavigationProperty Name="ItemCategories" Relationship="ecartdb.ItemCatGroupItemCategory" FromRole="ItemCatGroup" ToRole="ItemCategory" />
+    <Property Name="SortOrder" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="ItemCatGroupItemCategory">
+    <End Type="ecartdb.ItemCatGroup" Role="ItemCatGroup" Multiplicity="1" />
+    <End Type="ecartdb.ItemCategory" Role="ItemCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemCatGroup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ItemCategory">
+        <PropertyRef Name="ItemCatGroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="StorePickupPoint">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="StoreDetail" Relationship="ecartdb.StoreDetailStorePickupPoint" FromRole="StorePickupPoint" ToRole="StoreDetail" />
+    <Property Name="StoreDetailId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="StorePickupPartners" Relationship="ecartdb.StorePickupPointStorePickupPartner" FromRole="StorePickupPoint" ToRole="StorePickupPartner" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="250" />
+    <Property Name="Remarks" Type="String" Nullable="true" MaxLength="150" />
+    <NavigationProperty Name="CartDetails" Relationship="ecartdb.StorePickupPointCartDetail" FromRole="StorePickupPoint" ToRole="CartDetail" />
+    <NavigationProperty Name="StorePickupStatu" Relationship="ecartdb.StorePickupStatusStorePickupPoint" FromRole="StorePickupPoint" ToRole="StorePickupStatus" />
+    <Property Name="StorePickupStatusId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="StoreDetailStorePickupPoint">
+    <End Type="ecartdb.StoreDetail" Role="StoreDetail" Multiplicity="1" />
+    <End Type="ecartdb.StorePickupPoint" Role="StorePickupPoint" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StorePickupPoint">
+        <PropertyRef Name="StoreDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="StorePickupPartner">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="StorePickupPoint" Relationship="ecartdb.StorePickupPointStorePickupPartner" FromRole="StorePickupPartner" ToRole="StorePickupPoint" />
+    <Property Name="StorePickupPointId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="StoreDetail" Relationship="ecartdb.StoreDetailStorePickupPartner" FromRole="StorePickupPartner" ToRole="StoreDetail" />
+    <Property Name="StoreDetailId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="StorePickupPointStorePickupPartner">
+    <End Type="ecartdb.StorePickupPoint" Role="StorePickupPoint" Multiplicity="1" />
+    <End Type="ecartdb.StorePickupPartner" Role="StorePickupPartner" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StorePickupPoint">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StorePickupPartner">
+        <PropertyRef Name="StorePickupPointId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StoreDetailStorePickupPartner">
+    <End Type="ecartdb.StoreDetail" Role="StoreDetail" Multiplicity="1" />
+    <End Type="ecartdb.StorePickupPartner" Role="StorePickupPartner" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StorePickupPartner">
+        <PropertyRef Name="StoreDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StorePickupPointCartDetail">
+    <End Type="ecartdb.StorePickupPoint" Role="StorePickupPoint" Multiplicity="1" />
+    <End Type="ecartdb.CartDetail" Role="CartDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StorePickupPoint">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartDetail">
+        <PropertyRef Name="StorePickupPointId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="StorePickupStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="10" />
+    <NavigationProperty Name="StorePickupPoints" Relationship="ecartdb.StorePickupStatusStorePickupPoint" FromRole="StorePickupStatus" ToRole="StorePickupPoint" />
+  </EntityType>
+  <Association Name="StorePickupStatusStorePickupPoint">
+    <End Type="ecartdb.StorePickupStatus" Role="StorePickupStatus" Multiplicity="1" />
+    <End Type="ecartdb.StorePickupPoint" Role="StorePickupPoint" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StorePickupStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StorePickupPoint">
+        <PropertyRef Name="StorePickupStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

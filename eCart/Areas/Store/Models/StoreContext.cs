@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using eCart.Models;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+
+namespace eCart.Areas.Store.Models
+{
+    public class StoreContext: DbContext
+    {
+
+        public StoreContext()
+             : base("name=ecartdbContainer")
+        {
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            throw new UnintentionalCodeFirstException();
+        }
+
+        public virtual DbSet<StoreDetail> StoreDetails { get; set; }
+        public virtual DbSet<StoreStatus> StoreStatus { get; set; }
+        public virtual DbSet<StoreCategory> StoreCategories { get; set; }
+        public virtual DbSet<StoreItem> StoreItems { get; set; }
+        public virtual DbSet<StorePickupPoint> StorePickupPoints { get; set; }
+        public virtual DbSet<StorePickupPartner> StorePickupPartners { get; set; }
+        public virtual DbSet<StorePickupStatus> StorePickupStatus { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.MasterCity> MasterCities { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.MasterArea> MasterAreas { get; set; }
+    }
+}
