@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8cd14a5799894a709cfb67a00cf48bfa" Name="Diagram1" ZoomLevel="80" >
+      <Diagram DiagramId="8cd14a5799894a709cfb67a00cf48bfa" Name="Diagram1" ZoomLevel="79" >
         <EntityTypeShape EntityType="ecartdb.UserDetail" Width="1.5" PointX="5.625" PointY="0.875" />
         <EntityTypeShape EntityType="ecartdb.StoreDetail" Width="1.5" PointX="5.625" PointY="6" />
         <EntityTypeShape EntityType="ecartdb.UserStatus" Width="1.5" PointX="2.875" PointY="0.5" />

@@ -129,6 +129,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\MasterAreasController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MasterCitiesController.cs" />
+    <Compile Include="Areas\Admin\Models\AdminDBContext.cs" />
     <Compile Include="Areas\Shopper\ShopperAreaRegistration.cs" />
     <Compile Include="Areas\Store\Controllers\StoreDetailsController.cs" />
     <Compile Include="Areas\Store\Models\StoreContext.cs" />
@@ -259,6 +262,18 @@
     <Content Include="Areas\Store\Views\StoreDetails\Index.cshtml" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Shopper\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterCities\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterCities\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterCities\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterCities\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterCities\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterAreas\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterAreas\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterAreas\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterAreas\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterAreas\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -286,9 +301,6 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Controllers\" />
-    <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Shopper\Controllers\" />
     <Folder Include="Areas\Shopper\Models\" />
     <Folder Include="Areas\Shopper\Views\Shared\" />
