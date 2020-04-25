@@ -59,14 +59,19 @@ textarea {
 }
 
 .admin-panel-items {
-    padding: 15px 20px;
-    border-radius: 15px;
+    padding: 5px 12px;
+    border-radius: 8px;
     font-size: 18px;
-    width:100%;
+    width: 100%;
+    transition: 250ms;
+}
+
+.admin-panel-items img {
+    height:40px;
 }
 
 
 .admin-panel-items:hover {
-    background-color: lightgray;
+    box-shadow: 0px 0px 2px 1px dodgerblue;
     text-decoration:none;
 }
