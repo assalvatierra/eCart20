@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "MasterFiles";
+}
+
+
+<div class="jumbotron">
+    <h2> Master List </h2>
+</div>
+
+<div class="row">
+    <div class="col-sm-2">
+        @Html.ActionLink("Cities ", "Index", "MasterCities", new { area = "Admin" }, new { @class = "col-sm-12 bordered admin-panel-items" })
+    </div>
+    <div class="col-sm-2">
+        @Html.ActionLink("Areas ", "Index", "MasterAreas", new { area = "Admin" }, new { @class = "col-sm-12 bordered admin-panel-items" })
+    </div>
+    <div class="col-sm-3">
+        @Html.ActionLink("Item Categories", "Index", "ItemCategories", new { area = "Admin" }, new { @class = "col-sm-12 bordered admin-panel-items" })
+    </div>
+    <div class="col-sm-3">
+        @Html.ActionLink("Category Groups", "Index", "ItemcatGroups", new { area = "Admin" }, new { @class = "col-sm-12 bordered admin-panel-items" })
+    </div>
+</div>

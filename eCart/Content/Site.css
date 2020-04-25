@@ -53,3 +53,20 @@ textarea {
 .item-desc{
     position:relative;
 }
+
+.bordered{
+    border:1px solid lightgray;
+}
+
+.admin-panel-items {
+    padding: 15px 20px;
+    border-radius: 15px;
+    font-size: 18px;
+    width:100%;
+}
+
+
+.admin-panel-items:hover {
+    background-color: lightgray;
+    text-decoration:none;
+}

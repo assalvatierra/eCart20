@@ -129,6 +129,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AccountsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\ItemCategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ItemCatGroupsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ItemMastersController.cs" />
@@ -137,12 +139,14 @@
     <Compile Include="Areas\Admin\Controllers\StoreDetailsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserDetailsController.cs" />
     <Compile Include="Areas\Admin\Models\AdminDBContext.cs" />
+    <Compile Include="Areas\Shopper\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\CartDetailsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\StoreDetailsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\StoreItemsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\UserDetailsController.cs" />
     <Compile Include="Areas\Shopper\Models\ShopperContext.cs" />
     <Compile Include="Areas\Shopper\ShopperAreaRegistration.cs" />
+    <Compile Include="Areas\Store\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Store\Controllers\CartDetailsController.cs" />
     <Compile Include="Areas\Store\Controllers\ItemMastersController.cs" />
     <Compile Include="Areas\Store\Controllers\StoreDetailsController.cs" />
@@ -151,8 +155,9 @@
     <Compile Include="Areas\Store\Controllers\StorePickupPointsController.cs" />
     <Compile Include="Areas\Store\Models\StoreContext.cs" />
     <Compile Include="Areas\Store\StoreAreaRegistration.cs" />
-    <Compile Include="Controllers\StoreDetailsController.cs" />
-    <Compile Include="Controllers\UserDetailsController.cs" />
+    <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\MerchantController.cs" />
     <Compile Include="Interfaces\iCartMgr.cs" />
     <Compile Include="Interfaces\iStoreMgr.cs" />
     <Compile Include="Models\CartDetail.cs">
@@ -371,6 +376,13 @@
     <Content Include="Areas\Shopper\Views\UserDetails\Details.cshtml" />
     <Content Include="Areas\Shopper\Views\UserDetails\Edit.cshtml" />
     <Content Include="Areas\Shopper\Views\UserDetails\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Accounts\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Home\MasterFiles.cshtml" />
+    <Content Include="Areas\Shopper\Views\Accounts\Login.cshtml" />
+    <Content Include="Areas\Shopper\Views\Accounts\Register.cshtml" />
+    <Content Include="Areas\Store\Views\Accounts\Login.cshtml" />
+    <Content Include="Areas\Store\Views\Accounts\Register.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -403,26 +415,14 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\StoreDetails\Create.cshtml" />
-    <Content Include="Views\StoreDetails\Delete.cshtml" />
-    <Content Include="Views\StoreDetails\Details.cshtml" />
-    <Content Include="Views\StoreDetails\Edit.cshtml" />
-    <Content Include="Views\StoreDetails\Index.cshtml" />
     <Content Include="Views\Home\AboutHow.cshtml" />
-    <Content Include="Views\UserDetails\Create.cshtml" />
-    <Content Include="Views\UserDetails\Delete.cshtml" />
-    <Content Include="Views\UserDetails\Details.cshtml" />
-    <Content Include="Views\UserDetails\Edit.cshtml" />
-    <Content Include="Views\UserDetails\Index.cshtml" />
-    <Content Include="Views\StoreDetails\ItemList.cshtml" />
-    <Content Include="Views\UserDetails\Login.cshtml" />
-    <Content Include="Views\StoreDetails\Login.cshtml" />
-    <Content Include="Views\StoreDetails\Register.cshtml" />
-    <Content Include="Views\UserDetails\Register.cshtml" />
-    <Content Include="Views\StoreDetails\StoreList.cshtml" />
+    <Content Include="Views\Merchant\Index.cshtml" />
+    <Content Include="Views\Merchant\Products.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Views\Accounts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

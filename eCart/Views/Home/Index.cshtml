@@ -9,14 +9,14 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <h3> <a href="~/StoreDetails/StoreList"> Store List </a> </h3>
+        <h3> @Html.ActionLink("Store Lists", "Index", "Merchant", new { area = ""}, null) </h3>
     </div>
     <div class="col-sm-3 store-item">
         <img src="~/img/placeholders/company-logo.jpg" class="col-sm-6" />
         <div class="col-sm-6">
             <h4> Store 1</h4>
             <span class="badge badge-pill badge-primary">Category</span>
-            <br /><br /><a href="/StoreDetails/ItemList">View Products</a>
+            <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "" }, null)
         </div>
     </div>
     <div class="col-sm-3 store-item">
@@ -24,7 +24,7 @@
         <div class="col-sm-6">
             <h4> Store 2</h4>
             <span class="badge badge-pill badge-primary">Category</span>
-            <br /><br /><a href="/StoreDetails/ItemList">View Products</a>
+            <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "" }, null)
         </div>
     </div>
     <div class="col-sm-3 store-item">
@@ -32,7 +32,7 @@
         <div class="col-sm-6">
             <h4> Store 2</h4>
             <span class="badge badge-pill badge-primary">Category</span>
-            <br /><br /><a href="/StoreDetails/ItemList">View Products</a>
+            <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "" }, null)
         </div>
     </div>
     <div class="col-sm-3 store-item">
@@ -40,7 +40,7 @@
         <div class="col-sm-6">
             <h4> Store 2</h4>
             <span class="badge badge-pill badge-primary">Category</span>
-            <br /><br /><a href="/StoreDetails/ItemList">View Products</a>
+            <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "" }, null)
         </div>
     </div>
 </div>

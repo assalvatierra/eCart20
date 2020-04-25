@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="jumbotron">
+    <h2> Admin Dashboard </h2>
+</div>
+
+<div class="row">
+    <div class="col-sm-2">
+        @Html.ActionLink("Stores Panel", "Index", "StoreDetails", new { area = "Admin" }, new { @class = "col-sm-12 bordered admin-panel-items" })
+    </div>
+    <div class="col-sm-2">
+        @Html.ActionLink("Users Panel", "Index", "UserDetails", new { area = "Admin" }, new { @class = " col-sm-12 bordered admin-panel-items " })
+    </div>
+    <div class="col-sm-2">
+        @Html.ActionLink("Master Files", "MasterFiles", "Home", new { area = "Admin" }, new { @class = "col-sm-12 bordered admin-panel-items " })
+    </div>
+    <div class="col-sm-2">
+        @Html.ActionLink("Item Masters", "Index", "ItemMasters", new { area = "Admin" }, new { @class = "col-sm-12 bordered admin-panel-items " })
+    </div>
+</div>
