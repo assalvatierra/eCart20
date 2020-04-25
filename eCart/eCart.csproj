@@ -153,6 +153,8 @@
     <Compile Include="Areas\Store\StoreAreaRegistration.cs" />
     <Compile Include="Controllers\StoreDetailsController.cs" />
     <Compile Include="Controllers\UserDetailsController.cs" />
+    <Compile Include="Interfaces\iCartMgr.cs" />
+    <Compile Include="Interfaces\iStoreMgr.cs" />
     <Compile Include="Models\CartDetail.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
@@ -421,7 +423,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
