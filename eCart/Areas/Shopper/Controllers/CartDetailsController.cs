@@ -141,5 +141,10 @@ namespace eCart.Areas.Shopper.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult Cart()
+        {
+            return View();
+        }
     }
 }

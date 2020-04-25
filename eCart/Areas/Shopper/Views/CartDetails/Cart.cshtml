@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Cart";
+}
+
+<h2>Cart Page</h2>
+
+<div>
+    @Html.ActionLink("Go to Main Page", "Index","Home", new { area = ""}, null)
+</div>
+
+<div class="panel">
+    <h4> Shopper Details </h4>
+    <p> Name:  </p>
+    <p> Address:  </p>
+    <p> Contact No.:  </p>
+</div>
+
+<div class="panel">
+    <h4> Cart Items </h4>
+
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td> <b>Item Description</b> </td>
+                    <td> Qty </td>
+                    <td> Price per Item</td>
+                    <td> Total </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <img src="~/img/placeholders/placeholder-images-product-2.png" width="50" class="img-thumbnail bordered" />
+                        <b>Item Name</b>
+                        <span class="text-muted"> - Item Description </span>
+                    </td>
+                    <td> 1 </td>
+                    <td> 500 </td>
+                    <td> 500 </td>
+                </tr>
+                <!-- Total -->
+                <tr>
+                </tr>
+            </tbody>
+        </table>
+        <div class="col-lg-offset-10">
+
+            <button class="btn btn-primary"> Submit Order</button>
+        </div>
+    </div>
+</div>
+
+<div class="panel" style="padding:10px 20px;">
+    <h4> Pickup Details </h4>
+    <p> <b> Pickup Location and Time </b> </p>
+</div>
+
+

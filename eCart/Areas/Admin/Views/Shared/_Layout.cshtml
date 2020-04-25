@@ -22,6 +22,20 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Dashboard", "Index", "Home", new { area = "Admin" }, null)</li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Session["USER"] != null)
+                    {
+                        <li>@Html.ActionLink(" Hi " + Session["USER"], "Login", "Accounts", new { area = "Shopper" }, null)</li>
+                        <li>@Html.ActionLink("Log-out", "Login", "Accounts", new { area = "Shopper" }, null)</li>
+                    }
+                    else
+                    {
+
+                        <li>@Html.ActionLink("Shopper", "Login", "Accounts", new { area = "Shopper" }, null)</li>
+                        <li>@Html.ActionLink("Store", "Login", "Accounts", new { area = "Store" }, null)</li>
+
+                    }
+                </ul>
             </div>
         </div>
     </div>

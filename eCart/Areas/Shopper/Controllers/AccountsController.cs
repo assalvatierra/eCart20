@@ -14,8 +14,24 @@ namespace eCart.Areas.Shopper.Controllers
             return View();
         }
 
-        public ActionResult Login() {
+        public ActionResult Login()
+        {
             return View();
+        }
+
+        // Shopper/Accounts/Login
+        [HttpPost]
+        public ActionResult Login(string username, string password)
+        {
+           Session["USER"] = "Admin";   //For test only
+           return RedirectToAction("Index", "Home", new { area = "" });
+
+        }
+
+        public ActionResult Logout()
+        {
+            Session["USER"] = null;
+            return RedirectToAction("Login");
         }
 
         public ActionResult Register()

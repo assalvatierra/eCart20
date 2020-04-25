@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<eCart.Models.StoreItem>
 
 @{
-    ViewBag.Title = "ItemList";
+    ViewBag.Title = "Store Main Page";
 }
 <div class="jumbotron">
     <h2> Store List </h2>
@@ -95,3 +95,5 @@
         </div>
     </div>
 </div>
+
+@{ Html.RenderPartial("PartialView_Cart"); }

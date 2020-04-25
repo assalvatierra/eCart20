@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <h3> @Html.ActionLink("Store Lists", "Index", "Merchant", new { area = ""}, null) </h3>
+        <h3> @Html.ActionLink("Store Lists", "Index", "Merchant", new { area = "" }, null) </h3>
     </div>
     <div class="col-sm-3 store-item">
         <img src="~/img/placeholders/company-logo.jpg" class="col-sm-6" />
@@ -96,3 +96,4 @@
 </div>
 
 
+@{ Html.RenderPartial("../Merchant/PartialView_Cart"); }

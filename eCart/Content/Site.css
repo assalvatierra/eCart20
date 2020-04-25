@@ -75,3 +75,21 @@ textarea {
     box-shadow: 0px 0px 2px 1px dodgerblue;
     text-decoration:none;
 }
+
+
+/* Cart Styles */
+.cart-shopper-panel{
+
+}
+
+
+.panel {
+    padding: 10px 20px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    margin: 5px 0px;
+}
+
+.panel h4{
+    color: royalblue;
+}

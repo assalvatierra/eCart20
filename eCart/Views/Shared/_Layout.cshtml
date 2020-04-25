@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - eCart </title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -24,16 +24,29 @@
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
 
-                <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Shopper", "Login", "Accounts", new { area = "Shopper" }, null)</li>
-                    <li>@Html.ActionLink("Store"  , "Login", "Accounts", new { area = "Store" }, null)</li>
-                </ul>
 
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Session["USER"] != null)
+                    {
+
+                        <li>@Html.ActionLink(" Hi " + Session["USER"], "Login", "Accounts", new { area = "Shopper" }, null)</li>
+                        <li>@Html.ActionLink("MyCart", "Cart", "CartDetails", new { area = "Shopper" }, null)</li>
+                        <li>@Html.ActionLink("Log-out", "Logout", "Accounts", new { area = "Shopper" }, null)</li>
+
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Shopper", "Login", "Accounts", new { area = "Shopper" }, null)</li>
+                        <li>@Html.ActionLink("Store", "Login", "Accounts", new { area = "Store" }, null)</li>
+
+                    }
+                </ul>
             </div>
         </div>
     </div>
     <div class="container body-content">
         @RenderBody()
+
         <hr />
         <footer>
             <p>

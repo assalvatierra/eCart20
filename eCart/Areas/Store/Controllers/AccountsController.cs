@@ -18,6 +18,14 @@ namespace eCart.Areas.Store.Controllers
             return View();
         }
 
+        // Store/Accounts/Login
+        [HttpPost]
+        public ActionResult Login( string username, string password )
+        {
+            Session["STOREID"] = "01";   //For test only
+            return RedirectToAction("Index", "Home", new { area = "Store" });
+        }
+
         public ActionResult Register()
         {
             return View();
