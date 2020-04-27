@@ -1,0 +1,21 @@
+﻿@model IEnumerable<eCart.Models.StoreDetail>
+
+<div class="row">
+    <div class="col-sm-12">
+        <h3> @Html.ActionLink("Store Lists", "Index", "Merchant", new { area = "" }, null) </h3>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-3 store-item">
+            <img src="~/img/placeholders/company-logo.jpg" class="col-sm-6" />
+            <div class="col-sm-6">
+                <h4> @item.Name </h4>
+                <span class="badge badge-pill badge-primary"> @item.StoreCategory.Name </span>
+                <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "", id = item.Id }, null)
+            </div>
+        </div>
+    }
+
+</div>
+
+<hr />
