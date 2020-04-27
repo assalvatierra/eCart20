@@ -8,14 +8,39 @@
     {
 
      <div class="col-sm-2 item-list">
-        <img src="~/img/placeholders/placeholder-images-product-2.png" />
+        <img src="~/img/placeholders/placeholder-product.png" />
         <div class="item-desc">
             <h4> @item.Name </h4>
-            @Html.ActionLink("View Products", "Products", "Merchant", new { area = "", id = item.Id }, null)
+
+            <div class="add-to-Cart" >
+                <button class="btn btn-default" onclick="AddtoCart(this)" style="width:100%;"> Add to Cart </button>
+               
+                <div class="btn-group hidden">
+                    <button class="btn btn-default" type="button" onclick="SubtractQty(this)"> - </button>
+                    <div class="btn btn-default disabled item-qty" >
+                        1
+                    </div>
+                    <button class="btn btn-default" type="button" onclick="AddQty(this)"> + </button>
+                    <button class="btn btn-default" onclick="AddtoCart_Submit(this,'@item.Id', '@item.Name')"> Submit </button>
+                </div>
+            </div>
         </div>
      </div>
-
     }
-
 </div>
+
+
+<script src="~/Scripts/Cart/cart.js"> </script>
+<script>
+    //On Add to Cart Button Click
+    function AddtoCart(e) {
+        if ('@Session["USER"]' != '') {
+            $(e).addClass('hidden');                //hide
+            $(e).siblings().removeClass('hidden');  //show
+        } else {
+            //login user
+            window.location = "/Shopper/Accounts/Login";
+        }
+    }
+</script>
 

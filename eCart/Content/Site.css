@@ -37,8 +37,8 @@ textarea {
 
 .item-list {
     width: 190px;
-    height: 250px;
-    padding: 5px;
+    height: 285px;
+    padding: 7px;
     margin:2px;
 }
 
@@ -79,17 +79,48 @@ textarea {
 
 /* Cart Styles */
 .cart-shopper-panel{
-
+    border-bottom:0px;
+    box-shadow:0px;
+    display:flex;
+    flex-wrap:wrap;
 }
 
 
-.panel {
+.panel-carts {
     padding: 10px 20px;
     border: 1px solid lightgray;
     border-radius: 10px;
     margin: 5px 0px;
 }
 
-.panel h4{
+.panel-carts h4{
     color: royalblue;
+}
+
+.cart-item{
+    margin:5px;
+    padding:5px;
+    border: 1px solid lightgray;
+    border-radius:5px;
+}
+
+.cart-item img {
+    padding:0px;
+    margin-right: 3px;
+}
+
+
+.cart-item p {
+    font-size:12px;
+    padding: 1px;
+
+}
+
+/* Shopper Styles */
+.panel {
+    padding: 5px 0px;
+}
+
+.panel table tr td, .panel table tr th   {
+    padding-left: 15px;
 }

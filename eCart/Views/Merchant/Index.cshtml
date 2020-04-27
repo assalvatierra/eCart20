@@ -96,4 +96,5 @@
     </div>
 </div>
 
-@{ Html.RenderPartial("PartialView_Cart"); }
+@{ Html.RenderAction("_CartSummary", "CartDetails", new { area = "Shopper" }); }
+

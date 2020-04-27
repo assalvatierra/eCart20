@@ -36,5 +36,17 @@ namespace eCart.Controllers
             }
         }
 
+        public ActionResult ProductDetails(int? id)
+        {
+            if (id != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Error");
+            }
+        }
+
     }
 }

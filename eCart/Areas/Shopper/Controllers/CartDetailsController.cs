@@ -146,5 +146,35 @@ namespace eCart.Areas.Shopper.Controllers
         {
             return View();
         }
+
+        public string CreateCart()
+        {
+            CartDetail cartDetail = new CartDetail();
+            cartDetail.StoreDetailId = 0;
+            cartDetail.UserDetailId = 1;  // admin
+            cartDetail.CartStatusId = 1;  // active
+
+            db.CartDetails.Add(cartDetail);
+            db.SaveChanges();
+
+            Session["CARTID"] = cartDetail.Id;
+
+            return "Cart Created";
+        }
+
+        public PartialViewResult _CartSummary()
+        {
+            return PartialView();
+        }
+
+
+        [HttpPost]
+        public string AddToCart(int id, int qty)
+        {
+
+            return "OK";
+        }
+
+       
     }
 }

@@ -21,6 +21,7 @@ namespace eCart.Areas.Store.Controllers
             return View(db.ItemMasters.ToList());
         }
 
+
         // GET: Store/ItemMasters/Details/5
         public ActionResult Details(int? id)
         {
@@ -124,5 +125,6 @@ namespace eCart.Areas.Store.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

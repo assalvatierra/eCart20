@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Shopper - Home Page";
+}
+
+<div class="jumbotron">
+    <h1>eCart Online Shopping</h1>
+    <p class="lead"> <a href="~/Home/AboutHow"> How It Works? </a> </p>
+</div>
+
+@{ Html.RenderAction("_StoreList", new { area = "" }); }
+@{ Html.RenderAction("_ProductList", new { area = "" }); }
+
+@{ Html.RenderAction("_CartSummary","CartDetails", new { area = "Shopper" }); }
+

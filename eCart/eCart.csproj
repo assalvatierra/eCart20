@@ -141,6 +141,7 @@
     <Compile Include="Areas\Admin\Models\AdminDBContext.cs" />
     <Compile Include="Areas\Shopper\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\CartDetailsController.cs" />
+    <Compile Include="Areas\Shopper\Controllers\HomeController.cs" />
     <Compile Include="Areas\Shopper\Controllers\StoreDetailsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\StoreItemsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\UserDetailsController.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Areas\Store\Controllers\StorePickupPartnersController.cs" />
     <Compile Include="Areas\Store\Controllers\StorePickupPointsController.cs" />
     <Compile Include="Areas\Store\Models\StoreContext.cs" />
+    <Compile Include="Areas\Store\Models\StoreDB.cs" />
     <Compile Include="Areas\Store\StoreAreaRegistration.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -275,6 +277,7 @@
     <Content Include="img\placeholders\item-placeholder.png" />
     <Content Include="img\placeholders\placeholder-images-product-2.png" />
     <Content Include="img\placeholders\placeholder-images-product-3_large.png" />
+    <Content Include="img\placeholders\placeholder-product.png" />
     <Content Include="img\placeholders\shopping-cart-colour-thumbnail.png" />
     <Content Include="img\store\shopping-cart-24.png" />
     <Content Include="img\store\storefront.png" />
@@ -408,7 +411,10 @@
     <Content Include="Areas\Shopper\Views\CartDetails\Cart.cshtml" />
     <Content Include="Areas\Store\Views\Home\Index.cshtml" />
     <Content Include="Areas\Shopper\Views\StoreDetails\PartialView_Cart.cshtml" />
+    <Content Include="Areas\Shopper\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Shopper\Views\CartDetails\_CartSummary.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\Cart\cart.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -447,6 +453,7 @@
     <Content Include="Views\Merchant\PartialView_Cart.cshtml" />
     <Content Include="Views\Home\_ProductList.cshtml" />
     <Content Include="Views\Home\_StoreList.cshtml" />
+    <Content Include="Views\Merchant\ProductDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />

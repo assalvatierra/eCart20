@@ -16,10 +16,16 @@ namespace eCart.Areas.Store.Controllers
         private StoreContext db = new StoreContext();
 
         // GET: Store/StoreItems
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var storeItems = db.StoreItems.Include(s => s.ItemMaster).Include(s => s.StoreDetail);
-            return View(storeItems.ToList());
+            if (id != null)
+            {
+                var storeItems = db.StoreItems.Where(s=>s.StoreDetailId == id).Include(s => s.ItemMaster).Include(s => s.StoreDetail);
+
+                return View(storeItems.ToList());
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Store/StoreItems/Details/5

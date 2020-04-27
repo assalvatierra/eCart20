@@ -10,6 +10,7 @@ namespace eCart.Controllers
 {
     public class HomeController : Controller
     {
+        ecartdbContainer edb = new ecartdbContainer();
         StoreMgr storeMgr = new StoreMgr();
 
         public ActionResult Index()

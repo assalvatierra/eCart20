@@ -24,7 +24,7 @@ namespace eCart.Areas.Shopper.Controllers
         public ActionResult Login(string username, string password)
         {
            Session["USER"] = "Admin";   //For test only
-           return RedirectToAction("Index", "Home", new { area = "" });
+           return RedirectToAction("Index", "Home", new { area = "Shopper" });
 
         }
 

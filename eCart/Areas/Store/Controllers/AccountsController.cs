@@ -22,7 +22,7 @@ namespace eCart.Areas.Store.Controllers
         [HttpPost]
         public ActionResult Login( string username, string password )
         {
-            Session["STOREID"] = "01";   //For test only
+            Session["STOREID"] = "1";   //For test only
             return RedirectToAction("Index", "Home", new { area = "Store" });
         }
 

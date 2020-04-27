@@ -1,0 +1,19 @@
+﻿
+@{
+   var USER = Session["USER"] != null ? Session["USER"] : "" ;
+ }
+
+@if ( USER.ToString() != "")
+{
+    <div class="row">
+        <hr />
+        <div class="cart-shopper-panel" style="padding:5px;margin-right:5px;" id="Cart-Summary">
+            <div class="col-sm-12">
+                <a href="/Shopper/CartDetails/Cart">
+                    <b> <img src="~/img/store/shopping-cart-24.png"> Cart Summary : </b>
+                </a>
+            </div>
+        </div>
+    </div>
+}
+<hr />
