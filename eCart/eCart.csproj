@@ -161,6 +161,15 @@
     <Compile Include="Controllers\MerchantController.cs" />
     <Compile Include="Interfaces\iCartMgr.cs" />
     <Compile Include="Interfaces\iStoreMgr.cs" />
+    <Compile Include="Models\CartActivity.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CartActivityType.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CartDelivery.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CartDetail.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
@@ -211,6 +220,12 @@
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MasterCity.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RiderDetail.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RiderStatus.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StorePickupPartner.cs">

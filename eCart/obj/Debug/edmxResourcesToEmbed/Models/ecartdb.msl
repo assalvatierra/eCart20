@@ -200,5 +200,58 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CartDeliveries">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.CartDelivery)">
+        <MappingFragment StoreEntitySet="CartDeliveries">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CartDetailId" ColumnName="CartDetailId" />
+          <ScalarProperty Name="dtDelivery" ColumnName="dtDelivery" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="RiderDetailId" ColumnName="RiderDetailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RiderDetails">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.RiderDetail)">
+        <MappingFragment StoreEntitySet="RiderDetails">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="RiderStatusId" ColumnName="RiderStatusId" />
+          <ScalarProperty Name="MasterCityId" ColumnName="MasterCityId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RiderStatus">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.RiderStatus)">
+        <MappingFragment StoreEntitySet="RiderStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartActivities">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.CartActivity)">
+        <MappingFragment StoreEntitySet="CartActivities">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CartDeliveryId" ColumnName="CartDeliveryId" />
+          <ScalarProperty Name="dtActivity" ColumnName="dtActivity" />
+          <ScalarProperty Name="CartActivityTypeId" ColumnName="CartActivityTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartActivityTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.CartActivityType)">
+        <MappingFragment StoreEntitySet="CartActivityTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

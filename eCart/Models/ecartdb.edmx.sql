@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/23/2020 21:26:20
--- Generated from EDMX file: D:\Company\2020.RealSys\eCart\eCart\Models\ecartdb.edmx
+-- Date Created: 04/27/2020 11:38:51
+-- Generated from EDMX file: D:\Projects\eCart20\eCart\Models\ecartdb.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -80,6 +80,21 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_ItemCatGroupItemCategory]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ItemCategories] DROP CONSTRAINT [FK_ItemCatGroupItemCategory];
 GO
+IF OBJECT_ID(N'[dbo].[FK_StoreDetailStorePickupPoint]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StorePickupPoints] DROP CONSTRAINT [FK_StoreDetailStorePickupPoint];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StorePickupPointStorePickupPartner]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StorePickupPartners] DROP CONSTRAINT [FK_StorePickupPointStorePickupPartner];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StoreDetailStorePickupPartner]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StorePickupPartners] DROP CONSTRAINT [FK_StoreDetailStorePickupPartner];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StorePickupPointCartDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartDetails] DROP CONSTRAINT [FK_StorePickupPointCartDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StorePickupStatusStorePickupPoint]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StorePickupPoints] DROP CONSTRAINT [FK_StorePickupStatusStorePickupPoint];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -135,6 +150,15 @@ IF OBJECT_ID(N'[dbo].[CartItemStatus]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[ItemCatGroups]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ItemCatGroups];
+GO
+IF OBJECT_ID(N'[dbo].[StorePickupPoints]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StorePickupPoints];
+GO
+IF OBJECT_ID(N'[dbo].[StorePickupPartners]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StorePickupPartners];
+GO
+IF OBJECT_ID(N'[dbo].[StorePickupStatus]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StorePickupStatus];
 GO
 
 -- --------------------------------------------------
@@ -320,6 +344,54 @@ CREATE TABLE [dbo].[StorePickupStatus] (
 );
 GO
 
+-- Creating table 'CartDeliveries'
+CREATE TABLE [dbo].[CartDeliveries] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [CartDetailId] int  NOT NULL,
+    [dtDelivery] datetime  NOT NULL,
+    [Address] nvarchar(250)  NOT NULL,
+    [Remarks] nvarchar(180)  NULL,
+    [RiderDetailId] int  NOT NULL
+);
+GO
+
+-- Creating table 'RiderDetails'
+CREATE TABLE [dbo].[RiderDetails] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [UserId] nvarchar(max)  NOT NULL,
+    [Name] nvarchar(150)  NOT NULL,
+    [Address] nvarchar(180)  NOT NULL,
+    [Mobile] nvarchar(20)  NOT NULL,
+    [Remarks] nvarchar(180)  NULL,
+    [RiderStatusId] int  NOT NULL,
+    [MasterCityId] int  NOT NULL
+);
+GO
+
+-- Creating table 'RiderStatus'
+CREATE TABLE [dbo].[RiderStatus] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(10)  NOT NULL
+);
+GO
+
+-- Creating table 'CartActivities'
+CREATE TABLE [dbo].[CartActivities] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [CartDeliveryId] int  NOT NULL,
+    [dtActivity] datetime  NOT NULL,
+    [CartActivityTypeId] int  NOT NULL
+);
+GO
+
+-- Creating table 'CartActivityTypes'
+CREATE TABLE [dbo].[CartActivityTypes] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(20)  NOT NULL,
+    [SortOrder] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -441,6 +513,36 @@ GO
 -- Creating primary key on [Id] in table 'StorePickupStatus'
 ALTER TABLE [dbo].[StorePickupStatus]
 ADD CONSTRAINT [PK_StorePickupStatus]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'CartDeliveries'
+ALTER TABLE [dbo].[CartDeliveries]
+ADD CONSTRAINT [PK_CartDeliveries]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'RiderDetails'
+ALTER TABLE [dbo].[RiderDetails]
+ADD CONSTRAINT [PK_RiderDetails]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'RiderStatus'
+ALTER TABLE [dbo].[RiderStatus]
+ADD CONSTRAINT [PK_RiderStatus]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'CartActivities'
+ALTER TABLE [dbo].[CartActivities]
+ADD CONSTRAINT [PK_CartActivities]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'CartActivityTypes'
+ALTER TABLE [dbo].[CartActivityTypes]
+ADD CONSTRAINT [PK_CartActivityTypes]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -836,6 +938,96 @@ GO
 CREATE INDEX [IX_FK_StorePickupStatusStorePickupPoint]
 ON [dbo].[StorePickupPoints]
     ([StorePickupStatusId]);
+GO
+
+-- Creating foreign key on [CartDetailId] in table 'CartDeliveries'
+ALTER TABLE [dbo].[CartDeliveries]
+ADD CONSTRAINT [FK_CartDetailCartDelivery]
+    FOREIGN KEY ([CartDetailId])
+    REFERENCES [dbo].[CartDetails]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CartDetailCartDelivery'
+CREATE INDEX [IX_FK_CartDetailCartDelivery]
+ON [dbo].[CartDeliveries]
+    ([CartDetailId]);
+GO
+
+-- Creating foreign key on [RiderStatusId] in table 'RiderDetails'
+ALTER TABLE [dbo].[RiderDetails]
+ADD CONSTRAINT [FK_RiderStatusRiderDetail]
+    FOREIGN KEY ([RiderStatusId])
+    REFERENCES [dbo].[RiderStatus]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_RiderStatusRiderDetail'
+CREATE INDEX [IX_FK_RiderStatusRiderDetail]
+ON [dbo].[RiderDetails]
+    ([RiderStatusId]);
+GO
+
+-- Creating foreign key on [MasterCityId] in table 'RiderDetails'
+ALTER TABLE [dbo].[RiderDetails]
+ADD CONSTRAINT [FK_MasterCityRiderDetail]
+    FOREIGN KEY ([MasterCityId])
+    REFERENCES [dbo].[MasterCities]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_MasterCityRiderDetail'
+CREATE INDEX [IX_FK_MasterCityRiderDetail]
+ON [dbo].[RiderDetails]
+    ([MasterCityId]);
+GO
+
+-- Creating foreign key on [RiderDetailId] in table 'CartDeliveries'
+ALTER TABLE [dbo].[CartDeliveries]
+ADD CONSTRAINT [FK_RiderDetailCartDelivery]
+    FOREIGN KEY ([RiderDetailId])
+    REFERENCES [dbo].[RiderDetails]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_RiderDetailCartDelivery'
+CREATE INDEX [IX_FK_RiderDetailCartDelivery]
+ON [dbo].[CartDeliveries]
+    ([RiderDetailId]);
+GO
+
+-- Creating foreign key on [CartDeliveryId] in table 'CartActivities'
+ALTER TABLE [dbo].[CartActivities]
+ADD CONSTRAINT [FK_CartDeliveryCartDeliveryActivity]
+    FOREIGN KEY ([CartDeliveryId])
+    REFERENCES [dbo].[CartDeliveries]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CartDeliveryCartDeliveryActivity'
+CREATE INDEX [IX_FK_CartDeliveryCartDeliveryActivity]
+ON [dbo].[CartActivities]
+    ([CartDeliveryId]);
+GO
+
+-- Creating foreign key on [CartActivityTypeId] in table 'CartActivities'
+ALTER TABLE [dbo].[CartActivities]
+ADD CONSTRAINT [FK_CartActivityTypeCartActivity]
+    FOREIGN KEY ([CartActivityTypeId])
+    REFERENCES [dbo].[CartActivityTypes]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CartActivityTypeCartActivity'
+CREATE INDEX [IX_FK_CartActivityTypeCartActivity]
+ON [dbo].[CartActivities]
+    ([CartActivityTypeId]);
 GO
 
 -- --------------------------------------------------

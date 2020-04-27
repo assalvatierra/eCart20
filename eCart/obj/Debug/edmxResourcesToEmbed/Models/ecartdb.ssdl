@@ -21,6 +21,11 @@
     <EntitySet Name="StorePickupPoints" EntityType="ecartdb.Store.StorePickupPoints" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="StorePickupPartners" EntityType="ecartdb.Store.StorePickupPartners" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="StorePickupStatus" EntityType="ecartdb.Store.StorePickupStatus" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CartDeliveries" EntityType="ecartdb.Store.CartDeliveries" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RiderDetails" EntityType="ecartdb.Store.RiderDetails" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RiderStatus" EntityType="ecartdb.Store.RiderStatus" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CartActivities" EntityType="ecartdb.Store.CartActivities" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CartActivityTypes" EntityType="ecartdb.Store.CartActivityTypes" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserStatusUserDetail" Association="ecartdb.Store.UserStatusUserDetail">
       <End Role="UserStatus" EntitySet="UserStatus" />
       <End Role="UserDetail" EntitySet="UserDetails" />
@@ -124,6 +129,30 @@
     <AssociationSet Name="StorePickupStatusStorePickupPoint" Association="ecartdb.Store.StorePickupStatusStorePickupPoint">
       <End Role="StorePickupStatus" EntitySet="StorePickupStatus" />
       <End Role="StorePickupPoint" EntitySet="StorePickupPoints" />
+    </AssociationSet>
+    <AssociationSet Name="CartDetailCartDelivery" Association="ecartdb.Store.CartDetailCartDelivery">
+      <End Role="CartDetail" EntitySet="CartDetails" />
+      <End Role="CartDelivery" EntitySet="CartDeliveries" />
+    </AssociationSet>
+    <AssociationSet Name="RiderStatusRiderDetail" Association="ecartdb.Store.RiderStatusRiderDetail">
+      <End Role="RiderStatus" EntitySet="RiderStatus" />
+      <End Role="RiderDetail" EntitySet="RiderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="MasterCityRiderDetail" Association="ecartdb.Store.MasterCityRiderDetail">
+      <End Role="MasterCity" EntitySet="MasterCities" />
+      <End Role="RiderDetail" EntitySet="RiderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="RiderDetailCartDelivery" Association="ecartdb.Store.RiderDetailCartDelivery">
+      <End Role="RiderDetail" EntitySet="RiderDetails" />
+      <End Role="CartDelivery" EntitySet="CartDeliveries" />
+    </AssociationSet>
+    <AssociationSet Name="CartDeliveryCartDeliveryActivity" Association="ecartdb.Store.CartDeliveryCartDeliveryActivity">
+      <End Role="CartDelivery" EntitySet="CartDeliveries" />
+      <End Role="CartDeliveryActivity" EntitySet="CartActivities" />
+    </AssociationSet>
+    <AssociationSet Name="CartActivityTypeCartActivity" Association="ecartdb.Store.CartActivityTypeCartActivity">
+      <End Role="CartActivityType" EntitySet="CartActivityTypes" />
+      <End Role="CartActivity" EntitySet="CartActivities" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserDetails">
@@ -304,6 +333,54 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="CartDeliveries">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CartDetailId" Type="int" Nullable="false" />
+    <Property Name="dtDelivery" Type="datetime" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="250" />
+    <Property Name="Remarks" Type="nvarchar" Nullable="true" MaxLength="180" />
+    <Property Name="RiderDetailId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RiderDetails">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="180" />
+    <Property Name="Mobile" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="Remarks" Type="nvarchar" Nullable="true" MaxLength="180" />
+    <Property Name="RiderStatusId" Type="int" Nullable="false" />
+    <Property Name="MasterCityId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RiderStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="CartActivities">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CartDeliveryId" Type="int" Nullable="false" />
+    <Property Name="dtActivity" Type="datetime" Nullable="false" />
+    <Property Name="CartActivityTypeId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CartActivityTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="UserStatusUserDetail">
     <End Role="UserStatus" Type="ecartdb.Store.UserStatus" Multiplicity="1" />
@@ -614,6 +691,78 @@
       </Principal>
       <Dependent Role="StorePickupPoint">
         <PropertyRef Name="StorePickupStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CartDetailCartDelivery">
+    <End Role="CartDetail" Type="ecartdb.Store.CartDetails" Multiplicity="1" />
+    <End Role="CartDelivery" Type="ecartdb.Store.CartDeliveries" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CartDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartDelivery">
+        <PropertyRef Name="CartDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RiderStatusRiderDetail">
+    <End Role="RiderStatus" Type="ecartdb.Store.RiderStatus" Multiplicity="1" />
+    <End Role="RiderDetail" Type="ecartdb.Store.RiderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RiderStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RiderDetail">
+        <PropertyRef Name="RiderStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MasterCityRiderDetail">
+    <End Role="MasterCity" Type="ecartdb.Store.MasterCities" Multiplicity="1" />
+    <End Role="RiderDetail" Type="ecartdb.Store.RiderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MasterCity">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RiderDetail">
+        <PropertyRef Name="MasterCityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RiderDetailCartDelivery">
+    <End Role="RiderDetail" Type="ecartdb.Store.RiderDetails" Multiplicity="1" />
+    <End Role="CartDelivery" Type="ecartdb.Store.CartDeliveries" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RiderDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartDelivery">
+        <PropertyRef Name="RiderDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CartDeliveryCartDeliveryActivity">
+    <End Role="CartDelivery" Type="ecartdb.Store.CartDeliveries" Multiplicity="1" />
+    <End Role="CartDeliveryActivity" Type="ecartdb.Store.CartActivities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CartDelivery">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartDeliveryActivity">
+        <PropertyRef Name="CartDeliveryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CartActivityTypeCartActivity">
+    <End Role="CartActivityType" Type="ecartdb.Store.CartActivityTypes" Multiplicity="1" />
+    <End Role="CartActivity" Type="ecartdb.Store.CartActivities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CartActivityType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartActivity">
+        <PropertyRef Name="CartActivityTypeId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

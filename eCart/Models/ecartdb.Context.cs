@@ -45,5 +45,10 @@ namespace eCart.Models
         public virtual DbSet<StorePickupPoint> StorePickupPoints { get; set; }
         public virtual DbSet<StorePickupPartner> StorePickupPartners { get; set; }
         public virtual DbSet<StorePickupStatus> StorePickupStatus { get; set; }
+        public virtual DbSet<CartDelivery> CartDeliveries { get; set; }
+        public virtual DbSet<RiderDetail> RiderDetails { get; set; }
+        public virtual DbSet<RiderStatus> RiderStatus { get; set; }
+        public virtual DbSet<CartActivity> CartActivities { get; set; }
+        public virtual DbSet<CartActivityType> CartActivityTypes { get; set; }
     }
 }
