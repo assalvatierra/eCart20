@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace eCart.Interfaces
 {
-    interface iCartMgr
+    public interface iCartMgr
     {
         int getCartInfo(int id);
     }

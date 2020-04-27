@@ -153,7 +153,6 @@ D:\Projects\eCart20\eCart\bin\System.Web.WebPages.Razor.xml
 D:\Projects\eCart20\eCart\bin\Newtonsoft.Json.xml
 D:\Projects\eCart20\eCart\bin\Antlr3.Runtime.pdb
 D:\Projects\eCart20\eCart\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Projects\eCart20\eCart\obj\Debug\eCart.csprojAssemblyReference.cache
 D:\Projects\eCart20\eCart\obj\Debug\eCart.csproj.CoreCompileInputs.cache
 D:\Projects\eCart20\eCart\obj\Debug\eCart.csproj.CopyComplete
 D:\Projects\eCart20\eCart\obj\Debug\eCart.dll

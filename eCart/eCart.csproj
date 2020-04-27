@@ -256,6 +256,9 @@
     <Compile Include="Models\UserStatus.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\CartMgr.cs" />
+    <Compile Include="Services\StoreFactory.cs" />
+    <Compile Include="Services\StoreMgr.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ecartdb.mdf" />

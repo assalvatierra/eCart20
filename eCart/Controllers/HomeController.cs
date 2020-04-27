@@ -10,6 +10,10 @@ namespace eCart.Controllers
     {
         public ActionResult Index()
         {
+            Services.StoreFactory store = new Services.StoreFactory();
+
+           List<Models.StoreDetail> featuredstores = store.StoreMgr.getFeaturedStores();
+
             return View();
         }
 

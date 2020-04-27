@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace eCart.Interfaces
 {
-    interface iStoreMgr
+    public interface iStoreMgr
     {
-        int getStoreDetails(int id);
-        int getStoreItems(int id);
-        int getPickupPoint(int id);
+        List<Models.StoreDetail> getFeaturedStores();
+        List<Models.ItemMaster> getFeaturedItems();
 
 
     }
