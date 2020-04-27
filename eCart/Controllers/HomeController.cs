@@ -4,12 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using eCart.Models;
+using eCart.Services;
 
 namespace eCart.Controllers
 {
     public class HomeController : Controller
     {
-        ecartdbContainer db = new ecartdbContainer();
+        StoreMgr storeMgr = new StoreMgr();
 
         public ActionResult Index()
         {
@@ -41,23 +42,20 @@ namespace eCart.Controllers
             return View();
         }
 
-
         // PartialView for Store List View
         public PartialViewResult _StoreList()
         {
-            //take latest added stores
-            var stores = db.StoreDetails.OrderByDescending(s => s.Id).Take(4);
+            var featuredStores = storeMgr.getFeaturedStores();
 
-            return PartialView(stores.ToList());
+            return PartialView(featuredStores);
         }
 
         // PartialView for Store List View
         public PartialViewResult _ProductList()
         {
-            //take latest added items
-            var stores = db.StoreItems.OrderByDescending(s => s.Id).Take(10);
+            var featuredItems = storeMgr.getFeaturedItems();
 
-            return PartialView(stores.ToList());
+            return PartialView(featuredItems);
         }
 
     }

@@ -1,8 +1,8 @@
-﻿@model IEnumerable<eCart.Models.StoreItem>
+﻿@model IEnumerable<eCart.Models.ItemMaster>
 
 <div class="row">
      <div class="col-sm-12">
-        <h3> Items List </h3>
+         <h3> Featured Items </h3>
     </div>
     @foreach (var item in Model)
     {
@@ -10,8 +10,8 @@
      <div class="col-sm-2 item-list">
         <img src="~/img/placeholders/placeholder-images-product-2.png" />
         <div class="item-desc">
-            <h4> @item.ItemMaster.Name </h4>
-            <b class="text-success"> Price : @item.UnitPrice </b>
+            <h4> @item.Name </h4>
+            @Html.ActionLink("View Products", "Products", "Merchant", new { area = "", id = item.Id }, null)
         </div>
      </div>
 
@@ -19,4 +19,3 @@
 
 </div>
 
-<hr />
