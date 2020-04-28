@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/27/2020 11:38:51
+-- Date Created: 04/28/2020 13:32:43
 -- Generated from EDMX file: D:\Projects\eCart20\eCart\Models\ecartdb.edmx
 -- --------------------------------------------------
 
@@ -95,6 +95,24 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_StorePickupStatusStorePickupPoint]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[StorePickupPoints] DROP CONSTRAINT [FK_StorePickupStatusStorePickupPoint];
 GO
+IF OBJECT_ID(N'[dbo].[FK_CartDetailCartDelivery]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartDeliveries] DROP CONSTRAINT [FK_CartDetailCartDelivery];
+GO
+IF OBJECT_ID(N'[dbo].[FK_RiderStatusRiderDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[RiderDetails] DROP CONSTRAINT [FK_RiderStatusRiderDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_MasterCityRiderDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[RiderDetails] DROP CONSTRAINT [FK_MasterCityRiderDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_RiderDetailCartDelivery]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartDeliveries] DROP CONSTRAINT [FK_RiderDetailCartDelivery];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CartDeliveryCartDeliveryActivity]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartActivities] DROP CONSTRAINT [FK_CartDeliveryCartDeliveryActivity];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CartActivityTypeCartActivity]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartActivities] DROP CONSTRAINT [FK_CartActivityTypeCartActivity];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -159,6 +177,21 @@ IF OBJECT_ID(N'[dbo].[StorePickupPartners]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[StorePickupStatus]', 'U') IS NOT NULL
     DROP TABLE [dbo].[StorePickupStatus];
+GO
+IF OBJECT_ID(N'[dbo].[CartDeliveries]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CartDeliveries];
+GO
+IF OBJECT_ID(N'[dbo].[RiderDetails]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[RiderDetails];
+GO
+IF OBJECT_ID(N'[dbo].[RiderStatus]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[RiderStatus];
+GO
+IF OBJECT_ID(N'[dbo].[CartActivities]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CartActivities];
+GO
+IF OBJECT_ID(N'[dbo].[CartActivityTypes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CartActivityTypes];
 GO
 
 -- --------------------------------------------------
@@ -364,7 +397,8 @@ CREATE TABLE [dbo].[RiderDetails] (
     [Mobile] nvarchar(20)  NOT NULL,
     [Remarks] nvarchar(180)  NULL,
     [RiderStatusId] int  NOT NULL,
-    [MasterCityId] int  NOT NULL
+    [MasterCityId] int  NOT NULL,
+    [Mobile2] nvarchar(20)  NULL
 );
 GO
 

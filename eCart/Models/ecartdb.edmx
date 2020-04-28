@@ -362,6 +362,7 @@
     <Property Name="Remarks" Type="nvarchar" Nullable="true" MaxLength="180" />
     <Property Name="RiderStatusId" Type="int" Nullable="false" />
     <Property Name="MasterCityId" Type="int" Nullable="false" />
+    <Property Name="Mobile2" Type="nvarchar" Nullable="true" MaxLength="20" />
   </EntityType>
   <EntityType Name="RiderStatus">
     <Key>
@@ -1516,6 +1517,7 @@
           <NavigationProperty Name="MasterCity" Relationship="ecartdb.MasterCityRiderDetail" FromRole="RiderDetail" ToRole="MasterCity" />
           <Property Name="MasterCityId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CartDeliveries" Relationship="ecartdb.RiderDetailCartDelivery" FromRole="RiderDetail" ToRole="CartDelivery" />
+          <Property Name="Mobile2" Type="String" Nullable="true" MaxLength="20" />
         </EntityType>
         <EntityType Name="RiderStatus">
           <Key>
@@ -1833,6 +1835,7 @@
           <ScalarProperty Name="Remarks" ColumnName="Remarks" />
           <ScalarProperty Name="RiderStatusId" ColumnName="RiderStatusId" />
           <ScalarProperty Name="MasterCityId" ColumnName="MasterCityId" />
+          <ScalarProperty Name="Mobile2" ColumnName="Mobile2" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

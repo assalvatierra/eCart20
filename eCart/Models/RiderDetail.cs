@@ -28,6 +28,7 @@ namespace eCart.Models
         public string Remarks { get; set; }
         public int RiderStatusId { get; set; }
         public int MasterCityId { get; set; }
+        public string Mobile2 { get; set; }
     
         public virtual RiderStatus RiderStatu { get; set; }
         public virtual MasterCity MasterCity { get; set; }

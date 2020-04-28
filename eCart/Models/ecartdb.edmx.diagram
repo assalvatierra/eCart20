@@ -4,14 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8cd14a5799894a709cfb67a00cf48bfa" Name="Diagram1" ZoomLevel="88" >
+      <Diagram DiagramId="8cd14a5799894a709cfb67a00cf48bfa" Name="Diagram1" ZoomLevel="76" >
         <EntityTypeShape EntityType="ecartdb.UserDetail" Width="1.5" PointX="5.625" PointY="3.5" />
         <EntityTypeShape EntityType="ecartdb.StoreDetail" Width="1.5" PointX="5.625" PointY="8.75" />
         <EntityTypeShape EntityType="ecartdb.UserStatus" Width="1.5" PointX="2.875" PointY="3.25" />
         <AssociationConnector Association="ecartdb.UserStatusUserDetail" />
-        <EntityTypeShape EntityType="ecartdb.StoreStatus" Width="1.5" PointX="1.25" PointY="10.625" />
+        <EntityTypeShape EntityType="ecartdb.StoreStatus" Width="1.5" PointX="1.25" PointY="10.75" />
         <AssociationConnector Association="ecartdb.StoreStatusStoreDetail" />
-        <EntityTypeShape EntityType="ecartdb.StoreCategory" Width="1.5" PointX="3.375" PointY="10.125" />
+        <EntityTypeShape EntityType="ecartdb.StoreCategory" Width="1.5" PointX="3.375" PointY="10" />
         <AssociationConnector Association="ecartdb.StoreCategoryStoreDetail" />
         <EntityTypeShape EntityType="ecartdb.MasterCity" Width="1.5" PointX="0.5" PointY="4" />
         <EntityTypeShape EntityType="ecartdb.MasterArea" Width="1.5" PointX="1.625" PointY="7.25" />
