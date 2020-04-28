@@ -96,7 +96,7 @@ namespace eCart.Areas.Store.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(storeItem).State = EntityState.Modified;
+                db.Entry(storeItem).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

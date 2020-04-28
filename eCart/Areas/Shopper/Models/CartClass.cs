@@ -14,7 +14,7 @@ namespace eCart.Areas.Shopper.Models
         public decimal Price { get; set; }
     }
 
-    public class CartClass
+    public class CartClass 
     {
        
     }

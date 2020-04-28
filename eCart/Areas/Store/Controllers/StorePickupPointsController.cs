@@ -90,7 +90,7 @@ namespace eCart.Areas.Store.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(storePickupPoint).State = EntityState.Modified;
+                db.Entry(storePickupPoint).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

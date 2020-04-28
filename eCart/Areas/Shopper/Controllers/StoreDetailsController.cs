@@ -13,7 +13,7 @@ namespace eCart.Areas.Shopper.Controllers
 {
     public class StoreDetailsController : Controller
     {
-        private ShopperContext db = new ShopperContext();
+        private ecartdbContainer db = new ecartdbContainer();
 
         // GET: Shopper/StoreDetails
         public ActionResult Index()

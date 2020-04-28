@@ -8,12 +8,14 @@ using System.Web;
 using System.Web.Mvc;
 using eCart.Areas.Shopper.Models;
 using eCart.Models;
+using eCart.Services;
 
 namespace eCart.Areas.Shopper.Controllers
 {
     public class CartDetailsController : Controller
     {
         private ecartdbContainer db = new ecartdbContainer();
+        private CartMgr cartMgr = new CartMgr();
 
         // GET: Shopper/CartDetails
         public ActionResult Index()
@@ -144,60 +146,22 @@ namespace eCart.Areas.Shopper.Controllers
 
         public ActionResult Cart()
         {
-
-            List<cCart> carts = (List<cCart>)Session["MYCART"] ?? new List<cCart>();
-
-            //transfer cCart to cartItems 
-            List<CartItem> cartItems = new List<CartItem>();
-            CreateCartDetail();
-
-            var order = 1;
-            foreach (var item in carts)
-            {
-                var storeItem = db.StoreItems.Find(item.Id);
-
-                cartItems.Add(new CartItem
-                {
-                    CartDetail = CreateCartDetail(),
-                    StoreItem = storeItem,
-                    ItemQty = item.Qty,
-                    ItemOrder = order.ToString(),
-                    CartItemStatusId = 1,
-                    Remarks1 = "",
-                    Remarks2 = ""
-
-                });
-            }
-            return View(cartItems);
+            var cartSummary = cartMgr.getCartSummary();
+            return View(cartSummary);
         }
 
         public PartialViewResult _CartSummary()
         {
-            List<cCart> cartItems = (List<cCart>)Session["MYCART"] ?? new List<cCart>();
-
+            var cartItems = cartMgr.getCartItems();
+           
             return PartialView(cartItems);
         }
 
-        public CartDetail CreateCartDetail()
-        {
-          
-                CartDetail cartDetails = new CartDetail
-                {
-                    UserDetailId = 1,
-                    StoreDetailId = 1,
-                    CartStatusId = 1,
-                    StorePickupPointId = 1
-                };
-
-                return cartDetails;
        
-
-        }
-
         [HttpGet]
         public JsonResult getSession()
         {
-            List<cCart> cartItems = (List<cCart>)Session["MYCART"] ?? new List<cCart>();
+            var cartItems = cartMgr.getCartItems();
             return Json(cartItems, JsonRequestBehavior.AllowGet);
         }
        
@@ -206,26 +170,7 @@ namespace eCart.Areas.Shopper.Controllers
         {
             try
             {
-                List<cCart> cartItems = (List<cCart>)Session["MYCART"] ?? new List<cCart>();
-
-                //CartItem cart = new CartItem();
-                //cart.CartDetailId = 1;
-                //cart.StoreItemId = id;
-                //cart.ItemQty = qty;
-                //cart.ItemOrder = "1";
-                //cart.CartItemStatusId = 1;
-                //cart.Remarks1 = "";
-                //cart.Remarks2 = "";
-
-                cCart cart = new cCart {
-                Id = id,
-                Qty = qty,
-                Name = itemName,
-                Price = itemPrice
-                };
-
-
-                cartItems.Add(cart);
+                cartMgr.addItemToCart(id, qty, itemName, itemPrice);
 
                 return "1";
             }catch (Exception ex)
@@ -234,6 +179,20 @@ namespace eCart.Areas.Shopper.Controllers
             }
         }
 
-       
+        [HttpPost]
+        public string RemoveCartItem(int id)
+        {
+            try
+            {
+                cartMgr.removeCartItem(id);
+
+                return "1";
+            }catch(Exception ex)
+            {
+                return ex.ToString();
+            }
+
+        }
+
     }
 }

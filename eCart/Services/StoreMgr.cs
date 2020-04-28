@@ -30,7 +30,7 @@ namespace eCart.Services
             try
             {
                 //take latest added items
-                var items = db.StoreItems.OrderByDescending(s => s.Id).Take(10);
+                var items = db.StoreItems.OrderByDescending(s => s.Id).Take(12);
 
                 return items.ToList();
             }
