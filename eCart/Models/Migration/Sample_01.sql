@@ -8,7 +8,7 @@ values	(1, 'NCCC Centerpoint', 'Matina Crossing, Davao City','', 1, 3, 1, 1),
 
 -- item Master --
 insert into ItemMasters([Name])
-values	('Loaf Bread'), ('Rice'), ('Sardines'), ('Chicken'), ('Beef'), ('Pork'), ('CornBeef Canned'), ('Cenutry Tuna Canned'), ('Milk'), ('Coca-Cola 1 Liter'),
+values	('Loaf Bread'), ('Rice 5 kilos'), ('Sardines'), ('Chicken'), ('Beef'), ('Pork'), ('CornBeef Canned'), ('Cenutry Tuna Canned'), ('Milk'), ('Coca-Cola 1 Liter'),
 		('Colgate TootPaste'),('Safguard Soap'),('Clear Shampoo'),('Clear Shampoo'),('Clear Shampoo');
 
 -- create items for store --

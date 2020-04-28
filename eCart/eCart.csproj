@@ -145,6 +145,7 @@
     <Compile Include="Areas\Shopper\Controllers\StoreDetailsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\StoreItemsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\UserDetailsController.cs" />
+    <Compile Include="Areas\Shopper\Models\CartClass.cs" />
     <Compile Include="Areas\Shopper\Models\ShopperContext.cs" />
     <Compile Include="Areas\Shopper\ShopperAreaRegistration.cs" />
     <Compile Include="Areas\Store\Controllers\AccountsController.cs" />

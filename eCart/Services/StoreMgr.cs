@@ -8,7 +8,7 @@ namespace eCart.Services
 {
     public class StoreMgr : Interfaces.iStoreMgr    
     {
-        public ecartdbContainer db = new ecartdbContainer();
+       public ecartdbContainer db = new ecartdbContainer();
 
        public List<Models.StoreDetail> getFeaturedStores()
         {
@@ -25,12 +25,12 @@ namespace eCart.Services
             }
         }
 
-        public List<Models.ItemMaster> getFeaturedItems()
+        public List<Models.StoreItem> getFeaturedItems()
         {
             try
             {
                 //take latest added items
-                var items = db.ItemMasters.OrderByDescending(s => s.Id).Take(10);
+                var items = db.StoreItems.OrderByDescending(s => s.Id).Take(10);
 
                 return items.ToList();
             }

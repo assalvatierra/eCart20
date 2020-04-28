@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<eCart.Models.CartItem>
 @{
     ViewBag.Title = "Cart";
 }
@@ -30,16 +30,25 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>
-                        <img src="~/img/placeholders/placeholder-images-product-2.png" width="50" class="img-thumbnail bordered" />
-                        <b>Item Name</b>
-                        <span class="text-muted"> - Item Description </span>
-                    </td>
-                    <td> 1 </td>
-                    <td> 500 </td>
-                    <td> 500 </td>
-                </tr>
+                <!-- Cart Items -->
+                @foreach (var item in Model)
+                {
+                    var qty = item.ItemQty;
+                    var unitprice = item.StoreItem.UnitPrice ;
+                    var total = qty * unitprice;
+                    <tr>
+                        <td>
+                            <img src="~/img/placeholders/placeholder-images-product-2.png" width="50" class="img-thumbnail bordered" />
+                            <b> @item.StoreItem.ItemMaster.Name </b>
+                            <span class="text-muted"> - @item.Remarks1 </span>
+                        </td>
+                        <td> @item.ItemQty </td>
+                        <td> @item.StoreItem.UnitPrice.ToString("0.00") </td>
+                        <td> @total </td>
+                    </tr>
+                }
+
+
                 <!-- Total -->
                 <tr>
                 </tr>

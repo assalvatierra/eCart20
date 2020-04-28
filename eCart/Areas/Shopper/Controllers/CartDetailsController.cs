@@ -13,7 +13,7 @@ namespace eCart.Areas.Shopper.Controllers
 {
     public class CartDetailsController : Controller
     {
-        private ShopperContext db = new ShopperContext();
+        private ecartdbContainer db = new ecartdbContainer();
 
         // GET: Shopper/CartDetails
         public ActionResult Index()
@@ -144,35 +144,94 @@ namespace eCart.Areas.Shopper.Controllers
 
         public ActionResult Cart()
         {
-            return View();
-        }
 
-        public string CreateCart()
-        {
-            CartDetail cartDetail = new CartDetail();
-            cartDetail.StoreDetailId = 0;
-            cartDetail.UserDetailId = 1;  // admin
-            cartDetail.CartStatusId = 1;  // active
+            List<cCart> carts = (List<cCart>)Session["MYCART"] ?? new List<cCart>();
 
-            db.CartDetails.Add(cartDetail);
-            db.SaveChanges();
+            //transfer cCart to cartItems 
+            List<CartItem> cartItems = new List<CartItem>();
+            CreateCartDetail();
 
-            Session["CARTID"] = cartDetail.Id;
+            var order = 1;
+            foreach (var item in carts)
+            {
+                var storeItem = db.StoreItems.Find(item.Id);
 
-            return "Cart Created";
+                cartItems.Add(new CartItem
+                {
+                    CartDetail = CreateCartDetail(),
+                    StoreItem = storeItem,
+                    ItemQty = item.Qty,
+                    ItemOrder = order.ToString(),
+                    CartItemStatusId = 1,
+                    Remarks1 = "",
+                    Remarks2 = ""
+
+                });
+            }
+            return View(cartItems);
         }
 
         public PartialViewResult _CartSummary()
         {
-            return PartialView();
+            List<cCart> cartItems = (List<cCart>)Session["MYCART"] ?? new List<cCart>();
+
+            return PartialView(cartItems);
         }
 
-
-        [HttpPost]
-        public string AddToCart(int id, int qty)
+        public CartDetail CreateCartDetail()
         {
+          
+                CartDetail cartDetails = new CartDetail
+                {
+                    UserDetailId = 1,
+                    StoreDetailId = 1,
+                    CartStatusId = 1,
+                    StorePickupPointId = 1
+                };
 
-            return "OK";
+                return cartDetails;
+       
+
+        }
+
+        [HttpGet]
+        public JsonResult getSession()
+        {
+            List<cCart> cartItems = (List<cCart>)Session["MYCART"] ?? new List<cCart>();
+            return Json(cartItems, JsonRequestBehavior.AllowGet);
+        }
+       
+        [HttpPost]
+        public string AddToCart(int id, int qty, string itemName, decimal itemPrice)
+        {
+            try
+            {
+                List<cCart> cartItems = (List<cCart>)Session["MYCART"] ?? new List<cCart>();
+
+                //CartItem cart = new CartItem();
+                //cart.CartDetailId = 1;
+                //cart.StoreItemId = id;
+                //cart.ItemQty = qty;
+                //cart.ItemOrder = "1";
+                //cart.CartItemStatusId = 1;
+                //cart.Remarks1 = "";
+                //cart.Remarks2 = "";
+
+                cCart cart = new cCart {
+                Id = id,
+                Qty = qty,
+                Name = itemName,
+                Price = itemPrice
+                };
+
+
+                cartItems.Add(cart);
+
+                return "1";
+            }catch (Exception ex)
+            {
+                return ex.ToString();
+            }
         }
 
        

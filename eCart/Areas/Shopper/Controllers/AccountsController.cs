@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eCart.Areas.Shopper.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -24,6 +25,7 @@ namespace eCart.Areas.Shopper.Controllers
         public ActionResult Login(string username, string password)
         {
            Session["USER"] = "Admin";   //For test only
+           CreateCart();
            return RedirectToAction("Index", "Home", new { area = "Shopper" });
 
         }
@@ -38,5 +40,22 @@ namespace eCart.Areas.Shopper.Controllers
         {
             return View();
         }
+
+        public string CreateCart()
+        {
+            //CartDetail cartDetail = new CartDetail();
+            //cartDetail.StoreDetailId = 0;
+            //cartDetail.UserDetailId = 1;  // admin
+            //cartDetail.CartStatusId = 1;  // active
+            //cartDetail.StorePickupPointId = 0;
+
+            //db.CartDetails.Add(cartDetail);
+            //db.SaveChanges();
+            List<cCart> cartItems = new List<cCart>();
+            Session["MYCART"] = (List<cCart>)cartItems;
+
+            return "Cart Created";
+        }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<eCart.Areas.Shopper.Models.cCart>
 @{
    var USER = Session["USER"] != null ? Session["USER"] : "" ;
  }
@@ -7,13 +7,37 @@
 {
     <div class="row">
         <hr />
-        <div class="cart-shopper-panel" style="padding:5px;margin-right:5px;" id="Cart-Summary">
+
+        <div class="cart-shopper-panel" id="Cart-Summary">
             <div class="col-sm-12">
                 <a href="/Shopper/CartDetails/Cart">
                     <b> <img src="~/img/store/shopping-cart-24.png"> Cart Summary : </b>
                 </a>
             </div>
+
+            @if (Model != null)
+            {
+
+                foreach (var item in Model)
+                { 
+
+                    <div class='col-sm-2 cart-item'>
+                        <img src='/img/placeholders/placeholder-product.png' width='35' class='col-sm-4 img-thumbnail'>
+                        <p class='col-sm-7'> <b>  @item.Name  </b> <br> Qty: @item.Qty  <br /> Price: @item.Price </p>
+                    </div>
+                }
+            }
+
         </div>
+
     </div>
+
 }
 <hr />
+<script>
+    function getJsonData() {
+        $.get('/Shopper/CartDetails/getSession', null, (data) => {
+            console.log(data);
+        })
+    }
+</script>

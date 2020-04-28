@@ -36,15 +36,17 @@ textarea {
 
 
 .item-list {
+    display:flex; 
+    flex-direction: column;
     width: 190px;
-    height: 285px;
+    height: 305px;
     padding: 7px;
     margin:2px;
 }
 
 .item-list img {
     width: 100% ;
-
+    flex: 1;
 }
 .item-list:hover {
     border: 1px solid lightgray;
@@ -83,6 +85,8 @@ textarea {
     box-shadow:0px;
     display:flex;
     flex-wrap:wrap;
+    margin:0px -20px;
+    padding:2px;
 }
 
 
@@ -98,7 +102,7 @@ textarea {
 }
 
 .cart-item{
-    margin:5px;
+    margin:5px 0px;
     padding:5px;
     border: 1px solid lightgray;
     border-radius:5px;
