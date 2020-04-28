@@ -39,6 +39,18 @@ namespace eCart.Services
 
         }
 
+        public void addCartItemToDb(CartItem cartItem)
+        {
+            try
+            {
+                db.CartItems.Add(cartItem);
+            }
+            catch (Exception)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         public int getCartInfo(int id)
         {
             throw new NotImplementedException();
@@ -63,7 +75,7 @@ namespace eCart.Services
 
                 cartItems.Add(new CartItem
                 {
-                    CartDetail = CreateCartDetail(),
+                    //CartDetail = CreateCartDetail(storeItem.StoreDetailId),
                     StoreItemId = item.Id,
                     StoreItem = storeItem,
                     ItemQty = item.Qty,
@@ -79,19 +91,41 @@ namespace eCart.Services
             return cartItems;
         }
 
-        public CartDetail CreateCartDetail()
+        public List<CartDetail> getCartDetailsSummary(List<CartItem> cartItems)
+        {
+            List<CartDetail> cartDetail = new List<CartDetail>();
+
+            var groupedCartItems = cartItems.GroupBy(s => s.StoreItem.StoreDetail.Id);
+
+            foreach (var group in groupedCartItems)
+            {
+                //create CartDetails for current group
+                var tempCartDetail = CreateCartDetail(group.Key); //KEY = StoredDetail.Id
+                cartDetail.Add(tempCartDetail);
+
+                foreach (var item in group)
+                {
+                    item.CartDetail = tempCartDetail;   //assign CartDetail to the cartItem
+                }
+            }
+
+            return cartDetail;
+        }
+
+
+        //create a new cart per store
+        public CartDetail CreateCartDetail(int storeId)
         {
             CartDetail cartDetails = new CartDetail
             {
-                UserDetailId = 1,
-                StoreDetailId = 1,
-                CartStatusId = 1,
-                StorePickupPointId = 1
+                UserDetailId = 1,               //TODO: change to USERID
+                StoreDetailId = storeId,        
+                CartStatusId = 1,               //default: active
+                StorePickupPointId = 1  
             };
 
             return cartDetails;
         }
-
 
         public void removeCartItem(int id)
         {
@@ -104,6 +138,21 @@ namespace eCart.Services
             catch (Exception)
             {
                 throw new NotImplementedException();
+            }
+        }
+
+        public void saveOrder(List<CartDetail> cartDetails, List<CartItem> cartItems)
+        {
+            try
+            {
+                foreach(var cart in cartDetails)
+                {
+                    //TODO : Add CartDetails save to DB
+                }
+            }
+            catch (Exception)
+            {
+                throw new NotSupportedException();
             }
         }
     }

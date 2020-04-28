@@ -23,6 +23,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <td></td>
                     <td> <b>Item Description</b> </td>
                     <td> Qty </td>
                     <td> Price per Item</td>
@@ -32,13 +33,22 @@
             <tbody>
                 @{  decimal totalPrice = 0; }
                 <!-- Cart Items -->
-                @foreach (var item in Model)
+                @foreach (var group in Model.GroupBy(s=>s.StoreItem.StoreDetail.Name))
                 {
+                    <tr>
+                        <td colspan="6">
+                          <b>@group.Key</b>
+                        </td>
+                    </tr>
+                    foreach (var item in group)
+                    {
+
                     var qty = item.ItemQty;
                     var unitprice = item.StoreItem.UnitPrice ;
                     var subtotal = qty * unitprice;
-                    totalPrice += subtotal; 
+                    totalPrice += subtotal;
                     <tr>
+                        <td></td>
                         <td>
                             <img src="~/img/placeholders/placeholder-images-product-2.png" width="50" class="img-thumbnail bordered" />
                             <b> @item.StoreItem.ItemMaster.Name </b>
@@ -49,13 +59,14 @@
                         <td> <b>Php @subtotal.ToString("0.00")</b> </td>
                         <td width="20"> <div class="cart-summary-remove-item" onclick="RemoveItem(this, '@item.StoreItemId', '@subtotal')"> &#10006 </div></td>
                     </tr>
+                    }
                 }
 
 
                 <!-- Total -->
                 <tr>
-                    <td colspan="3">
-                        <h4 class="pull-right">Total Price</h4>
+                    <td colspan="4">
+                        <h4 class="pull-right">Total </h4>
                     </td>
                     <td>
                         <h4 class="text-success" > Php <span id="Total-Price"> @totalPrice.ToString("0.00") </span></h4>
