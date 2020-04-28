@@ -64,6 +64,7 @@ namespace eCart.Services
                 cartItems.Add(new CartItem
                 {
                     CartDetail = CreateCartDetail(),
+                    StoreItemId = item.Id,
                     StoreItem = storeItem,
                     ItemQty = item.Qty,
                     ItemOrder = order.ToString(),
@@ -94,12 +95,16 @@ namespace eCart.Services
 
         public void removeCartItem(int id)
         {
-            var cartItems = getCartItems();
-            var selectedItem = cartItems.Find(s => s.Id == id);
-
-            cartItems.Remove(selectedItem);
-
-            throw new NotImplementedException();
+            try
+            {
+                var cartItems = getCartItems();
+                var selectedItem = cartItems.Find(s => s.Id == id);
+                cartItems.Remove(selectedItem);
+            }
+            catch (Exception)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

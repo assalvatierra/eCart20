@@ -41,8 +41,9 @@ function AddtoCart_Submit(e, itemId, itemName, price) {
             //add item to cart
             cartItem = "<div class='col-sm-2 cart-item'> " +
                 "<img src='/img/placeholders/placeholder-product.png' width='35' class='col-sm-4 img-thumbnail' >" +
-                "<p class='col-sm-7'> <b> " + itemName + "</b> <br> Qty:" + qty + " </br>" +
-                "<span class='text-success'> Price: " + totalPrice + " </span> </p>"
+                "<p class='col-sm-7'> <b> " + itemName + "</b> <br> Qty:" + qty + "  &nbsp;&nbsp;&nbsp; " +
+                "<span class='text-success'> Price: " + totalPrice + " </span> </p>"+
+                "<div><span class='cart-remove-item' onclick='RemoveItem(this,"+ itemId +")'> x </span></div>"+
                 "</div>";
             $("#Cart-Summary").append(cartItem);
         }
@@ -51,4 +52,17 @@ function AddtoCart_Submit(e, itemId, itemName, price) {
     //Show buttons
     $(e).parent().siblings().removeClass('hidden');   //show Add Cart Button
     $(e).parent().addClass('hidden');      //hide add cart button
+}
+
+function RemoveItem(e,Id) {
+
+    var data = {
+        id: Id
+    }
+
+    $.post('/Shopper/CartDetails/RemoveCartItem', data, (response) => {
+        console.log(response);
+    });
+
+    $(e).parent().parent().remove();
 }

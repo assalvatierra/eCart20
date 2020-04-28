@@ -6,17 +6,17 @@
 <h2>Cart Page</h2>
 
 <div>
-    @Html.ActionLink("Go to Main Page", "Index","Home", new { area = ""}, null)
+    @Html.ActionLink("Go to Main Page", "Index", "Home", new { area = "" }, null)
 </div>
 
-<div class="panel">
+<div class="container-panel">
     <h4> Shopper Details </h4>
-    <p> Name:  </p>
-    <p> Address:  </p>
+    <p> Name: <b>Guest User</b> </p>
+    <p> Address: <b> Davao City </b> </p>
     <p> Contact No.:  </p>
 </div>
 
-<div class="panel">
+<div class="container-panel">
     <h4> Cart Items </h4>
 
     <div>
@@ -30,40 +30,77 @@
                 </tr>
             </thead>
             <tbody>
+                @{  decimal totalPrice = 0; }
                 <!-- Cart Items -->
                 @foreach (var item in Model)
                 {
                     var qty = item.ItemQty;
                     var unitprice = item.StoreItem.UnitPrice ;
-                    var total = qty * unitprice;
+                    var subtotal = qty * unitprice;
+                    totalPrice += subtotal; 
                     <tr>
                         <td>
                             <img src="~/img/placeholders/placeholder-images-product-2.png" width="50" class="img-thumbnail bordered" />
                             <b> @item.StoreItem.ItemMaster.Name </b>
-                            <span class="text-muted"> - @item.Remarks1 </span>
+                            <span class="text-muted">  @item.Remarks1 </span>
                         </td>
                         <td> @item.ItemQty </td>
                         <td> @item.StoreItem.UnitPrice.ToString("0.00") </td>
-                        <td> @total </td>
+                        <td> <b>Php @subtotal.ToString("0.00")</b> </td>
+                        <td width="20"> <div class="cart-summary-remove-item" onclick="RemoveItem(this, '@item.StoreItemId', '@subtotal')"> &#10006 </div></td>
                     </tr>
                 }
 
 
                 <!-- Total -->
                 <tr>
+                    <td colspan="3">
+                        <h4 class="pull-right">Total Price</h4>
+                    </td>
+                    <td>
+                        <h4 class="text-success" > Php <span id="Total-Price"> @totalPrice.ToString("0.00") </span></h4>
+                    </td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
-        <div class="col-lg-offset-10">
-
-            <button class="btn btn-primary"> Submit Order</button>
-        </div>
     </div>
 </div>
 
-<div class="panel" style="padding:10px 20px;">
+<div class="container-panel" >
     <h4> Pickup Details </h4>
     <p> <b> Pickup Location and Time </b> </p>
 </div>
 
+<div>
+    <div class="col-lg-offset-10">
 
+        <button class="btn btn-primary" style="width:100%;">  Submit Order</button>
+    </div>
+</div>
+
+<br />
+<script src="~/Scripts/Cart/cart.js"> </script>
+<script>
+
+
+    function RemoveItem(e, Id, subtotal) {
+        var data = {
+            id: Id
+        }
+
+        $.post('/Shopper/CartDetails/RemoveCartItem', data, (response) => {
+            console.log(response);
+            UpdatePrice(subtotal)
+        });
+
+        $(e).parent().parent().remove();
+    }
+
+
+    function UpdatePrice(removedsubtotal) {
+        var totalPrice = parseFloat($('#Total-Price').text());
+        totalPrice -= removedsubtotal;
+        $('#Total-Price').text(totalPrice.toLocaleString('en-US', { minimumFractionDigits: 2 }));
+    }
+</script>

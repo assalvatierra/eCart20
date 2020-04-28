@@ -23,7 +23,8 @@
 
                     <div class='col-sm-2 cart-item'>
                         <img src='/img/placeholders/placeholder-product.png' width='35' class='col-sm-4 img-thumbnail'>
-                        <p class='col-sm-7'> <b>  @item.Name  </b> <br> Qty: @item.Qty  <br /> Price: @item.Price </p>
+                        <p class='col-sm-7'> <b>  @item.Name  </b> <br> Qty: @item.Qty   &nbsp; &nbsp;&nbsp; <span class="text-success"> Price: @item.Price </span> </p>
+                        <div> <span class="cart-remove-item" onclick="RemoveItem(this,'@item.Id')"> x </span></div>
                     </div>
                 }
             }

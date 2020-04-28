@@ -90,6 +90,7 @@ textarea {
 }
 
 
+
 .panel-carts {
     padding: 10px 20px;
     border: 1px solid lightgray;
@@ -102,7 +103,7 @@ textarea {
 }
 
 .cart-item{
-    margin:5px 0px;
+    margin:5px 2px;
     padding:5px;
     border: 1px solid lightgray;
     border-radius:5px;
@@ -117,8 +118,47 @@ textarea {
 .cart-item p {
     font-size:12px;
     padding: 1px;
-
 }
+
+.cart-remove-item {
+    position: absolute;
+    background-color:white;
+    border: 1px solid lightgray;
+    border-radius: 50%;
+    width: 20px;
+    height: 22px;
+    color: lightgray;
+    text-align: center;
+    top: -4px;
+    right: -4px;
+    cursor: pointer;
+    transition: 300ms;
+}
+
+.cart-remove-item:hover {
+    background-color: red;
+    border: 1px solid red;
+    color: white;
+    box-shadow: 0px 0px 1px 1px red;
+}
+
+.cart-summary-remove-item {
+    border-radius: 50%;
+    border: 1px solid whitesmoke;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 5px;
+    cursor: pointer;
+    transition: 200ms;
+    color: gray;
+}
+.cart-summary-remove-item:hover {
+    background-color: red;
+    border: 1px solid red;
+    color: white;
+}
+
 
 /* Shopper Styles */
 .panel {
@@ -127,4 +167,12 @@ textarea {
 
 .panel table tr td, .panel table tr th   {
     padding-left: 15px;
+}
+
+
+.container-panel {
+    padding: 10px 20px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    margin: 5px 0px;
 }
