@@ -421,6 +421,8 @@
     <NavigationProperty Name="StorePickupPoint" Relationship="ecartdb.StorePickupPointCartDetail" FromRole="CartDetail" ToRole="StorePickupPoint" />
     <Property Name="StorePickupPointId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="CartDeliveries" Relationship="ecartdb.CartDetailCartDelivery" FromRole="CartDetail" ToRole="CartDelivery" />
+    <Property Name="DtPickup" Type="DateTime" Nullable="false" />
+    <Property Name="DeliveryType" Type="String" Nullable="false" MaxLength="10" />
   </EntityType>
   <Association Name="UserDetailCartDetail">
     <End Type="ecartdb.UserDetail" Role="UserDetail" Multiplicity="1" />
@@ -741,6 +743,7 @@
     <NavigationProperty Name="MasterCity" Relationship="ecartdb.MasterCityRiderDetail" FromRole="RiderDetail" ToRole="MasterCity" />
     <Property Name="MasterCityId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="CartDeliveries" Relationship="ecartdb.RiderDetailCartDelivery" FromRole="RiderDetail" ToRole="CartDelivery" />
+    <Property Name="Mobile2" Type="String" Nullable="true" MaxLength="20" />
   </EntityType>
   <EntityType Name="RiderStatus">
     <Key>

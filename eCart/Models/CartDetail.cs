@@ -27,6 +27,8 @@ namespace eCart.Models
         public int StoreDetailId { get; set; }
         public int CartStatusId { get; set; }
         public int StorePickupPointId { get; set; }
+        public System.DateTime DtPickup { get; set; }
+        public string DeliveryType { get; set; }
     
         public virtual UserDetail UserDetail { get; set; }
         public virtual StoreDetail StoreDetail { get; set; }

@@ -13,5 +13,7 @@ namespace eCart.Interfaces
         List<Models.StoreItem> getStoreItems(int id);
         Models.StoreDetail  getStoreDetails(int id);
 
+        //add getdefault store pickuppoint
+        //Models.StorePickupPoint getDefaultPickupPoint(int StoreId);
     }
 }
