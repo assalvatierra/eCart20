@@ -157,7 +157,28 @@ namespace eCart.Areas.Shopper.Controllers
             return PartialView(cartItems);
         }
 
-       
+        public PartialViewResult CartCheckout()
+        {
+            var cartItems = cartMgr.getCartSummary();
+            var cartDetails = cartMgr.getCartDetailsSummary(cartItems);
+
+            //Add Items to each Cart with the same cartDetails Id
+            cartDetails.ForEach(c => {
+                cartItems.ForEach(i => {
+                    if(c.StoreDetail.Id == i.StoreItem.StoreDetail.Id)
+                    {
+                        i.CartDetailId = c.Id;
+                        i.CartDetail = c;
+
+                        c.CartItems.Add(i);
+                    }
+                });
+            });
+
+            return PartialView(cartDetails);
+        }
+
+
         [HttpGet]
         public JsonResult getSession()
         {
@@ -191,8 +212,34 @@ namespace eCart.Areas.Shopper.Controllers
             {
                 return ex.ToString();
             }
-
         }
 
+        public string SubmitOrder()
+        {
+            var cartItems = cartMgr.getCartSummary();
+            var cartDetails = cartMgr.getCartDetailsSummary(cartItems);
+
+            var msg = cartMgr.saveOrder(cartDetails, cartItems);
+
+            return msg;
+        }
+
+        [HttpGet]
+        public JsonResult GetStorePickups(int storeId)
+        {
+
+            var locations = cartMgr.GetStorePickupPoints(storeId).Select(s => new { s.Id, s.Address });
+
+            return Json(locations, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetStorePickupAddress(int id)
+        {
+
+            var location = cartMgr.GetStorePickup(id).Address;
+
+            return Json(location, JsonRequestBehavior.AllowGet);
+        }
     }
 }

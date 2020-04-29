@@ -162,7 +162,7 @@ textarea {
 
 /* Shopper Styles */
 .panel {
-    padding: 5px 0px;
+    padding: 0px 0px;
 }
 
 .panel table tr td, .panel table tr th   {
@@ -175,4 +175,20 @@ textarea {
     border: 1px solid lightgray;
     border-radius: 10px;
     margin: 5px 0px;
+}
+
+
+/* Summary Cart */
+.cart-summary-store {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.cart-summary-pickup {
+    padding: 2%;
+    color: gray;
+    flex: 1;
 }

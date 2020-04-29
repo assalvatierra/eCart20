@@ -27,7 +27,7 @@
                     @if (Session["USER"] != null)
                     {
                         <li>@Html.ActionLink(" Hi " + Session["USER"], "Login", "Accounts", new { area = "Shopper" }, null)</li>
-                        <li>@Html.ActionLink("MyCart", "Cart", "CartDetails", new { area = "Shopper" }, null)</li>
+                        <li>@Html.ActionLink("MyCart", "CartCheckout", "CartDetails", new { area = "Shopper" }, null)</li>
                         <li>@Html.ActionLink("Log-out", "Login", "Accounts", new { area = "Shopper" }, null)</li>
                     }
                     else

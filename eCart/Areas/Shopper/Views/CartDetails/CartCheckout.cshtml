@@ -1,6 +1,7 @@
-﻿@model IEnumerable<eCart.Models.CartItem>
+﻿@model IEnumerable<eCart.Models.CartDetail>
 @{
-    ViewBag.Title = "Cart";
+    ViewBag.Title = "Cart Checkout";
+    Layout = "~/Areas/Shopper/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Cart Page</h2>
@@ -19,22 +20,22 @@
 </div>
 
 @{ decimal totalAmount = 0; }
-
-@foreach (var group in Model.GroupBy(s => s.StoreItem.StoreDetail.Name))
+@foreach (var cart in Model)
 {
-    decimal subtotalAmount = 0; 
+    decimal subtotalAmount = 0;
     <div class="panel bordered">
         <div class="panel-body">
             <div class="cart-summary-store">
                 <div>
-                    <h3> @group.Key </h3>
+                    <h3> @cart.StoreDetail.Name </h3>
                 </div>
-                <div class="cart-summary-pickup" >
-                    <span>
-                        Pick up Location
-                    </span>
+                <div class="cart-summary-pickup">
+                    <span> Pickup Point: </span>
+                    <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.StoreDetail.Id')" id="pickupAddress-@cart.StoreDetail.Id" value="@cart.StorePickupPoint.Id">
+                        @cart.StorePickupPoint.Address
+                    </a>
                 </div>
-            </div> 
+            </div>
             <table class="table">
                 <thead>
                     <tr>
@@ -45,7 +46,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in group)
+                    @foreach (var item in cart.CartItems)
                     {
                         var qty = item.ItemQty;
                         var unitprice = item.StoreItem.UnitPrice;
@@ -71,7 +72,7 @@
                 <h4> Amount: <b class="text-success"> Php @subtotalAmount.ToString("0.00") </b> </h4>
             </div>
             <div class="col-lg-2">
-                <a href="@Url.Action("SubmitOrder", new { id = group.Key })" class="btn btn-primary" style="width:100%;">
+                <a href="@Url.Action("SubmitOrder", new { id = cart.Id })" class="btn btn-primary" style="width:100%;">
                     Checkout
                 </a>
             </div>
@@ -81,7 +82,7 @@
 }
 
 
-<div class="panel bordered" style="margin:0px;"> 
+<div class="panel bordered" style="margin:0px;">
     <div class="panel-body">
         <div class="col-lg-10">
             <h3> Total Amount: <b class="text-success"> Php @totalAmount.ToString("0.00")</b> </h3>
@@ -95,6 +96,11 @@
 </div>
 
 <br />
+
+
+@Html.Partial("_ModalPickupEdit");
+
+
 <script src="~/Scripts/Cart/cart.js"></script>
 <script>
     function RemoveItem(e, Id, subtotal) {
