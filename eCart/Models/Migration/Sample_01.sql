@@ -2,14 +2,31 @@
 
 -- create stores --
 insert into StoreDetails([LoginId],[Name],[Address],[Remarks],[StoreStatusId],[StoreCategoryId],[MasterCityId],[MasterAreaId]) 
-values	(1, 'NCCC Centerpoint', 'Matina Crossing, Davao City','', 1, 3, 1, 1),
-		(2, 'SM SuperMarket', 'Ecoland, Davao City','', 1, 3, 1, 1),
-		(3, 'Gaisano Mall', 'Ecoland, Davao City','', 1, 3, 2, 1);
+values	(1, 'NCCC Mall', 'Matina Crossing, Davao City','', 1, 3, 1, 1),
+		(2, 'SM Mall', 'Ecoland, Davao City','', 1, 3, 1, 1),
+		(3, 'Gaisano Mall', 'Sta Ana, Davao City','', 1, 3, 2, 1);
+
+-- store pickup locations --
+insert into StorePickupPoints([StoreDetailId],[Address],[Remarks],[StorePickupStatusId])
+values  (1,'Matina Crossing, Davao City','NA',1),
+		(2,'Ecoland, Davao City','NA',1),
+		(3,'Sta Ana, Davao City','NA',1),
+		--second address --
+		(1,'Buhangin, Davao City','NA',1),	
+		(2,'Lanang, Davao City','NA',1),	
+		(3,'Toril, Davao City','NA',1);
+
+insert into StorePickupPartners([StorePickupPointId],[StoreDetailId])
+values	(1,1),(2,2),(3,3),
+		(4,1),(5,2),(6,3);
 
 -- item Master --
 insert into ItemMasters([Name])
 values	('Loaf Bread'), ('Rice 5 kilos'), ('Sardines'), ('Chicken'), ('Beef'), ('Pork'), ('CornBeef Canned'), ('Cenutry Tuna Canned'), ('Milk'), ('Coca-Cola 1 Liter'),
 		('Colgate TootPaste'),('Safguard Soap'),('Clear Shampoo'),('Clear Shampoo'),('Clear Shampoo');
+
+insert into ItemMasterCategories([ItemCategoryId],[ItemMasterId])
+values (14, 1),(14, 2),(3, 3),(14,4),(14,5),(14,6),(1,7),(4,8),(14,9),(5,10);
 
 -- create items for store --
 insert into StoreItems([ItemMasterId], [StoreDetailId], [UnitPrice]) 

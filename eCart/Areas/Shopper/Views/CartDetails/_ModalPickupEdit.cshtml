@@ -1,0 +1,78 @@
+﻿
+<!-- Change Pickup Location Modal -->
+<div id="pickupModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"> Select Pickup Location</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group" id="pickupLocList">
+
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"> </script>
+<script>
+    //TODO: get pickup Locations based on stores - ajax
+    var data = {
+        Id: 0,
+        Address: ''
+    };
+
+
+    function getPickupPoints(StoreId) {
+        $.getJSON("/Shopper/CartDetails/GetStorePickups", { storeId: StoreId }, (result) => {
+            $("#pickupLocList").children().remove();
+
+            for (var i = 0; i < result.length; i++) {
+          
+                 data = {
+                    Id: result[i]['Id'],
+                    Address: result[i]['Address']
+                 };
+
+                var location = "<li type='button' class='list-group-item btn btn-default' value='" + result[i]['Id'] + "'" +
+                    " onclick='updateLocation(" + StoreId + "," + result[i]['Id'] +")' >" + result[i]['Address'] + "</li>";
+                $("#pickupLocList").append(location);
+            }
+
+
+            var Delivery = "<li  type='button' class='list-group-item btn btn-default' value='0' onclick='updateAsDelivery(" + StoreId + ")' > Delivery </li>";
+            $("#pickupLocList").append(Delivery);
+        });
+
+
+    }
+
+    function updateLocation(storeId, id) {
+
+        $.getJSON('/Shopper/CartDetails/GetStorePickupAddress', { id: id }, (address) => {
+            console.log(address);
+            $("#pickupAddress-" + storeId).val(id);
+            $("#pickupAddress-" + storeId).text(address);
+            $("#pickupModal").modal('hide');
+        });
+
+        //$("#pickupAddress-" + storeId).val(pickup);
+        //$("#pickupAddress-" + storeId).text(pickup['Address']);
+    }
+
+    function updateAsDelivery(storeId) {
+        $("#pickupAddress-" + storeId).val(0);
+        $("#pickupAddress-" + storeId).text("Delivery");
+        $("#pickupModal").modal('hide');
+    }
+
+</script>

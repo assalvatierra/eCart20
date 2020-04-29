@@ -23,6 +23,11 @@ namespace eCart.Services
 
         }
 
+        public iCartMgr CartMgr
+        {
+            get { return this.cartmgr; }
+        }
+
 
     }
 }

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using eCart.Models;
 using eCart.Services;
+using eCart.Interfaces;
 
 namespace eCart.Controllers
 {
@@ -58,6 +59,8 @@ namespace eCart.Controllers
 
             return PartialView(featuredItems);
         }
+
+
 
     }
 }
