@@ -263,6 +263,8 @@
     <Property Name="StoreDetailId" Type="int" Nullable="false" />
     <Property Name="CartStatusId" Type="int" Nullable="false" />
     <Property Name="StorePickupPointId" Type="int" Nullable="false" />
+    <Property Name="DtPickup" Type="datetime" Nullable="false" />
+    <Property Name="DeliveryType" Type="nvarchar" Nullable="false" MaxLength="10" />
   </EntityType>
   <EntityType Name="CartItems">
     <Key>
@@ -357,6 +359,7 @@
     <Property Name="Remarks" Type="nvarchar" Nullable="true" MaxLength="180" />
     <Property Name="RiderStatusId" Type="int" Nullable="false" />
     <Property Name="MasterCityId" Type="int" Nullable="false" />
+    <Property Name="Mobile2" Type="nvarchar" Nullable="true" MaxLength="20" />
   </EntityType>
   <EntityType Name="RiderStatus">
     <Key>

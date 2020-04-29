@@ -268,6 +268,8 @@
     <Property Name="StoreDetailId" Type="int" Nullable="false" />
     <Property Name="CartStatusId" Type="int" Nullable="false" />
     <Property Name="StorePickupPointId" Type="int" Nullable="false" />
+    <Property Name="DtPickup" Type="datetime" Nullable="false" />
+    <Property Name="DeliveryType" Type="nvarchar" Nullable="false" MaxLength="10" />
   </EntityType>
   <EntityType Name="CartItems">
     <Key>
@@ -1197,6 +1199,8 @@
           <NavigationProperty Name="StorePickupPoint" Relationship="ecartdb.StorePickupPointCartDetail" FromRole="CartDetail" ToRole="StorePickupPoint" />
           <Property Name="StorePickupPointId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CartDeliveries" Relationship="ecartdb.CartDetailCartDelivery" FromRole="CartDetail" ToRole="CartDelivery" />
+          <Property Name="DtPickup" Type="DateTime" Nullable="false" />
+          <Property Name="DeliveryType" Type="String" Nullable="false" MaxLength="10" />
         </EntityType>
         <Association Name="UserDetailCartDetail">
           <End Type="ecartdb.UserDetail" Role="UserDetail" Multiplicity="1" />
@@ -1731,6 +1735,8 @@
           <ScalarProperty Name="StoreDetailId" ColumnName="StoreDetailId" />
           <ScalarProperty Name="CartStatusId" ColumnName="CartStatusId" />
           <ScalarProperty Name="StorePickupPointId" ColumnName="StorePickupPointId" />
+          <ScalarProperty Name="DtPickup" ColumnName="DtPickup" />
+          <ScalarProperty Name="DeliveryType" ColumnName="DeliveryType" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -119,6 +119,8 @@
           <ScalarProperty Name="StoreDetailId" ColumnName="StoreDetailId" />
           <ScalarProperty Name="CartStatusId" ColumnName="CartStatusId" />
           <ScalarProperty Name="StorePickupPointId" ColumnName="StorePickupPointId" />
+          <ScalarProperty Name="DtPickup" ColumnName="DtPickup" />
+          <ScalarProperty Name="DeliveryType" ColumnName="DeliveryType" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -223,6 +225,7 @@
           <ScalarProperty Name="Remarks" ColumnName="Remarks" />
           <ScalarProperty Name="RiderStatusId" ColumnName="RiderStatusId" />
           <ScalarProperty Name="MasterCityId" ColumnName="MasterCityId" />
+          <ScalarProperty Name="Mobile2" ColumnName="Mobile2" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
