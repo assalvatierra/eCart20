@@ -8,10 +8,11 @@
 
 <p>
     @Html.ActionLink("Back to Store", "Index", "Home") |
-    @Html.ActionLink("Create New", "Create")
+    @*@Html.ActionLink("Add Item", "Create", new { id = @ViewBag.StoreId })*@
+    <a data-target="#AddItem" data-toggle="modal"> Add Item </a>
 </p>
 <div class="panel panel-default">
-    <table class="table ">
+    <table class="table" id="StoreItemsTable">
         <tr>
             <td>
             </td>
@@ -28,9 +29,9 @@
         {
             <tr>
                 <td width="80">
-                    <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail" width="60"/>
+                    <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail" width="60" />
                 </td>
-                <td >
+                <td>
                     <div style="display:flex;">
                         <b style="margin:auto 0;">
                             @Html.DisplayFor(modelItem => item.ItemMaster.Name)
@@ -41,7 +42,9 @@
                     @Html.DisplayFor(modelItem => item.UnitPrice)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+
+                    <a data-target="#EditItem" data-toggle="modal" onclick="getItem(@item.Id)"> Edit </a> |
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
                     @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 </td>
@@ -50,3 +53,8 @@
 
     </table>
 </div>
+
+
+@{Html.RenderPartial("_ModalAddItem", null, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } }); }
+
+@{Html.RenderPartial("_ModalEditItem", null, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } }); }

@@ -20,7 +20,9 @@ namespace eCart.Areas.Store.Controllers
         {
             if (id != null)
             {
-                var storeItems = db.StoreItems.Where(s=>s.StoreDetailId == id).Include(s => s.ItemMaster).Include(s => s.StoreDetail);
+                var storeItems = db.StoreItems.Where(s=>s.StoreDetailId == id).Include(s => s.ItemMaster).Include(s => s.StoreDetail).OrderByDescending(s=>s.Id);
+
+                ViewBag.StoreId = id;
 
                 return View(storeItems.ToList());
             }
@@ -44,11 +46,16 @@ namespace eCart.Areas.Store.Controllers
         }
 
         // GET: Store/StoreItems/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
+            StoreItem storeItem = new StoreItem() {
+                StoreDetailId = id,
+                UnitPrice = 0
+            };
+
             ViewBag.ItemMasterId = new SelectList(db.ItemMasters, "Id", "Name");
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId");
-            return View();
+            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", id);
+            return View(storeItem);
         }
 
         // POST: Store/StoreItems/Create
@@ -62,7 +69,7 @@ namespace eCart.Areas.Store.Controllers
             {
                 db.StoreItems.Add(storeItem);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = storeItem.StoreDetailId });
             }
 
             ViewBag.ItemMasterId = new SelectList(db.ItemMasters, "Id", "Name", storeItem.ItemMasterId);
@@ -98,7 +105,7 @@ namespace eCart.Areas.Store.Controllers
             {
                 db.Entry(storeItem).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = storeItem.StoreDetailId });
             }
             ViewBag.ItemMasterId = new SelectList(db.ItemMasters, "Id", "Name", storeItem.ItemMasterId);
             ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storeItem.StoreDetailId);
@@ -128,7 +135,7 @@ namespace eCart.Areas.Store.Controllers
             StoreItem storeItem = db.StoreItems.Find(id);
             db.StoreItems.Remove(storeItem);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { id = storeItem.StoreDetailId });
         }
 
         protected override void Dispose(bool disposing)
@@ -139,5 +146,109 @@ namespace eCart.Areas.Store.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        public PartialViewResult _ModalAddItem()
+        {
+            StoreItem item = new StoreItem();
+            ViewBag.ItemMasterId = new SelectList(db.ItemMasters, "Id", "Name");
+            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId");
+           
+            return PartialView(item);
+        }
+
+        [HttpPost]
+        public ActionResult _ModalAddItem(int StoreId, string ItemName, decimal price)
+        {
+            ItemMaster item = new ItemMaster() { 
+                Name = ItemName,
+            };
+            db.ItemMasters.Add(item);
+            db.SaveChanges();
+
+            StoreItem storeItem = new StoreItem()
+            {
+                ItemMaster = item,
+                StoreDetailId = StoreId,
+                UnitPrice = price
+            };
+            db.StoreItems.Add(storeItem);
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index", new { id = StoreId });
+        }
+
+        [HttpPost]
+        public void AddStoreItem(int storeId, string itemName, decimal price)
+        {
+            try
+            {
+
+                ItemMaster item = new ItemMaster()
+                {
+                    Name = itemName,
+                };
+
+                db.ItemMasters.Add(item);
+
+
+                StoreItem storeItem = new StoreItem()
+                {
+                    ItemMaster = item,
+                    StoreDetailId = storeId,
+                    UnitPrice = price
+                };
+                db.StoreItems.Add(storeItem);
+
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        [HttpGet]
+        public JsonResult GetStoreItem(int id)
+        {
+            var item = db.StoreItems.Find(id);
+            var jsonItem = new jsonStoreItem
+            {
+                Id = id,
+                ItemName = item.ItemMaster.Name,
+                UnitPrice = item.UnitPrice
+            };
+
+            return Json(jsonItem, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public void UpdateStoreItem(int storeItemId, string itemName, decimal price)
+        {
+            try
+            {
+                var storeItem = db.StoreItems.Find(storeItemId);
+                storeItem.UnitPrice = price;
+                storeItem.ItemMaster.Name = itemName;
+
+                db.Entry(storeItem).State = System.Data.Entity.EntityState.Modified;
+
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
+}
+
+
+public class jsonStoreItem {
+    public int Id { get; set; }
+    public string ItemName { get; set; }
+    public decimal UnitPrice { get; set; }
 }

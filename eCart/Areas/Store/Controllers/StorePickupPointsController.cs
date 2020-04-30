@@ -15,11 +15,18 @@ namespace eCart.Areas.Store.Controllers
     {
         private StoreContext db = new StoreContext();
 
-        // GET: Store/StorePickupPoints
-        public ActionResult Index()
+        // GET: Store/StorePickupPoints/{id}
+        public ActionResult Index(int? id)
         {
-            var storePickupPoints = db.StorePickupPoints.Include(s => s.StoreDetail).Include(s => s.StorePickupStatu);
-            return View(storePickupPoints.ToList());
+            if (id != null) { 
+                var storePickupPoints = db.StorePickupPoints.Where(s => s.StoreDetailId == id).Include(s => s.StoreDetail).Include(s => s.StorePickupStatu);
+                ViewBag.StoreId = id;
+                return View(storePickupPoints.ToList());
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         // GET: Store/StorePickupPoints/Details/5
@@ -38,9 +45,9 @@ namespace eCart.Areas.Store.Controllers
         }
 
         // GET: Store/StorePickupPoints/Create
-        public ActionResult Create()
+        public ActionResult Create(int id)
         {
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId");
+            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", id);
             ViewBag.StorePickupStatusId = new SelectList(db.StorePickupStatus, "Id", "Name");
             return View();
         }
@@ -56,7 +63,7 @@ namespace eCart.Areas.Store.Controllers
             {
                 db.StorePickupPoints.Add(storePickupPoint);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = storePickupPoint.StoreDetailId });
             }
 
             ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storePickupPoint.StoreDetailId);
@@ -92,7 +99,7 @@ namespace eCart.Areas.Store.Controllers
             {
                 db.Entry(storePickupPoint).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = storePickupPoint.StoreDetailId });
             }
             ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storePickupPoint.StoreDetailId);
             ViewBag.StorePickupStatusId = new SelectList(db.StorePickupStatus, "Id", "Name", storePickupPoint.StorePickupStatusId);
@@ -122,7 +129,7 @@ namespace eCart.Areas.Store.Controllers
             StorePickupPoint storePickupPoint = db.StorePickupPoints.Find(id);
             db.StorePickupPoints.Remove(storePickupPoint);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { id });
         }
 
         protected override void Dispose(bool disposing)

@@ -1,0 +1,120 @@
+﻿
+
+<div id="EditItem" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Item</h4>
+            </div>
+
+            <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="form-group" hidden>
+                            <label class="col-md-2 control-label"> Id</label>
+                            <div class="col-md-10">
+                                <input id="edit-Id" class="form-control" type="number" value="" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label"> Item</label>
+                            <div class="col-md-10">
+                                <input id="edit-ItemMaster" class="form-control" type="text" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label"> Price</label>
+                            <div class="col-md-10">
+                                <input id="edit-UnitPrice" class="form-control" type="text" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <p class="text-danger col-md-offset-2" id="edit-warning" hidden> Please do not leave any field blank </p>
+                            <p class="text-danger col-md-offset-2" id="edit-warning-price" hidden> Invalid input on Price Field </p>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="submit" value="Update" class="btn btn-default" onclick="UpdateItem()"> Update </button> 
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    function UpdateItem() {
+        var Id = parseInt($("#edit-Id").val());
+        var itemName = $("#edit-ItemMaster").val();
+        var price = parseFloat($("#edit-UnitPrice").val());
+
+        $("#edit-warning").hide();
+        $("#edit-warning-price").hide();
+        if ((itemName != null && price.length != 0) && (itemName != "" && price != "")) {
+         
+            if (!isNaN(price)) {
+
+                var Item = {
+                    storeItemId: Id,
+                    itemName: itemName,
+                    price: price
+                }
+
+                var result = $.post("/Store/StoreItems/UpdateStoreItem", Item, (data) => {
+                    if (result.status == 200) {
+                        console.log("OK");
+                        window.location.reload();
+                    } else {
+                        console.log("error");
+                    }
+                });
+
+                //console.log(result);
+                console.log("OK");
+            } else {
+                $("#edit-warning-price").show();
+            }
+        } else {
+            $("#edit-warning").show();
+        }
+    }
+
+
+    function AddItemToTable(item, price, Id) {
+        var item = "<tr>" +
+            "<td width='80'><img src='/img/placeholders/placeholder-product.png' class='img-thumbnail' width='60' /></td>"+
+            "<td><b> " + item + " </td><td> " + price + " <b></td>" +
+            "<td> " +
+            "<a href='/Store/StoreItems/Edit/" + Id + "'> Edit </a> |" +
+            "<a href='/Store/StoreItems/Details/" + Id + "'> Details </a> |" +
+            "<a href='/Store/StoreItems/Delete/" + Id + "'> Delete </a> " +
+            " </td>"
+        " </tr>";
+        $("#StoreItemsTable").append(item);
+        $("#EditItem").modal('hide');
+    }
+
+    function getItem(Id) {
+        //GetStoreItem
+        var result = $.get("/Store/StoreItems/GetStoreItem", { id : Id}, (data) => {
+            if (result.status == 200) {
+                $("#edit-Id").val(data["Id"]);
+                $("#edit-ItemMaster").val(data["ItemName"]);
+                $("#edit-UnitPrice").val(data["UnitPrice"]);
+            } else {
+                console.log("error while getting item data.");
+            }
+        });
+
+    }
+</script>

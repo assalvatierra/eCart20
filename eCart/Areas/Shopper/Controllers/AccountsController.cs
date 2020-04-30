@@ -43,16 +43,12 @@ namespace eCart.Areas.Shopper.Controllers
 
         public string CreateCart()
         {
-            //CartDetail cartDetail = new CartDetail();
-            //cartDetail.StoreDetailId = 0;
-            //cartDetail.UserDetailId = 1;  // admin
-            //cartDetail.CartStatusId = 1;  // active
-            //cartDetail.StorePickupPointId = 0;
-
-            //db.CartDetails.Add(cartDetail);
-            //db.SaveChanges();
+          
             List<cCart> cartItems = new List<cCart>();
             Session["MYCART"] = (List<cCart>)cartItems;
+
+            List<cCartDetails> cartDetails = new List<cCartDetails>();
+            Session["CARTDETAILS"] = (List<cCartDetails>)cartDetails;
 
             return "Cart Created";
         }

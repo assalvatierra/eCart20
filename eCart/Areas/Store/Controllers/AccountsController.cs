@@ -26,6 +26,12 @@ namespace eCart.Areas.Store.Controllers
             return RedirectToAction("Index", "Home", new { area = "Store" });
         }
 
+        public ActionResult Logout()
+        {
+            Session["STOREID"] = null;
+            return RedirectToAction("Login", "Accounts", new { area = "Store" });
+        }
+
         public ActionResult Register()
         {
             return View();

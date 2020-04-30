@@ -7,7 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body >
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -27,6 +27,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if (Session["STOREID"] != null)
                     {
+                        <li> <a> Hi Store Admin! </a> </li>
                         <li>@Html.ActionLink("MyStore", "Index", "Home")</li>
                         <li>@Html.ActionLink("Log Out", "Login", "Accounts")</li>
                     }

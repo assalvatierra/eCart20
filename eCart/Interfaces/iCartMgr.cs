@@ -13,7 +13,8 @@ namespace eCart.Interfaces
         int getCartInfo(int id);
         List<cCart> getCartItems();
         List<CartItem> getCartSummary();
-        List<CartDetail> getCartDetailsSummary(List<CartItem> cartItems);
+        List<CartDetail> getCartDetailsSummary();
+        int getDefaultPickupPointId(int storeId);
 
         List<StorePickupPoint> GetStorePickupPoints(int storeId);
         StorePickupPoint GetStorePickup(int id);

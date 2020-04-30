@@ -15,10 +15,12 @@ namespace eCart.Areas.Store.Controllers
     {
         private StoreContext db = new StoreContext();
 
-        // GET: Store/StorePickupPartners
-        public ActionResult Index()
+        // GET: Store/StorePickupPartners/{storeId}
+        public ActionResult Index(int id)
         {
-            var storePickupPartners = db.StorePickupPartners.Include(s => s.StoreDetail).Include(s => s.StorePickupPoint);
+            ViewBag.StoreId = id;
+            ViewBag.PickupPoints = db.StorePickupPoints.Include(s=>s.StoreDetail).ToList().OrderBy(s=>s.StoreDetailId);
+            var storePickupPartners = db.StorePickupPartners.Where(s=>s.StoreDetailId==id).Include(s => s.StoreDetail).Include(s => s.StorePickupPoint);
             return View(storePickupPartners.ToList());
         }
 
@@ -56,7 +58,7 @@ namespace eCart.Areas.Store.Controllers
             {
                 db.StorePickupPartners.Add(storePickupPartner);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = storePickupPartner.StoreDetailId });
             }
 
             ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storePickupPartner.StoreDetailId);
@@ -92,7 +94,7 @@ namespace eCart.Areas.Store.Controllers
             {
                 db.Entry(storePickupPartner).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = storePickupPartner.StoreDetailId });
             }
             ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storePickupPartner.StoreDetailId);
             ViewBag.StorePickupPointId = new SelectList(db.StorePickupPoints, "Id", "Address", storePickupPartner.StorePickupPointId);
@@ -120,9 +122,10 @@ namespace eCart.Areas.Store.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             StorePickupPartner storePickupPartner = db.StorePickupPartners.Find(id);
+            var storeId = storePickupPartner.StoreDetailId;
             db.StorePickupPartners.Remove(storePickupPartner);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { id = storeId });
         }
 
         protected override void Dispose(bool disposing)
@@ -133,5 +136,47 @@ namespace eCart.Areas.Store.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [HttpGet]
+        public JsonResult AddPartner(int id, int storeId)
+        {
+            try
+            {
+                StorePickupPartner storePartner = new StorePickupPartner
+                {
+                    StoreDetailId = storeId,
+                    StorePickupPointId = id
+                };
+
+                db.StorePickupPartners.Add(storePartner);
+                //db.SaveChanges();
+
+                var store = db.StoreItems.Find(storeId);
+
+
+                //create obj for json
+                var partnerStore = db.StorePickupPoints.Find(id);
+                var data = new jsonStorePartner
+                {
+                    Id = id,
+                    StoreName = partnerStore.StoreDetail.Name,
+                    PickupAddress = partnerStore.Address
+                };
+
+                return Json(data, JsonRequestBehavior.AllowGet);
+            } catch (Exception ex) {
+                return Json(ex.Message.ToString(), JsonRequestBehavior.AllowGet); ;
+            }
+        }
     }
 }
+
+
+#region helperClass
+public class jsonStorePartner{
+        public int Id { get; set; }
+        public string StoreName { get; set; }
+        public string PickupAddress { get; set; }
+    }
+
+#endregion

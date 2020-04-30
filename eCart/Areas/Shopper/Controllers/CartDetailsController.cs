@@ -159,22 +159,9 @@ namespace eCart.Areas.Shopper.Controllers
 
         public PartialViewResult CartCheckout()
         {
-            var cartItems = cartMgr.getCartSummary();
-            var cartDetails = cartMgr.getCartDetailsSummary(cartItems);
+            var cartDetails = cartMgr.getCartDetailsSummary();
 
-            //Add Items to each Cart with the same cartDetails Id
-            cartDetails.ForEach(c => {
-                cartItems.ForEach(i => {
-                    if(c.StoreDetail.Id == i.StoreItem.StoreDetail.Id)
-                    {
-                        i.CartDetailId = c.Id;
-                        i.CartDetail = c;
-
-                        c.CartItems.Add(i);
-                    }
-                });
-            });
-
+        
             return PartialView(cartDetails);
         }
 
@@ -217,7 +204,7 @@ namespace eCart.Areas.Shopper.Controllers
         public string SubmitOrder()
         {
             var cartItems = cartMgr.getCartSummary();
-            var cartDetails = cartMgr.getCartDetailsSummary(cartItems);
+            var cartDetails = cartMgr.getCartDetailsSummary();
 
             var msg = cartMgr.saveOrder(cartDetails, cartItems);
 
@@ -227,7 +214,6 @@ namespace eCart.Areas.Shopper.Controllers
         [HttpGet]
         public JsonResult GetStorePickups(int storeId)
         {
-
             var locations = cartMgr.GetStorePickupPoints(storeId).Select(s => new { s.Id, s.Address });
 
             return Json(locations, JsonRequestBehavior.AllowGet);
@@ -236,10 +222,81 @@ namespace eCart.Areas.Shopper.Controllers
         [HttpGet]
         public JsonResult GetStorePickupAddress(int id)
         {
-
             var location = cartMgr.GetStorePickup(id).Address;
 
             return Json(location, JsonRequestBehavior.AllowGet);
         }
+
+
+        #region CartDetails
+        /* Revision of Cart */
+        public JsonResult AddCartItem(int id, int qty, string itemName, decimal itemPrice)
+        {
+            try
+            {
+                 var item = db.StoreItems.Find(id);
+
+                //create cartItem
+                var newItem = new cCart
+                {
+                    Id = id,
+                    Name = item.ItemMaster.Name,
+                    Price = item.UnitPrice,
+                    Qty = qty,
+                    StoreId = item.StoreDetailId
+                };
+
+                //create cartDetails
+                var newCart = new cCartDetails
+                {
+                    Id = 0,
+                    StoreId = newItem.StoreId,
+                    CartStatus = 1,
+                    DeliveryType = "Pickup",
+                    DtPickup = new DateTime(),
+                    PickupPointId = 1, //TODO : get default
+                    cartItems = new List<cCart> { newItem }
+                };
+
+                var cartList = cartMgr.getCartDetails();
+                var isAssigned = false;
+                   
+                    foreach (var cart in cartList)
+                    {
+                        if (cart.StoreId == newItem.StoreId)
+                        {
+                            cart.cartItems.Add(newItem);
+                            isAssigned = true;
+                        }
+                    }
+                
+                if(isAssigned == false)
+                {
+                    cartList.Add(newCart);
+                }
+
+                return Json(cartList, JsonRequestBehavior.AllowGet); 
+            }
+            catch(Exception ex)
+            {
+                return Json("NA", JsonRequestBehavior.AllowGet);
+                //return ex.ToString();
+            }
+
+        }
+
+        public List<cCartDetails> getCart()
+        {
+            return (List<cCartDetails>)Session["CARTDETAILS"] ?? new List<cCartDetails>();
+        }
+
+        public JsonResult getCurrentCart()
+        {
+            var cartList = cartMgr.getCartDetails();
+
+            return Json(cartList, JsonRequestBehavior.AllowGet);
+        }
+        /* */
+        #endregion
     }
 }

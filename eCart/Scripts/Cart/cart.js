@@ -24,16 +24,20 @@ function SubtractQty(e) {
 function AddtoCart_Submit(e, itemId, itemName, price) {
     var qty = $(e).siblings('.item-qty').text();
     var data = {
-        id: itemId,
-        qty: qty,
+        id: parseInt(itemId),
+        qty: parseInt(qty),
         itemName: itemName,
-        itemPrice: price
+        itemPrice: parseInt(price)
     }
 
+    console.log(data);
+
     var totalPrice = qty * price;
-    
+
+
     //add item with qty to cart
     $.post("/Shopper/CartDetails/AddToCart", data, (response) => {
+    //$.post("/Shopper/CartDetails/AddCartItem", data, (response) => {
         console.log(response);
         if (response == '1') {
 

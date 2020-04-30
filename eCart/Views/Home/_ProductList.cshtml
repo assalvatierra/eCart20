@@ -1,35 +1,46 @@
 ﻿@model IEnumerable<eCart.Models.StoreItem>
 
-<div class="row">
-     <div class="col-sm-12">
-         <h3> Featured Items </h3>
-    </div>
+<div class="col-sm-12">
+    <h3> Featured Items </h3>
+</div>
+<div class="row item-panel">
     @foreach (var item in Model)
     {
 
-     <div class="col-sm-2 item-list">
-        <img src="~/img/placeholders/placeholder-product.png" />
-        <div class="item-desc">
-            <h4> @item.ItemMaster.Name </h4>
-            <b class="text-success"> Php @item.UnitPrice.ToString("0.00") </b>
+        <div class="col-sm-2 item-list" >
+            <img src="~/img/placeholders/placeholder-product.png" />
+            <div class="item-desc">
+                <h4>
+
+                    @if (item.ItemMaster.Name.Length < 20)
+                    {
+                        @item.ItemMaster.Name
+                    }
+                    else
+                    {
+                        @item.ItemMaster.Name.Substring(0,20) 
+                        <text>... </text>
+                    }
+                </h4>
+                <b class="text-success"> Php @item.UnitPrice.ToString("0.00") </b>
+            </div>
+            <div class="add-to-Cart">
+                <button class="btn btn-default" onclick="AddtoCart(this)" style="width:100%;"> Add to Cart </button>
+                <div class="btn-group hidden">
+                    <button class="btn btn-default" type="button" onclick="SubtractQty(this)"> - </button>
+                    <div class="btn btn-default disabled item-qty">
+                        1
+                    </div>
+                    <button class="btn btn-default" type="button" onclick="AddQty(this)"> + </button>
+                    <button class="btn btn-default" onclick="AddtoCart_Submit(this,'@item.Id', '@item.ItemMaster.Name', '@item.UnitPrice')"> Submit </button>
+                </div>
+            </div>
         </div>
-        <div class="add-to-Cart" >
-           <button class="btn btn-default" onclick="AddtoCart(this)" style="width:100%;"> Add to Cart </button>
-           <div class="btn-group hidden">
-               <button class="btn btn-default" type="button" onclick="SubtractQty(this)"> - </button>
-               <div class="btn btn-default disabled item-qty" >
-                   1
-               </div>
-               <button class="btn btn-default" type="button" onclick="AddQty(this)"> + </button>
-               <button class="btn btn-default" onclick="AddtoCart_Submit(this,'@item.Id', '@item.ItemMaster.Name', '@item.UnitPrice')"> Submit </button>
-           </div>
-        </div>
-     </div>
     }
 </div>
 
 
-<script src="~/Scripts/Cart/cart.js"> </script>
+<script src="~/Scripts/Cart/cart.js"></script>
 <script>
     //On Add to Cart Button Click
     function AddtoCart(e) {

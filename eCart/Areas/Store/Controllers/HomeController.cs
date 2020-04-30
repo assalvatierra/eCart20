@@ -17,9 +17,6 @@ namespace eCart.Areas.Store.Controllers
             string STOREID = Session["STOREID"] != null ? Session["STOREID"].ToString() : "1";
             ViewBag.StoreId = int.Parse(STOREID);
 
-
-            
-
             return View(sdb.getStoreDetails(STOREID));
         }
     }

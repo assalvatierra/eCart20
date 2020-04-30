@@ -40,5 +40,11 @@ namespace eCart.Areas.Store.Models
         public System.Data.Entity.DbSet<eCart.Models.UserDetail> UserDetails { get; set; }
 
         public System.Data.Entity.DbSet<eCart.Models.ItemMaster> ItemMasters { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.ItemMasterCategory> ItemMasterCategories { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.ItemCategory> ItemCategories { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.ItemCatGroup> ItemCatGroups { get; set; }
     }
 }

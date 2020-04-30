@@ -5,31 +5,33 @@
 }
 
     <div class="row">
-        <div class="panel-carts col-lg-12 ">
-            <div class="col-lg-10">
-                <img src="~/img/placeholders/company-logo.jpg" class="col-sm-2" />
-                <div class="col-sm-8">
+        <div class="container-panel col-lg-12 "> 
+
+            <div class="col-sm-9">
+                <div class="col-sm-2">
+                    <img src="~/img/placeholders/company-logo.jpg" class="store-logo" />
+                </div>
+
+                <div class="col-sm-10">
                     <h2> @Model.Name </h2>
                     <p class="text-muted"> Address: <b>@Model.Address</b> </p>
                     <p class="text-muted"> Categories: <b>@Model.StoreCategory.Name</b> </p>
                 </div>
             </div>
-            <div class="col-lg-2">
-                <a class="btn btn-default"  href="@Url.Action("Index","StoreItems",new { id = ViewBag.StoreId })" style="margin:5px;width:100%;" >
-                    Store Items
-                </a>
-                <button class="btn btn-default" style="margin:5px;width:100%;"> Pickup Points </button>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <h2> Active Shoppers Carts </h2>
-            <hr />
-        </div>
-        <div class="panel-carts col-lg-12">
-            <div class="store-cart">
-                <h4> Cart # </h4>
-                <p> Shopper Details  </p><hr />
-                <p> Shopper Items  </p>
+
+            <div class="col-sm-3">
+                <div class="btn-group-vertical" style="width:100%;margin:10% 0;">
+                    <a class="btn btn-default" href="@Url.Action("Index","StoreItems",new { id = ViewBag.StoreId })">
+                        Store Items
+                    </a>
+                    <a class="btn btn-default" href="@Url.Action("Index","StorePickupPoints",new { id = ViewBag.StoreId })" style="width:100%;">
+                        Pickup Points
+                    </a>
+                    <a class="btn btn-default" href="@Url.Action("Index","StorePickupPartners",new { id = ViewBag.StoreId })" style="width:100%;">
+                        Pickup Partner
+                    </a>
+                </div>
             </div>
         </div>
     </div>
+        @Html.Partial("_PartialCartList", Model.CartDetails as IEnumerable<eCart.Models.CartDetail> )
