@@ -308,6 +308,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\Migration\Sample_01.sql" />
     <Content Include="Models\Migration\Initialize_01.sql" />
+    <Content Include="Models\Sql.Reports\Rpt.StoreCart.SQL" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\ecartdb.edmx">
