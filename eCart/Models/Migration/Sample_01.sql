@@ -41,7 +41,11 @@ values	( 1, 1, 15.00 ), ( 2, 1, 52.00 ), ( 3, 1, 18.00 ), ( 4, 1, 120.00 ),( 5, 
 --- Create Sample Cart --
 insert into CartDetails([UserDetailId], [StoreDetailId], [CartStatusId], [StorePickupPointId], [DtPickup], [DeliveryType])
 values (1, 1, 1, 1, '04/03/2020 5:00 PM', 'Pickup');
+insert into CartDetails([UserDetailId], [StoreDetailId], [CartStatusId], [StorePickupPointId], [DtPickup], [DeliveryType])
+values (1, 1, 1, 1, '04/03/2020 3:00 PM', 'Pickup');
 
 --- Create Cart Items ---
 insert into CartItems([CartDetailId],[StoreItemId],[ItemQty],[ItemOrder],[CartItemStatusId],[Remarks1],[Remarks2])
 values (1, 7, 1, '1', 1, '', ''), (1, 8, 2, '1', 1, '', '');
+insert into CartItems([CartDetailId],[StoreItemId],[ItemQty],[ItemOrder],[CartItemStatusId],[Remarks1],[Remarks2])
+values (2, 7, 2, '1', 1, '', ''), (1, 8, 2, '1', 1, '', '');
