@@ -75,6 +75,65 @@ namespace eCart.Services
 
         }
 
+        public void addNewStoreItem(int storeId, string itemName, decimal price)
+        {
+            try
+            {
 
+                ItemMaster item = new ItemMaster()
+                {
+                    Name = itemName,
+                };
+
+                db.ItemMasters.Add(item);
+
+                StoreItem storeItem = new StoreItem()
+                {
+                    ItemMaster = item,
+                    StoreDetailId = storeId,
+                    UnitPrice = price
+                };
+                db.StoreItems.Add(storeItem);
+
+                db.SaveChanges();
+            }
+            catch (Exception ex) 
+            { 
+                throw ex; 
+            }
+            
+        }
+
+        public StoreItem getStoreItem(int id)
+        {
+            try
+            {
+                return db.StoreItems.Find(id);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
+
+        public void updateStoreItem(int storeItemId, string itemName, decimal price)
+        {
+                
+            try
+            {
+                var storeItem = db.StoreItems.Find(storeItemId);
+                storeItem.UnitPrice = price;
+                storeItem.ItemMaster.Name = itemName;
+
+                db.Entry(storeItem).State = System.Data.Entity.EntityState.Modified;
+
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
