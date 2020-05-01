@@ -15,10 +15,11 @@ namespace eCart.Areas.Store.Controllers
     {
         private StoreContext db = new StoreContext();
 
-        // GET: Store/CartDetails
-        public ActionResult Index()
+        // GET: Store/CartDetails/{cartId}
+        public ActionResult Index(int id)
         {
-            var cartDetails = db.CartDetails.Include(c => c.CartStatu).Include(c => c.StoreDetail).Include(c => c.StorePickupPoint).Include(c => c.UserDetail);
+            var cartDetails = db.CartDetails.Include(c => c.CartStatu).Include(c => c.StoreDetail).Include(c => c.StorePickupPoint).Include(c => c.UserDetail).Where(c=>c.Id == id);
+            ViewBag.StoreId = id;
             return View(cartDetails.ToList());
         }
 
@@ -29,7 +30,11 @@ namespace eCart.Areas.Store.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             CartDetail cartDetail = db.CartDetails.Find(id);
+            ViewBag.StoreId = cartDetail.StoreDetailId;
+            ViewBag.Store = cartDetail.StoreDetail.Name;
+
             if (cartDetail == null)
             {
                 return HttpNotFound();
