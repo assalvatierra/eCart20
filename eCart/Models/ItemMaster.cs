@@ -19,6 +19,7 @@ namespace eCart.Models
         {
             this.ItemMasterCategories = new HashSet<ItemMasterCategory>();
             this.StoreItems = new HashSet<StoreItem>();
+            this.ItemImages = new HashSet<ItemImage>();
         }
     
         public int Id { get; set; }
@@ -28,5 +29,7 @@ namespace eCart.Models
         public virtual ICollection<ItemMasterCategory> ItemMasterCategories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StoreItem> StoreItems { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ItemImage> ItemImages { get; set; }
     }
 }

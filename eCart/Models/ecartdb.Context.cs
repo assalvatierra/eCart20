@@ -50,5 +50,8 @@ namespace eCart.Models
         public virtual DbSet<RiderStatus> RiderStatus { get; set; }
         public virtual DbSet<CartActivity> CartActivities { get; set; }
         public virtual DbSet<CartActivityType> CartActivityTypes { get; set; }
+        public virtual DbSet<StoreImage> StoreImages { get; set; }
+        public virtual DbSet<ItemImage> ItemImages { get; set; }
+        public virtual DbSet<StoreImgType> StoreImgTypes { get; set; }
     }
 }

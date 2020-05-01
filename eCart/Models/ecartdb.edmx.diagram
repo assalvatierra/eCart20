@@ -62,6 +62,12 @@
         <AssociationConnector Association="ecartdb.CartDeliveryCartDeliveryActivity" />
         <EntityTypeShape EntityType="ecartdb.CartActivityType" Width="1.5" PointX="17.25" PointY="0.75" />
         <AssociationConnector Association="ecartdb.CartActivityTypeCartActivity" />
+        <EntityTypeShape EntityType="ecartdb.StoreImage" Width="1.5" PointX="3.875" PointY="13.5" />
+        <AssociationConnector Association="ecartdb.StoreDetailStoreImage" />
+        <EntityTypeShape EntityType="ecartdb.ItemImage" Width="1.5" PointX="4.75" PointY="19.25" />
+        <AssociationConnector Association="ecartdb.ItemMasterItemImage" />
+        <EntityTypeShape EntityType="ecartdb.StoreImgType" Width="1.5" PointX="1.5" PointY="13" />
+        <AssociationConnector Association="ecartdb.StoreImgTypeStoreImage" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -213,6 +213,9 @@
     <Compile Include="Models\ItemCatGroup.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ItemImage.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ItemMaster.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
@@ -229,6 +232,12 @@
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RiderStatus.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StoreImage.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StoreImgType.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StorePickupPartner.cs">

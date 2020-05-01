@@ -256,5 +256,32 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="StoreImages">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreImage)">
+        <MappingFragment StoreEntitySet="StoreImages">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StoreDetailId" ColumnName="StoreDetailId" />
+          <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+          <ScalarProperty Name="StoreImgTypeId" ColumnName="StoreImgTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemImages">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.ItemImage)">
+        <MappingFragment StoreEntitySet="ItemImages">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ItemMasterId" ColumnName="ItemMasterId" />
+          <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StoreImgTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreImgType)">
+        <MappingFragment StoreEntitySet="StoreImgTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -154,6 +154,21 @@
       <End Role="CartActivityType" EntitySet="CartActivityTypes" />
       <End Role="CartActivity" EntitySet="CartActivities" />
     </AssociationSet>
+    <EntitySet Name="StoreImages" EntityType="ecartdb.StoreImage" />
+    <AssociationSet Name="StoreDetailStoreImage" Association="ecartdb.StoreDetailStoreImage">
+      <End Role="StoreDetail" EntitySet="StoreDetails" />
+      <End Role="StoreImage" EntitySet="StoreImages" />
+    </AssociationSet>
+    <EntitySet Name="ItemImages" EntityType="ecartdb.ItemImage" />
+    <AssociationSet Name="ItemMasterItemImage" Association="ecartdb.ItemMasterItemImage">
+      <End Role="ItemMaster" EntitySet="ItemMasters" />
+      <End Role="ItemImage" EntitySet="ItemImages" />
+    </AssociationSet>
+    <EntitySet Name="StoreImgTypes" EntityType="ecartdb.StoreImgType" />
+    <AssociationSet Name="StoreImgTypeStoreImage" Association="ecartdb.StoreImgTypeStoreImage">
+      <End Role="StoreImgType" EntitySet="StoreImgTypes" />
+      <End Role="StoreImage" EntitySet="StoreImages" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserDetail">
     <Key>
@@ -195,6 +210,7 @@
     <Property Name="MasterAreaId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="StorePickupPoints" Relationship="ecartdb.StoreDetailStorePickupPoint" FromRole="StoreDetail" ToRole="StorePickupPoint" />
     <NavigationProperty Name="StorePickupPartners" Relationship="ecartdb.StoreDetailStorePickupPartner" FromRole="StoreDetail" ToRole="StorePickupPartner" />
+    <NavigationProperty Name="StoreImages" Relationship="ecartdb.StoreDetailStoreImage" FromRole="StoreDetail" ToRole="StoreImage" />
   </EntityType>
   <EntityType Name="UserStatus">
     <Key>
@@ -323,6 +339,7 @@
     <Property Name="Name" Type="String" Nullable="false" MaxLength="80" />
     <NavigationProperty Name="ItemMasterCategories" Relationship="ecartdb.ItemMasterItemMasterCategory" FromRole="ItemMaster" ToRole="ItemMasterCategory" />
     <NavigationProperty Name="StoreItems" Relationship="ecartdb.ItemMasterStoreItem" FromRole="ItemMaster" ToRole="StoreItem" />
+    <NavigationProperty Name="ItemImages" Relationship="ecartdb.ItemMasterItemImage" FromRole="ItemMaster" ToRole="ItemImage" />
   </EntityType>
   <EntityType Name="ItemCategory">
     <Key>
@@ -830,6 +847,70 @@
       </Principal>
       <Dependent Role="CartActivity">
         <PropertyRef Name="CartActivityTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="StoreImage">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="StoreDetail" Relationship="ecartdb.StoreDetailStoreImage" FromRole="StoreImage" ToRole="StoreDetail" />
+    <Property Name="StoreDetailId" Type="Int32" Nullable="false" />
+    <Property Name="ImageUrl" Type="String" Nullable="false" MaxLength="250" />
+    <NavigationProperty Name="StoreImgType" Relationship="ecartdb.StoreImgTypeStoreImage" FromRole="StoreImage" ToRole="StoreImgType" />
+    <Property Name="StoreImgTypeId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="StoreDetailStoreImage">
+    <End Type="ecartdb.StoreDetail" Role="StoreDetail" Multiplicity="1" />
+    <End Type="ecartdb.StoreImage" Role="StoreImage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreImage">
+        <PropertyRef Name="StoreDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ItemImage">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="ItemMaster" Relationship="ecartdb.ItemMasterItemImage" FromRole="ItemImage" ToRole="ItemMaster" />
+    <Property Name="ItemMasterId" Type="Int32" Nullable="false" />
+    <Property Name="ImageUrl" Type="String" Nullable="false" MaxLength="250" />
+  </EntityType>
+  <Association Name="ItemMasterItemImage">
+    <End Type="ecartdb.ItemMaster" Role="ItemMaster" Multiplicity="1" />
+    <End Type="ecartdb.ItemImage" Role="ItemImage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemMaster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ItemImage">
+        <PropertyRef Name="ItemMasterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="StoreImgType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="30" />
+    <NavigationProperty Name="StoreImages" Relationship="ecartdb.StoreImgTypeStoreImage" FromRole="StoreImgType" ToRole="StoreImage" />
+  </EntityType>
+  <Association Name="StoreImgTypeStoreImage">
+    <End Type="ecartdb.StoreImgType" Role="StoreImgType" Multiplicity="1" />
+    <End Type="ecartdb.StoreImage" Role="StoreImage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreImgType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreImage">
+        <PropertyRef Name="StoreImgTypeId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

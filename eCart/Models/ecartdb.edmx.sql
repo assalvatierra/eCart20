@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/29/2020 10:21:36
+-- Date Created: 05/01/2020 07:55:44
 -- Generated from EDMX file: D:\Projects\eCart20\eCart\Models\ecartdb.edmx
 -- --------------------------------------------------
 
@@ -428,6 +428,30 @@ CREATE TABLE [dbo].[CartActivityTypes] (
 );
 GO
 
+-- Creating table 'StoreImages'
+CREATE TABLE [dbo].[StoreImages] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [StoreDetailId] int  NOT NULL,
+    [ImageUrl] nvarchar(250)  NOT NULL,
+    [StoreImgTypeId] int  NOT NULL
+);
+GO
+
+-- Creating table 'ItemImages'
+CREATE TABLE [dbo].[ItemImages] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [ItemMasterId] int  NOT NULL,
+    [ImageUrl] nvarchar(250)  NOT NULL
+);
+GO
+
+-- Creating table 'StoreImgTypes'
+CREATE TABLE [dbo].[StoreImgTypes] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(30)  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -579,6 +603,24 @@ GO
 -- Creating primary key on [Id] in table 'CartActivityTypes'
 ALTER TABLE [dbo].[CartActivityTypes]
 ADD CONSTRAINT [PK_CartActivityTypes]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'StoreImages'
+ALTER TABLE [dbo].[StoreImages]
+ADD CONSTRAINT [PK_StoreImages]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'ItemImages'
+ALTER TABLE [dbo].[ItemImages]
+ADD CONSTRAINT [PK_ItemImages]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'StoreImgTypes'
+ALTER TABLE [dbo].[StoreImgTypes]
+ADD CONSTRAINT [PK_StoreImgTypes]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -1064,6 +1106,51 @@ GO
 CREATE INDEX [IX_FK_CartActivityTypeCartActivity]
 ON [dbo].[CartActivities]
     ([CartActivityTypeId]);
+GO
+
+-- Creating foreign key on [StoreDetailId] in table 'StoreImages'
+ALTER TABLE [dbo].[StoreImages]
+ADD CONSTRAINT [FK_StoreDetailStoreImage]
+    FOREIGN KEY ([StoreDetailId])
+    REFERENCES [dbo].[StoreDetails]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_StoreDetailStoreImage'
+CREATE INDEX [IX_FK_StoreDetailStoreImage]
+ON [dbo].[StoreImages]
+    ([StoreDetailId]);
+GO
+
+-- Creating foreign key on [ItemMasterId] in table 'ItemImages'
+ALTER TABLE [dbo].[ItemImages]
+ADD CONSTRAINT [FK_ItemMasterItemImage]
+    FOREIGN KEY ([ItemMasterId])
+    REFERENCES [dbo].[ItemMasters]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ItemMasterItemImage'
+CREATE INDEX [IX_FK_ItemMasterItemImage]
+ON [dbo].[ItemImages]
+    ([ItemMasterId]);
+GO
+
+-- Creating foreign key on [StoreImgTypeId] in table 'StoreImages'
+ALTER TABLE [dbo].[StoreImages]
+ADD CONSTRAINT [FK_StoreImgTypeStoreImage]
+    FOREIGN KEY ([StoreImgTypeId])
+    REFERENCES [dbo].[StoreImgTypes]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_StoreImgTypeStoreImage'
+CREATE INDEX [IX_FK_StoreImgTypeStoreImage]
+ON [dbo].[StoreImages]
+    ([StoreImgTypeId]);
 GO
 
 -- --------------------------------------------------

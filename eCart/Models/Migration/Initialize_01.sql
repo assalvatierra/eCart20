@@ -4,6 +4,7 @@ insert into StoreStatus("Name") values ('Active'),('Inactive');
 insert into StorePickupStatus("Name") values ('Active'),('Inactive');
 insert into CartItemStatus("Name") values ('Active'),('Cancelled');
 insert into CartStatus("Name") values ('Active'),('Submitted'),('Processing'),('Ready'),('Delivered');
+insert into StoreImgTypes("Name") values('Front'),('icon');
 
 -- initialize cities
 insert into MasterCities("Name") values ('Davao'),('Tagum'),('Digos');
