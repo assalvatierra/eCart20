@@ -240,6 +240,15 @@
     <Compile Include="Models\StoreImgType.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StorePayment.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StorePaymentStatus.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StorePaymentType.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\StorePickupPartner.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>

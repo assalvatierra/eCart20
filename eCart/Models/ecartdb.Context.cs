@@ -53,5 +53,8 @@ namespace eCart.Models
         public virtual DbSet<StoreImage> StoreImages { get; set; }
         public virtual DbSet<ItemImage> ItemImages { get; set; }
         public virtual DbSet<StoreImgType> StoreImgTypes { get; set; }
+        public virtual DbSet<StorePayment> StorePayments { get; set; }
+        public virtual DbSet<StorePaymentType> StorePaymentTypes { get; set; }
+        public virtual DbSet<StorePaymentStatus> StorePaymentStatus { get; set; }
     }
 }

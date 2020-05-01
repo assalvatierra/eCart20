@@ -34,6 +34,9 @@
     <EntitySet Name="StoreImages" EntityType="ecartdb.Store.StoreImages" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ItemImages" EntityType="ecartdb.Store.ItemImages" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="StoreImgTypes" EntityType="ecartdb.Store.StoreImgTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StorePayments" EntityType="ecartdb.Store.StorePayments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StorePaymentTypes" EntityType="ecartdb.Store.StorePaymentTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StorePaymentStatus" EntityType="ecartdb.Store.StorePaymentStatus" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserStatusUserDetail" Association="ecartdb.Store.UserStatusUserDetail">
       <End Role="UserStatus" EntitySet="UserStatus" />
       <End Role="UserDetail" EntitySet="UserDetails" />
@@ -173,6 +176,18 @@
     <AssociationSet Name="StoreImgTypeStoreImage" Association="ecartdb.Store.StoreImgTypeStoreImage">
       <End Role="StoreImgType" EntitySet="StoreImgTypes" />
       <End Role="StoreImage" EntitySet="StoreImages" />
+    </AssociationSet>
+    <AssociationSet Name="StorePaymentTypeStorePayment" Association="ecartdb.Store.StorePaymentTypeStorePayment">
+      <End Role="StorePaymentType" EntitySet="StorePaymentTypes" />
+      <End Role="StorePayment" EntitySet="StorePayments" />
+    </AssociationSet>
+    <AssociationSet Name="StoreDetailStorePayment" Association="ecartdb.Store.StoreDetailStorePayment">
+      <End Role="StoreDetail" EntitySet="StoreDetails" />
+      <End Role="StorePayment" EntitySet="StorePayments" />
+    </AssociationSet>
+    <AssociationSet Name="StorePaymentStatusStorePayment" Association="ecartdb.Store.StorePaymentStatusStorePayment">
+      <End Role="StorePaymentStatus" EntitySet="StorePaymentStatus" />
+      <End Role="StorePayment" EntitySet="StorePayments" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserDetails">
@@ -428,6 +443,34 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="StorePayments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StoreDetailId" Type="int" Nullable="false" />
+    <Property Name="dtPayment" Type="datetime" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Nullable="false" />
+    <Property Name="StorePaymentTypeId" Type="int" Nullable="false" />
+    <Property Name="Remarks" Type="nvarchar" Nullable="true" MaxLength="150" />
+    <Property Name="dtPosted" Type="datetime" Nullable="true" />
+    <Property Name="StorePaymentStatusId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StorePaymentTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="Remarks" Type="nvarchar" Nullable="true" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="StorePaymentStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="20" />
   </EntityType>
   <Association Name="UserStatusUserDetail">
     <End Role="UserStatus" Type="ecartdb.Store.UserStatus" Multiplicity="1" />
@@ -849,6 +892,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="StorePaymentTypeStorePayment">
+    <End Role="StorePaymentType" Type="ecartdb.Store.StorePaymentTypes" Multiplicity="1" />
+    <End Role="StorePayment" Type="ecartdb.Store.StorePayments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StorePaymentType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StorePayment">
+        <PropertyRef Name="StorePaymentTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StoreDetailStorePayment">
+    <End Role="StoreDetail" Type="ecartdb.Store.StoreDetails" Multiplicity="1" />
+    <End Role="StorePayment" Type="ecartdb.Store.StorePayments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StorePayment">
+        <PropertyRef Name="StoreDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StorePaymentStatusStorePayment">
+    <End Role="StorePaymentStatus" Type="ecartdb.Store.StorePaymentStatus" Multiplicity="1" />
+    <End Role="StorePayment" Type="ecartdb.Store.StorePayments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StorePaymentStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StorePayment">
+        <PropertyRef Name="StorePaymentStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -1022,6 +1101,21 @@
             <End Role="StoreImgType" EntitySet="StoreImgTypes" />
             <End Role="StoreImage" EntitySet="StoreImages" />
           </AssociationSet>
+          <EntitySet Name="StorePayments" EntityType="ecartdb.StorePayment" />
+          <EntitySet Name="StorePaymentTypes" EntityType="ecartdb.StorePaymentType" />
+          <AssociationSet Name="StorePaymentTypeStorePayment" Association="ecartdb.StorePaymentTypeStorePayment">
+            <End Role="StorePaymentType" EntitySet="StorePaymentTypes" />
+            <End Role="StorePayment" EntitySet="StorePayments" />
+          </AssociationSet>
+          <AssociationSet Name="StoreDetailStorePayment" Association="ecartdb.StoreDetailStorePayment">
+            <End Role="StoreDetail" EntitySet="StoreDetails" />
+            <End Role="StorePayment" EntitySet="StorePayments" />
+          </AssociationSet>
+          <EntitySet Name="StorePaymentStatus" EntityType="ecartdb.StorePaymentStatus" />
+          <AssociationSet Name="StorePaymentStatusStorePayment" Association="ecartdb.StorePaymentStatusStorePayment">
+            <End Role="StorePaymentStatus" EntitySet="StorePaymentStatus" />
+            <End Role="StorePayment" EntitySet="StorePayments" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserDetail">
           <Key>
@@ -1064,6 +1158,7 @@
           <NavigationProperty Name="StorePickupPoints" Relationship="ecartdb.StoreDetailStorePickupPoint" FromRole="StoreDetail" ToRole="StorePickupPoint" />
           <NavigationProperty Name="StorePickupPartners" Relationship="ecartdb.StoreDetailStorePickupPartner" FromRole="StoreDetail" ToRole="StorePickupPartner" />
           <NavigationProperty Name="StoreImages" Relationship="ecartdb.StoreDetailStoreImage" FromRole="StoreDetail" ToRole="StoreImage" />
+          <NavigationProperty Name="StorePayments" Relationship="ecartdb.StoreDetailStorePayment" FromRole="StoreDetail" ToRole="StorePayment" />
         </EntityType>
         <EntityType Name="UserStatus">
           <Key>
@@ -1767,6 +1862,75 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="StorePayment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoreDetailId" Type="Int32" Nullable="false" />
+          <Property Name="dtPayment" Type="DateTime" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="StorePaymentType" Relationship="ecartdb.StorePaymentTypeStorePayment" FromRole="StorePayment" ToRole="StorePaymentType" />
+          <Property Name="StorePaymentTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="StoreDetail" Relationship="ecartdb.StoreDetailStorePayment" FromRole="StorePayment" ToRole="StoreDetail" />
+          <Property Name="Remarks" Type="String" Nullable="true" MaxLength="150" />
+          <Property Name="dtPosted" Type="DateTime" Nullable="true" />
+          <NavigationProperty Name="StorePaymentStatu" Relationship="ecartdb.StorePaymentStatusStorePayment" FromRole="StorePayment" ToRole="StorePaymentStatus" />
+          <Property Name="StorePaymentStatusId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StorePaymentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="150" />
+          <NavigationProperty Name="StorePayments" Relationship="ecartdb.StorePaymentTypeStorePayment" FromRole="StorePaymentType" ToRole="StorePayment" />
+          <Property Name="Remarks" Type="String" Nullable="true" MaxLength="200" />
+        </EntityType>
+        <Association Name="StorePaymentTypeStorePayment">
+          <End Type="ecartdb.StorePaymentType" Role="StorePaymentType" Multiplicity="1" />
+          <End Type="ecartdb.StorePayment" Role="StorePayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StorePaymentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StorePayment">
+              <PropertyRef Name="StorePaymentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StoreDetailStorePayment">
+          <End Type="ecartdb.StoreDetail" Role="StoreDetail" Multiplicity="1" />
+          <End Type="ecartdb.StorePayment" Role="StorePayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StoreDetail">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StorePayment">
+              <PropertyRef Name="StoreDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="StorePaymentStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" />
+          <NavigationProperty Name="StorePayments" Relationship="ecartdb.StorePaymentStatusStorePayment" FromRole="StorePaymentStatus" ToRole="StorePayment" />
+        </EntityType>
+        <Association Name="StorePaymentStatusStorePayment">
+          <End Type="ecartdb.StorePaymentStatus" Role="StorePaymentStatus" Multiplicity="1" />
+          <End Type="ecartdb.StorePayment" Role="StorePayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StorePaymentStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StorePayment">
+              <PropertyRef Name="StorePaymentStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2050,6 +2214,37 @@
     <EntitySetMapping Name="StoreImgTypes">
       <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreImgType)">
         <MappingFragment StoreEntitySet="StoreImgTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StorePayments">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StorePayment)">
+        <MappingFragment StoreEntitySet="StorePayments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StoreDetailId" ColumnName="StoreDetailId" />
+          <ScalarProperty Name="dtPayment" ColumnName="dtPayment" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="StorePaymentTypeId" ColumnName="StorePaymentTypeId" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="dtPosted" ColumnName="dtPosted" />
+          <ScalarProperty Name="StorePaymentStatusId" ColumnName="StorePaymentStatusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StorePaymentTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StorePaymentType)">
+        <MappingFragment StoreEntitySet="StorePaymentTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StorePaymentStatus">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StorePaymentStatus)">
+        <MappingFragment StoreEntitySet="StorePaymentStatus">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
