@@ -20,6 +20,8 @@ namespace eCart.Models
             this.CartItems = new HashSet<CartItem>();
             this.CartHistories = new HashSet<CartHistory>();
             this.CartDeliveries = new HashSet<CartDelivery>();
+            this.PaymentDetails = new HashSet<PaymentDetail>();
+            this.RiderCashDetails = new HashSet<RiderCashDetail>();
         }
     
         public int Id { get; set; }
@@ -40,5 +42,9 @@ namespace eCart.Models
         public virtual StorePickupPoint StorePickupPoint { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartDelivery> CartDeliveries { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PaymentDetail> PaymentDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RiderCashDetail> RiderCashDetails { get; set; }
     }
 }

@@ -228,6 +228,24 @@
     <Compile Include="Models\MasterCity.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PaymentDetail.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PaymentParty.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PaymentReceiver.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PaymentStatus.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RiderCashDetail.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RiderCashParty.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\RiderDetail.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>

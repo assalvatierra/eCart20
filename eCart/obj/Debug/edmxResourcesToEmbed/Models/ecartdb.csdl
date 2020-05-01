@@ -184,6 +184,40 @@
       <End Role="StorePaymentStatus" EntitySet="StorePaymentStatus" />
       <End Role="StorePayment" EntitySet="StorePayments" />
     </AssociationSet>
+    <EntitySet Name="PaymentDetails" EntityType="ecartdb.PaymentDetail" />
+    <AssociationSet Name="CartDetailPaymentDetail" Association="ecartdb.CartDetailPaymentDetail">
+      <End Role="CartDetail" EntitySet="CartDetails" />
+      <End Role="PaymentDetail" EntitySet="PaymentDetails" />
+    </AssociationSet>
+    <EntitySet Name="PaymentReceivers" EntityType="ecartdb.PaymentReceiver" />
+    <AssociationSet Name="PaymentReceiverPaymentDetail" Association="ecartdb.PaymentReceiverPaymentDetail">
+      <End Role="PaymentReceiver" EntitySet="PaymentReceivers" />
+      <End Role="PaymentDetail" EntitySet="PaymentDetails" />
+    </AssociationSet>
+    <EntitySet Name="PaymentStatus" EntityType="ecartdb.PaymentStatus" />
+    <AssociationSet Name="PaymentStatusPaymentDetail" Association="ecartdb.PaymentStatusPaymentDetail">
+      <End Role="PaymentStatus" EntitySet="PaymentStatus" />
+      <End Role="PaymentDetail" EntitySet="PaymentDetails" />
+    </AssociationSet>
+    <EntitySet Name="RiderCashDetails" EntityType="ecartdb.RiderCashDetail" />
+    <AssociationSet Name="RiderDetailRiderCashDetail" Association="ecartdb.RiderDetailRiderCashDetail">
+      <End Role="RiderDetail" EntitySet="RiderDetails" />
+      <End Role="RiderCashDetail" EntitySet="RiderCashDetails" />
+    </AssociationSet>
+    <EntitySet Name="RiderCashParties" EntityType="ecartdb.RiderCashParty" />
+    <AssociationSet Name="RiderCashPartyRiderCashDetail" Association="ecartdb.RiderCashPartyRiderCashDetail">
+      <End Role="RiderCashParty" EntitySet="RiderCashParties" />
+      <End Role="RiderCashDetail" EntitySet="RiderCashDetails" />
+    </AssociationSet>
+    <AssociationSet Name="CartDetailRiderCashDetail" Association="ecartdb.CartDetailRiderCashDetail">
+      <End Role="CartDetail" EntitySet="CartDetails" />
+      <End Role="RiderCashDetail" EntitySet="RiderCashDetails" />
+    </AssociationSet>
+    <EntitySet Name="PaymentParties" EntityType="ecartdb.PaymentParty" />
+    <AssociationSet Name="PaymentPartyPaymentDetail" Association="ecartdb.PaymentPartyPaymentDetail">
+      <End Role="PaymentParty" EntitySet="PaymentParties" />
+      <End Role="PaymentDetail" EntitySet="PaymentDetails" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserDetail">
     <Key>
@@ -456,6 +490,8 @@
     <NavigationProperty Name="CartDeliveries" Relationship="ecartdb.CartDetailCartDelivery" FromRole="CartDetail" ToRole="CartDelivery" />
     <Property Name="DtPickup" Type="DateTime" Nullable="false" />
     <Property Name="DeliveryType" Type="String" Nullable="false" MaxLength="10" />
+    <NavigationProperty Name="PaymentDetails" Relationship="ecartdb.CartDetailPaymentDetail" FromRole="CartDetail" ToRole="PaymentDetail" />
+    <NavigationProperty Name="RiderCashDetails" Relationship="ecartdb.CartDetailRiderCashDetail" FromRole="CartDetail" ToRole="RiderCashDetail" />
   </EntityType>
   <Association Name="UserDetailCartDetail">
     <End Type="ecartdb.UserDetail" Role="UserDetail" Multiplicity="1" />
@@ -777,6 +813,7 @@
     <Property Name="MasterCityId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="CartDeliveries" Relationship="ecartdb.RiderDetailCartDelivery" FromRole="RiderDetail" ToRole="CartDelivery" />
     <Property Name="Mobile2" Type="String" Nullable="true" MaxLength="20" />
+    <NavigationProperty Name="RiderCashDetails" Relationship="ecartdb.RiderDetailRiderCashDetail" FromRole="RiderDetail" ToRole="RiderCashDetail" />
   </EntityType>
   <EntityType Name="RiderStatus">
     <Key>
@@ -996,6 +1033,155 @@
       </Principal>
       <Dependent Role="StorePayment">
         <PropertyRef Name="StorePaymentStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="PaymentDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="CartDetail" Relationship="ecartdb.CartDetailPaymentDetail" FromRole="PaymentDetail" ToRole="CartDetail" />
+    <Property Name="CartDetailId" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" />
+    <NavigationProperty Name="PaymentReceiver" Relationship="ecartdb.PaymentReceiverPaymentDetail" FromRole="PaymentDetail" ToRole="PaymentReceiver" />
+    <Property Name="dtPayment" Type="DateTime" Nullable="false" />
+    <NavigationProperty Name="PaymentStatu" Relationship="ecartdb.PaymentStatusPaymentDetail" FromRole="PaymentDetail" ToRole="PaymentStatus" />
+    <Property Name="PaymentReceiverId" Type="Int32" Nullable="false" />
+    <Property Name="ReceiverInfo" Type="String" Nullable="true" MaxLength="30" />
+    <NavigationProperty Name="PaymentParty" Relationship="ecartdb.PaymentPartyPaymentDetail" FromRole="PaymentDetail" ToRole="PaymentParty" />
+    <Property Name="PaymentPartyId" Type="Int32" Nullable="false" />
+    <Property Name="PartyInfo" Type="String" Nullable="true" MaxLength="30" />
+    <Property Name="PaymentStatusId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="CartDetailPaymentDetail">
+    <End Type="ecartdb.CartDetail" Role="CartDetail" Multiplicity="1" />
+    <End Type="ecartdb.PaymentDetail" Role="PaymentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CartDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PaymentDetail">
+        <PropertyRef Name="CartDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="PaymentReceiver">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="50" />
+    <NavigationProperty Name="PaymentDetails" Relationship="ecartdb.PaymentReceiverPaymentDetail" FromRole="PaymentReceiver" ToRole="PaymentDetail" />
+  </EntityType>
+  <Association Name="PaymentReceiverPaymentDetail">
+    <End Type="ecartdb.PaymentReceiver" Role="PaymentReceiver" Multiplicity="1" />
+    <End Type="ecartdb.PaymentDetail" Role="PaymentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentReceiver">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PaymentDetail">
+        <PropertyRef Name="PaymentReceiverId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="PaymentStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="PaymentDetails" Relationship="ecartdb.PaymentStatusPaymentDetail" FromRole="PaymentStatus" ToRole="PaymentDetail" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="10" />
+  </EntityType>
+  <Association Name="PaymentStatusPaymentDetail">
+    <End Type="ecartdb.PaymentStatus" Role="PaymentStatus" Multiplicity="1" />
+    <End Type="ecartdb.PaymentDetail" Role="PaymentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PaymentDetail">
+        <PropertyRef Name="PaymentStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="RiderCashDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="RiderDetail" Relationship="ecartdb.RiderDetailRiderCashDetail" FromRole="RiderCashDetail" ToRole="RiderDetail" />
+    <Property Name="RiderDetailId" Type="Int32" Nullable="false" />
+    <Property Name="DtCash" Type="DateTime" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" />
+    <NavigationProperty Name="RiderCashParty" Relationship="ecartdb.RiderCashPartyRiderCashDetail" FromRole="RiderCashDetail" ToRole="RiderCashParty" />
+    <Property Name="RiderCashPartyId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="CartDetail" Relationship="ecartdb.CartDetailRiderCashDetail" FromRole="RiderCashDetail" ToRole="CartDetail" />
+    <Property Name="CartDetailId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="RiderDetailRiderCashDetail">
+    <End Type="ecartdb.RiderDetail" Role="RiderDetail" Multiplicity="1" />
+    <End Type="ecartdb.RiderCashDetail" Role="RiderCashDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RiderDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RiderCashDetail">
+        <PropertyRef Name="RiderDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="RiderCashParty">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="30" />
+    <NavigationProperty Name="RiderCashDetails" Relationship="ecartdb.RiderCashPartyRiderCashDetail" FromRole="RiderCashParty" ToRole="RiderCashDetail" />
+    <Property Name="Operation" Type="String" Nullable="false" MaxLength="10" />
+  </EntityType>
+  <Association Name="RiderCashPartyRiderCashDetail">
+    <End Type="ecartdb.RiderCashParty" Role="RiderCashParty" Multiplicity="1" />
+    <End Type="ecartdb.RiderCashDetail" Role="RiderCashDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RiderCashParty">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RiderCashDetail">
+        <PropertyRef Name="RiderCashPartyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CartDetailRiderCashDetail">
+    <End Type="ecartdb.CartDetail" Role="CartDetail" Multiplicity="1" />
+    <End Type="ecartdb.RiderCashDetail" Role="RiderCashDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CartDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RiderCashDetail">
+        <PropertyRef Name="CartDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="PaymentParty">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="20" />
+    <NavigationProperty Name="PaymentDetails" Relationship="ecartdb.PaymentPartyPaymentDetail" FromRole="PaymentParty" ToRole="PaymentDetail" />
+  </EntityType>
+  <Association Name="PaymentPartyPaymentDetail">
+    <End Type="ecartdb.PaymentParty" Role="PaymentParty" Multiplicity="1" />
+    <End Type="ecartdb.PaymentDetail" Role="PaymentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentParty">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PaymentDetail">
+        <PropertyRef Name="PaymentPartyId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

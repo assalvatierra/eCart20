@@ -157,4 +157,3 @@ D:\Projects\eCart20\eCart\obj\Debug\eCart.csproj.CoreCompileInputs.cache
 D:\Projects\eCart20\eCart\obj\Debug\eCart.csproj.CopyComplete
 D:\Projects\eCart20\eCart\obj\Debug\eCart.dll
 D:\Projects\eCart20\eCart\obj\Debug\eCart.pdb
-D:\Projects\eCart20\eCart\obj\Debug\eCart.csprojAssemblyReference.cache

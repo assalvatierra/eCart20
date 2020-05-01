@@ -32,6 +32,12 @@
     <EntitySet Name="StorePayments" EntityType="ecartdb.Store.StorePayments" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="StorePaymentTypes" EntityType="ecartdb.Store.StorePaymentTypes" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="StorePaymentStatus" EntityType="ecartdb.Store.StorePaymentStatus" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PaymentDetails" EntityType="ecartdb.Store.PaymentDetails" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PaymentReceivers" EntityType="ecartdb.Store.PaymentReceivers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PaymentStatus" EntityType="ecartdb.Store.PaymentStatus" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RiderCashDetails" EntityType="ecartdb.Store.RiderCashDetails" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RiderCashParties" EntityType="ecartdb.Store.RiderCashParties" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PaymentParties" EntityType="ecartdb.Store.PaymentParties" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserStatusUserDetail" Association="ecartdb.Store.UserStatusUserDetail">
       <End Role="UserStatus" EntitySet="UserStatus" />
       <End Role="UserDetail" EntitySet="UserDetails" />
@@ -183,6 +189,34 @@
     <AssociationSet Name="StorePaymentStatusStorePayment" Association="ecartdb.Store.StorePaymentStatusStorePayment">
       <End Role="StorePaymentStatus" EntitySet="StorePaymentStatus" />
       <End Role="StorePayment" EntitySet="StorePayments" />
+    </AssociationSet>
+    <AssociationSet Name="CartDetailPaymentDetail" Association="ecartdb.Store.CartDetailPaymentDetail">
+      <End Role="CartDetail" EntitySet="CartDetails" />
+      <End Role="PaymentDetail" EntitySet="PaymentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="PaymentReceiverPaymentDetail" Association="ecartdb.Store.PaymentReceiverPaymentDetail">
+      <End Role="PaymentReceiver" EntitySet="PaymentReceivers" />
+      <End Role="PaymentDetail" EntitySet="PaymentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="PaymentStatusPaymentDetail" Association="ecartdb.Store.PaymentStatusPaymentDetail">
+      <End Role="PaymentStatus" EntitySet="PaymentStatus" />
+      <End Role="PaymentDetail" EntitySet="PaymentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="RiderDetailRiderCashDetail" Association="ecartdb.Store.RiderDetailRiderCashDetail">
+      <End Role="RiderDetail" EntitySet="RiderDetails" />
+      <End Role="RiderCashDetail" EntitySet="RiderCashDetails" />
+    </AssociationSet>
+    <AssociationSet Name="RiderCashPartyRiderCashDetail" Association="ecartdb.Store.RiderCashPartyRiderCashDetail">
+      <End Role="RiderCashParty" EntitySet="RiderCashParties" />
+      <End Role="RiderCashDetail" EntitySet="RiderCashDetails" />
+    </AssociationSet>
+    <AssociationSet Name="CartDetailRiderCashDetail" Association="ecartdb.Store.CartDetailRiderCashDetail">
+      <End Role="CartDetail" EntitySet="CartDetails" />
+      <End Role="RiderCashDetail" EntitySet="RiderCashDetails" />
+    </AssociationSet>
+    <AssociationSet Name="PaymentPartyPaymentDetail" Association="ecartdb.Store.PaymentPartyPaymentDetail">
+      <End Role="PaymentParty" EntitySet="PaymentParties" />
+      <End Role="PaymentDetail" EntitySet="PaymentDetails" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserDetails">
@@ -461,6 +495,60 @@
     <Property Name="Remarks" Type="nvarchar" Nullable="true" MaxLength="200" />
   </EntityType>
   <EntityType Name="StorePaymentStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="PaymentDetails">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CartDetailId" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Nullable="false" />
+    <Property Name="dtPayment" Type="datetime" Nullable="false" />
+    <Property Name="PaymentReceiverId" Type="int" Nullable="false" />
+    <Property Name="ReceiverInfo" Type="nvarchar" Nullable="true" MaxLength="30" />
+    <Property Name="PaymentPartyId" Type="int" Nullable="false" />
+    <Property Name="PartyInfo" Type="nvarchar" Nullable="true" MaxLength="30" />
+    <Property Name="PaymentStatusId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PaymentReceivers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="PaymentStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="RiderCashDetails">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RiderDetailId" Type="int" Nullable="false" />
+    <Property Name="DtCash" Type="datetime" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Nullable="false" />
+    <Property Name="RiderCashPartyId" Type="int" Nullable="false" />
+    <Property Name="CartDetailId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RiderCashParties">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="30" />
+    <Property Name="Operation" Type="nvarchar" Nullable="false" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="PaymentParties">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -920,6 +1008,90 @@
       </Principal>
       <Dependent Role="StorePayment">
         <PropertyRef Name="StorePaymentStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CartDetailPaymentDetail">
+    <End Role="CartDetail" Type="ecartdb.Store.CartDetails" Multiplicity="1" />
+    <End Role="PaymentDetail" Type="ecartdb.Store.PaymentDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CartDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PaymentDetail">
+        <PropertyRef Name="CartDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PaymentReceiverPaymentDetail">
+    <End Role="PaymentReceiver" Type="ecartdb.Store.PaymentReceivers" Multiplicity="1" />
+    <End Role="PaymentDetail" Type="ecartdb.Store.PaymentDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentReceiver">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PaymentDetail">
+        <PropertyRef Name="PaymentReceiverId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PaymentStatusPaymentDetail">
+    <End Role="PaymentStatus" Type="ecartdb.Store.PaymentStatus" Multiplicity="1" />
+    <End Role="PaymentDetail" Type="ecartdb.Store.PaymentDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PaymentDetail">
+        <PropertyRef Name="PaymentStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RiderDetailRiderCashDetail">
+    <End Role="RiderDetail" Type="ecartdb.Store.RiderDetails" Multiplicity="1" />
+    <End Role="RiderCashDetail" Type="ecartdb.Store.RiderCashDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RiderDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RiderCashDetail">
+        <PropertyRef Name="RiderDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RiderCashPartyRiderCashDetail">
+    <End Role="RiderCashParty" Type="ecartdb.Store.RiderCashParties" Multiplicity="1" />
+    <End Role="RiderCashDetail" Type="ecartdb.Store.RiderCashDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RiderCashParty">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RiderCashDetail">
+        <PropertyRef Name="RiderCashPartyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CartDetailRiderCashDetail">
+    <End Role="CartDetail" Type="ecartdb.Store.CartDetails" Multiplicity="1" />
+    <End Role="RiderCashDetail" Type="ecartdb.Store.RiderCashDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CartDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RiderCashDetail">
+        <PropertyRef Name="CartDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PaymentPartyPaymentDetail">
+    <End Role="PaymentParty" Type="ecartdb.Store.PaymentParties" Multiplicity="1" />
+    <End Role="PaymentDetail" Type="ecartdb.Store.PaymentDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PaymentParty">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PaymentDetail">
+        <PropertyRef Name="PaymentPartyId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/01/2020 11:07:50
+-- Date Created: 05/01/2020 16:53:33
 -- Generated from EDMX file: D:\Projects\eCart20\eCart\Models\ecartdb.edmx
 -- --------------------------------------------------
 
@@ -122,6 +122,36 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_StoreImgTypeStoreImage]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[StoreImages] DROP CONSTRAINT [FK_StoreImgTypeStoreImage];
 GO
+IF OBJECT_ID(N'[dbo].[FK_StorePaymentTypeStorePayment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StorePayments] DROP CONSTRAINT [FK_StorePaymentTypeStorePayment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StoreDetailStorePayment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StorePayments] DROP CONSTRAINT [FK_StoreDetailStorePayment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StorePaymentStatusStorePayment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StorePayments] DROP CONSTRAINT [FK_StorePaymentStatusStorePayment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CartDetailPaymentDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PaymentDetails] DROP CONSTRAINT [FK_CartDetailPaymentDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PaymentReceiverPaymentDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PaymentDetails] DROP CONSTRAINT [FK_PaymentReceiverPaymentDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PaymentStatusPaymentDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PaymentDetails] DROP CONSTRAINT [FK_PaymentStatusPaymentDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_RiderDetailRiderCashDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[RiderCashDetails] DROP CONSTRAINT [FK_RiderDetailRiderCashDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_RiderCashPartyRiderCashDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[RiderCashDetails] DROP CONSTRAINT [FK_RiderCashPartyRiderCashDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CartDetailRiderCashDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[RiderCashDetails] DROP CONSTRAINT [FK_CartDetailRiderCashDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PaymentPartyPaymentDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PaymentDetails] DROP CONSTRAINT [FK_PaymentPartyPaymentDetail];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -210,6 +240,33 @@ IF OBJECT_ID(N'[dbo].[ItemImages]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[StoreImgTypes]', 'U') IS NOT NULL
     DROP TABLE [dbo].[StoreImgTypes];
+GO
+IF OBJECT_ID(N'[dbo].[StorePayments]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StorePayments];
+GO
+IF OBJECT_ID(N'[dbo].[StorePaymentTypes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StorePaymentTypes];
+GO
+IF OBJECT_ID(N'[dbo].[StorePaymentStatus]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StorePaymentStatus];
+GO
+IF OBJECT_ID(N'[dbo].[PaymentDetails]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PaymentDetails];
+GO
+IF OBJECT_ID(N'[dbo].[PaymentReceivers]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PaymentReceivers];
+GO
+IF OBJECT_ID(N'[dbo].[PaymentStatus]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PaymentStatus];
+GO
+IF OBJECT_ID(N'[dbo].[RiderCashDetails]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[RiderCashDetails];
+GO
+IF OBJECT_ID(N'[dbo].[RiderCashParties]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[RiderCashParties];
+GO
+IF OBJECT_ID(N'[dbo].[PaymentParties]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PaymentParties];
 GO
 
 -- --------------------------------------------------
@@ -498,6 +555,60 @@ CREATE TABLE [dbo].[StorePaymentStatus] (
 );
 GO
 
+-- Creating table 'PaymentDetails'
+CREATE TABLE [dbo].[PaymentDetails] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [CartDetailId] int  NOT NULL,
+    [Amount] decimal(18,0)  NOT NULL,
+    [dtPayment] datetime  NOT NULL,
+    [PaymentReceiverId] int  NOT NULL,
+    [ReceiverInfo] nvarchar(30)  NULL,
+    [PaymentPartyId] int  NOT NULL,
+    [PartyInfo] nvarchar(30)  NULL,
+    [PaymentStatusId] int  NOT NULL
+);
+GO
+
+-- Creating table 'PaymentReceivers'
+CREATE TABLE [dbo].[PaymentReceivers] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Description] nvarchar(50)  NOT NULL
+);
+GO
+
+-- Creating table 'PaymentStatus'
+CREATE TABLE [dbo].[PaymentStatus] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(10)  NOT NULL
+);
+GO
+
+-- Creating table 'RiderCashDetails'
+CREATE TABLE [dbo].[RiderCashDetails] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [RiderDetailId] int  NOT NULL,
+    [DtCash] datetime  NOT NULL,
+    [Amount] decimal(18,0)  NOT NULL,
+    [RiderCashPartyId] int  NOT NULL,
+    [CartDetailId] int  NOT NULL
+);
+GO
+
+-- Creating table 'RiderCashParties'
+CREATE TABLE [dbo].[RiderCashParties] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(30)  NOT NULL,
+    [Operation] nvarchar(10)  NOT NULL
+);
+GO
+
+-- Creating table 'PaymentParties'
+CREATE TABLE [dbo].[PaymentParties] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(20)  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -685,6 +796,42 @@ GO
 -- Creating primary key on [Id] in table 'StorePaymentStatus'
 ALTER TABLE [dbo].[StorePaymentStatus]
 ADD CONSTRAINT [PK_StorePaymentStatus]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'PaymentDetails'
+ALTER TABLE [dbo].[PaymentDetails]
+ADD CONSTRAINT [PK_PaymentDetails]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'PaymentReceivers'
+ALTER TABLE [dbo].[PaymentReceivers]
+ADD CONSTRAINT [PK_PaymentReceivers]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'PaymentStatus'
+ALTER TABLE [dbo].[PaymentStatus]
+ADD CONSTRAINT [PK_PaymentStatus]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'RiderCashDetails'
+ALTER TABLE [dbo].[RiderCashDetails]
+ADD CONSTRAINT [PK_RiderCashDetails]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'RiderCashParties'
+ALTER TABLE [dbo].[RiderCashParties]
+ADD CONSTRAINT [PK_RiderCashParties]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'PaymentParties'
+ALTER TABLE [dbo].[PaymentParties]
+ADD CONSTRAINT [PK_PaymentParties]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -1260,6 +1407,111 @@ GO
 CREATE INDEX [IX_FK_StorePaymentStatusStorePayment]
 ON [dbo].[StorePayments]
     ([StorePaymentStatusId]);
+GO
+
+-- Creating foreign key on [CartDetailId] in table 'PaymentDetails'
+ALTER TABLE [dbo].[PaymentDetails]
+ADD CONSTRAINT [FK_CartDetailPaymentDetail]
+    FOREIGN KEY ([CartDetailId])
+    REFERENCES [dbo].[CartDetails]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CartDetailPaymentDetail'
+CREATE INDEX [IX_FK_CartDetailPaymentDetail]
+ON [dbo].[PaymentDetails]
+    ([CartDetailId]);
+GO
+
+-- Creating foreign key on [PaymentReceiverId] in table 'PaymentDetails'
+ALTER TABLE [dbo].[PaymentDetails]
+ADD CONSTRAINT [FK_PaymentReceiverPaymentDetail]
+    FOREIGN KEY ([PaymentReceiverId])
+    REFERENCES [dbo].[PaymentReceivers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PaymentReceiverPaymentDetail'
+CREATE INDEX [IX_FK_PaymentReceiverPaymentDetail]
+ON [dbo].[PaymentDetails]
+    ([PaymentReceiverId]);
+GO
+
+-- Creating foreign key on [PaymentStatusId] in table 'PaymentDetails'
+ALTER TABLE [dbo].[PaymentDetails]
+ADD CONSTRAINT [FK_PaymentStatusPaymentDetail]
+    FOREIGN KEY ([PaymentStatusId])
+    REFERENCES [dbo].[PaymentStatus]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PaymentStatusPaymentDetail'
+CREATE INDEX [IX_FK_PaymentStatusPaymentDetail]
+ON [dbo].[PaymentDetails]
+    ([PaymentStatusId]);
+GO
+
+-- Creating foreign key on [RiderDetailId] in table 'RiderCashDetails'
+ALTER TABLE [dbo].[RiderCashDetails]
+ADD CONSTRAINT [FK_RiderDetailRiderCashDetail]
+    FOREIGN KEY ([RiderDetailId])
+    REFERENCES [dbo].[RiderDetails]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_RiderDetailRiderCashDetail'
+CREATE INDEX [IX_FK_RiderDetailRiderCashDetail]
+ON [dbo].[RiderCashDetails]
+    ([RiderDetailId]);
+GO
+
+-- Creating foreign key on [RiderCashPartyId] in table 'RiderCashDetails'
+ALTER TABLE [dbo].[RiderCashDetails]
+ADD CONSTRAINT [FK_RiderCashPartyRiderCashDetail]
+    FOREIGN KEY ([RiderCashPartyId])
+    REFERENCES [dbo].[RiderCashParties]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_RiderCashPartyRiderCashDetail'
+CREATE INDEX [IX_FK_RiderCashPartyRiderCashDetail]
+ON [dbo].[RiderCashDetails]
+    ([RiderCashPartyId]);
+GO
+
+-- Creating foreign key on [CartDetailId] in table 'RiderCashDetails'
+ALTER TABLE [dbo].[RiderCashDetails]
+ADD CONSTRAINT [FK_CartDetailRiderCashDetail]
+    FOREIGN KEY ([CartDetailId])
+    REFERENCES [dbo].[CartDetails]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CartDetailRiderCashDetail'
+CREATE INDEX [IX_FK_CartDetailRiderCashDetail]
+ON [dbo].[RiderCashDetails]
+    ([CartDetailId]);
+GO
+
+-- Creating foreign key on [PaymentPartyId] in table 'PaymentDetails'
+ALTER TABLE [dbo].[PaymentDetails]
+ADD CONSTRAINT [FK_PaymentPartyPaymentDetail]
+    FOREIGN KEY ([PaymentPartyId])
+    REFERENCES [dbo].[PaymentParties]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PaymentPartyPaymentDetail'
+CREATE INDEX [IX_FK_PaymentPartyPaymentDetail]
+ON [dbo].[PaymentDetails]
+    ([PaymentPartyId]);
 GO
 
 -- --------------------------------------------------

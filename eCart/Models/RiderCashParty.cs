@@ -12,29 +12,18 @@ namespace eCart.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class RiderDetail
+    public partial class RiderCashParty
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public RiderDetail()
+        public RiderCashParty()
         {
-            this.CartDeliveries = new HashSet<CartDelivery>();
             this.RiderCashDetails = new HashSet<RiderCashDetail>();
         }
     
         public int Id { get; set; }
-        public string UserId { get; set; }
         public string Name { get; set; }
-        public string Address { get; set; }
-        public string Mobile { get; set; }
-        public string Remarks { get; set; }
-        public int RiderStatusId { get; set; }
-        public int MasterCityId { get; set; }
-        public string Mobile2 { get; set; }
+        public string Operation { get; set; }
     
-        public virtual RiderStatus RiderStatu { get; set; }
-        public virtual MasterCity MasterCity { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CartDelivery> CartDeliveries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RiderCashDetail> RiderCashDetails { get; set; }
     }
