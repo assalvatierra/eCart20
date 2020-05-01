@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/01/2020 07:55:44
+-- Date Created: 05/01/2020 11:07:50
 -- Generated from EDMX file: D:\Projects\eCart20\eCart\Models\ecartdb.edmx
 -- --------------------------------------------------
 
@@ -113,6 +113,15 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_CartActivityTypeCartActivity]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CartActivities] DROP CONSTRAINT [FK_CartActivityTypeCartActivity];
 GO
+IF OBJECT_ID(N'[dbo].[FK_StoreDetailStoreImage]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreImages] DROP CONSTRAINT [FK_StoreDetailStoreImage];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ItemMasterItemImage]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ItemImages] DROP CONSTRAINT [FK_ItemMasterItemImage];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StoreImgTypeStoreImage]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreImages] DROP CONSTRAINT [FK_StoreImgTypeStoreImage];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -192,6 +201,15 @@ IF OBJECT_ID(N'[dbo].[CartActivities]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[CartActivityTypes]', 'U') IS NOT NULL
     DROP TABLE [dbo].[CartActivityTypes];
+GO
+IF OBJECT_ID(N'[dbo].[StoreImages]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StoreImages];
+GO
+IF OBJECT_ID(N'[dbo].[ItemImages]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ItemImages];
+GO
+IF OBJECT_ID(N'[dbo].[StoreImgTypes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StoreImgTypes];
 GO
 
 -- --------------------------------------------------
@@ -452,6 +470,34 @@ CREATE TABLE [dbo].[StoreImgTypes] (
 );
 GO
 
+-- Creating table 'StorePayments'
+CREATE TABLE [dbo].[StorePayments] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [StoreDetailId] int  NOT NULL,
+    [dtPayment] datetime  NOT NULL,
+    [Amount] decimal(18,0)  NOT NULL,
+    [StorePaymentTypeId] int  NOT NULL,
+    [Remarks] nvarchar(150)  NULL,
+    [dtPosted] datetime  NULL,
+    [StorePaymentStatusId] int  NOT NULL
+);
+GO
+
+-- Creating table 'StorePaymentTypes'
+CREATE TABLE [dbo].[StorePaymentTypes] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Description] nvarchar(150)  NOT NULL,
+    [Remarks] nvarchar(200)  NULL
+);
+GO
+
+-- Creating table 'StorePaymentStatus'
+CREATE TABLE [dbo].[StorePaymentStatus] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(20)  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -621,6 +667,24 @@ GO
 -- Creating primary key on [Id] in table 'StoreImgTypes'
 ALTER TABLE [dbo].[StoreImgTypes]
 ADD CONSTRAINT [PK_StoreImgTypes]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'StorePayments'
+ALTER TABLE [dbo].[StorePayments]
+ADD CONSTRAINT [PK_StorePayments]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'StorePaymentTypes'
+ALTER TABLE [dbo].[StorePaymentTypes]
+ADD CONSTRAINT [PK_StorePaymentTypes]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'StorePaymentStatus'
+ALTER TABLE [dbo].[StorePaymentStatus]
+ADD CONSTRAINT [PK_StorePaymentStatus]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -1151,6 +1215,51 @@ GO
 CREATE INDEX [IX_FK_StoreImgTypeStoreImage]
 ON [dbo].[StoreImages]
     ([StoreImgTypeId]);
+GO
+
+-- Creating foreign key on [StorePaymentTypeId] in table 'StorePayments'
+ALTER TABLE [dbo].[StorePayments]
+ADD CONSTRAINT [FK_StorePaymentTypeStorePayment]
+    FOREIGN KEY ([StorePaymentTypeId])
+    REFERENCES [dbo].[StorePaymentTypes]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_StorePaymentTypeStorePayment'
+CREATE INDEX [IX_FK_StorePaymentTypeStorePayment]
+ON [dbo].[StorePayments]
+    ([StorePaymentTypeId]);
+GO
+
+-- Creating foreign key on [StoreDetailId] in table 'StorePayments'
+ALTER TABLE [dbo].[StorePayments]
+ADD CONSTRAINT [FK_StoreDetailStorePayment]
+    FOREIGN KEY ([StoreDetailId])
+    REFERENCES [dbo].[StoreDetails]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_StoreDetailStorePayment'
+CREATE INDEX [IX_FK_StoreDetailStorePayment]
+ON [dbo].[StorePayments]
+    ([StoreDetailId]);
+GO
+
+-- Creating foreign key on [StorePaymentStatusId] in table 'StorePayments'
+ALTER TABLE [dbo].[StorePayments]
+ADD CONSTRAINT [FK_StorePaymentStatusStorePayment]
+    FOREIGN KEY ([StorePaymentStatusId])
+    REFERENCES [dbo].[StorePaymentStatus]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_StorePaymentStatusStorePayment'
+CREATE INDEX [IX_FK_StorePaymentStatusStorePayment]
+ON [dbo].[StorePayments]
+    ([StorePaymentStatusId]);
 GO
 
 -- --------------------------------------------------

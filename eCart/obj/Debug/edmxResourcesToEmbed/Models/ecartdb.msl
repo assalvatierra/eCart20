@@ -283,5 +283,36 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="StorePayments">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StorePayment)">
+        <MappingFragment StoreEntitySet="StorePayments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StoreDetailId" ColumnName="StoreDetailId" />
+          <ScalarProperty Name="dtPayment" ColumnName="dtPayment" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="StorePaymentTypeId" ColumnName="StorePaymentTypeId" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="dtPosted" ColumnName="dtPosted" />
+          <ScalarProperty Name="StorePaymentStatusId" ColumnName="StorePaymentStatusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StorePaymentTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StorePaymentType)">
+        <MappingFragment StoreEntitySet="StorePaymentTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StorePaymentStatus">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StorePaymentStatus)">
+        <MappingFragment StoreEntitySet="StorePaymentStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
