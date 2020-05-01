@@ -314,5 +314,65 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PaymentDetails">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.PaymentDetail)">
+        <MappingFragment StoreEntitySet="PaymentDetails">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CartDetailId" ColumnName="CartDetailId" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="dtPayment" ColumnName="dtPayment" />
+          <ScalarProperty Name="PaymentReceiverId" ColumnName="PaymentReceiverId" />
+          <ScalarProperty Name="ReceiverInfo" ColumnName="ReceiverInfo" />
+          <ScalarProperty Name="PaymentPartyId" ColumnName="PaymentPartyId" />
+          <ScalarProperty Name="PartyInfo" ColumnName="PartyInfo" />
+          <ScalarProperty Name="PaymentStatusId" ColumnName="PaymentStatusId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentReceivers">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.PaymentReceiver)">
+        <MappingFragment StoreEntitySet="PaymentReceivers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentStatus">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.PaymentStatus)">
+        <MappingFragment StoreEntitySet="PaymentStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RiderCashDetails">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.RiderCashDetail)">
+        <MappingFragment StoreEntitySet="RiderCashDetails">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="RiderDetailId" ColumnName="RiderDetailId" />
+          <ScalarProperty Name="DtCash" ColumnName="DtCash" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="RiderCashPartyId" ColumnName="RiderCashPartyId" />
+          <ScalarProperty Name="CartDetailId" ColumnName="CartDetailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RiderCashParties">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.RiderCashParty)">
+        <MappingFragment StoreEntitySet="RiderCashParties">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Operation" ColumnName="Operation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentParties">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.PaymentParty)">
+        <MappingFragment StoreEntitySet="PaymentParties">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
