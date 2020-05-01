@@ -7,48 +7,67 @@
     <hr />
 </div>
 
-@foreach (var cart in Model)
-{
-    <div class="panel panel-carts col-lg-12">
-        <div class="panel-heading" style="border-bottom:1px solid lightgray;">
-            <div >
-                <h4>
-                    <a href="@Url.Action("Details", "CartDetails",new { id = cart.Id })" >
-                        <b> Cart Details - #@cart.Id  </b>
-                    </a>
-                 
-                    <span class="pill-active pull-right">  @cart.CartStatu.Name </span>
-                </h4>
-            </div>
-        </div>
-        <div class="panel-body">
-            @{ 
+<div class="panel panel-default col-lg-12">
+    <table class="table">
+        <thead>
+            <tr style="font-weight:bold;">
+                <td> Cart Id </td>
+                <td> Status </td>
+                <td> Shopper </td>
+                <td> Contact # </td>
+                <td> Delivery Type </td>
+                <td> Pickup Date </td>
+                <td> Pickup Location </td>
+                <td> Total Items </td>
+                <td> Total Amount </td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            @{
                 var itemCount = 0;
                 decimal totalAmount = 0;
             }
-            @foreach (var item in cart.CartItems)
+            @foreach (var cart in Model)
             {
-                itemCount++;
-                totalAmount += item.ItemQty * item.StoreItem.UnitPrice;
+                foreach (var item in cart.CartItems)
+                {
+                    itemCount++;
+                    totalAmount += item.ItemQty * item.StoreItem.UnitPrice;
+                }
+                <tr>
+                    <td>
+                        @cart.Id
+                    </td>
+                    <td>
+                        @cart.CartStatu.Name
+                    </td>
+                    <td>
+                        @cart.UserDetail.Name
+                    </td>
+                    <td>
+                        @cart.UserDetail.Mobile
+                    </td>
+                    <td>
+                        @cart.DeliveryType
+                    </td>
+                    <td>
+                        @cart.DtPickup.ToString("MMM dd yyyy h:mm tt")
+                    </td>
+                    <td>
+                        @cart.StorePickupPoint.Address
+                    </td>
+                    <td>
+                        @itemCount
+                    </td>
+                    <td>
+                        @totalAmount.ToString("0.00")
+                    </td>
+                    <td>
+                        @Html.ActionLink("View Cart", "Details", "CartDetails", new { id = cart.Id }, null)
+                    </td>
+                </tr>
             }
-
-            <div class="row">
-                <div class="col-lg-6 col-md-4">
-                    <p> <span class="text-muted"> Shopper:</span> @cart.UserDetail.Name </p>
-                    <p> <span class="text-muted"> Contact #:</span> @cart.UserDetail.Mobile </p>
-                    <p> <span class="text-muted"> Total Items:</span> @itemCount </p>
-                    <p> <span class="text-muted"> Total Amount #:</span> Php @totalAmount.ToString("0.00") </p>
-                </div>
-
-                <div class="col-lg-6 col-md-4">
-                    <p> <span class="text-muted"> Delivery Type:</span>  @cart.DeliveryType</p>
-                    <p> <span class="text-muted"> Pickup Date:</span> @cart.DtPickup.ToString("MMM dd yyyy") </p>
-                    <p> <span class="text-muted"> Pickup Time:</span> @cart.DtPickup.ToString("h:mm tt") </p>
-                    <p> <span class="text-muted"> Pickup Location:</span>  @cart.StorePickupPoint.StoreDetail.Name, @cart.StorePickupPoint.Address </p>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-}
+        </tbody>
+    </table>
+</div>
