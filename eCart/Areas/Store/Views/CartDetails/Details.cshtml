@@ -5,18 +5,16 @@
 }
 
 <div class="row">
-    <h1>@ViewBag.Store</h1>
-    <h3> Carts Details </h3>
-    @Html.ActionLink("Back to List", "Index", "Home", new { area ="Store", id = @ViewBag.StoreId }, null)
-    <hr />
+    <h1>@ViewBag.Store - Carts Details</h1>
+    @Html.ActionLink("Back to List", "Index", "Home", new { area = "Store", id = @ViewBag.StoreId }, null)
 </div>
 
-<div class="panel panel-carts col-lg-12">
+<div class="panel row">
     <div class="panel-body store-cart">
         <h3>
             Cart # : @Model.Id  &nbsp;
-            <span class="pill-active pull-right">  @Model.CartStatu.Name </span>
         </h3>
+        <p><span class="text-muted"> Status: </span> @Model.CartStatu.Name</p>
         <hr />
         <h4> <b> Shopper Details </b> </h4>
         <div class="col-lg-12">
@@ -37,9 +35,9 @@
         <hr />
         <h4> <b> Shopper Items </b> </h4>
         <div style="margin:0px -15px;">
-            <table class="table">
+            <table class="table bordered">
 
-                <thead style="background-color:whitesmoke;color:darkgray;border-top:1px solid lightgray;">
+                <thead style="font-weight:bold;background-color:whitesmoke;">
                     <tr>
                         <th style="padding-left:20px;"> Item </th>
                         <th> Qty </th>
@@ -80,13 +78,9 @@
             </table>
         </div>
     </div>
-    <div class="panel-footer" >
-        <div style="display:flex;justify-content:flex-end;">
-            <div class="btn-group" >
-                <button class="btn btn-default"> Process  </button>
-                <button class="btn btn-default"> Done </button>
-                <button class="btn btn-default"> Cancel  </button>
-            </div>
-        </div>
+    <div>
+      
     </div>
+    <br />
+    <br />
 </div>

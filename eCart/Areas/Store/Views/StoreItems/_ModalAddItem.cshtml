@@ -74,6 +74,7 @@
                     if (result.status == 200) {
                         console.log("OK");
                         AddItemToTable(itemName, price, storeId);
+                        $("#AddItem").modal('hide');
                     } else {
                         console.log("error");
                     }
@@ -100,7 +101,7 @@
             "<a href='/Store/StoreItems/Delete/" + Id + "'> Delete </a> " +
             " </td>"
         " </tr>";
-        $("#StoreItemsTable").append(item);
-        $("#AddItem").modal('hide');
+        $("#StoreItemsTable tbody").prepend(item);
+        $("#AddItem").modal('toggle');
     }
 </script>

@@ -15,14 +15,22 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <h3> Items </h3>
+        <h1> Store Items </h1>
     </div>
 
     @foreach (var item in Model)
     {
 
-        <div class="col-sm-2 item-list">
-            <img src="~/img/placeholders/placeholder-product.png" />
+        <div class="col-sm-2 item-list bordered">
+             @if (item.ItemMaster.ItemImages.FirstOrDefault() != null)
+              {
+                  var image = item.ItemMaster.ItemImages.FirstOrDefault(); 
+                  <img src="@image.ImageUrl" class="item-image" width="60" />
+              }
+              else
+              {
+                  <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail" width="60" />
+              }
             <div class="item-desc">
                 <h4> @item.ItemMaster.Name </h4>
                 <b class="text-success"> Php @item.UnitPrice.ToString("0.00") </b>

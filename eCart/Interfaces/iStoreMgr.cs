@@ -13,6 +13,9 @@ namespace eCart.Interfaces
         List<Models.StoreItem> getStoreItems(int id);
         Models.StoreDetail  getStoreDetails(int id);
 
+        void addNewStoreItem(int storeId, string itemName, decimal price);
+        Models.StoreItem getStoreItem(int id);
+        void updateStoreItem(int storeItemId, string itemName, decimal price);
         //add getdefault store pickuppoint
         //Models.StorePickupPoint getDefaultPickupPoint(int StoreId);
     }

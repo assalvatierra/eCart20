@@ -25,7 +25,7 @@ values	(1,1),(2,2),(3,3),
 
 -- item Master --
 insert into ItemMasters([Name])
-values	('Loaf Bread'), ('Rice 5 kilos'), ('Sardines'), ('Chicken'), ('Beef'), ('Pork'), ('CornBeef Canned'), ('Century Tuna'), ('Milk'), ('Coca-Cola 1 Liter'),
+values	('Loaf Bread'), ('Rice 1 kilo'), ('Sardines'), ('Chicken'), ('Beef'), ('Pork'), ('CornBeef Canned'), ('Century Tuna'), ('Powerdered Milk'), ('Coca-Cola 1 Liter'),
 		('Colgate TootPaste'),('Safguard Soap'),('Clear Shampoo'),('Head & Shoulders'),('Cooking Oil');
 
 insert into ItemMasterCategories([ItemCategoryId],[ItemMasterId])
@@ -36,6 +36,20 @@ insert into StoreItems([ItemMasterId], [StoreDetailId], [UnitPrice])
 values	( 1, 1, 15.00 ), ( 2, 1, 52.00 ), ( 3, 1, 18.00 ), ( 4, 1, 120.00 ),( 5, 1, 155.00 ), ( 7, 1, 140.00 ), ( 8, 1, 18.00 ), ( 9, 1, 25.00 ), ( 10, 1, 45.00 ), ( 11, 1, 75.00 ),
 		( 1, 2, 15.75 ), ( 2, 2, 50.25 ), ( 3, 2, 18.25 ), ( 4, 2, 125.00 ),( 5, 2, 165.00 ), 
 		( 7, 3, 135.00 ), ( 8, 3, 19.75 ), ( 9, 3, 27.25 ), ( 10, 3, 42.25 ), ( 11, 3, 72.50 );
+
+-- item images --
+insert into ItemImages([ItemMasterID],[ImageUrl]) values 
+(11, 'https://zumia.co.zw/wp-content/uploads/2019/08/colgate.jpg'),
+(10, 'https://redbottle.com.au/wp-content/uploads/2018/05/Coca-Cola-1_25L.jpg'),
+(9,	'https://www.homeshop.ph/image/cache/catalog/Products/Dairy/Milk-Powder/Bear-Brand-Powdered-Milk-With-Iron-700g-500x500-product_popup.png'),
+(8, 'https://www.freshdealites.com/var/images/product/300.300/Grocery/Canned%20Seafood/Grocery_Century-Tuna-Flakes-Hot-and-Spicy-420g.jpg'),
+(7, 'https://shop.smmarkets.ph/pub/media/catalog/product/cache/0f831c1845fc143d00d6d1ebc49f446a/1/0/10006940.png'),
+(5, 'https://thumbs.dreamstime.com/b/packaged-t-bone-steak-15165979.jpg'),
+(4, 'https://pngimage.net/wp-content/uploads/2018/06/packed-chicken-meat-png-2.png'),
+(3, 'https://cdn.shopify.com/s/files/1/0147/9445/7136/products/555_Sardines_In_Tomato_Sauce_Plain_155g__66573.1536919367_grande.jpg'),
+(2, 'https://cdn.pixabay.com/photo/2016/02/29/05/46/brown-rice-1228099_960_720.jpg'),
+(1, 'https://cdn.shopify.com/s/files/1/2889/2216/products/Gardenia_High_Fiber_Whole_Wheat_Loaf_Bread_600g_800x.png')
+;
 
 
 --- Create Sample Cart --

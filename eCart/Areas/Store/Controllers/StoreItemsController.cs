@@ -8,12 +8,14 @@ using System.Web;
 using System.Web.Mvc;
 using eCart.Areas.Store.Models;
 using eCart.Models;
+using eCart.Services;
 
 namespace eCart.Areas.Store.Controllers
 {
     public class StoreItemsController : Controller
     {
         private StoreContext db = new StoreContext();
+        private StoreFactory storeFactory = new StoreFactory();
 
         // GET: Store/StoreItems
         public ActionResult Index(int? id)
@@ -157,55 +159,18 @@ namespace eCart.Areas.Store.Controllers
             return PartialView(item);
         }
 
-        [HttpPost]
-        public ActionResult _ModalAddItem(int StoreId, string ItemName, decimal price)
-        {
-            ItemMaster item = new ItemMaster() { 
-                Name = ItemName,
-            };
-            db.ItemMasters.Add(item);
-            db.SaveChanges();
-
-            StoreItem storeItem = new StoreItem()
-            {
-                ItemMaster = item,
-                StoreDetailId = StoreId,
-                UnitPrice = price
-            };
-            db.StoreItems.Add(storeItem);
-
-            db.SaveChanges();
-
-            return RedirectToAction("Index", new { id = StoreId });
-        }
 
         [HttpPost]
         public void AddStoreItem(int storeId, string itemName, decimal price)
         {
             try
             {
-
-                ItemMaster item = new ItemMaster()
-                {
-                    Name = itemName,
-                };
-
-                db.ItemMasters.Add(item);
-
-
-                StoreItem storeItem = new StoreItem()
-                {
-                    ItemMaster = item,
-                    StoreDetailId = storeId,
-                    UnitPrice = price
-                };
-                db.StoreItems.Add(storeItem);
-
-                db.SaveChanges();
+                var storeMgr = storeFactory.StoreMgr;
+                storeMgr.addNewStoreItem(storeId, itemName, price);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+              
             }
         }
 
@@ -213,13 +178,16 @@ namespace eCart.Areas.Store.Controllers
         [HttpGet]
         public JsonResult GetStoreItem(int id)
         {
-            var item = db.StoreItems.Find(id);
+            var storeMgr = storeFactory.StoreMgr;
+            var item = storeMgr.getStoreItem(id);
+
             var jsonItem = new jsonStoreItem
             {
                 Id = id,
                 ItemName = item.ItemMaster.Name,
                 UnitPrice = item.UnitPrice
             };
+
 
             return Json(jsonItem, JsonRequestBehavior.AllowGet);
         }
@@ -230,22 +198,15 @@ namespace eCart.Areas.Store.Controllers
         {
             try
             {
-                var storeItem = db.StoreItems.Find(storeItemId);
-                storeItem.UnitPrice = price;
-                storeItem.ItemMaster.Name = itemName;
-
-                db.Entry(storeItem).State = System.Data.Entity.EntityState.Modified;
-
-                db.SaveChanges();
+                var storeMgr = storeFactory.StoreMgr;
+                storeMgr.updateStoreItem(storeItemId, itemName, price);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
             }
         }
     }
 }
-
 
 public class jsonStoreItem {
     public int Id { get; set; }

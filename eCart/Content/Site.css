@@ -52,10 +52,14 @@ textarea {
     flex: 1;
 }
     .item-list:hover {
-        border: 1px solid lightgray;
-        box-shadow: 0 2px 3px 1px lightgray;
+        color: royalblue;
+        border: 1px solid rgb(14, 156, 228);
+        box-shadow: 0 2px 3px 1px rgba(14, 156, 228, 0.5);
     }
 
+.item-image {
+    max-height: 175px;
+}
 
 .item-desc {
     position: relative;
@@ -64,10 +68,12 @@ textarea {
 
 .item-desc .text-success{
     
-    background-color: rgba(87, 177, 73, 0.2) ;
+    /*background-color: rgba(87, 177, 73, 0.2) ;
     padding:5px 15px;
-    border-radius:25px;
+    border-radius:25px;*/
 }
+
+
 
 .bordered{
     border:1px solid lightgray;
