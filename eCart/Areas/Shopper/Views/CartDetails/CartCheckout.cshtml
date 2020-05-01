@@ -54,7 +54,16 @@
                         subtotalAmount += subtotal;
                         <tr>
                             <td>
-                                <img src="~/img/placeholders/placeholder-images-product-2.png" width="50" class="img-thumbnail bordered" />
+                                @if (item.StoreItem.ItemMaster.ItemImages.FirstOrDefault() != null)
+                                {
+                                    var image = item.StoreItem.ItemMaster.ItemImages.FirstOrDefault();
+                                    <img src="@image.ImageUrl" class="img-thumbnail" width="50" />
+                                }
+                                else
+                                {
+                                    <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail" width="50" />
+                                }
+
                                 <b> @item.StoreItem.ItemMaster.Name </b>
                                 <span class="text-muted">  @item.Remarks1 </span>
                             </td>

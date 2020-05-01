@@ -36,7 +36,8 @@ namespace eCart.Services
                     Name = item.ItemMaster.Name,
                     Price = price,
                     Qty = qty,
-                    StoreId = item.StoreDetailId
+                    StoreId = item.StoreDetailId,
+                    ItemImage = item.ItemMaster.ItemImages.FirstOrDefault() != null ? item.ItemMaster.ItemImages.FirstOrDefault().ImageUrl : ""
                 };
 
                 //create cartDetails

@@ -75,17 +75,25 @@ namespace eCart.Services
 
         }
 
-        public void addNewStoreItem(int storeId, string itemName, decimal price)
+        public void addNewStoreItem(int storeId, string itemName, decimal price, string imgUrl)
         {
             try
             {
-
+                //add item to item master
                 ItemMaster item = new ItemMaster()
                 {
                     Name = itemName,
                 };
 
                 db.ItemMasters.Add(item);
+
+                //add item image
+                ItemImage itemImage = new ItemImage() {
+                    ItemMaster = item,
+                    ImageUrl = imgUrl
+                };
+                db.ItemImages.Add(itemImage);
+
 
                 StoreItem storeItem = new StoreItem()
                 {
@@ -127,6 +135,26 @@ namespace eCart.Services
                 storeItem.ItemMaster.Name = itemName;
 
                 db.Entry(storeItem).State = System.Data.Entity.EntityState.Modified;
+
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public void updateStoreItemImage(int storeItemId, string imageUrl) 
+        {
+            try
+            {
+                var storeItem = getStoreItem(storeItemId);
+                var item = db.ItemMasters.Find(storeItem.Id);
+                var itemImg = item.ItemImages.FirstOrDefault();
+                itemImg.ImageUrl = imageUrl;
+
+                db.Entry(itemImg).State = System.Data.Entity.EntityState.Modified;
 
                 db.SaveChanges();
             }

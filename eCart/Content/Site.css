@@ -257,7 +257,8 @@ textarea {
 /* Store Admin*/
 
 .store-logo {
-    width: 150px;
+    max-width: 150px;
+    margin:15px auto;
 }
 
 

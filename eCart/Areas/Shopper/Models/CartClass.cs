@@ -15,6 +15,7 @@ namespace eCart.Areas.Shopper.Models
         public int StoreId { get; set; }
         public string remarks1 { get; set; }
         public string remarks2 { get; set; }
+        public string ItemImage { get; set; }
     }
 
 

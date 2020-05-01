@@ -6,41 +6,51 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"> Add Item</h4>
+                <h4 class="modal-title"> Create New Item</h4>
             </div>
 
             <div class="modal-body">
-                    <div class="form-horizontal">
-                        <div class="form-group" hidden>
-                            <label class="col-md-2 control-label"> Id</label>
-                            <div class="col-md-10">
-                                <input id="StoreId" class="form-control" type="number" value="@ViewBag.StoreId" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-2 control-label"> Item</label>
-                            <div class="col-md-10">
-                                <input id="ItemMaster" class="form-control" type="text" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-2 control-label"> Price</label>
-                            <div class="col-md-10">
-                                <input id="UnitPrice" class="form-control" type="text" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <p class="text-danger col-md-offset-2" id="warning" hidden> Please do not leave any field blank </p>
-                            <p class="text-danger col-md-offset-2" id="warning-price" hidden> Invalid input on Price Field </p>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Create" class="btn btn-default" onclick="AddItem()" />
-                            </div>
+                <div class="form-horizontal">
+                    <div class="form-group" hidden>
+                        <label class="col-md-2 control-label"> Id</label>
+                        <div class="col-md-10">
+                            <input id="StoreId" class="form-control" type="number" value="@ViewBag.StoreId" />
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"> Item</label>
+                        <div class="col-md-10">
+                            <input id="ItemMaster" class="form-control" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"> Price</label>
+                        <div class="col-md-10">
+                            <input id="UnitPrice" class="form-control" type="text" />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"> Image Url</label>
+                        <div class="col-md-10">
+                            <input id="ItemImgUrl" class="form-control" type="text" />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <p class="text-danger col-md-offset-2" id="warning" hidden> Please do not leave any field blank </p>
+                        <p class="text-danger col-md-offset-2" id="warning-price" hidden> Invalid input on Price Field </p>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" onclick="AddItem()" />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -57,6 +67,7 @@
         var storeId = parseInt($("#StoreId").val());
         var itemName = $("#ItemMaster").val();
         var price = parseFloat($("#UnitPrice").val());
+        var imgUrl = $("#ItemImgUrl").val();
 
         $("#warning").hide();
         $("#warning-price").hide();
@@ -67,19 +78,23 @@
                 var Item = {
                     storeId: storeId,
                     itemName: itemName,
-                    price: price
+                    price: price,
+                    imgUrl: imgUrl
                 }
 
                 var result = $.post("/Store/StoreItems/AddStoreItem", Item, (data) => {
                     if (result.status == 200) {
                         console.log("OK");
-                        AddItemToTable(itemName, price, storeId);
-                        $("#AddItem").modal('hide');
+
+                        AddItemToTable(itemName, price, storeId, imgUrl);
+                        //window.location.reload();
+                       
                     } else {
                         console.log("error");
                     }
                 });
 
+                //console.log(Item);
                 //console.log(result);
                 console.log("OK");
             } else {
@@ -91,9 +106,10 @@
     }
 
 
-    function AddItemToTable(item, price, Id) {
+    function AddItemToTable(item, price, Id, imgUrl) {
+
         var item = "<tr>" +
-            "<td width='80'><img src='/img/placeholders/placeholder-product.png' class='img-thumbnail' width='60' /></td>"+
+            "<td width='80'><img src='" + imgUrl +"' class='img-thumbnail' width='60' /></td>"+
             "<td><b> " + item + " </td><td> " + price + " <b></td>" +
             "<td> " +
             "<a href='/Store/StoreItems/Edit/" + Id + "'> Edit </a> |" +
@@ -101,7 +117,8 @@
             "<a href='/Store/StoreItems/Delete/" + Id + "'> Delete </a> " +
             " </td>"
         " </tr>";
-        $("#StoreItemsTable tbody").prepend(item);
-        $("#AddItem").modal('toggle');
+
+        $("tbody").append(item);
+        $("#AddItem").modal('hide');
     }
 </script>

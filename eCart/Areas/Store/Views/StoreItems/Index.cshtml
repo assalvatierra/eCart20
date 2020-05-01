@@ -8,8 +8,8 @@
 
 <p>
     @Html.ActionLink("Back to Store", "Index", "Home") |
-    @*@Html.ActionLink("Add Item", "Create", new { id = @ViewBag.StoreId })*@
-    <a data-target="#AddItem" data-toggle="modal"> Add Item </a>
+    @Html.ActionLink("Add Item", "Create", new { id = @ViewBag.StoreId }) |
+    <a data-target="#AddItem" data-toggle="modal" style="cursor:pointer;"> Create Item </a>
 </p>
 <div class="panel panel-default">
     <table class="table" id="StoreItemsTable">
@@ -24,7 +24,7 @@
             </th>
             <th></th>
         </tr>
-        <tbody>
+        <tbody class="StoreItemsTable-tbody">
             @foreach (var item in Model)
             {
                 <tr>

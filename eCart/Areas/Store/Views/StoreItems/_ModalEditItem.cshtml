@@ -10,37 +10,45 @@
             </div>
 
             <div class="modal-body">
-                    <div class="form-horizontal">
-                        <div class="form-group" hidden>
-                            <label class="col-md-2 control-label"> Id</label>
-                            <div class="col-md-10">
-                                <input id="edit-Id" class="form-control" type="number" value="" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-2 control-label"> Item</label>
-                            <div class="col-md-10">
-                                <input id="edit-ItemMaster" class="form-control" type="text" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-2 control-label"> Price</label>
-                            <div class="col-md-10">
-                                <input id="edit-UnitPrice" class="form-control" type="text" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <p class="text-danger col-md-offset-2" id="edit-warning" hidden> Please do not leave any field blank </p>
-                            <p class="text-danger col-md-offset-2" id="edit-warning-price" hidden> Invalid input on Price Field </p>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <button type="submit" value="Update" class="btn btn-default" onclick="UpdateItem()"> Update </button> 
-                            </div>
+                <div class="form-horizontal">
+                    <div class="form-group" hidden>
+                        <label class="col-md-2 control-label"> Id</label>
+                        <div class="col-md-10">
+                            <input id="edit-Id" class="form-control" type="number" value="" />
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"> Item</label>
+                        <div class="col-md-10">
+                            <input id="edit-ItemMaster" class="form-control" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"> Price</label>
+                        <div class="col-md-10">
+                            <input id="edit-UnitPrice" class="form-control" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"> Image </label>
+                        <div class="col-md-10">
+                            <input id="edit-ItemImgUrl" class="form-control" type="text" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="text-danger col-md-offset-2" id="edit-warning" hidden> Please do not leave any field blank </p>
+                        <p class="text-danger col-md-offset-2" id="edit-warning-price" hidden> Invalid input on Price Field </p>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" value="Update" class="btn btn-default" onclick="UpdateItem()"> Update </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -57,6 +65,7 @@
         var Id = parseInt($("#edit-Id").val());
         var itemName = $("#edit-ItemMaster").val();
         var price = parseFloat($("#edit-UnitPrice").val());
+        var imageUrl = $("#edit-ItemImgUrl").val();
 
         $("#edit-warning").hide();
         $("#edit-warning-price").hide();
@@ -67,7 +76,8 @@
                 var Item = {
                     storeItemId: Id,
                     itemName: itemName,
-                    price: price
+                    price: price,
+                    imageUrl: imageUrl
                 }
 
                 var result = $.post("/Store/StoreItems/UpdateStoreItem", Item, (data) => {
@@ -90,19 +100,6 @@
     }
 
 
-    function AddItemToTable(item, price, Id) {
-        var item = "<tr>" +
-            "<td width='80'><img src='/img/placeholders/placeholder-product.png' class='img-thumbnail' width='60' /></td>"+
-            "<td><b> " + item + " </td><td> " + price + " <b></td>" +
-            "<td> " +
-            "<a href='/Store/StoreItems/Edit/" + Id + "'> Edit </a> |" +
-            "<a href='/Store/StoreItems/Details/" + Id + "'> Details </a> |" +
-            "<a href='/Store/StoreItems/Delete/" + Id + "'> Delete </a> " +
-            " </td>"
-        " </tr>";
-        $("#StoreItemsTable").append(item);
-        $("#EditItem").modal('hide');
-    }
 
     function getItem(Id) {
         //GetStoreItem
@@ -111,6 +108,7 @@
                 $("#edit-Id").val(data["Id"]);
                 $("#edit-ItemMaster").val(data["ItemName"]);
                 $("#edit-UnitPrice").val(data["UnitPrice"]);
+                $("#edit-ItemImgUrl").val(data["ImageUrl"]);
             } else {
                 console.log("error while getting item data.");
             }

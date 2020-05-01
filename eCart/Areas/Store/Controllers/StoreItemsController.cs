@@ -161,12 +161,12 @@ namespace eCart.Areas.Store.Controllers
 
 
         [HttpPost]
-        public void AddStoreItem(int storeId, string itemName, decimal price)
+        public void AddStoreItem(int storeId, string itemName, decimal price, string imgUrl)
         {
             try
             {
                 var storeMgr = storeFactory.StoreMgr;
-                storeMgr.addNewStoreItem(storeId, itemName, price);
+                storeMgr.addNewStoreItem(storeId, itemName, price, imgUrl);
             }
             catch (Exception)
             {
@@ -185,21 +185,22 @@ namespace eCart.Areas.Store.Controllers
             {
                 Id = id,
                 ItemName = item.ItemMaster.Name,
-                UnitPrice = item.UnitPrice
+                UnitPrice = item.UnitPrice,
+                ImageUrl = item.ItemMaster.ItemImages.FirstOrDefault().ImageUrl
             };
-
 
             return Json(jsonItem, JsonRequestBehavior.AllowGet);
         }
 
 
         [HttpPost]
-        public void UpdateStoreItem(int storeItemId, string itemName, decimal price)
+        public void UpdateStoreItem(int storeItemId, string itemName, decimal price, string imageUrl)
         {
             try
             {
                 var storeMgr = storeFactory.StoreMgr;
                 storeMgr.updateStoreItem(storeItemId, itemName, price);
+                storeMgr.updateStoreItemImage(storeItemId,imageUrl);
             }
             catch (Exception)
             {
@@ -212,4 +213,5 @@ public class jsonStoreItem {
     public int Id { get; set; }
     public string ItemName { get; set; }
     public decimal UnitPrice { get; set; }
+    public string ImageUrl { get; set; }
 }

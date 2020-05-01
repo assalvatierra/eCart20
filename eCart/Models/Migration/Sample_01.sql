@@ -9,6 +9,16 @@ values	(1, 'NCCC Mall', 'Matina Crossing, Davao City','', 1, 3, 1, 1),
 		(2, 'SM Mall', 'Ecoland, Davao City','', 1, 3, 1, 1),
 		(3, 'Gaisano Mall', 'Sta Ana, Davao City','', 1, 3, 2, 1);
 
+-- store images --
+insert into StoreImgTypes([Name]) 
+values ('Url');
+
+insert into StoreImages([StoreDetailId],[StoreImgTypeId],[ImageUrl]) values
+(1,1,'https://www.bworldonline.com/wp-content/uploads/2018/09/nccc-logo.jpg'),
+(2,1,'https://upload.wikimedia.org/wikipedia/commons/7/76/SM_Supermalls_Logo.png'),
+(3,1,'https://media.glassdoor.com/sqll/656853/gaisano-mall-squarelogo-1471522333300.png')
+;
+
 -- store pickup locations --
 insert into StorePickupPoints([StoreDetailId],[Address],[Remarks],[StorePickupStatusId])
 values  (1,'Matina Crossing, Davao City','NA',1),
