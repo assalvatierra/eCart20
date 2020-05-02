@@ -14,7 +14,8 @@ namespace eCart.Controllers
         // GET: Store
         public ActionResult Index()
         {
-            return View();
+            var storeList = storeMgr.getFeaturedStores();
+            return View(storeList);
         }
 
         public ActionResult Products(int? id)
@@ -27,7 +28,7 @@ namespace eCart.Controllers
 
                 ViewBag.StoreName = storeDetails.Name;
                 ViewBag.StoreAddress = storeDetails.Address;
-
+                ViewBag.StoreImg = storeDetails.StoreImages.FirstOrDefault().ImageUrl;
                 return View(storeItems);
             }
             else

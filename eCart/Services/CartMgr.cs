@@ -9,7 +9,7 @@ namespace eCart.Services
 {
     public class CartMgr: Interfaces.iCartMgr
     {
-        ecartdbContainer db = new ecartdbContainer();
+       protected ecartdbContainer db = new ecartdbContainer();
 
         public void addItemToCart(int id, int qty)
         {
@@ -187,6 +187,18 @@ namespace eCart.Services
         }
 
 
+        public List<PaymentReceiver> getPaymentRecievers()
+        {
+            try
+            {
+                return db.PaymentReceivers.ToList();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         //create a new cart per store
         public CartDetail CreateCartDetail(cCartDetails cart)
         {
@@ -242,7 +254,7 @@ namespace eCart.Services
             {
                 var cart = getCartDetails().Find(s => s.Id == cartId);
                 cart.PickupPointId = pickupPointId;
-                cart.DeliveryType = "For Pickup";
+                cart.DeliveryType = "Pickup";
 
             }
             catch(Exception ex)
@@ -300,16 +312,22 @@ namespace eCart.Services
         {
             try
             {
+                var userId = 1; //TODO : get UserId
+
                 foreach (var cart in cartDetails)
                 {
                     //check if cart is active, then change status to submitted 
                     //and save to the db
                     if (cart.CartStatusId == 1 )
                     {
-                        cart.CartStatusId = 2;  //Submitted
+                        var cartStatus = db.CartStatus.Find(2);  //Submitted
+                        cart.CartStatu = cartStatus;
                         addCartDetailToDb(cart);
 
-                        updateCartDetailsStatus(cart.Id, "Submitted");
+                        //add cart history
+                        addCartHistory(cart, cartStatus, userId.ToString());
+
+                        //updateCartDetailsStatus(cart.Id, "Submitted");
                         removeCartSession(cart.Id);
                     }
                 }
@@ -328,17 +346,21 @@ namespace eCart.Services
         {
             try
             {
-              
-                    //check if cart is active, then change status to submitted 
-                    //and save to the db
-                    if (cart.CartStatusId == 1)
-                    {
-                        cart.CartStatusId = 2;  //Submitted
-                        addCartDetailToDb(cart);
+                var userId = 1; //TODO : get UserId
+                //check if cart is active, then change status to submitted 
+                //and save to the db
+                if (cart.CartStatusId == 1)
+                {
+                    var cartStatus = db.CartStatus.Find(2);  //Submitted
+                    cart.CartStatu = db.CartStatus.Find(2);  //Submitted
+                    addCartDetailToDb(cart);
 
-                        updateCartDetailsStatus(cart.Id, "Submitted");
-                        removeCartSession(cart.Id);
-                    }
+                    //add cart history
+                    addCartHistory(cart, cartStatus, userId.ToString());
+
+                    //updateCartDetailsStatus(cart.Id, "Submitted");
+                    removeCartSession(cart.Id);
+                }
                
                 db.SaveChanges();
 
@@ -356,6 +378,35 @@ namespace eCart.Services
             int statusId = db.CartStatus.Where(s=>s.Name.ToLower() == status.ToLower()).FirstOrDefault() != null ?
                 db.CartStatus.Where(s => s.Name.ToLower() == status.ToLower()).FirstOrDefault().Id : 1;
             cart.CartStatus = statusId;
+
+        }
+
+
+        public void setCartPaymentReceiver(int cartId, int recieverId)
+        {
+
+                var cart = getCartDetails().Find(c => c.Id == cartId);
+
+                //if (cart.cartPayments == null)
+                //{
+                    //create new cartPayment
+
+                    var cartpayment = new cCartPayment { 
+                        Amount = 0,
+                        dtPayment = DateTime.Now,
+                        PaymentReciever = recieverId,
+                        PaymentStatusId = 1
+                    };
+
+                    cart.cartPayments.Add(cartpayment);
+                //}
+                //else
+                //{
+                //    //update current payment
+                //   var cartPayment = cart.cartPayments.FirstOrDefault();
+                //   cartPayment.PaymentReciever = recieverId;
+                //   cartPayment.dtPayment = DateTime.Now;
+                //}
 
         }
 
@@ -389,11 +440,31 @@ namespace eCart.Services
             }
         }
 
-
         public List<CartDetail> getShopperCarts(int userId)
         {
             var cartList = db.CartDetails.Where(s => s.UserDetailId == userId).ToList();
             return cartList;
         }
+
+        public void addCartHistory(CartDetail cart , CartStatus status, string userId)
+        {
+            try
+            {
+                var cartHistory = new CartHistory
+                {
+                    CartDetail = cart,
+                    CartStatu = status,
+                    dtStatus = DateTime.Now,
+                    UserId = userId,
+                };
+
+                db.CartHistories.Add(cartHistory);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

@@ -175,5 +175,33 @@ namespace eCart.Services
                 throw ex;
             }
         }
+
+        public string addPaymentDetails(string date, int partyId, string partyInfo, int receiverId, string receiverInfo, int statusId, decimal amount, int cartDetailId)
+        {
+            try
+            {
+
+                PaymentDetail payment = new PaymentDetail()
+                {
+                    Amount = amount,
+                    CartDetailId = cartDetailId,
+                    dtPayment = DateTime.Now,
+                    PaymentPartyId = partyId,
+                    PartyInfo = partyInfo,
+                    PaymentReceiverId = receiverId,
+                    ReceiverInfo = receiverInfo,
+                    PaymentStatusId = statusId
+                };
+
+                db.PaymentDetails.Add(payment);
+                db.SaveChanges();
+
+                return "Payment Added";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message.ToLower();
+            }
+        }
     }
 }

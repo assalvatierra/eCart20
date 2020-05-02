@@ -8,18 +8,22 @@ using System.Web;
 using System.Web.Mvc;
 using eCart.Areas.Store.Models;
 using eCart.Models;
+using eCart.Services;
 
 namespace eCart.Areas.Store.Controllers
 {
     public class CartDetailsController : Controller
     {
+        ecartdbContainer edb = new ecartdbContainer();
         private StoreContext db = new StoreContext();
+        StoreFactory storeFactory = new StoreFactory();
 
         // GET: Store/CartDetails/{cartId}
         public ActionResult Index(int id)
         {
             var cartDetails = db.CartDetails.Include(c => c.CartStatu).Include(c => c.StoreDetail).Include(c => c.StorePickupPoint).Include(c => c.UserDetail).Where(c=>c.Id == id);
             ViewBag.StoreId = id;
+
             return View(cartDetails.ToList());
         }
 
@@ -34,6 +38,10 @@ namespace eCart.Areas.Store.Controllers
             CartDetail cartDetail = db.CartDetails.Find(id);
             ViewBag.StoreId = cartDetail.StoreDetailId;
             ViewBag.Store = cartDetail.StoreDetail.Name;
+            ViewBag.PaymentReceiverList = db.PaymentReceivers.ToList();
+            ViewBag.PaymentPartyList = db.PaymentParties.ToList();
+            ViewBag.PaymentStatusList = db.PaymentStatus.ToList();
+            ViewBag.PaymentDetails = db.PaymentDetails.Where(s => s.CartDetailId == id).ToList();
 
             if (cartDetail == null)
             {
@@ -145,6 +153,22 @@ namespace eCart.Areas.Store.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [HttpPost]
+        public string AddPayment(string date, int partyId, string partyInfo, int receiverId, string receiverInfo, int statusId, decimal amount, int cartDetailId)
+        {
+            try
+            {
+                var storeMgr = storeFactory.StoreMgr;
+                storeMgr.addPaymentDetails(date, partyId, partyInfo, receiverId, receiverInfo, statusId, amount, cartDetailId);
+
+                return "OK";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message.ToString();
+            }
         }
     }
 }

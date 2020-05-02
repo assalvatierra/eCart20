@@ -16,6 +16,7 @@ namespace eCart.Interfaces
         Models.StorePickupPoint getDefaultPickupPoint(int StoreId);
 
         void addNewStoreItem(int storeId, string itemName, decimal price, string imgUrl);
+        string addPaymentDetails(string date, int partyId, string partyInfo, int receiverId, string receiverInfo, int statusId, decimal amount, int cartDetailId);
 
         void updateStoreItem(int storeItemId, string itemName, decimal price );
         void updateStoreItemImage(int storeItemId, string imageUrl);

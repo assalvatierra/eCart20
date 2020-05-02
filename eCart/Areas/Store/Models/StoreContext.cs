@@ -5,6 +5,7 @@ using System.Web;
 using eCart.Models;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Collections;
 
 namespace eCart.Areas.Store.Models
 {
@@ -46,5 +47,13 @@ namespace eCart.Areas.Store.Models
         public System.Data.Entity.DbSet<eCart.Models.ItemCategory> ItemCategories { get; set; }
 
         public System.Data.Entity.DbSet<eCart.Models.ItemCatGroup> ItemCatGroups { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.PaymentDetail> PaymentDetails { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.PaymentParty> PaymentParties { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.PaymentReceiver> PaymentReceivers { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.PaymentStatus> PaymentStatus { get; set; }
     }
 }

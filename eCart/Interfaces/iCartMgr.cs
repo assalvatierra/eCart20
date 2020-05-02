@@ -18,15 +18,18 @@ namespace eCart.Interfaces
         List<CartDetail> getCartDetailsSummary();
         List<StorePickupPoint> GetStorePickupPoints(int storeId);
         List<CartDetail> getShopperCarts(int userId);
+        List<PaymentReceiver> getPaymentRecievers();
 
         void addItemToCart(int id, int qty);
         void addItemToCart(int id, int qty, string itemName, decimal price);
         void addCartItemToDb(CartItem cartItem);
         void addCartDetailToDb(CartDetail cartDetail);
+        void addCartHistory(CartDetail cart, CartStatus status, string userId);
 
         void updateCartPickupPoint(int cartId, int pickupPoint);
         void updateCartAsDelivery(int cartId);
         void updateCartDetailsStatus(int cartId, string status);
+        void setCartPaymentReceiver(int cartId, int recieverId);
 
         void removeCartItem(int id);
 

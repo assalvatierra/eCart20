@@ -1,4 +1,4 @@
-﻿@model IEnumerable<eCart.Models.StoreItem>
+﻿@model IEnumerable<eCart.Models.StoreDetail>
 
 @{
     ViewBag.Title = "Store Main Page";
@@ -8,92 +8,38 @@
 </div>
 
 <div class="row" style="margin-bottom:50px;">
-    <div class="col-sm-6 store-item">
-        <img src="~/img/placeholders/company-logo.jpg" class="col-sm-6" />
-        <div class="col-sm-6">
-            <h4> Store 1</h4>
-            <span class="badge badge-pill badge-primary">Category</span>
-            <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "" }, null)
+    <h3> Featured Stores </h3>
+    @foreach (var store in Model.Take(2))
+    {
+
+        <div class="col-sm-6 store-item">
+            <img src="@store.StoreImages.FirstOrDefault().ImageUrl" class="col-sm-6" />
+            <div class="col-sm-6">
+                <h4>  @store.Name</h4>
+                <span class="badge badge-pill badge-primary">Category</span>
+                <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "", id = store.Id }, null)
+            </div>
         </div>
-    </div>
-    <div class="col-sm-6 store-item">
-        <img src="~/img/placeholders/company-logo.jpg" class="col-sm-6" />
-        <div class="col-sm-6">
-            <h4> Store 2</h4>
-            <span class="badge badge-pill badge-primary">Category</span>
-            <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "" }, null)
-        </div>
-    </div>
+
+    }
+
 </div>
 
+<hr />
+<div class="row">
+    <h3> All Stores </h3>
+    @foreach (var store in Model.Take(10))
+    {
+    <div class="col-sm-3 store-item">
+        <img src="@store.StoreImages.FirstOrDefault().ImageUrl" class="col-sm-6" />
+        <div class="col-sm-6">
+            <h4>  @store.Name</h4>
+            <span class="badge badge-pill badge-primary">Category</span>
+            <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "", id = store.Id }, null)
+        </div>
+    </div>
 
-<div class="row">
-    <div class="col-sm-3 store-item">
-        <img src="~/img/placeholders/company-logo-3.jpg" class="col-sm-6" />
-        <div class="col-sm-6">
-            <h4> Store 1</h4>
-            <span class="badge badge-pill badge-primary">Category</span>
-            <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "" }, null)
-        </div>
-    </div>
-    <div class="col-sm-3 store-item">
-        <img src="~/img/placeholders/company-logo-3.jpg" class="col-sm-6" />
-        <div class="col-sm-6">
-            <h4> Store 2</h4>
-            <span class="badge badge-pill badge-primary">Category</span>
-            <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "" }, null)
-        </div>
-    </div>
-    <div class="col-sm-3 store-item">
-        <img src="~/img/placeholders/company-logo-3.jpg" class="col-sm-6" />
-        <div class="col-sm-6">
-            <h4> Store 2</h4>
-            <span class="badge badge-pill badge-primary">Category</span>
-            <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "" }, null)
-        </div>
-    </div>
-    <div class="col-sm-3 store-item">
-        <img src="~/img/placeholders/company-logo-3.jpg" class="col-sm-6" />
-        <div class="col-sm-6">
-            <h4> Store 2</h4>
-            <span class="badge badge-pill badge-primary">Category</span>
-            <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "" }, null)
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-3 store-item">
-        <img src="~/img/placeholders/company-logo-2.png" class="col-sm-6" />
-        <div class="col-sm-6">
-            <h4> Store 1</h4>
-            <span class="badge badge-pill badge-primary">Category</span>
-            <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "" }, null)
-        </div>
-    </div>
-    <div class="col-sm-3 store-item">
-        <img src="~/img/placeholders/company-logo-2.png" class="col-sm-6" />
-        <div class="col-sm-6">
-            <h4> Store 2</h4>
-            <span class="badge badge-pill badge-primary">Category</span>
-            <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "" }, null)
-        </div>
-    </div>
-    <div class="col-sm-3 store-item">
-        <img src="~/img/placeholders/company-logo-2.png" class="col-sm-6" />
-        <div class="col-sm-6">
-            <h4> Store 2</h4>
-            <span class="badge badge-pill badge-primary">Category</span>
-            <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "" }, null)
-        </div>
-    </div>
-    <div class="col-sm-3 store-item">
-        <img src="~/img/placeholders/company-logo-2.png" class="col-sm-6" />
-        <div class="col-sm-6">
-            <h4> Store 2</h4>
-            <span class="badge badge-pill badge-primary">Category</span>
-            <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "" }, null)
-        </div>
-    </div>
+    }
 </div>
 
 @{ Html.RenderAction("_CartSummary", "CartDetails", new { area = "Shopper" }); }

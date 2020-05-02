@@ -28,23 +28,25 @@
     decimal subtotalAmount = 0;
     <div class="panel bordered">
         <div class="panel-body">
-            <div class="cart-summary-store">
-                <div>
+            <div class="cart-summary-store ">
+                <div class="col-lg-2 col-md-4 col-sm-12">
                     <h3> @cart.StoreDetail.Name </h3>
                 </div>
-                <div class="cart-summary-pickup">
+                <div class="col-lg-3 col-md-6 col-sm-12">
                     <span> Pickup Point: </span>
                     <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetail.Id')" id="pickupAddress-@cart.Id" value="@cart.StorePickupPoint.Id">
                         @cart.StorePickupPoint.Address
                     </a>
                 </div>
-                <div class="cart-summary-pickup">
+                <div class="col-lg-3 col-md-6 col-sm-12">
                     <span> DateTime Pickup: </span>
                     <a href=""> @cart.DtPickup </a>
                 </div>
-                <div class="cart-summary-pickup">
+                <div class="col-lg-3 col-md-5 col-sm-12">
                     <span> Payment: </span>
-                    <a href="" id="paymentMode-@cart.StoreDetail.Id"> On Pickup </a>
+                    <a href="" id="paymentMode-@cart.Id" data-toggle="modal" data-target="#paymentModal" onclick="getPaymentReceivers(@cart.Id)">
+                        Cash On Delivery
+                    </a>
                 </div>
             </div>
             <table class="table">
@@ -123,7 +125,6 @@
     totalAmount += subtotalAmount;
 }
 
-
 <div class="panel bordered" style="margin:0px;">
     <div class="panel-body">
         <div class="col-lg-10">
@@ -148,57 +149,9 @@
 
 <br />
 
-@Html.Partial("_ModalPickupEdit");
-@Html.Partial("_ModalCheckoutSuccess");
+@Html.Partial("_ModalPickupEdit")
+@Html.Partial("_ModalCheckoutSuccess")
+@Html.Partial("_ModalCartPayment", ViewBag.PaymentParties as IEnumerable<eCart.Models.PaymentReceiver>)
 
 <script src="~/Scripts/Cart/cart.js"></script>
-<script>
-    function RemoveItem(e, Id, subtotal) {
-        var data = {
-            id: Id
-        }
-
-        $.post('/Shopper/CartDetails/RemoveCartItem', data, (response) => {
-            console.log(response);
-            UpdatePrice(subtotal);
-        });
-
-        $(e).parent().parent().remove();
-    }
-
-
-    function UpdatePrice(removedsubtotal) {
-        var totalPrice = parseFloat($('#Total-Price').text());
-        totalPrice -= removedsubtotal;
-        $('#Total-Price').text(totalPrice.toLocaleString('en-US', { minimumFractionDigits: 2 }));
-    }
-
-    function SubmitOrder(e, cartId) {
-
-        $.post("/Shopper/CartDetails/SubmitOrder", { id: cartId }, (result) => {
-            console.log(result);
-            $(e).attr("disabled", true);
-            $("#CheckOutSuccessModal").modal('show');
-            DisableAllButton();
-        });
-
-
-    }
-
-    function SubmitAllOrder() {
-        $.post("/Shopper/CartDetails/SubmitAllOrder", null, (result) => {
-            console.log(result);
-            $(":button").attr("disabled", "disabled");
-            $("#CheckOutSuccessModal").modal('show');
-        });
-    }
-
-    function DisableAllButton() {
-       var hasActive = @Model.Any(s => s.CartStatusId == 1);
-       if (hasActive)
-       {
-           $(".btn-primary").attr("disabled", "disabled");
-       }
-    }
-
-</script>
+<script src="~/Areas/Shopper/Scripts/checkout.js"> </script>

@@ -4,20 +4,33 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using eCart.Areas.Store.Models;
+using eCart.Services;
 
 namespace eCart.Areas.Store.Controllers
 {
     public class HomeController : Controller
     {
         StoreDB sdb = new StoreDB();
+        StoreFactory storeFactory = new StoreFactory();
 
         // GET: Store/Home
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            string STOREID = Session["STOREID"] != null ? Session["STOREID"].ToString() : "1";
-            ViewBag.StoreId = int.Parse(STOREID);
+            if (id != null )
+            {
+                var storeMgr = storeFactory.StoreMgr;
 
-            return View(sdb.getStoreDetails(STOREID));
+                string STOREID = Session["STOREID"] != null ? Session["STOREID"].ToString() : "1";
+                ViewBag.StoreId = int.Parse(STOREID);
+
+                var store = storeMgr.getStoreDetails((int)id);
+                return View(store);
+            }
+            else
+            {
+                return RedirectToAction("Login","Accounts", new { area = "Store" });
+            }
+            
         }
     }
 }

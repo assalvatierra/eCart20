@@ -28,7 +28,19 @@ namespace eCart.Areas.Shopper.Models
         public DateTime DtPickup { get; set; }
         public string DeliveryType { get; set; }
         public List<cCart> cartItems { get; set; }
+        public List<cCartPayment> cartPayments { get; set; }
 
+    }
+
+    public class cCartPayment 
+    {
+        public decimal Amount { get; set; }
+        public DateTime dtPayment { get; set; }
+        public int PaymentReciever { get; set; }
+        public string ReceiverInfo { get; set; }
+        public int PaymentParty { get; set; }
+        public string PartyInfo { get; set; }
+        public int PaymentStatusId { get; set; }
     }
 
     public class cCartTransaction

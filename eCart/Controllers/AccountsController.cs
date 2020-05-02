@@ -10,8 +10,7 @@ namespace eCart.Controllers
 {
     public class AccountsController : Controller
     {
-        StoreFactory storeFactory;
-
+      
         // GET: Accounts
         public ActionResult Index()
         {
@@ -20,8 +19,7 @@ namespace eCart.Controllers
 
         public void TestFactory()
         {
-            var storeMgr = storeFactory.StoreMgr;
-
+       
 
         }
     }

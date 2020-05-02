@@ -1,0 +1,59 @@
+﻿
+<!-- Change Pickup Location Modal -->
+<div id="paymentModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"> Select Payment </h4>
+            </div>
+            <div class="modal-body">
+                <div class="list-group" id="Receiver-list">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+    function getPaymentReceivers(cartId) {
+        $("#Receiver-list").children().remove();
+
+        $.get("/Shopper/CartDetails/GetPaymentRecievers", null, (result) => {
+            console.log(result);
+            for (var i = 0; i < result.length; i++ ) {
+                var button = "<button class='list-group-item' value='" + result[i]["Id"] + "' onclick='selectPayment(this," + result[i]["Id"] + "," + cartId + ")' > "+ 
+                    result[i]["Description"] +" </button>";
+                $("#Receiver-list").append(button);
+            }
+
+            //add default
+            var button = "<button class='list-group-item' value='0' onclick='selectPayment(this, 0, " + cartId + ")' > " +
+                 " Cash On Delivery </button>";
+            $("#Receiver-list").append(button);
+
+        });
+    }
+
+    function selectPayment(e, receiverId, cartId) {
+        //TODO: update payment mode on session
+        var res = $.post("/Shopper/CartDetails/SetPaymentReceiver", { cartId: cartId, receiverId: receiverId }, (result) => {
+            console.log(result);
+        })
+
+        console.log(res);
+
+        //udpate display text
+        var description = $(e).text();
+        $("#paymentMode-" + cartId).text(description);
+        $("#paymentModal").modal('hide');
+    }
+</script>

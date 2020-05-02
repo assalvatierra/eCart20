@@ -11,26 +11,66 @@
 
 <div class="panel row">
     <div class="panel-body store-cart">
-        <h3>
-            Cart # : @Model.Id  &nbsp;
-        </h3>
-        <p><span class="text-muted"> Status: </span> @Model.CartStatu.Name</p>
+        <div class="row">
+            <div class="col-lg-4">
+                <h3>
+                    Cart # : @Model.Id  &nbsp;
+                </h3>
+                <p><span class="text-muted"> Status: </span> @Model.CartStatu.Name</p>
+            </div>
+            <div class="col-lg-8">
+                <div class="btn-group pull-right">
+                    <button class="btn btn-default" data-target="#PaymentModal" data-toggle="modal"> Payment </button>
+                    <button class="btn btn-default"> Processing </button>
+                    <button class="btn btn-default"> Ready </button>
+                    <button class="btn btn-default"> Delivered </button>
+                    <button class="btn btn-default"> Cancel </button>
+                </div>
+            </div>
+        </div>
+
         <hr />
         <h4> <b> Shopper Details </b> </h4>
         <div class="col-lg-12">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <p> <span class="text-muted"> Shopper:</span> @Model.UserDetail.Name </p>
                 <p> <span class="text-muted"> Contact:</span> @Model.UserDetail.Mobile </p>
                 <p> <span class="text-muted"> Email:</span> @Model.UserDetail.Email </p>
 
             </div>
 
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <p> <span class="text-muted"> Delivery Type:</span>  @Model.DeliveryType</p>
                 <p> <span class="text-muted"> Pickup Date:</span> @Model.DtPickup.ToString("MMM dd yyyy HH:mm ") </p>
                 <p> <span class="text-muted"> Pickup Location:</span>  @Model.StorePickupPoint.StoreDetail.Name, @Model.StorePickupPoint.Address </p>
             </div>
 
+            <div class="col-lg-4">
+                <p>
+                    <span class="text-muted"> Payment Type:</span>
+                    @if (Model.PaymentDetails.Count != 0)
+                    {
+                        @Model.PaymentDetails.FirstOrDefault().PaymentReceiver.Description
+                    }
+                    else
+                    {
+                        <text> Cash on Delivery </text>
+                    }
+
+                </p>
+                <p>
+                    <span class="text-muted"> Payment Status:</span>
+                    @if (Model.PaymentDetails.Count != 0)
+                    {
+                        @Model.PaymentDetails.LastOrDefault().PaymentStatu.Name
+                    }
+                    else
+                    {
+                        <text> Pending </text>
+                    }
+
+                </p>
+            </div>
         </div>
         <hr />
         <h4> <b> Shopper Items </b> </h4>
@@ -79,8 +119,42 @@
         </div>
     </div>
     <div>
-      
+
     </div>
-    <br />
-    <br />
 </div>
+
+<h3> Payment </h3>
+<div class="panel ">
+        <table class="table bordered" >
+            <thead>
+                <tr style="font-weight:bold;background-color:whitesmoke;">
+                    <th> Date </th>
+                    <th> Party </th>
+                    <th> Party Info </th>
+                    <th> Receiver </th>
+                    <th> Receiver Info </th>
+                    <th> status </th>
+                    <th> Amount </th>
+                </tr>
+            </thead>
+            <tbody id="table-payments">
+                @foreach (var payment in ViewBag.PaymentDetails as IEnumerable<eCart.Models.PaymentDetail>)
+                {
+                <tr>
+                    <td> @payment.dtPayment </td>
+                    <td> @payment.PaymentParty.Name </td>
+                    <td> @payment.PartyInfo </td>
+                    <td> @payment.PaymentReceiver.Description </td>
+                    <td> @payment.ReceiverInfo </td>
+                    <td> @payment.PaymentStatu.Name </td>
+                    <td> @payment.Amount.ToString("0.00") </td>
+                </tr>
+                    
+                }
+            </tbody>
+        </table>
+</div>
+
+
+@Html.Partial("_ModalPayment", null, new ViewDataDictionary { { "PaymentReceiverList", ViewBag.PaymentReceiverList },
+    { "PaymentPartyList", ViewBag.PaymentPartyList }, { "PaymentStatusList", ViewBag.PaymentStatusList }, { "CartId", Model.Id } })

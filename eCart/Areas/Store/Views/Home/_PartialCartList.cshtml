@@ -58,13 +58,22 @@
                         @cart.StorePickupPoint.Address
                     </td>
                     <td>
-                        @itemCount
+                        @cart.CartItems.Count()
                     </td>
                     <td>
-                        @totalAmount.ToString("0.00")
+                        @{decimal amount = 0;}
+                        @foreach (var item in cart.CartItems)
+                        {
+
+                            amount += item.StoreItem.UnitPrice * item.ItemQty;
+
+                        }
+                        <span>
+                            @amount.ToString("0.00")
+                        </span>
                     </td>
                     <td>
-                        @Html.ActionLink("View Cart", "Details", "CartDetails", new { id = cart.Id }, null )
+                        @Html.ActionLink("View Cart", "Details", "CartDetails", new { id = cart.Id }, new { @class="btn btn-primary" } )
                     </td>
                 </tr>
             }

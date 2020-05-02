@@ -160,7 +160,7 @@ namespace eCart.Areas.Shopper.Controllers
         public PartialViewResult CartCheckout()
         {
             var cartDetails = cartMgr.getCartDetailsSummary();
-
+            ViewBag.PaymentParties = cartMgr.getPaymentRecievers();
         
             return PartialView(cartDetails);
         }
@@ -266,6 +266,20 @@ namespace eCart.Areas.Shopper.Controllers
 
         }
 
+        [HttpGet]
+        public JsonResult GetPaymentRecievers()
+        {
+            var paymentOptions = cartMgr.getPaymentRecievers().Select(s => new { s.Id , s.Description });
+            return Json(paymentOptions, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public void SetPaymentReceiver(int cartId, int receiverId)
+        {
+            cartMgr.setCartPaymentReceiver(cartId, receiverId);
+        }
+
+
         #region CartDetails
         /* Revision of Cart */
         public JsonResult AddCartItem(int id, int qty, string itemName, decimal itemPrice)
@@ -341,7 +355,7 @@ namespace eCart.Areas.Shopper.Controllers
         public ActionResult PendingCarts()
         {
             var userId = 1; //TODO: get current user;
-            var myCarts = cartMgr.getShopperCarts(userId);
+            var myCarts = cartMgr.getShopperCarts(userId).OrderByDescending(s=>s.Id).ToList();
 
             return View(myCarts);
         }

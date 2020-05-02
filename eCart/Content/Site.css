@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+   /*/ background-color: rgba(242, 242, 242,0.5);*/
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -25,8 +26,11 @@ textarea {
 
 
 /* Store Listings */
-.store-item{
-    padding:5px;
+.store-item {
+    background-color: white;
+    padding: 5px;
+    margin-right:5px;
+    height:130px;
 }
 
 
@@ -36,6 +40,7 @@ textarea {
 
 
 .item-list {
+    background-color:white;
     display: flex;
     flex-direction: column;
     width: 190px;

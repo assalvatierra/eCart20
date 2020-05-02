@@ -70,3 +70,7 @@ insert into CartItems([CartDetailId],[StoreItemId],[ItemQty],[ItemOrder],[CartIt
 values (1, 7, 1, '1', 1, '', ''), (1, 8, 2, '1', 1, '', '');
 insert into CartItems([CartDetailId],[StoreItemId],[ItemQty],[ItemOrder],[CartItemStatusId],[Remarks1],[Remarks2])
 values (2, 7, 2, '1', 1, '', ''), (1, 8, 2, '1', 1, '', '');
+
+
+insert into PaymentDetails(Amount,CartDetailId,dtPayment,PaymentPartyId,PartyInfo,PaymentReceiverId,ReceiverInfo,PaymentStatusId)
+values (120, 1, '05/02/2020', 1, 'party info', 1, 'receiver info', 1 );
