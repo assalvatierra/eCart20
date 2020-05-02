@@ -58,8 +58,19 @@ namespace eCart.Services
                 {
                     if (cart.StoreId == newItem.StoreId)
                     {
-                        cart.cartItems.Add(newItem);
-                        isAssigned = true;
+                        if(cart.CartStatus == 1)
+                        {
+                            //add new item to the current active cart
+                            newCart.Id = cartList.LastOrDefault().Id;
+                            cart.cartItems.Add(newItem);
+                            isAssigned = true;
+                        }
+                        else
+                        {
+                            newCart.Id = cartList.LastOrDefault().Id;
+                            cartList.Add(newCart);
+                            isAssigned = true;
+                        }
                     }
                 }
 
@@ -162,8 +173,6 @@ namespace eCart.Services
         {
             List<CartDetail> cartDetail = new List<CartDetail>();
 
-            //var groupedCartItems = cartItems.GroupBy(s => s.StoreItem.StoreDetail.Id);
-
             var cartList = getCartDetails();
 
             foreach (var cart in cartList)
@@ -188,8 +197,8 @@ namespace eCart.Services
                 UserDetailId = 1,               //TODO: change to USERID
                 StoreDetailId = cart.StoreId,
                 StoreDetail = tempStore,
-                CartStatusId = 1,               //default: active
-                CartStatu = db.CartStatus.Find(1),
+                CartStatusId = cart.CartStatus,               //default: active
+                CartStatu = db.CartStatus.Find(cart.CartStatus),
                 StorePickupPoint = pickup,
                 StorePickupPointId = cart.PickupPointId,
                 DeliveryType = cart.DeliveryType,
@@ -227,15 +236,58 @@ namespace eCart.Services
             return items;
         }
 
+        public void updateCartPickupPoint(int cartId, int pickupPointId)
+        {
+            try
+            {
+                var cart = getCartDetails().Find(s => s.Id == cartId);
+                cart.PickupPointId = pickupPointId;
+                cart.DeliveryType = "For Pickup";
+
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public void updateCartAsDelivery(int cartId)
+        {
+            try
+            {
+                var cart = getCartDetails().Find(s => s.Id == cartId);
+                cart.PickupPointId = db.StoreDetails.Find(cart.StoreId).StorePickupPoints.FirstOrDefault().Id;
+                cart.DeliveryType = "Delivery";
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
         public void removeCartItem(int id)
         {
             try
             {
                 var cartList = getCartDetails();
                 cartList.ForEach( (cart) => {
-                        var selected = cart.cartItems.Find(i => i.Id == id);
-                        cart.cartItems.Remove(selected);
-                    });
+                   
+                    //find the item and remove from the cart list
+                    var selected = cart.cartItems.Find(i => i.Id == id);
+                    cart.cartItems.Remove(selected);
+
+                    //check if cart is empty, delete cart
+                    if(cart.cartItems.Count == 0)
+                    {
+                        cartList.Remove(cart);
+                    }
+                });
+
 
             }
             catch (Exception)
@@ -244,28 +296,22 @@ namespace eCart.Services
             }
         }
 
-        public string saveOrder(List<CartDetail> cartDetails, List<CartItem> cartItems)
+        public string saveOrder(List<CartDetail> cartDetails)
         {
             try
             {
                 foreach (var cart in cartDetails)
                 {
+                    //check if cart is active, then change status to submitted 
+                    //and save to the db
+                    if (cart.CartStatusId == 1 )
+                    {
+                        cart.CartStatusId = 2;  //Submitted
+                        addCartDetailToDb(cart);
 
-                    cart.DtPickup = DateTime.Now; //TODO : update dtpickup and location on user input
-                    addCartDetailToDb(cart);
-
-                    //foreach (var item in cartItems)
-                    //{
-                    //    if (item.StoreItem.StoreDetailId == cart.StoreDetailId)
-                    //    {
-                    //        //assign cart to each item
-                    //        item.CartDetail = cart;
-
-                    //        //add to db
-                    //        addCartItemToDb(item);
-                    //    }
-                    //}
-
+                        updateCartDetailsStatus(cart.Id, "Submitted");
+                        removeCartSession(cart.Id);
+                    }
                 }
 
                 db.SaveChanges();
@@ -274,8 +320,49 @@ namespace eCart.Services
             }
             catch (Exception ex)
             {
-                return ex.ToString();
+                return ex.Message.ToString();
             }
+        }
+
+        public string saveOrder(CartDetail cart)
+        {
+            try
+            {
+              
+                    //check if cart is active, then change status to submitted 
+                    //and save to the db
+                    if (cart.CartStatusId == 1)
+                    {
+                        cart.CartStatusId = 2;  //Submitted
+                        addCartDetailToDb(cart);
+
+                        updateCartDetailsStatus(cart.Id, "Submitted");
+                        removeCartSession(cart.Id);
+                    }
+               
+                db.SaveChanges();
+
+                return "Order Submitted";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message.ToString();
+            }
+        }
+
+        public void updateCartDetailsStatus(int cartId, string status)
+        {
+            var cart = getCartDetails().Find(s=> s.Id == cartId);
+            int statusId = db.CartStatus.Where(s=>s.Name.ToLower() == status.ToLower()).FirstOrDefault() != null ?
+                db.CartStatus.Where(s => s.Name.ToLower() == status.ToLower()).FirstOrDefault().Id : 1;
+            cart.CartStatus = statusId;
+
+        }
+
+        public void removeCartSession(int id)
+        {
+            var cartlist = getCartDetails();
+            cartlist.Remove(cartlist.Find(c=>c.Id == id));
         }
 
         public List<StorePickupPoint> GetStorePickupPoints(int storeId)
@@ -300,6 +387,13 @@ namespace eCart.Services
             {
                 throw ex;
             }
+        }
+
+
+        public List<CartDetail> getShopperCarts(int userId)
+        {
+            var cartList = db.CartDetails.Where(s => s.UserDetailId == userId).ToList();
+            return cartList;
         }
     }
 }

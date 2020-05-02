@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using eCart.Models;
 using eCart.Services;
 using eCart.Interfaces;
+using eCart.Areas.Shopper.Models;
 
 namespace eCart.Controllers
 {
@@ -18,8 +19,10 @@ namespace eCart.Controllers
         {
             Services.StoreFactory store = new Services.StoreFactory();
 
-           List<Models.StoreDetail> featuredstores = store.StoreMgr.getFeaturedStores();
+            List<Models.StoreDetail> featuredstores = store.StoreMgr.getFeaturedStores();
 
+            Session["USER"] = "Admin";   //For test only
+            CreateCart();
             return View();
         }
 
@@ -61,6 +64,18 @@ namespace eCart.Controllers
         }
 
 
+        //test only
+        public string CreateCart()
+        {
+            if (Session["CARTDETAILS"] == null)
+            {
+                List<cCartDetails> cartDetails = new List<cCartDetails>();
+                Session["CARTDETAILS"] = (List<cCartDetails>)cartDetails;
+            }
+
+
+            return "Cart Created";
+        }
 
     }
 }

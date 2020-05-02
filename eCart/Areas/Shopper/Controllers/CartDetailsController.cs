@@ -201,14 +201,40 @@ namespace eCart.Areas.Shopper.Controllers
             }
         }
 
-        public string SubmitOrder()
+        public string SubmitOrder(int id)
         {
-            var cartItems = cartMgr.getCartSummary();
-            var cartDetails = cartMgr.getCartDetailsSummary();
+            try
+            {
+                var msg = "0";
+               
+                int cartDetailId = id;
+                 var cartDetail = cartMgr.getCartDetailsSummary().Find(s => s.Id == id);
+                msg = cartMgr.saveOrder(cartDetail);  //save to db
 
-            var msg = cartMgr.saveOrder(cartDetails, cartItems);
+                return msg;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
 
-            return msg;
+
+        }
+
+        public string SubmitAllOrder()
+        {
+            try
+            {
+                var cartDetails = cartMgr.getCartDetailsSummary();
+                var msg = cartMgr.saveOrder(cartDetails); //save to db
+
+                return msg;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+
         }
 
         [HttpGet]
@@ -227,6 +253,18 @@ namespace eCart.Areas.Shopper.Controllers
             return Json(location, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public void UpdatePickupPoint(int cartId, int pickupPointId)
+        {
+            cartMgr.updateCartPickupPoint(cartId, pickupPointId);
+
+        }
+
+        public void UpdateCartAsDelivery(int cartId)
+        {
+            cartMgr.updateCartAsDelivery(cartId);
+
+        }
 
         #region CartDetails
         /* Revision of Cart */
@@ -277,7 +315,7 @@ namespace eCart.Areas.Shopper.Controllers
 
                 return Json(cartList, JsonRequestBehavior.AllowGet); 
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 return Json("NA", JsonRequestBehavior.AllowGet);
                 //return ex.ToString();
@@ -296,7 +334,18 @@ namespace eCart.Areas.Shopper.Controllers
 
             return Json(cartList, JsonRequestBehavior.AllowGet);
         }
+
         /* */
         #endregion
+
+        public ActionResult PendingCarts()
+        {
+            var userId = 1; //TODO: get current user;
+            var myCarts = cartMgr.getShopperCarts(userId);
+
+            return View(myCarts);
+        }
+
+
     }
 }

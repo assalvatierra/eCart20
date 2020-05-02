@@ -163,5 +163,17 @@ namespace eCart.Services
                 throw ex;
             }
         }
+
+        public StorePickupPoint getDefaultPickupPoint(int StoreId)
+        {
+            try
+            {
+                return db.StoreDetails.Find(StoreId).StorePickupPoints.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

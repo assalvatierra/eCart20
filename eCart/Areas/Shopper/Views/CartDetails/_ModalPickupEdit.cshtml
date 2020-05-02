@@ -26,42 +26,37 @@
 <script src="~/Scripts/jquery-3.4.1.min.js"> </script>
 <script>
     //TODO: get pickup Locations based on stores - ajax
-    var data = {
-        Id: 0,
-        Address: ''
-    };
 
-
-    function getPickupPoints(StoreId) {
+    function getPickupPoints(cartId ,StoreId) {
         $.getJSON("/Shopper/CartDetails/GetStorePickups", { storeId: StoreId }, (result) => {
             $("#pickupLocList").children().remove();
 
             for (var i = 0; i < result.length; i++) {
           
-                 data = {
-                    Id: result[i]['Id'],
-                    Address: result[i]['Address']
-                 };
 
                 var location = "<li type='button' class='list-group-item btn btn-default' value='" + result[i]['Id'] + "'" +
-                    " onclick='updateLocation(" + StoreId + "," + result[i]['Id'] +")' >" + result[i]['Address'] + "</li>";
+                    " onclick='updateLocation(" + cartId +"," + StoreId + "," + result[i]['Id'] +")' >" + result[i]['Address'] + "</li>";
                 $("#pickupLocList").append(location);
             }
 
 
-            var Delivery = "<li  type='button' class='list-group-item btn btn-default' value='0' onclick='updateAsDelivery(" + StoreId + ")' > Delivery </li>";
+            var Delivery = "<li  type='button' class='list-group-item btn btn-default' value='0' onclick='updateAsDelivery(" + StoreId + ", " + cartId +")' > Delivery </li>";
             $("#pickupLocList").append(Delivery);
         });
-
-
     }
+     
+    function updateLocation(cartId, storeId, pickupPointId) {
 
-    function updateLocation(storeId, id) {
 
-        $.getJSON('/Shopper/CartDetails/GetStorePickupAddress', { id: id }, (address) => {
+        $.post('/Shopper/CartDetails/UpdatePickupPoint', { cartId: cartId, pickupPointId: pickupPointId });
+
+        $.getJSON('/Shopper/CartDetails/GetStorePickupAddress', { id: pickupPointId }, (address) => {
+
             console.log(address);
-            $("#pickupAddress-" + storeId).val(id);
-            $("#pickupAddress-" + storeId).text(address);
+
+            $("#pickupAddress-" + cartId).val(pickupPointId);
+            $("#pickupAddress-" + cartId).text(address);
+
             $("#pickupModal").modal('hide');
         });
 
@@ -69,9 +64,13 @@
         //$("#pickupAddress-" + storeId).text(pickup['Address']);
     }
 
-    function updateAsDelivery(storeId) {
-        $("#pickupAddress-" + storeId).val(0);
-        $("#pickupAddress-" + storeId).text("Delivery");
+    function updateAsDelivery(storeId, cartId) {
+        console.log("Delivery");
+
+        $.post('/Shopper/CartDetails/UpdateCartAsDelivery', { cartId: cartId });
+
+        $("#pickupAddress-" + cartId).val(0);
+        $("#pickupAddress-" + cartId).text("Delivery");
         $("#pickupModal").modal('hide');
     }
 

@@ -1,17 +1,10 @@
 ﻿@model IEnumerable<eCart.Models.CartDetail>
+
 @{
-    ViewBag.Title = "Cart Checkout";
-    Layout = "~/Areas/Shopper/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "PendingCarts";
 }
 
-<h2>Cart Page</h2>
-
-<div>
-    <p>
-        @Html.ActionLink("Go to Main Page", "Index", "Home", new { area = "" }, null) |
-        <a href="@Url.Action("PendingCarts", "CartDetails", new { area ="Shopper" })"> Pending Carts </a>
-    </p>
-</div>
+<h2>Pending Carts</h2>
 
 <div class="panel bordered">
     <div class="panel-body">
@@ -84,15 +77,7 @@
                             <td width="20">
 
                             <td>
-                                <!-- Remove Order -->
-                                @if (cart.CartStatusId == 1)
-                                {
-                                    <div class="cart-summary-remove-item" onclick="RemoveItem(this, '@item.StoreItemId', '@subtotal')"> &#10006 </div>
-                                }
-                                else
-                                {
-
-                                }
+                             
                             </td>
 
                         </tr>
@@ -101,104 +86,24 @@
             </table>
         </div>
         <div class="row panel-footer" style="margin:0px;">
-            <div class="col-lg-10">
+            <div class="col-lg-8">
                 <h4> Amount: <b class="text-success"> Php @subtotalAmount.ToString("0.00") </b> </h4>
             </div>
             <div class="col-lg-2">
-                @if (cart.CartStatusId == 1)
-                {
-                    <button class="btn btn-primary" style="width:100%;" onclick="SubmitOrder(this, @cart.Id);" name="Checkout">
-                        Checkout
-                    </button>
-                }
-                else
-                {
-                    <button class="btn btn-default disabled" style="width:100%;">
-                        Cart Submitted
-                    </button>
-                }
+
+                <h4 style="width:100%;">
+                    Status:  @cart.CartStatu.Name
+                </h4>
+
+            </div>
+            <div class="col-lg-2">
+
+                <button class="btn btn-warning" style="width:100%;">
+                    Cancel Order
+                </button>
+
             </div>
         </div>
     </div>
     totalAmount += subtotalAmount;
 }
-
-
-<div class="panel bordered" style="margin:0px;">
-    <div class="panel-body">
-        <div class="col-lg-10">
-            <h3> Total Amount: <b class="text-success"> Php @totalAmount.ToString("0.00")</b> </h3>
-        </div>
-        <div class="col-lg-2" style="margin:10px 0px;">
-            @if (Model.Any(s => s.CartStatusId == 1))
-            {
-                <button class="btn btn-primary" style="width:100%;" onclick="SubmitAllOrder()" name="Checkout">
-                    Checkout All
-                </button>
-            }
-            else
-            {
-                <button class="btn btn-default disabled" style="width:100%;">
-                    All Carts Submitted
-                </button>
-            }
-        </div>
-    </div>
-</div>
-
-<br />
-
-@Html.Partial("_ModalPickupEdit");
-@Html.Partial("_ModalCheckoutSuccess");
-
-<script src="~/Scripts/Cart/cart.js"></script>
-<script>
-    function RemoveItem(e, Id, subtotal) {
-        var data = {
-            id: Id
-        }
-
-        $.post('/Shopper/CartDetails/RemoveCartItem', data, (response) => {
-            console.log(response);
-            UpdatePrice(subtotal);
-        });
-
-        $(e).parent().parent().remove();
-    }
-
-
-    function UpdatePrice(removedsubtotal) {
-        var totalPrice = parseFloat($('#Total-Price').text());
-        totalPrice -= removedsubtotal;
-        $('#Total-Price').text(totalPrice.toLocaleString('en-US', { minimumFractionDigits: 2 }));
-    }
-
-    function SubmitOrder(e, cartId) {
-
-        $.post("/Shopper/CartDetails/SubmitOrder", { id: cartId }, (result) => {
-            console.log(result);
-            $(e).attr("disabled", true);
-            $("#CheckOutSuccessModal").modal('show');
-            DisableAllButton();
-        });
-
-
-    }
-
-    function SubmitAllOrder() {
-        $.post("/Shopper/CartDetails/SubmitAllOrder", null, (result) => {
-            console.log(result);
-            $(":button").attr("disabled", "disabled");
-            $("#CheckOutSuccessModal").modal('show');
-        });
-    }
-
-    function DisableAllButton() {
-       var hasActive = @Model.Any(s => s.CartStatusId == 1);
-       if (hasActive)
-       {
-           $(".btn-primary").attr("disabled", "disabled");
-       }
-    }
-
-</script>

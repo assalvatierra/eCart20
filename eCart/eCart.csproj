@@ -452,11 +452,13 @@
     <Content Include="Areas\Shopper\Views\Home\Index.cshtml" />
     <Content Include="Areas\Shopper\Views\CartDetails\_CartSummary.cshtml" />
     <Content Include="Areas\Shopper\Views\CartDetails\CartCheckout.cshtml" />
-    <Content Include="Areas\Shopper\Views\CartDetails\_ModalPickupEdit.cshtml" />
+    <Content Include="Areas\Shopper\Views\CartDetails\_ModalCheckoutSuccess.cshtml" />
     <Content Include="Areas\Store\Views\StorePickupPartners\_ModalPartnerAdd.cshtml" />
     <Content Include="Areas\Store\Views\Home\_PartialCartList.cshtml" />
     <Content Include="Areas\Store\Views\StoreItems\_ModalAddItem.cshtml" />
     <Content Include="Areas\Store\Views\StoreItems\_ModalEditItem.cshtml" />
+    <Content Include="Areas\Shopper\Views\CartDetails\_ModalPickupEdit.cshtml" />
+    <Content Include="Areas\Shopper\Views\CartDetails\PendingCarts.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Cart\cart.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

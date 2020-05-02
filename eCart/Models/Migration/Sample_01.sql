@@ -10,9 +10,6 @@ values	(1, 'NCCC Mall', 'Matina Crossing, Davao City','', 1, 3, 1, 1),
 		(3, 'Gaisano Mall', 'Sta Ana, Davao City','', 1, 3, 2, 1);
 
 -- store images --
-insert into StoreImgTypes([Name]) 
-values ('Url');
-
 insert into StoreImages([StoreDetailId],[StoreImgTypeId],[ImageUrl]) values
 (1,1,'https://www.bworldonline.com/wp-content/uploads/2018/09/nccc-logo.jpg'),
 (2,1,'https://upload.wikimedia.org/wikipedia/commons/7/76/SM_Supermalls_Logo.png'),
