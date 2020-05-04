@@ -1,7 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-   /*/ background-color: rgba(242, 242, 242,0.5);*/
+    background-color: rgba(242, 242, 242,0.5);
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -29,8 +29,10 @@ textarea {
 .store-item {
     background-color: white;
     padding: 5px;
-    margin-right:5px;
-    height:130px;
+    margin-right: 5px;
+    margin-top: 5px;
+    min-height: 130px;
+    border-radius: 25px;
 }
 
 
@@ -40,7 +42,6 @@ textarea {
 
 
 .item-list {
-    background-color:white;
     display: flex;
     flex-direction: column;
     width: 190px;
@@ -48,19 +49,42 @@ textarea {
     padding: 7px;
     margin: 2px;
     justify-content: stretch;
-    transition: 100ms;
-    border: 1px solid white;
+    transition: 500ms;
+    border-radius: 10px;
+}
+
+.add-to-Cart{
+    display: none;
 }
 
 .item-list img {
-    width: 100% ;
+    background-color: white;
+    width: 100%;
     flex: 1;
+    border-radius: 30px;
+    transition: 200ms;
 }
-    .item-list:hover {
-        color: royalblue;
+
+.item-list:hover {
+    /*color: royalblue;
         border: 1px solid rgb(14, 156, 228);
-        box-shadow: 0 2px 3px 1px rgba(14, 156, 228, 0.5);
+        box-shadow: 0 2px 3px 1px gray;*/
+}
+
+.item-list:hover .add-to-Cart {
+    display: block;
+}
+
+.item-list:hover img {
+   box-shadow: 0 1px 5px 1px lightgray;
+}
+
+
+@media only screen and (max-width:1020px ) {
+    .add-to-Cart {
+        display: block;
     }
+}
 
 .item-image {
     max-height: 175px;
@@ -70,6 +94,7 @@ textarea {
     position: relative;
     margin: 10px 0;
 }
+
 
 .item-desc .text-success{
     
@@ -131,6 +156,7 @@ textarea {
     padding:5px;
     border: 1px solid lightgray;
     border-radius:5px;
+    background-color:white;
 }
 
 .cart-item img {
@@ -195,6 +221,7 @@ textarea {
 
 
 .container-panel {
+    background-color:white;
     padding: 10px 20px;
     border: 1px solid lightgray;
     border-radius: 10px;
@@ -236,6 +263,16 @@ textarea {
     margin-left: 15px;
 }
 
+.login-image-side{
+    border-radius:25%;
+    max-width:70%;
+}
+
+.login-panel {
+    background-color: white;
+    border-radius: 20px;
+    
+}
 
 /* Button */
 .btn-primary {

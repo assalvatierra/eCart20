@@ -142,11 +142,13 @@
     <Compile Include="Areas\Shopper\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\CartDetailsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Shopper\Controllers\PaymentDetailsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\StoreDetailsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\StoreItemsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\UserDetailsController.cs" />
     <Compile Include="Areas\Shopper\Models\CartClass.cs" />
     <Compile Include="Areas\Shopper\ShopperAreaRegistration.cs" />
+    <Compile Include="Areas\Shopper\Models\ShopperContext.cs" />
     <Compile Include="Areas\Store\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Store\Controllers\CartDetailsController.cs" />
     <Compile Include="Areas\Store\Controllers\HomeController.cs" />
@@ -162,8 +164,10 @@
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\MerchantController.cs" />
+    <Compile Include="Interfaces\iAccMgr.cs" />
     <Compile Include="Interfaces\iCartMgr.cs" />
     <Compile Include="Interfaces\iStoreMgr.cs" />
+    <Compile Include="Models\AccountLogin.cs" />
     <Compile Include="Models\CartActivity.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
@@ -295,6 +299,7 @@
     <Compile Include="Models\UserStatus.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\AccMgr.cs" />
     <Compile Include="Services\CartMgr.cs" />
     <Compile Include="Services\StoreFactory.cs" />
     <Compile Include="Services\StoreMgr.cs" />
@@ -469,6 +474,11 @@
     <Content Include="Areas\Store\Views\PaymentDetails\Edit.cshtml" />
     <Content Include="Areas\Store\Views\PaymentDetails\Index.cshtml" />
     <Content Include="Content\daterangepicker.scss" />
+    <Content Include="Areas\Shopper\Views\PaymentDetails\Create.cshtml" />
+    <Content Include="Areas\Shopper\Views\PaymentDetails\Delete.cshtml" />
+    <Content Include="Areas\Shopper\Views\PaymentDetails\Details.cshtml" />
+    <Content Include="Areas\Shopper\Views\PaymentDetails\Edit.cshtml" />
+    <Content Include="Areas\Shopper\Views\PaymentDetails\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Cart\cart.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />

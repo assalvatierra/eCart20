@@ -91,19 +91,37 @@
             </div>
             <div class="col-lg-2">
 
-                <h4 style="width:100%;">
+                <h4 style="width:100%;" class="cart-status-text">
                     Status:  @cart.CartStatu.Name
                 </h4>
 
             </div>
             <div class="col-lg-2">
-
-                <button class="btn btn-warning" style="width:100%;">
-                    Cancel Order
-                </button>
-
+                @if (cart.CartStatusId < 3)
+                {
+                    <button class="btn btn-warning" style="width:100%;" onclick="CancelOrder(this,@cart.Id)">
+                        Cancel Order
+                    </button>
+                }
             </div>
         </div>
     </div>
     totalAmount += subtotalAmount;
 }
+
+
+<script>
+    function CancelOrder(e,cartId) {
+        $.get("/Shopper/CartDetails/CancelCart", { cartId: cartId }, (res) => {
+            console.log(res);
+            if (res => "Order Cancelled") {
+                $(e).attr("disabled", "disabled");
+                $(e).parent().siblings('.col-lg-2').children('.cart-status-text').text("Cancelled");
+            } else {
+                alert(res);
+            }
+        });
+
+
+    }
+</script>

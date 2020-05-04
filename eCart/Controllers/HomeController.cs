@@ -21,8 +21,8 @@ namespace eCart.Controllers
 
             List<Models.StoreDetail> featuredstores = store.StoreMgr.getFeaturedStores();
 
-            Session["USER"] = "Admin";   //For test only
-            CreateCart();
+            // Session["USER"] = "Admin";   //For test only
+            //  CreateCart();
             return View();
         }
 
@@ -69,8 +69,8 @@ namespace eCart.Controllers
         {
             if (Session["CARTDETAILS"] == null)
             {
-                List<cCartDetails> cartDetails = new List<cCartDetails>();
-                Session["CARTDETAILS"] = (List<cCartDetails>)cartDetails;
+                //List<cCartDetails> cartDetails = new List<cCartDetails>();
+                //Session["CARTDETAILS"] = (List<cCartDetails>)cartDetails;
             }
 
 

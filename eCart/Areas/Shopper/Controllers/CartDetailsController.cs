@@ -289,64 +289,6 @@ namespace eCart.Areas.Shopper.Controllers
         }
 
 
-
-        #region CartDetails
-        /* Revision of Cart */
-        public JsonResult AddCartItem(int id, int qty, string itemName, decimal itemPrice)
-        {
-            try
-            {
-                 var item = db.StoreItems.Find(id);
-
-                //create cartItem
-                var newItem = new cCart
-                {
-                    Id = id,
-                    Name = item.ItemMaster.Name,
-                    Price = item.UnitPrice,
-                    Qty = qty,
-                    StoreId = item.StoreDetailId
-                };
-
-                //create cartDetails
-                var newCart = new cCartDetails
-                {
-                    Id = 0,
-                    StoreId = newItem.StoreId,
-                    CartStatus = 1,
-                    DeliveryType = "Pickup",
-                    DtPickup = new DateTime(),
-                    PickupPointId = 1, //TODO : get default
-                    cartItems = new List<cCart> { newItem }
-                };
-
-                var cartList = cartMgr.getCartDetails();
-                var isAssigned = false;
-                   
-                    foreach (var cart in cartList)
-                    {
-                        if (cart.StoreId == newItem.StoreId)
-                        {
-                            cart.cartItems.Add(newItem);
-                            isAssigned = true;
-                        }
-                    }
-                
-                if(isAssigned == false)
-                {
-                    cartList.Add(newCart);
-                }
-
-                return Json(cartList, JsonRequestBehavior.AllowGet); 
-            }
-            catch(Exception)
-            {
-                return Json("NA", JsonRequestBehavior.AllowGet);
-                //return ex.ToString();
-            }
-
-        }
-
         public List<cCartDetails> getCart()
         {
             return (List<cCartDetails>)Session["CARTDETAILS"] ?? new List<cCartDetails>();
@@ -359,17 +301,22 @@ namespace eCart.Areas.Shopper.Controllers
             return Json(cartList, JsonRequestBehavior.AllowGet);
         }
 
-        /* */
-        #endregion
 
         public ActionResult PendingCarts()
         {
-            var userId = 1; //TODO: get current user;
+            var userId = cartMgr.getUserId(); 
             var myCarts = cartMgr.getShopperCarts(userId).OrderByDescending(s=>s.Id).ToList();
 
             return View(myCarts);
         }
 
+        [HttpGet]
+        public string CancelCart(int cartId)
+        {
+            var userId = cartMgr.getUserId();
+            var result = cartMgr.setCartStatusCancelled(cartId, userId.ToString());
+            return result;
+        }
 
     }
 }

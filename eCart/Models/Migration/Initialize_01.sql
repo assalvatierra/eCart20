@@ -3,7 +3,7 @@ insert into UserStatus("Name") values ('Active'),('Inactive');
 insert into StoreStatus("Name") values ('Active'),('Inactive');
 insert into StorePickupStatus("Name") values ('Active'),('Inactive');
 insert into CartItemStatus("Name") values ('Active'),('Cancelled');
-insert into CartStatus("Name") values ('Active'),('Submitted'),('Processing'),('Ready'),('Delivered');
+insert into CartStatus("Name") values ('Active'),('Submitted'),('Processing'),('Ready'),('Delivered'),('Cancelled');
 insert into StoreImgTypes("Name") values('Front'),('icon');
 insert into PaymentParties("Name") values('Shopper'),('Rider');
 insert into PaymentReceivers("Description") values('Store'),('Bank'),('Paypal'),('Padala');

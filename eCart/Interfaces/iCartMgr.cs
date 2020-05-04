@@ -10,6 +10,7 @@ namespace eCart.Interfaces
 {
     public interface iCartMgr
     {
+        int getUserId();
         int getCartInfo(int id);
         int getDefaultPickupPointId(int storeId);
         StorePickupPoint GetStorePickup(int id);
@@ -31,8 +32,11 @@ namespace eCart.Interfaces
         void updateCartDetailsStatus(int cartId, string status);
         string setCartPaymentReceiver(int cartId, int recieverId);
         void setCartPickupDate(int cartId, DateTime pickupdate);
+        string setDBCartStatus(int cartId, int cartStatusId, string userId);
+        string setCartStatusCancelled(int cartId, string userId);
 
         void removeCartItem(int id);
+        void removeDBCartItem(int id, int statusId);
 
         string saveOrder(List<CartDetail> cartDetails);
         string saveOrder(CartDetail cart);

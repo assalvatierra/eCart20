@@ -7,7 +7,7 @@
 <h2>Store Items</h2>
 
 <p>
-    @Html.ActionLink("Back to Store", "Index", "Home") |
+    @Html.ActionLink("Back to Store", "Index", "Home", new { id = @ViewBag.StoreId }, null) |
     @Html.ActionLink("Add Item", "Create", new { id = @ViewBag.StoreId }) |
     <a data-target="#AddItem" data-toggle="modal" style="cursor:pointer;"> Create Item </a>
 </p>

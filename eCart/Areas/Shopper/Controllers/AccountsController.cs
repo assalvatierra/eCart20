@@ -4,11 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using eCart.Services;
+using eCart.Models;
 
 namespace eCart.Areas.Shopper.Controllers
 {
     public class AccountsController : Controller
     {
+        ShopperContext db = new ShopperContext();
+        AccMgr accMgr = new AccMgr();
+
         // GET: Shopper/Accounts
         public ActionResult Index()
         {
@@ -22,12 +27,25 @@ namespace eCart.Areas.Shopper.Controllers
 
         // Shopper/Accounts/Login
         [HttpPost]
-        public ActionResult Login(string username, string password)
+        public ActionResult Login([Bind(Include ="Username, Password")] AccountLogin account )
         {
-           Session["USER"] = "Admin";   //For test only
-           CreateCart();
-           return RedirectToAction("Index", "Home", new { area = "Shopper" });
+            var result = accMgr.checkLoginCredentials(account.Username, account.Password);
+            if (result > 0)
+            {
+                Session["USERID"] = result;  
+                Session["USER"] = account.Username;  
+                CreateCart();
 
+                return RedirectToAction("Index", "Home", new { area = "Shopper" });
+            }
+            else
+            {
+                Session["USERID"] = 1;
+                Session["USER"] = "Admin";   //For test only
+                CreateCart();
+
+                return RedirectToAction("Index", "Home", new { area = "Shopper" });
+            }
         }
 
         public ActionResult Logout()
@@ -43,7 +61,6 @@ namespace eCart.Areas.Shopper.Controllers
 
         public string CreateCart()
         {
-          
             List<cCart> cartItems = new List<cCart>();
             Session["MYCART"] = (List<cCart>)cartItems;
 
@@ -52,6 +69,13 @@ namespace eCart.Areas.Shopper.Controllers
 
             return "Cart Created";
         }
+
+
+
+
+        #region functions
+
+        #endregion
 
     }
 }

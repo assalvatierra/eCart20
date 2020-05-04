@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using eCart.Areas.Shopper.Models;
+using eCart.Interfaces;
 using eCart.Models;
 
 namespace eCart.Services
@@ -37,7 +39,8 @@ namespace eCart.Services
                     Price = price,
                     Qty = qty,
                     StoreId = item.StoreDetailId,
-                    ItemImage = item.ItemMaster.ItemImages.FirstOrDefault() != null ? item.ItemMaster.ItemImages.FirstOrDefault().ImageUrl : ""
+                    ItemImage = item.ItemMaster.ItemImages.FirstOrDefault() != null ? item.ItemMaster.ItemImages.FirstOrDefault().ImageUrl : "",
+                    CartItemStatusId = 1    
                 };
 
                 //create cartDetails
@@ -47,7 +50,7 @@ namespace eCart.Services
                     CartStatus = 1,
                     DeliveryType = "Pickup",
                     DtPickup = DateTime.Now.AddHours(4),
-                    PickupPointId = getDefaultPickupPointId(newItem.StoreId), //TODO : get default
+                    PickupPointId = getDefaultPickupPointId(newItem.StoreId),
                     cartItems = new List<cCart> { newItem }
                 };
 
@@ -206,7 +209,7 @@ namespace eCart.Services
             var pickup = db.StorePickupPoints.Find(cart.PickupPointId);
             CartDetail cartDetails = new CartDetail
             {
-                UserDetailId = 1,               //TODO: change to USERID
+                UserDetailId = getUserId(),  
                 StoreDetailId = cart.StoreId,
                 StoreDetail = tempStore,
                 CartStatusId = cart.CartStatus,               //default: active
@@ -219,6 +222,11 @@ namespace eCart.Services
             };
 
             return cartDetails;
+        }
+
+        public int getUserId()
+        {
+            return HttpContext.Current.Session["USERID"] != null ? (int)HttpContext.Current.Session["USERID"] : 0;
         }
 
 
@@ -312,7 +320,7 @@ namespace eCart.Services
         {
             try
             {
-                var userId = 1; //TODO : get UserId
+                var userId = getUserId(); 
 
                 foreach (var cart in cartDetails)
                 {
@@ -346,7 +354,7 @@ namespace eCart.Services
         {
             try
             {
-                var userId = 1; //TODO : get UserId
+                var userId = getUserId(); 
                 //check if cart is active, then change status to submitted 
                 //and save to the db
                 if (cart.CartStatusId == 1)
@@ -488,9 +496,67 @@ namespace eCart.Services
                 };
 
                 db.CartHistories.Add(cartHistory);
+                db.SaveChanges();
             }
             catch (Exception ex)
             {
+                throw ex;
+            }
+        }
+
+        public string setDBCartStatus(int cartId, int cartStatusId, string userId)
+        {
+            try
+            {
+                CartDetail cart = db.CartDetails.Find(cartId);
+                CartStatus cartStatus = db.CartStatus.Find(cartStatusId);
+
+                cart.CartStatu = cartStatus;
+                db.Entry(cart).State = EntityState.Modified;
+                db.SaveChanges();
+
+                addCartHistory(cart, cartStatus, getUserId().ToString());
+                return "cart status updated";
+            }
+            catch (Exception ex)
+            {
+
+                return ex.Message;
+            }
+        }
+
+        public string setCartStatusCancelled(int cartId, string userId)
+        {
+
+            var cartstatusId = db.CartDetails.Find(cartId).CartStatusId;
+            if (cartstatusId < 3) 
+            {
+                // if cart is still on Pending or Active, 
+                // user is allowed to cancel the cart
+                setDBCartStatus(cartId, 6, userId);
+                return "Order Cancelled";
+            }
+            else
+            {
+                return "Order is now being processed";
+            }
+
+        }
+
+        public void removeDBCartItem(int id, int statusId)
+        {
+
+            try
+            {
+                CartItem cartItem = db.CartItems.Find(id);
+                cartItem.CartItemStatusId = 2;
+
+                db.Entry(cartItem).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
                 throw ex;
             }
         }

@@ -16,6 +16,7 @@ namespace eCart.Areas.Shopper.Models
         public string remarks1 { get; set; }
         public string remarks2 { get; set; }
         public string ItemImage { get; set; }
+        public int CartItemStatusId { get; set; }
     }
 
 
@@ -60,4 +61,5 @@ namespace eCart.Areas.Shopper.Models
             return db.StoreItems.Find(id);
         }
     }
+
 }

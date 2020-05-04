@@ -14,7 +14,6 @@ namespace eCart.Areas.Store.Controllers
 {
     public class CartDetailsController : Controller
     {
-        ecartdbContainer edb = new ecartdbContainer();
         private StoreContext db = new StoreContext();
         StoreFactory storeFactory = new StoreFactory();
 
@@ -169,6 +168,16 @@ namespace eCart.Areas.Store.Controllers
             {
                 return ex.Message.ToString();
             }
+        }
+
+        [HttpGet]
+        public JsonResult SetCartStatus(int id, int statusId)
+        {
+            var cartMgr = storeFactory.CartMgr;
+            var userid = cartMgr.getUserId();
+            var response = cartMgr.setDBCartStatus(id,statusId, userid.ToString()); 
+
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -7,7 +7,7 @@
    @foreach (var item in Model)
     {
 
-    <div class="col-sm-12 col-md-3 col-lg-2 item-list bordered">
+    <div class="col-sm-12 col-md-3 col-lg-2 item-list">
         @if (item.ItemMaster.ItemImages.FirstOrDefault() != null)
         {
             var image = item.ItemMaster.ItemImages.FirstOrDefault();
@@ -34,7 +34,7 @@
             <b class="text-success"> Php @item.UnitPrice.ToString("0.00") </b>
         </div>
         <div class="add-to-Cart">
-            <button class="btn btn-default" onclick="AddtoCart(this)" style="width:100%;"> Add to Cart </button>
+            <button class="btn btn-primary" onclick="AddtoCart(this)" style="width:100%;"> Add to Cart </button>
             <div class="btn-group hidden">
                 <button class="btn btn-default" type="button" onclick="SubtractQty(this)"> - </button>
                 <div class="btn btn-default disabled item-qty">
@@ -48,7 +48,7 @@
     }
 </div>
 
-
+<script  src="~/Scripts/jquery-3.3.1.min.js"> </script>
 <script src="~/Scripts/Cart/cart.js"></script>
 <script>
     //On Add to Cart Button Click
@@ -61,5 +61,11 @@
             window.location = "/Shopper/Accounts/Login";
         }
     }
+
+    $(".item-list").on("hover", new function () {
+
+        console.log("hover");
+    });
+
 </script>
 

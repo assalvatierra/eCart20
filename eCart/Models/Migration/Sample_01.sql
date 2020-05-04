@@ -3,6 +3,9 @@
 insert into UserDetails([UserId], [Name], [Address], [Email], [Mobile], [Remarks], [UserStatusId], [MasterCityId], [MasterAreaId] )
 values (1, 'Admin', 'Davao City', 'admin@gmail.com', '0912-345-6789', 'Admin User', 1, 1, 1);
 
+insert into UserDetails([UserId], [Name], [Address], [Email], [Mobile], [Remarks], [UserStatusId], [MasterCityId], [MasterAreaId] )
+values (1, 'Tester', 'Davao City', 'tester@gmail.com', '0912-345-6789', 'Tester User', 1, 1, 1);
+
 -- create stores --
 insert into StoreDetails([LoginId],[Name],[Address],[Remarks],[StoreStatusId],[StoreCategoryId],[MasterCityId],[MasterAreaId]) 
 values	(1, 'NCCC Mall', 'Matina Crossing, Davao City','', 1, 3, 1, 1),
@@ -61,9 +64,9 @@ insert into ItemImages([ItemMasterID],[ImageUrl]) values
 
 --- Create Sample Cart --
 insert into CartDetails([UserDetailId], [StoreDetailId], [CartStatusId], [StorePickupPointId], [DtPickup], [DeliveryType])
-values (1, 1, 1, 1, '04/03/2020 5:00 PM', 'Pickup');
+values (1, 1, 2, 1, '05/03/2020 5:00 PM', 'Pickup');
 insert into CartDetails([UserDetailId], [StoreDetailId], [CartStatusId], [StorePickupPointId], [DtPickup], [DeliveryType])
-values (1, 1, 1, 1, '04/03/2020 3:00 PM', 'Pickup');
+values (1, 1, 2, 1, '05/03/2020 3:00 PM', 'Pickup');
 
 --- Create Cart Items ---
 insert into CartItems([CartDetailId],[StoreItemId],[ItemQty],[ItemOrder],[CartItemStatusId],[Remarks1],[Remarks2])

@@ -9,22 +9,22 @@
     @Html.ActionLink("Back to List", "Index", "Home", new { area = "Store", id = @ViewBag.StoreId }, null)
 </div>
 
-<div class="panel row">
+<div class="panel row" style="padding:15px;">
     <div class="panel-body store-cart">
         <div class="row">
             <div class="col-lg-4">
                 <h3>
                     Cart # : @Model.Id  &nbsp;
                 </h3>
-                <p><span class="text-muted"> Status: </span> @Model.CartStatu.Name</p>
+                <p><span class="text-muted"> Status: </span> <span id="cart-status-text"> @Model.CartStatu.Name </span></p>
             </div>
             <div class="col-lg-8">
                 <div class="btn-group pull-right">
                     <button class="btn btn-default" data-target="#PaymentModal" data-toggle="modal"> Payment </button>
-                    <button class="btn btn-default"> Processing </button>
-                    <button class="btn btn-default"> Ready </button>
-                    <button class="btn btn-default"> Delivered </button>
-                    <button class="btn btn-default"> Cancel </button>
+                    <button class="btn btn-default" onclick="SetCartStatus(@Model.Id, 3, 'Processing')"> Processing </button>
+                    <button class="btn btn-default" onclick="SetCartStatus(@Model.Id, 4, 'Ready')"> Ready </button>
+                    <button class="btn btn-default" onclick="SetCartStatus(@Model.Id, 5, 'Delivered')"> Delivered </button>
+                    <button class="btn btn-default" onclick="SetCartStatus(@Model.Id, 6, 'Cancelled')"> Cancel </button>
                 </div>
             </div>
         </div>
@@ -118,14 +118,10 @@
             </table>
         </div>
     </div>
-    <div>
 
-    </div>
-</div>
-
-<h3> Payment </h3>
-<div class="panel ">
-        <table class="table bordered" >
+    <h3> Payment </h3>
+    <div class="panel ">
+        <table class="table bordered">
             <thead>
                 <tr style="font-weight:bold;background-color:whitesmoke;">
                     <th> Date </th>
@@ -140,21 +136,40 @@
             <tbody id="table-payments">
                 @foreach (var payment in ViewBag.PaymentDetails as IEnumerable<eCart.Models.PaymentDetail>)
                 {
-                <tr>
-                    <td> @payment.dtPayment </td>
-                    <td> @payment.PaymentParty.Name </td>
-                    <td> @payment.PartyInfo </td>
-                    <td> @payment.PaymentReceiver.Description </td>
-                    <td> @payment.ReceiverInfo </td>
-                    <td> @payment.PaymentStatu.Name </td>
-                    <td> @payment.Amount.ToString("0.00") </td>
-                </tr>
-                    
+                    <tr>
+                        <td> @payment.dtPayment </td>
+                        <td> @payment.PaymentParty.Name </td>
+                        <td> @payment.PartyInfo </td>
+                        <td> @payment.PaymentReceiver.Description </td>
+                        <td> @payment.ReceiverInfo </td>
+                        <td> @payment.PaymentStatu.Name </td>
+                        <td> @payment.Amount.ToString("0.00") </td>
+                    </tr>
+
                 }
             </tbody>
         </table>
+
+
+
+    </div>
+
+
 </div>
 
 
 @Html.Partial("_ModalPayment", null, new ViewDataDictionary { { "PaymentReceiverList", ViewBag.PaymentReceiverList },
     { "PaymentPartyList", ViewBag.PaymentPartyList }, { "PaymentStatusList", ViewBag.PaymentStatusList }, { "CartId", Model.Id } })
+
+<script>
+    function SetCartStatus(cartId, statusId, status) {
+        let response = $.get("/Store/CartDetails/SetCartStatus", { id: cartId, statusId, statusId }, (res) => {
+            //if (res.status == 200) {
+                //update status description
+                $("#cart-status-text").text(status);
+                console.log(res);
+            //}
+        });
+
+    }
+</script>

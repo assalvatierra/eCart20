@@ -1,24 +1,27 @@
-﻿
+﻿@model eCart.Models.AccountLogin
 @{
     ViewBag.Title = "Login";
 }
 
 
-<div class="row" style="margin-top:100px;">
+<div class="row login-panel" style="margin-top:100px;">
 
-    <div class="col-md-6 login-form" style="bottom:50px;left:80px;">
-        <img src="~/img/placeholders/shopping-cart-colour-thumbnail.png" width="350" />
+    <div class="col-md-6 login-form" style="bottom:50px;left:40px;">
+        <img src="~/img/placeholders/shopping-cart-colour-thumbnail.png"  class="login-image-side" />
     </div>
 
     <div class="col-md-6 login-form" style="top:0px;">
         <h2> <span style="color:royalblue;">Shopper</span> Login</h2>
-        @using (Html.BeginForm()) {
+        @using (Html.BeginForm())
+        {
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="email" />
+                @*<input type="text" class="form-control" placeholder="email" id="username" />*@
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
             </div>
 
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="password" />
+                @*<input type="password" class="form-control" placeholder="password" id="password" />*@
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
             </div>
 
             <button class="btn btn-default" type="submit"> Login </button>
@@ -27,6 +30,7 @@
 
                 <p> Create an account <a href="~/Shopper/Accounts/Register"> Here </a></p>
             </div>
+            <br /><br />
         }
     </div>
 

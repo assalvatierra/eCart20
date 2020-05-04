@@ -21,7 +21,7 @@
     @foreach (var item in Model)
     {
 
-        <div class="col-sm-2 item-list bordered">
+        <div class="col-sm-2 item-list">
              @if (item.ItemMaster.ItemImages.FirstOrDefault() != null)
               {
                   var image = item.ItemMaster.ItemImages.FirstOrDefault(); 
@@ -37,7 +37,7 @@
 
             </div>
             <div class="add-to-Cart">
-                <button class="btn btn-default" onclick="AddtoCart(this)" style="width:100%;"> Add to Cart </button>
+                <button class="btn btn-primary" onclick="AddtoCart(this)" style="width:100%;"> Add to Cart </button>
                 <div class="btn-group hidden">
                     <button class="btn btn-default" type="button" onclick="SubtractQty(this)"> - </button>
                     <div class="btn btn-default disabled item-qty">
