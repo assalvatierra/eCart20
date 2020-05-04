@@ -146,12 +146,12 @@
     <Compile Include="Areas\Shopper\Controllers\StoreItemsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\UserDetailsController.cs" />
     <Compile Include="Areas\Shopper\Models\CartClass.cs" />
-    <Compile Include="Areas\Shopper\Models\ShopperContext.cs" />
     <Compile Include="Areas\Shopper\ShopperAreaRegistration.cs" />
     <Compile Include="Areas\Store\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Store\Controllers\CartDetailsController.cs" />
     <Compile Include="Areas\Store\Controllers\HomeController.cs" />
     <Compile Include="Areas\Store\Controllers\ItemMastersController.cs" />
+    <Compile Include="Areas\Store\Controllers\PaymentDetailsController.cs" />
     <Compile Include="Areas\Store\Controllers\StoreDetailsController.cs" />
     <Compile Include="Areas\Store\Controllers\StoreItemsController.cs" />
     <Compile Include="Areas\Store\Controllers\StorePickupPartnersController.cs" />
@@ -306,10 +306,12 @@
     </Content>
     <Content Include="Areas\Admin\img\bulleted-list-gray.png" />
     <Content Include="Areas\Admin\img\bulleted-list.png" />
+    <Content Include="Areas\Shopper\Scripts\checkout.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\daterangepicker.css" />
     <Content Include="img\placeholders\image-placeholder.png" />
     <Content Include="img\placeholders\item-placeholder.png" />
     <Content Include="img\placeholders\placeholder-images-product-2.png" />
@@ -459,8 +461,17 @@
     <Content Include="Areas\Store\Views\StoreItems\_ModalEditItem.cshtml" />
     <Content Include="Areas\Shopper\Views\CartDetails\_ModalPickupEdit.cshtml" />
     <Content Include="Areas\Shopper\Views\CartDetails\PendingCarts.cshtml" />
+    <Content Include="Areas\Shopper\Views\CartDetails\_ModalCartPayment.cshtml" />
+    <Content Include="Areas\Store\Views\CartDetails\_ModalPayment.cshtml" />
+    <Content Include="Areas\Store\Views\PaymentDetails\Create.cshtml" />
+    <Content Include="Areas\Store\Views\PaymentDetails\Delete.cshtml" />
+    <Content Include="Areas\Store\Views\PaymentDetails\Details.cshtml" />
+    <Content Include="Areas\Store\Views\PaymentDetails\Edit.cshtml" />
+    <Content Include="Areas\Store\Views\PaymentDetails\Index.cshtml" />
+    <Content Include="Content\daterangepicker.scss" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Cart\cart.js" />
+    <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -478,6 +489,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\DateRangePicker\moment.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

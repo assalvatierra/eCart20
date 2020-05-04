@@ -46,7 +46,7 @@ namespace eCart.Services
                     StoreId = newItem.StoreId,
                     CartStatus = 1,
                     DeliveryType = "Pickup",
-                    DtPickup = DateTime.Now,
+                    DtPickup = DateTime.Now.AddHours(4),
                     PickupPointId = getDefaultPickupPointId(newItem.StoreId), //TODO : get default
                     cartItems = new List<cCart> { newItem }
                 };
@@ -382,33 +382,62 @@ namespace eCart.Services
         }
 
 
-        public void setCartPaymentReceiver(int cartId, int recieverId)
+        public string setCartPaymentReceiver(int cartId, int recieverId)
         {
+            try
+            {
 
-                var cart = getCartDetails().Find(c => c.Id == cartId);
+                var cartpayment = new cCartPayment()
+                {
+                    Id = 1,
+                    PaymentRecieverId = recieverId,
+                    Amount = 0,
+                    dtPayment = DateTime.Now,
+                    PaymentStatusId = 1,    //pending
+                    PartyInfo = "",
+                    PaymentPartyId = 1,   //shopper
+                    ReceiverInfo = ""
+                };
 
-                //if (cart.cartPayments == null)
-                //{
-                    //create new cartPayment
+                var cartList = getCartDetails();
 
-                    var cartpayment = new cCartPayment { 
-                        Amount = 0,
-                        dtPayment = DateTime.Now,
-                        PaymentReciever = recieverId,
-                        PaymentStatusId = 1
-                    };
+                cartList.ForEach((c) => {
+                    if (c.Id == cartId)
+                    {
+                        c.PaymentMode = db.PaymentReceivers.Find(recieverId).Description;
 
-                    cart.cartPayments.Add(cartpayment);
-                //}
-                //else
-                //{
-                //    //update current payment
-                //   var cartPayment = cart.cartPayments.FirstOrDefault();
-                //   cartPayment.PaymentReciever = recieverId;
-                //   cartPayment.dtPayment = DateTime.Now;
-                //}
+
+                        if (c.cartPayments == null )
+                        {
+                            c.cartPayments = new List<cCartPayment>();
+
+                            //create new cartPayment
+                            c.cartPayments.Add(cartpayment);
+                        }
+                        else
+                        {
+                            //add to the current list
+                            c.cartPayments.Add(cartpayment);
+                        }
+                    }
+                });
+
+                return "Payment mode changes";
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
+        }
+
+        public void setCartPickupDate(int cartId, DateTime pickupdate)
+        {
+            //get session cart
+            var cart = getCartDetails().Find(c=>c.Id == cartId);
+            cart.DtPickup = pickupdate;
 
         }
+
 
         public void removeCartSession(int id)
         {

@@ -24,7 +24,6 @@ function SubmitOrder(e, cartId) {
         console.log(result);
         $(e).attr("disabled", true);
         $("#CheckOutSuccessModal").modal('show');
-        DisableAllButton();
     });
 }
 

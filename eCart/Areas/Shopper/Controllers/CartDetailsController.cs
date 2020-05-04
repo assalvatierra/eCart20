@@ -274,10 +274,20 @@ namespace eCart.Areas.Shopper.Controllers
         }
 
         [HttpPost]
-        public void SetPaymentReceiver(int cartId, int receiverId)
+        public string SetPaymentReceiver(int cartId, int receiverId)
         {
-            cartMgr.setCartPaymentReceiver(cartId, receiverId);
+           receiverId = receiverId != 0 ? receiverId : 1;
+           return cartMgr.setCartPaymentReceiver(cartId, receiverId);
         }
+
+        [HttpPost]
+        public void SetCartPickupDate(int cartId, DateTime date)
+        {
+          
+           cartMgr.setCartPickupDate(cartId, date);
+          
+        }
+
 
 
         #region CartDetails

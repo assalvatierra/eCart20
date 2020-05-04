@@ -11,7 +11,7 @@ values	(1, 'NCCC Mall', 'Matina Crossing, Davao City','', 1, 3, 1, 1),
 
 -- store images --
 insert into StoreImages([StoreDetailId],[StoreImgTypeId],[ImageUrl]) values
-(1,1,'https://www.bworldonline.com/wp-content/uploads/2018/09/nccc-logo.jpg'),
+(1,1,'https://gidci.com.ph/wp-content/uploads/2015/06/NCCC.jpg'),
 (2,1,'https://upload.wikimedia.org/wikipedia/commons/7/76/SM_Supermalls_Logo.png'),
 (3,1,'https://media.glassdoor.com/sqll/656853/gaisano-mall-squarelogo-1471522333300.png')
 ;
@@ -42,7 +42,7 @@ values (14, 1),(14, 2),(3, 3),(14,4),(14,5),(14,6),(1,7),(4,8),(14,9),(5,10);
 insert into StoreItems([ItemMasterId], [StoreDetailId], [UnitPrice]) 
 values	( 1, 1, 15.00 ), ( 2, 1, 52.00 ), ( 3, 1, 18.00 ), ( 4, 1, 120.00 ),( 5, 1, 155.00 ), ( 7, 1, 140.00 ), ( 8, 1, 18.00 ), ( 9, 1, 25.00 ), ( 10, 1, 45.00 ), ( 11, 1, 75.00 ),
 		( 1, 2, 15.75 ), ( 2, 2, 50.25 ), ( 3, 2, 18.25 ), ( 4, 2, 125.00 ),( 5, 2, 165.00 ), 
-		( 7, 3, 135.00 ), ( 8, 3, 19.75 ), ( 9, 3, 27.25 ), ( 10, 3, 42.25 ), ( 11, 3, 72.50 );
+		( 7, 3, 13.00 ), ( 8, 3, 19.75 ), ( 9, 3, 27.25 ), ( 10, 3, 42.25 ), ( 11, 3, 72.50 );
 
 -- item images --
 insert into ItemImages([ItemMasterID],[ImageUrl]) values 

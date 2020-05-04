@@ -40,7 +40,8 @@
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <span> DateTime Pickup: </span>
-                    <a href=""> @cart.DtPickup </a>
+                    <span class="hidden" id="cartID"> @cart.Id </span>
+                    <input type="text" name="pickup-date" value="@cart.DtPickup"  class="date-link"  >
                 </div>
                 <div class="col-lg-3 col-md-5 col-sm-12">
                     <span> Payment: </span>
@@ -149,9 +150,52 @@
 
 <br />
 
+
+
 @Html.Partial("_ModalPickupEdit")
 @Html.Partial("_ModalCheckoutSuccess")
 @Html.Partial("_ModalCartPayment", ViewBag.PaymentParties as IEnumerable<eCart.Models.PaymentReceiver>)
 
 <script src="~/Scripts/Cart/cart.js"></script>
-<script src="~/Areas/Shopper/Scripts/checkout.js"> </script>
+<script src="~/Areas/Shopper/Scripts/checkout.js"></script>
+
+<script src="~/Scripts/DateRangePicker/moment.min.js"></script>
+<script src="~/Scripts/DateRangePicker/daterangepicker.js"></script>
+<link href="~/Content/daterangepicker.css" rel="stylesheet" />
+<script>
+    $('input[name="pickup-date"]').daterangepicker({
+        singleDatePicker: true,
+        startDate: moment().add('hours', 4),
+        showDropdowns: true,
+        timePicker: true,
+        timePicker24Hour: false,
+        timePickerIncrement: 10,
+        autoUpdateInput: true,
+        locale: {
+            format: 'MMM DD,YYYY h:mm A'
+        },
+    });
+
+
+    $('input[name="pickup-date"]').on('change', () => {
+        let paymentDate = $('input[name="pickup-date"]').val();
+        let cartId = $('input[name="pickup-date"]').siblings('#cartID').text();
+        let now = moment();
+
+
+        let dateComparision = moment(paymentDate).diff(now, 'minutes');
+        console.log(dateComparision);
+        if (dateComparision > 120) {    //at least 120 minutes or 2 hours from now
+            //update date on session
+            let result = $.post('/Shopper/CartDetails/SetCartPickupDate', { cartId: cartId, date: paymentDate });
+            console.log(result);
+        } else {
+            $('input[name="pickup-date"]').val(moment().add('hours', 4).format('MMM DD,YYYY h:mm A'));
+            alert('Invalid Date, please input a valid date for the date and time pickup.');
+        }
+
+    });
+
+    
+</script>
+

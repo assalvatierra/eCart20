@@ -29,7 +29,8 @@ namespace eCart.Interfaces
         void updateCartPickupPoint(int cartId, int pickupPoint);
         void updateCartAsDelivery(int cartId);
         void updateCartDetailsStatus(int cartId, string status);
-        void setCartPaymentReceiver(int cartId, int recieverId);
+        string setCartPaymentReceiver(int cartId, int recieverId);
+        void setCartPickupDate(int cartId, DateTime pickupdate);
 
         void removeCartItem(int id);
 

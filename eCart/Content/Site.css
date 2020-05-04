@@ -284,3 +284,15 @@ textarea {
     }
 }
 
+
+.date-link {
+    border: none;
+    color: #0066CC;
+    cursor:pointer;
+}
+.date-link:hover {
+    border: none;
+    color: #0066CC;
+    text-decoration:underline;
+
+}
