@@ -12,7 +12,6 @@ namespace eCart.Areas.Shopper.Controllers
     public class AccountsController : Controller
     {
         ecartdbContainer edb = new ecartdbContainer();
-        ShopperContext db = new ShopperContext();
         AccMgr accMgr = new AccMgr();
 
         // GET: Shopper/Accounts
@@ -57,11 +56,11 @@ namespace eCart.Areas.Shopper.Controllers
 
         public ActionResult Register()
         {
-            ViewBag.UserStatusId = new SelectList(db.UserStatuses, "Id", "Name");
+            ViewBag.UserStatusId = new SelectList(edb.UserStatus, "Id", "Name");
 
-            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name");
+            ViewBag.MasterCityId = new SelectList(edb.MasterCities, "Id", "Name");
 
-            ViewBag.UserStatusId = new SelectList(db.MasterAreas, "Id", "Name");
+            ViewBag.UserStatusId = new SelectList(edb.MasterAreas, "Id", "Name");
 
             return View();
         }

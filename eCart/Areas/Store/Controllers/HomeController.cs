@@ -20,8 +20,8 @@ namespace eCart.Areas.Store.Controllers
             {
                 var storeMgr = storeFactory.StoreMgr;
 
-                string STOREID = Session["STOREID"] != null ? Session["STOREID"].ToString() : "1";
-                ViewBag.StoreId = int.Parse(STOREID);
+                string STOREID = Session["STOREID"] != null ? Session["STOREID"].ToString() : id.ToString();
+                ViewBag.StoreId = id;
 
                 var store = storeMgr.getStoreDetails((int)id);
                 return View(store);
