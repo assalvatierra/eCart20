@@ -14,12 +14,18 @@ namespace eCart.Areas.Store.Controllers
     public class StoreDetailsController : Controller
     {
         private StoreContext db = new StoreContext();
-
+        private ecartdbContainer edb = new ecartdbContainer();
         // GET: Store/StoreDetails
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            var storeDetails = db.StoreDetails.Include(s => s.MasterArea).Include(s => s.MasterCity).Include(s => s.StoreCategory).Include(s => s.StoreStatu);
-            return View(storeDetails.ToList());
+
+            var storeDetails = db.StoreDetails.Find(id);
+
+            ViewBag.Status = db.StoreStatus.ToList();
+            ViewBag.Cities = db.MasterCities.ToList();
+            ViewBag.Areas = db.MasterAreas.ToList();
+
+            return View(storeDetails);
         }
 
         // GET: Store/StoreDetails/Details/5

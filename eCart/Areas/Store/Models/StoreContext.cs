@@ -55,5 +55,11 @@ namespace eCart.Areas.Store.Models
         public System.Data.Entity.DbSet<eCart.Models.PaymentReceiver> PaymentReceivers { get; set; }
 
         public System.Data.Entity.DbSet<eCart.Models.PaymentStatus> PaymentStatus { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.StorePayment> StorePayments { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.StorePaymentStatus> StorePaymentStatus { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.StorePaymentType> StorePaymentTypes { get; set; }
     }
 }
