@@ -17,12 +17,13 @@
             {
                 <img src="~/img/placeholders/placeholder-product.png" class="col-sm-6" width="100%"  />
             }
-
-            <div class="col-sm-6">
-                <h4> @item.Name </h4>
-                <span class="badge badge-pill badge-primary"> @item.StoreCategory.Name </span>
-                <br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "", id = item.Id }, null)
-            </div>
+            <a href="../Merchant/Products/@item.Id" >
+                <div class="col-sm-6">
+                    <h4> @item.Name </h4>
+                    <span class="badge badge-pill badge-primary"> @item.StoreCategory.Name </span>
+                    @*<br /><br /> @Html.ActionLink("View Products", "Products", "Merchant", new { area = "", id = item.Id }, null)*@
+                </div>
+            </a>
         </div>
     }
 

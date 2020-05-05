@@ -174,7 +174,6 @@ namespace eCart.Areas.Store.Controllers
             }
         }
 
-
         [HttpGet]
         public JsonResult GetStoreItem(int id)
         {
@@ -205,6 +204,55 @@ namespace eCart.Areas.Store.Controllers
             catch (Exception)
             {
             }
+        }
+
+        [HttpGet]
+        public JsonResult GetItemCategories()
+        {
+            var categories = db.ItemCategories.Select(c => new { c.Id, c.Name }).ToList();
+            return Json(categories, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public void AddItemCategory(int itemId, int categoryId)
+        {
+            try
+            {
+                var item = db.StoreItems.Find(itemId);
+                var masterItem = item.ItemMaster;
+                var category = db.ItemCategories.Find(categoryId);
+
+                var mastercategory = new ItemMasterCategory
+                {
+                    ItemCategory = category,
+                    ItemMaster = masterItem
+                };
+
+                db.ItemMasterCategories.Add(mastercategory);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+
+        [HttpPost]
+        public void RemoveItemCategory(int Id)
+        {
+            try
+            {
+                var itemMasterCategory = db.ItemMasterCategories.Find(Id);
+                db.ItemMasterCategories.Remove(itemMasterCategory);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
     }
 }

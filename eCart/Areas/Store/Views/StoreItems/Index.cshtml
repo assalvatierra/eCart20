@@ -19,6 +19,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.ItemMaster.Name)
             </th>
+            <td>
+                <b> Category</b>
+            </td>
             <th>
                 @Html.DisplayNameFor(model => model.UnitPrice)
             </th>
@@ -31,7 +34,7 @@
                     <td width="80">
                         @if (item.ItemMaster.ItemImages.FirstOrDefault() != null)
                         {
-                            var image = item.ItemMaster.ItemImages.FirstOrDefault(); 
+                            var image = item.ItemMaster.ItemImages.FirstOrDefault();
                             <img src="@image.ImageUrl" class="img-thumbnail" width="60" />
                         }
                         else
@@ -46,6 +49,27 @@
                                 @Html.DisplayFor(modelItem => item.ItemMaster.Name)
                             </b>
                         </div>
+                    </td>
+                    <td>
+                        <div id="category-@item.Id">
+
+                            @foreach (var category in item.ItemMaster.ItemMasterCategories)
+                            {
+                            <div class="btn-group">
+                                <button class='btn btn-default btn-xs'>
+                                    @category.ItemCategory.Name
+
+                                </button>
+                                <button class='btn btn-default btn-xs' style="color:gray;" onclick="RemoveItemCategory(this, @category.Id)">
+                                    &times;
+                                </button>
+                            </div>
+                            }
+                        </div>
+
+                        <button class="btn btn-default btn-xs" href="" data-target="#AddCategory" data-toggle="modal" onclick="GetCategoryList(@item.Id)">
+                            Add Category
+                        </button>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.UnitPrice)
@@ -68,3 +92,17 @@
 @{Html.RenderPartial("_ModalAddItem", null, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } }); }
 
 @{Html.RenderPartial("_ModalEditItem", null, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } }); }
+
+@{Html.RenderPartial("_ModalAddCategory", null, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } }); }
+
+
+<script>
+    function RemoveItemCategory(e, categoryId) {
+        $.post("/Store/StoreItems/RemoveItemCategory", { Id: categoryId }).then(() => {
+            $(e).parent().remove(); //remove item from table 
+        }).catch((err) => {
+            console.log(err);
+        });
+
+    }
+</script>
