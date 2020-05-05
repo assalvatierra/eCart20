@@ -11,6 +11,7 @@ namespace eCart.Areas.Shopper.Controllers
 {
     public class AccountsController : Controller
     {
+        ecartdbContainer edb = new ecartdbContainer();
         ShopperContext db = new ShopperContext();
         AccMgr accMgr = new AccMgr();
 
@@ -56,9 +57,36 @@ namespace eCart.Areas.Shopper.Controllers
 
         public ActionResult Register()
         {
+            ViewBag.UserStatusId = new SelectList(db.UserStatuses, "Id", "Name");
+
+            ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name");
+
+            ViewBag.UserStatusId = new SelectList(db.MasterAreas, "Id", "Name");
+
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Register([Bind(Include = "Name, Address, Email, Mobile, Password")] AccountRegistration registration)
+        {
+            if (registration != null )
+            {
+                registration.UserStatusId = 1;
+                registration.MasterAreaId = 1;
+                registration.MasterCityId = 1;
+
+                //register account
+                accMgr.registerAccount(registration);
+
+                // proceed to login
+                return RedirectToAction("Login");
+            }
+
+            ViewBag.UserStatusId = new SelectList(edb.UserStatus, "Id", "Name", 1);
+            ViewBag.MasterCityId = new SelectList(edb.MasterCities, "Id", "Name", 1);
+            ViewBag.UserStatusId = new SelectList(edb.MasterAreas, "Id", "Name", 1);
+            return View();
+        }
         public string CreateCart()
         {
             List<cCart> cartItems = new List<cCart>();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eCart.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -32,5 +33,9 @@ namespace eCart.Areas.Shopper
         public System.Data.Entity.DbSet<eCart.Models.UserDetail> UserDetails { get; set; }
 
         public System.Data.Entity.DbSet<eCart.Models.UserStatus> UserStatuses { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.MasterCity> MasterCities { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.MasterArea> MasterAreas  { get; set; }
     }
 }

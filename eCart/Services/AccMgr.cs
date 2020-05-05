@@ -46,5 +46,31 @@ namespace eCart.Services
                 return "NULL";
             }
         }
+
+        public void registerAccount(AccountRegistration newAccount)
+        {
+            try
+            {
+                UserDetail user = new UserDetail()
+                {
+                    UserId = "1",
+                    Name = newAccount.Name,
+                    Email = newAccount.Email,
+                    Address = newAccount.Address,
+                    Mobile = newAccount.Mobile,
+                    MasterAreaId = newAccount.MasterAreaId,
+                    MasterCityId = newAccount.MasterCityId,
+                    Remarks= " ",
+                    UserStatusId = newAccount.UserStatusId
+                };
+
+                db.UserDetails.Add(user);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
