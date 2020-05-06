@@ -139,6 +139,9 @@
     <Compile Include="Areas\Admin\Controllers\StoreDetailsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserDetailsController.cs" />
     <Compile Include="Areas\Admin\Models\AdminDBContext.cs" />
+    <Compile Include="Areas\Rider\Controllers\RiderDetailsController.cs" />
+    <Compile Include="Areas\Rider\Model\RiderContext.cs" />
+    <Compile Include="Areas\Rider\RiderAreaRegistration.cs" />
     <Compile Include="Areas\Shopper\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\CartDetailsController.cs" />
     <Compile Include="Areas\Shopper\Controllers\HomeController.cs" />
@@ -486,6 +489,14 @@
     <Content Include="Areas\Store\Views\StorePayments\Details.cshtml" />
     <Content Include="Areas\Store\Views\StorePayments\Edit.cshtml" />
     <Content Include="Areas\Store\Views\StorePayments\Index.cshtml" />
+    <Content Include="Areas\Rider\Views\web.config" />
+    <Content Include="Areas\Rider\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Rider\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Rider\Views\RiderDetails\Create.cshtml" />
+    <Content Include="Areas\Rider\Views\RiderDetails\Delete.cshtml" />
+    <Content Include="Areas\Rider\Views\RiderDetails\Details.cshtml" />
+    <Content Include="Areas\Rider\Views\RiderDetails\Edit.cshtml" />
+    <Content Include="Areas\Rider\Views\RiderDetails\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Cart\cart.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />

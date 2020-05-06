@@ -16,7 +16,7 @@ namespace eCart.Areas.Shopper
         // For more information refer to the documentation:
         // http://msdn.microsoft.com/en-us/data/jj591621.aspx
     
-        public ShopperContext() : base("name=ShopperContext")
+        public ShopperContext() : base("name=ecartdbContainer")
         {
         }
 
