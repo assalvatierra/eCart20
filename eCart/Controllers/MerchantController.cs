@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using eCart.Models;
 using eCart.Services;
 
 namespace eCart.Controllers
@@ -29,6 +30,17 @@ namespace eCart.Controllers
                 ViewBag.StoreName = storeDetails.Name;
                 ViewBag.StoreAddress = storeDetails.Address;
                 ViewBag.StoreImg = storeDetails.StoreImages.FirstOrDefault().ImageUrl;
+
+                //Get next suggested Store
+                StoreDetail store = new StoreDetail();
+                do
+                {
+                    store = storeMgr.getRandomStore();
+                } while (store.Id == id);
+
+                ViewBag.nextStoreId = store.Id;
+                ViewBag.nextStore = store.Name;
+                ViewBag.nextStoreImg = store.StoreImages.FirstOrDefault().ImageUrl;
                 return View(storeItems);
             }
             else
@@ -36,6 +48,7 @@ namespace eCart.Controllers
                 return RedirectToAction("Index", "Error");
             }
         }
+
 
         public ActionResult ProductDetails(int? id)
         {

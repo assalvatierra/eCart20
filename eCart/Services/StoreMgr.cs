@@ -201,6 +201,24 @@ namespace eCart.Services
             catch (Exception ex)
             {
                 return ex.Message.ToLower();
+            }   
+        }
+
+        public StoreDetail getRandomStore()
+        {
+            try
+            {
+                var random = new Random();
+                var storeListCount = db.StoreDetails.ToList().Count();
+
+                var selectedID = random.Next(1, storeListCount+1);
+                var store = db.StoreDetails.Find(selectedID);
+
+                return store;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

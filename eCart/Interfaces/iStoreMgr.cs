@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eCart.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace eCart.Interfaces
         Models.StoreDetail  getStoreDetails(int id);
         Models.StoreItem getStoreItem(int id);
         Models.StorePickupPoint getDefaultPickupPoint(int StoreId);
+        StoreDetail getRandomStore();
 
         void addNewStoreItem(int storeId, string itemName, decimal price, string imgUrl);
         string addPaymentDetails(string date, int partyId, string partyInfo, int receiverId, string receiverInfo, int statusId, decimal amount, int cartDetailId);

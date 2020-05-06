@@ -5,10 +5,19 @@
 }
 <div class="jumbotron">
     <div class="row">
-        <img class="col-lg-2 img-thumbnail" src="@ViewBag.StoreImg" />
-        <div class="col-lg-8">
-            <h1> @ViewBag.StoreName </h1>
-            <p class="text-muted">  Address: @ViewBag.StoreAddress  </p>
+        <div class="col-lg-10">
+            <img class="col-lg-2 img-thumbnail" src="@ViewBag.StoreImg" />
+            <div class="col-lg-8">
+                <h1> @ViewBag.StoreName </h1>
+                <p class="text-muted">  Address: @ViewBag.StoreAddress  </p>
+            </div>
+        </div>
+        <div class="col-lg-2 " >
+            <h4>Featured Store: </h4>
+
+            <a href="@Url.Action("Products",new { id = ViewBag.nextStoreId })" >
+                <img src="@ViewBag.nextStoreImg" style="width:50%;margin-left:20px;" class="store-hover" />
+            </a>
         </div>
     </div>
 </div>

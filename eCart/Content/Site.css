@@ -40,6 +40,15 @@ textarea {
     border: 1px solid lightgray;
 }
 
+.store-hover {
+    padding:5px;
+    transition: 0.5s;
+}
+
+.store-hover:hover {
+
+    box-shadow: 0px 0px 2px 1px rgb(6, 158, 235);
+}
 
 .item-list {
     display: flex;
@@ -320,6 +329,8 @@ textarea {
         width:100%;
     }
 }
+
+
 
 
 .date-link {
