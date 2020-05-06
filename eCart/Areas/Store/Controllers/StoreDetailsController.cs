@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -15,6 +16,7 @@ namespace eCart.Areas.Store.Controllers
     {
         private StoreContext db = new StoreContext();
         private ecartdbContainer edb = new ecartdbContainer();
+
         // GET: Store/StoreDetails
         public ActionResult Index(int id)
         {
@@ -86,10 +88,12 @@ namespace eCart.Areas.Store.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.StoreId = id;
             ViewBag.MasterAreaId = new SelectList(db.MasterAreas, "Id", "Name", storeDetail.MasterAreaId);
             ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", storeDetail.MasterCityId);
             ViewBag.StoreCategoryId = new SelectList(db.StoreCategories, "Id", "Name", storeDetail.StoreCategoryId);
             ViewBag.StoreStatusId = new SelectList(db.StoreStatus, "Id", "Name", storeDetail.StoreStatusId);
+            ViewBag.StoreImg = storeDetail.StoreImages.LastOrDefault().ImageUrl;
             return View(storeDetail);
         }
 
@@ -98,19 +102,51 @@ namespace eCart.Areas.Store.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,LoginId,Name,Address,Remarks,StoreStatusId,StoreCategoryId,MasterCityId,MasterAreaId")] StoreDetail storeDetail)
+        public ActionResult Edit([Bind(Include = "Id,LoginId,Name,Address,Remarks,StoreStatusId,StoreCategoryId,MasterCityId,MasterAreaId")] StoreDetail storeDetail, string ImgUrl)
         {
             if (ModelState.IsValid)
             {
+                if (storeDetail.Remarks == null)
+                {
+                    storeDetail.Remarks = " ";
+
+                }
+
+                if (ImgUrl != null)
+                {
+                    //update store Img
+                    //storeDetail.StoreImages.FirstOrDefault().ImageUrl = ImgUrl;
+                    var storeImg = db.StoreImages.Where(s => s.StoreDetailId == storeDetail.Id).FirstOrDefault();
+                    storeImg.ImageUrl = ImgUrl;
+                    db.Entry(storeImg).State = EntityState.Modified;
+
+                }
+
                 db.Entry(storeDetail).State = EntityState.Modified;
+                
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home",new { area="Store", id = storeDetail.Id });
             }
             ViewBag.MasterAreaId = new SelectList(db.MasterAreas, "Id", "Name", storeDetail.MasterAreaId);
             ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", storeDetail.MasterCityId);
             ViewBag.StoreCategoryId = new SelectList(db.StoreCategories, "Id", "Name", storeDetail.StoreCategoryId);
             ViewBag.StoreStatusId = new SelectList(db.StoreStatus, "Id", "Name", storeDetail.StoreStatusId);
             return View(storeDetail);
+        }
+
+
+        public void AddStoreImg(int id, string ImgUrl )
+        {
+            var StoreImage = new StoreImage()
+            {
+                ImageUrl = ImgUrl,
+                StoreImgTypeId = 1,
+                StoreDetailId = id
+            };
+
+
+            db.StoreImages.Add(StoreImage);
+            db.SaveChanges();
         }
 
         // GET: Store/StoreDetails/Delete/5

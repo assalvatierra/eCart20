@@ -15,18 +15,21 @@
 </p>
 <hr />
 <div class="panel bordered">
-    <div class="panel-body" style="margin:50px 0px;">
+    <div class="panel-body" style="margin:10px 0px;">
+        <div class="col-lg-12"><h3> Edit Store </h3></div>
         <div class="col-lg-3">
-            <img src="@Model.StoreImages.FirstOrDefault().ImageUrl" width="100%" class="img-thumbnail img-responsive" />
+            <img src="@Model.StoreImages.FirstOrDefault().ImageUrl" class="img-thumbnail img-responsive" />
+            <div class="form-group col-lg-12" style="display:flex;padding:10px 0;align-items:baseline;">
+                <label class="control-label"> Url&nbsp;:&nbsp; </label>
+                <input type="text" class="form-control col-lg-8" id="ImgUrl" value="@Model.StoreImages.FirstOrDefault().ImageUrl" />
+            </div>
         </div>
+       @using (Html.BeginForm()) { 
         <div class="col-lg-9">
+            
             <div class="form-group col-lg-6">
                 <label class="control-label"> Store Name </label>
                 <input type="text" class="form-control" id="Name" value="@Model.Name" />
-            </div>
-            <div class="form-group col-lg-6">
-                <label class="control-label"> Img </label>
-                <input type="text" class="form-control" id="ImgUrl" value="@Model.StoreImages.FirstOrDefault().ImageUrl" />
             </div>
             <div class="form-group col-lg-12">
                 <label class="control-label"> Address </label>
@@ -101,7 +104,7 @@
                 <label class="control-label"> Remarks </label>
                 <input type="text" class="form-control" id="Name" value="@Model.Remarks" />
             </div>
-        </div>
+         </div>
         <div class=" col-lg-12">
             <div class="col-lg-offset-9 col-lg-3">
                 <button class="btn btn-primary">
@@ -109,5 +112,10 @@
                 </button>
             </div>
         </div>
+        }
     </div>
 </div>
+
+<script>
+
+</script>

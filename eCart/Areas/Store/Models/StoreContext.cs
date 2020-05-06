@@ -26,6 +26,7 @@ namespace eCart.Areas.Store.Models
         public virtual DbSet<StoreStatus> StoreStatus { get; set; }
         public virtual DbSet<StoreCategory> StoreCategories { get; set; }
         public virtual DbSet<StoreItem> StoreItems { get; set; }
+        public virtual DbSet<StoreItem> Store { get; set; }
         public virtual DbSet<StorePickupPoint> StorePickupPoints { get; set; }
         public virtual DbSet<StorePickupPartner> StorePickupPartners { get; set; }
         public virtual DbSet<StorePickupStatus> StorePickupStatus { get; set; }
@@ -61,5 +62,9 @@ namespace eCart.Areas.Store.Models
         public System.Data.Entity.DbSet<eCart.Models.StorePaymentStatus> StorePaymentStatus { get; set; }
 
         public System.Data.Entity.DbSet<eCart.Models.StorePaymentType> StorePaymentTypes { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.StoreImage> StoreImages { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.StoreImgType> StoreImgTypes { get; set; }
     }
 }
