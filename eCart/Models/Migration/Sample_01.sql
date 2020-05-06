@@ -77,3 +77,8 @@ values (2, 7, 2, '1', 1, '', ''), (1, 8, 2, '1', 1, '', '');
 
 insert into PaymentDetails(Amount,CartDetailId,dtPayment,PaymentPartyId,PartyInfo,PaymentReceiverId,ReceiverInfo,PaymentStatusId)
 values (120, 1, '05/02/2020', 1, 'party info', 1, 'receiver info', 1 );
+
+
+--Rider sample --
+insert into RiderDetails([UserId],[Name],[Address],[Mobile],[Remarks],[RiderStatusId],[MasterCityId],[Mobile2] )
+values ('1','John Doe', 'Davao City', '0912-345-6789', 'None', 1, 1, '0998-765-4321');

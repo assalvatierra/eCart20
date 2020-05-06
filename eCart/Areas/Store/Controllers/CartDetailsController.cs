@@ -41,6 +41,8 @@ namespace eCart.Areas.Store.Controllers
             ViewBag.PaymentPartyList = db.PaymentParties.ToList();
             ViewBag.PaymentStatusList = db.PaymentStatus.ToList();
             ViewBag.PaymentDetails = db.PaymentDetails.Where(s => s.CartDetailId == id).ToList();
+            ViewBag.CartDelivery = db.CartDeliveries.Where(s => s.CartDetailId == id).ToList();
+            ViewBag.RiderList = db.RiderDetails.Where(r=>r.RiderStatusId == 1).ToList();
 
             if (cartDetail == null)
             {
@@ -178,6 +180,37 @@ namespace eCart.Areas.Store.Controllers
             var response = cartMgr.setDBCartStatus(id,statusId, userid.ToString()); 
 
             return Json(response, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public void AddDeliveryRider(int cartDetailId, DateTime date, string address, int riderId, string remarks)
+        {
+            var cartMgr = storeFactory.CartMgr;
+            cartMgr.addDeliveryDetails(cartDetailId, date, address, riderId, remarks);
+        }
+
+        [HttpPost]
+        public void UpdateDeliveryRider(int id, int cartDetailId, DateTime date, string address, int riderId, string remarks)
+        {
+            var cartMgr = storeFactory.CartMgr;
+
+            var cartDelivery = new CartDelivery
+            {
+                Id = id,
+                Address = address,
+                CartDetailId = cartDetailId,
+                RiderDetailId = riderId,
+                Remarks = remarks,
+                dtDelivery = date
+            };
+
+            cartMgr.updateCartDelivery(cartDelivery);
+        }
+
+        public void DeleteCartDelivery(int id)
+        {
+            var cartMgr = storeFactory.CartMgr;
+            cartMgr.removeCartdelivery(id);
         }
     }
 }

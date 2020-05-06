@@ -9,6 +9,7 @@ insert into PaymentParties("Name") values('Shopper'),('Rider');
 insert into PaymentReceivers("Description") values('Store'),('Bank'),('Paypal'),('Padala');
 insert into PaymentStatus("Name") values('Pending'),('Accepted'),('Cancelled');
 insert into RiderCashParties("Name","Operation") values('Shopper','Cash In'),('Store','Cash Out');
+insert into RiderStatus("Name") values ('Active'),('Inactive');
 
 -- initialize cities
 insert into MasterCities("Name") values ('Davao'),('Tagum'),('Digos');

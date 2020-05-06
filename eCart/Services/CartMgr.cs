@@ -9,7 +9,7 @@ using eCart.Models;
 
 namespace eCart.Services
 {
-    public class CartMgr: Interfaces.iCartMgr
+    public class CartMgr: iCartMgr
     {
        protected ecartdbContainer db = new ecartdbContainer();
 
@@ -561,5 +561,61 @@ namespace eCart.Services
             }
         }
 
+        public void addDeliveryDetails(int id, DateTime date, string address, int riderId, string remarks)
+        {
+            try
+            {
+                var deliveryDetails = new CartDelivery
+                {
+                    CartDetailId = id,
+                    dtDelivery = date,
+                    Address = address,
+                    RiderDetailId = riderId,
+                    Remarks = remarks
+                };
+
+                db.CartDeliveries.Add(deliveryDetails);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void updateCartDelivery(CartDelivery cartDelivery)
+        {
+            try
+            {
+                var deliveryDetails = db.CartDeliveries.Find(cartDelivery.Id);
+                deliveryDetails.RiderDetailId = cartDelivery.RiderDetailId;
+                deliveryDetails.dtDelivery = cartDelivery.dtDelivery;
+                deliveryDetails.Address = cartDelivery.Address;
+                deliveryDetails.Remarks = cartDelivery.Remarks;
+
+                db.Entry(deliveryDetails).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void removeCartdelivery(int id)
+        {
+            try
+            {
+            var deliveryDetails = db.CartDeliveries.Find(id);
+
+            db.CartDeliveries.Remove(deliveryDetails);
+            db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
     }
 }

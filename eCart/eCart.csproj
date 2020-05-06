@@ -139,6 +139,7 @@
     <Compile Include="Areas\Admin\Controllers\StoreDetailsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserDetailsController.cs" />
     <Compile Include="Areas\Admin\Models\AdminDBContext.cs" />
+    <Compile Include="Areas\Rider\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Rider\Controllers\RiderDetailsController.cs" />
     <Compile Include="Areas\Rider\Model\RiderContext.cs" />
     <Compile Include="Areas\Rider\RiderAreaRegistration.cs" />
@@ -321,6 +322,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\daterangepicker.css" />
+    <Content Include="img\placeholders\food-delivery.png" />
     <Content Include="img\placeholders\image-placeholder.png" />
     <Content Include="img\placeholders\item-placeholder.png" />
     <Content Include="img\placeholders\placeholder-images-product-2.png" />
@@ -497,6 +499,11 @@
     <Content Include="Areas\Rider\Views\RiderDetails\Details.cshtml" />
     <Content Include="Areas\Rider\Views\RiderDetails\Edit.cshtml" />
     <Content Include="Areas\Rider\Views\RiderDetails\Index.cshtml" />
+    <Content Include="Areas\Rider\Views\Accounts\Login.cshtml" />
+    <Content Include="Areas\Rider\Views\Accounts\Register.cshtml" />
+    <Content Include="Areas\Store\Views\CartDetails\_PartialCartDelivery.cshtml" />
+    <Content Include="Areas\Store\Views\CartDetails\_ModalCartDeliveryAdd.cshtml" />
+    <Content Include="Areas\Store\Views\CartDetails\_ModalCartDeliveryEdit.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Cart\cart.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />

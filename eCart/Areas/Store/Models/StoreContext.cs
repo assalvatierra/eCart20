@@ -66,5 +66,9 @@ namespace eCart.Areas.Store.Models
         public System.Data.Entity.DbSet<eCart.Models.StoreImage> StoreImages { get; set; }
 
         public System.Data.Entity.DbSet<eCart.Models.StoreImgType> StoreImgTypes { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.CartDelivery> CartDeliveries { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.RiderDetail> RiderDetails { get; set; }
     }
 }

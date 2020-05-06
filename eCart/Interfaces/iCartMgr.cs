@@ -26,17 +26,20 @@ namespace eCart.Interfaces
         void addCartItemToDb(CartItem cartItem);
         void addCartDetailToDb(CartDetail cartDetail);
         void addCartHistory(CartDetail cart, CartStatus status, string userId);
+        void addDeliveryDetails(int id, DateTime date, string address, int riderId, string remarks);
 
         void updateCartPickupPoint(int cartId, int pickupPoint);
         void updateCartAsDelivery(int cartId);
         void updateCartDetailsStatus(int cartId, string status);
-        string setCartPaymentReceiver(int cartId, int recieverId);
+        void updateCartDelivery(CartDelivery cartDelivery);
         void setCartPickupDate(int cartId, DateTime pickupdate);
+        string setCartPaymentReceiver(int cartId, int recieverId);
         string setDBCartStatus(int cartId, int cartStatusId, string userId);
         string setCartStatusCancelled(int cartId, string userId);
 
         void removeCartItem(int id);
         void removeDBCartItem(int id, int statusId);
+        void removeCartdelivery(int id);
 
         string saveOrder(List<CartDetail> cartDetails);
         string saveOrder(CartDetail cart);
