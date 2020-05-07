@@ -45,15 +45,25 @@ namespace eCart.Services
 
         public void AddCartHistory(int id, int statusId)
         {
-            db.CartHistories.Add(new CartHistory { 
-               CartDetailId = id,
-               CartStatusId = statusId,
-               dtStatus = DateTime.Now,
-               UserId = "1", //TODO: change to rider Id
-               
-            });
+            try
+            {
+                db.CartHistories.Add(new CartHistory
+                {
+                    CartDetailId = id,
+                    CartStatusId = statusId,
+                    dtStatus = DateTime.Now,
+                    UserId = "1", //TODO: change to rider Id
+                    
+                });
 
-            db.SaveChanges();
+                db.SaveChanges();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+           
         }
 
         public string getLastestActivity(int id)
@@ -79,6 +89,22 @@ namespace eCart.Services
 
             }
             catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void setCartStatusDelivered(int id)
+        {
+            try
+            {
+                var cart = db.CartDetails.Find(id);
+                cart.CartStatusId = 5;
+
+                db.Entry(cart).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }

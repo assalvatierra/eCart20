@@ -16,6 +16,7 @@ namespace eCart.Areas.Rider.Controllers
     {
         private RiderContext db = new RiderContext();
         private RiderMgr riderMgr = new RiderMgr();
+        private CartMgr cartMgr = new CartMgr();
 
         // GET: Rider/RiderDetails
         public ActionResult Index(int id)
@@ -183,7 +184,10 @@ namespace eCart.Areas.Rider.Controllers
             //on item delivered
             if(statusId == 4)
             {
-                riderMgr.AddCartHistory(id, 5);
+                var cartId = db.CartDeliveries.Find(id).CartDetailId;
+                riderMgr.AddCartHistory(cartId, 5);
+                riderMgr.setCartStatusDelivered(cartId);
+                //cartMgr.setDBCartStatus(id, 5, "1");
             }
         }
     }

@@ -16,5 +16,7 @@ namespace eCart.Interfaces
         void AddCartHistory(int id, int statusId);
 
         string getLastestActivity(int id);
+
+        void setCartStatusDelivered(int id);
     }
 }

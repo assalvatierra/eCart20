@@ -16,7 +16,7 @@ namespace eCart.Areas.Store.Controllers
     {
         private StoreContext db = new StoreContext();
         StoreFactory storeFactory = new StoreFactory();
-
+       
         // GET: Store/CartDetails/{cartId}
         public ActionResult Index(int id)
         {
@@ -43,6 +43,7 @@ namespace eCart.Areas.Store.Controllers
             ViewBag.PaymentDetails = db.PaymentDetails.Where(s => s.CartDetailId == id).ToList();
             ViewBag.CartDelivery = db.CartDeliveries.Where(s => s.CartDetailId == id).ToList();
             ViewBag.RiderList = db.RiderDetails.Where(r=>r.RiderStatusId == 1).ToList();
+           
 
             if (cartDetail == null)
             {

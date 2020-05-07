@@ -43,7 +43,15 @@
                     @Html.DisplayFor(modelItem => item.Remarks)
                 </td>
                 <td>
-                    Status
+                    @if (@item.CartDeliveryActivities.FirstOrDefault() != null)
+                    {
+                        @item.CartDeliveryActivities.LastOrDefault().CartActivityType.Name
+                    }
+                    else
+                    {
+                        <p>Pending</p>
+                    }
+
                 </td>
                 <td>
                     <a  data-target="#CartDeliveryEdit" data-toggle="modal" onclick="EditDelivery(@item.Id)"> Edit </a>|

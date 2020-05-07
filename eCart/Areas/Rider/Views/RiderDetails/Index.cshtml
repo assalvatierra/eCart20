@@ -26,7 +26,6 @@
                         <tr>
                             <th> CartID / Date </th>
                             <th> Shopper / Location </th>
-                            <th> Amount </th>
                             <th> Status </th>
                             <th> </th>
                         </tr>
@@ -38,15 +37,12 @@
                                 <td>
                                     CartID:  @delivery.CartDetailId
                                     <br />
-                                    @delivery.dtDelivery
+                                    <b> @delivery.dtDelivery.ToString("MMM dd yyyy hh:mm tt") </b>
                                 </td>
                                 <td>
                                     @delivery.CartDetail.UserDetail.Name
                                     <br />
                                     @delivery.Address
-                                </td>
-                                <td>
-                                    0
                                 </td>
                                 <td>
                                     @delivery.CartDetail.CartStatu.Name
