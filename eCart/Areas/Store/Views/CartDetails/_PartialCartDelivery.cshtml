@@ -19,6 +19,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Remarks)
         </th>
+        <th>
+            Status
+        </th>
         <th></th>
     </tr>
 
@@ -38,6 +41,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Remarks)
+                </td>
+                <td>
+                    Status
                 </td>
                 <td>
                     <a  data-target="#CartDeliveryEdit" data-toggle="modal" onclick="EditDelivery(@item.Id)"> Edit </a>|

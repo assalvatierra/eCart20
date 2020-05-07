@@ -24,5 +24,13 @@ namespace eCart.Areas.Rider.Model
         public System.Data.Entity.DbSet<eCart.Models.MasterCity> MasterCities { get; set; }
 
         public System.Data.Entity.DbSet<eCart.Models.RiderStatus> RiderStatus { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.CartDelivery> CartDeliveries { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.CartDetail> CartDetails { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.RiderCashParty> RiderCashParties { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.RiderCashDetail> RiderCashDetails { get; set; }
     }
 }

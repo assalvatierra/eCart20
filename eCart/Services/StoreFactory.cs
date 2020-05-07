@@ -10,11 +10,15 @@ namespace eCart.Services
     {
         iStoreMgr storemgr;
         iCartMgr cartmgr;
+        iRiderMgr riderMgr;
+        iAccMgr accMgr;
 
         public StoreFactory()
         {
             this.storemgr = new Services.StoreMgr();
             this.cartmgr = new Services.CartMgr();
+            this.accMgr = new Services.AccMgr();
+            this.riderMgr = new Services.RiderMgr();
         }
 
         public iStoreMgr StoreMgr
@@ -28,6 +32,16 @@ namespace eCart.Services
             get { return this.cartmgr; }
         }
 
+
+        //public iAccMgr AccMgr
+        //{
+        //    get { return this.accMgr; }
+        //}
+
+        //public iRiderMgr RiderMgr
+        //{
+        //    get { return this.riderMgr; }
+        //}
 
     }
 }

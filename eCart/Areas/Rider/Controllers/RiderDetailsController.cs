@@ -8,18 +8,23 @@ using System.Web;
 using System.Web.Mvc;
 using eCart.Areas.Rider.Model;
 using eCart.Models;
+using eCart.Services;
 
 namespace eCart.Areas.Rider.Controllers
 {
     public class RiderDetailsController : Controller
     {
         private RiderContext db = new RiderContext();
+        private RiderMgr riderMgr = new RiderMgr();
 
         // GET: Rider/RiderDetails
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            var riderDetails = db.RiderDetails.Include(r => r.MasterCity).Include(r => r.RiderStatu);
-            return View(riderDetails.ToList());
+            var rider = db.RiderDetails.Find(id);
+            ViewBag.Rider = rider;
+
+            var riderCarts = db.CartDeliveries;
+            return View(riderCarts.ToList());
         }
 
         // GET: Rider/RiderDetails/Details/5
@@ -132,6 +137,54 @@ namespace eCart.Areas.Rider.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+        public ActionResult DeliveryDetails(int id)
+        {
+            CartDelivery delivery = db.CartDeliveries.Find(id);
+            var paymentId = 0;
+            if (db.RiderCashDetails.Where(s => s.CartDetailId == delivery.CartDetailId).Count() != 0)
+            {
+                paymentId = db.RiderCashDetails.Where(s => s.CartDetailId == delivery.CartDetailId).OrderByDescending(s => s.Id).FirstOrDefault().Id;
+                ViewBag.RiderCashDetails = db.RiderCashDetails.Find(paymentId);
+            }
+            else
+            {
+                ViewBag.RiderCashDetails = null ;
+            }
+
+            ViewBag.DeliveryStatus = riderMgr.getLastestActivity(delivery.CartDetailId);
+            ViewBag.RiderCashParty = db.RiderCashParties;
+
+            return View(delivery);
+        }
+
+        [HttpPost]
+        public void AddPayment(int riderDetailId, int cartDetailId, int riderCashPartyId,  decimal amount)
+        {
+            var riderCashDetail = new RiderCashDetail
+            {
+                Amount = amount,
+                CartDetailId = cartDetailId,
+                DtCash = DateTime.Now,
+                RiderCashPartyId = riderCashPartyId,
+                RiderDetailId = riderDetailId
+            };
+
+            riderMgr.AddCartPayment(riderCashDetail);
+
+        }
+
+        public void UpdateStatus(int id, int statusId)
+        {
+            riderMgr.AddDeliveryActivity(id, statusId);
+
+            //on item delivered
+            if(statusId == 4)
+            {
+                riderMgr.AddCartHistory(id, 5);
+            }
         }
     }
 }

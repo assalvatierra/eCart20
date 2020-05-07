@@ -32,3 +32,7 @@ insert into ItemCategories("ItemCatGroupId","Name","SortOrder") values
 (2,'Softdrinks',1),(1,'Energy Drink',2),(1,'Alcoholic',3),
 (3,'Chips',1),(3,'Bread',2),(3,'Biscuit',3),(3,'Others',4),
 (4,'Bath Soap',1),(4,'Shampoo',2),(4,'Others',3);
+
+--rider delivery--
+insert into CartActivityTypes("Name","SortOrder") values
+('Item Ready', 1),('Item Pickup', 2),('In-Transit', 3),('Delivered', 4); 

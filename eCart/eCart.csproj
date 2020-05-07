@@ -171,6 +171,7 @@
     <Compile Include="Controllers\MerchantController.cs" />
     <Compile Include="Interfaces\iAccMgr.cs" />
     <Compile Include="Interfaces\iCartMgr.cs" />
+    <Compile Include="Interfaces\iRiderMgr.cs" />
     <Compile Include="Interfaces\iStoreMgr.cs" />
     <Compile Include="Models\AccountLogin.cs" />
     <Compile Include="Models\CartActivity.cs">
@@ -306,6 +307,7 @@
     </Compile>
     <Compile Include="Services\AccMgr.cs" />
     <Compile Include="Services\CartMgr.cs" />
+    <Compile Include="Services\RiderMgr.cs" />
     <Compile Include="Services\StoreFactory.cs" />
     <Compile Include="Services\StoreMgr.cs" />
   </ItemGroup>
@@ -504,6 +506,8 @@
     <Content Include="Areas\Store\Views\CartDetails\_PartialCartDelivery.cshtml" />
     <Content Include="Areas\Store\Views\CartDetails\_ModalCartDeliveryAdd.cshtml" />
     <Content Include="Areas\Store\Views\CartDetails\_ModalCartDeliveryEdit.cshtml" />
+    <Content Include="Areas\Rider\Views\RiderDetails\DeliveryDetails.cshtml" />
+    <Content Include="Areas\Rider\Views\RiderDetails\_ModalPaymentAdd.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Cart\cart.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />

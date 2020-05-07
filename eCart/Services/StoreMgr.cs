@@ -221,5 +221,10 @@ namespace eCart.Services
                 throw ex;
             }
         }
+
+        public void addCartDeliveryActivity(int cartId, int statusId)
+        {
+            
+        }
     }
 }

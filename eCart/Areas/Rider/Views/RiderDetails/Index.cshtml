@@ -1,28 +1,62 @@
-﻿@model IEnumerable<eCart.Models.RiderDetail>
+﻿@model IEnumerable<eCart.Models.CartDelivery>
 
 @{
     ViewBag.Title = "Index";
+    var Rider = ViewBag.Rider as eCart.Models.RiderDetail;
 }
 
-
+<br />
 <div class="panel bordered" >
     <div class="panel-body">
-        <h2>Rider Details </h2>
-        <hr />
+        <h2 class="col-lg-12"> Rider Details </h2>
+        <div class="col-lg-12" style="font-size:15px;">
+            <div class="col-lg-3">
+                Name: <b>  @Rider.Name</b>
+            </div>
+            <div class="col-lg-6">
+                Mobile:  <b>  @Rider.Mobile / @Rider.Mobile2 </b>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-12">
-                <h4><b> Carts Active </b></h4>
+                <hr />
+                <h4><b> Active Carts For Delivery </b></h4>
                 <table class="table bordered">
                     <thead>
                         <tr>
-                            <th> CartID </th>
-                            <th> Date </th>
-                            <th> Shopper </th>
-                            <th> Location </th>
+                            <th> CartID / Date </th>
+                            <th> Shopper / Location </th>
                             <th> Amount </th>
                             <th> Status </th>
+                            <th> </th>
                         </tr>
                     </thead>
+                    <tbody>
+                        @foreach (var delivery in Model)
+                        {
+                            <tr>
+                                <td>
+                                    CartID:  @delivery.CartDetailId
+                                    <br />
+                                    @delivery.dtDelivery
+                                </td>
+                                <td>
+                                    @delivery.CartDetail.UserDetail.Name
+                                    <br />
+                                    @delivery.Address
+                                </td>
+                                <td>
+                                    0
+                                </td>
+                                <td>
+                                    @delivery.CartDetail.CartStatu.Name
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Details","DeliveryDetails", "RiderDetails",new { area="Rider", id = delivery.Id }, new { @class="btn btn-primary" } )
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
             </div>
         </div>
