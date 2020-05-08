@@ -1,7 +1,15 @@
 ﻿@model IEnumerable<eCart.Models.StoreItem>
 
-<div class="col-sm-12">
-    <h3> Featured Items </h3>
+<div class="row col-lg-12" style="display:flex;align-items:baseline;">
+    <h3 class="col-lg-2"> Featured&nbsp;Items </h3>
+    <div class="col-lg-9">
+        <span class="badge badge-categories"> Vegetables </span>
+        <span class="badge badge-categories"> Canned Goods </span>
+        <span class="badge badge-categories"> Cooking </span>
+        <span class="badge badge-categories"> Snacks </span>
+        <span class="badge badge-categories"> Beverages </span>
+        <span class="badge badge-categories"> Personal Care </span>
+    </div>
 </div>
 <div class="row item-panel">
    @foreach (var item in Model)

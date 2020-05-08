@@ -12,6 +12,7 @@ namespace eCart.Interfaces
         List<Models.StoreDetail> getFeaturedStores();
         List<Models.StoreItem> getFeaturedItems();
         List<Models.StoreItem> getStoreItems(int id);
+        List<CartDetail> getStoreActiveCarts(int id);
         Models.StoreDetail  getStoreDetails(int id);
         Models.StoreItem getStoreItem(int id);
         Models.StorePickupPoint getDefaultPickupPoint(int StoreId);

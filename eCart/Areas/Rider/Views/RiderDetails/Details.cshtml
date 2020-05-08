@@ -1,82 +1,13 @@
 ﻿@model eCart.Models.RiderDetail
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Rider Details";
 }
 
-<h2>Details</h2>
+<div class="panel bordered">
+    <div class="panel-body">
+        <h3> Rider Details </h3>
 
-<div>
-    <h4>RiderDetail</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.MasterCity.Name)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.MasterCity.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RiderStatu.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RiderStatu.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Mobile)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Mobile)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Remarks)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Remarks)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Mobile2)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Mobile2)
-        </dd>
-
-    </dl>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

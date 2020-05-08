@@ -349,3 +349,14 @@ textarea {
     text-decoration:underline;
 
 }
+
+.badge-categories {
+    padding:7px;
+    margin:5px;
+    cursor:pointer;
+    transition:0.5s;
+}
+
+.badge-categories:hover {
+   background-color:dodgerblue;
+}

@@ -226,5 +226,13 @@ namespace eCart.Services
         {
             
         }
+
+
+        public List<CartDetail> getStoreActiveCarts(int id)
+        {
+            var storeCarts = db.CartDetails.Where(s => s.StoreDetailId == id && s.CartStatusId <= 5); //active
+
+            return storeCarts.ToList();
+        }
     }
 }

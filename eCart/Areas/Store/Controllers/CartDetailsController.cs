@@ -21,9 +21,10 @@ namespace eCart.Areas.Store.Controllers
         // GET: Store/CartDetails/{cartId}
         public ActionResult Index(int id)
         {
+            var storeMgr = storeFactory.StoreMgr;
             var cartDetails = db.CartDetails.Include(c => c.CartStatu).Include(c => c.StoreDetail).Include(c => c.StorePickupPoint).Include(c => c.UserDetail).Where(c=>c.Id == id);
             ViewBag.StoreId = id;
-
+            ViewBag.StoreCarts = storeMgr.getStoreActiveCarts(id);
             return View(cartDetails.ToList());
         }
 
