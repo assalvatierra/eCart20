@@ -47,6 +47,7 @@ namespace eCart.Areas.Store.Controllers
         // GET: Store/StorePickupPoints/Create
         public ActionResult Create(int id)
         {
+            ViewBag.StoreId = id;
             ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", id);
             ViewBag.StorePickupStatusId = new SelectList(db.StorePickupStatus, "Id", "Name");
             return View();
@@ -66,6 +67,7 @@ namespace eCart.Areas.Store.Controllers
                 return RedirectToAction("Index", new { id = storePickupPoint.StoreDetailId });
             }
 
+            ViewBag.StoreId = storePickupPoint.StoreDetailId;
             ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storePickupPoint.StoreDetailId);
             ViewBag.StorePickupStatusId = new SelectList(db.StorePickupStatus, "Id", "Name", storePickupPoint.StorePickupStatusId);
             return View(storePickupPoint);
@@ -83,6 +85,7 @@ namespace eCart.Areas.Store.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.StoreId = storePickupPoint.StoreDetailId;
             ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storePickupPoint.StoreDetailId);
             ViewBag.StorePickupStatusId = new SelectList(db.StorePickupStatus, "Id", "Name", storePickupPoint.StorePickupStatusId);
             return View(storePickupPoint);
@@ -101,6 +104,7 @@ namespace eCart.Areas.Store.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index", new { id = storePickupPoint.StoreDetailId });
             }
+            ViewBag.StoreId = storePickupPoint.StoreDetailId;
             ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storePickupPoint.StoreDetailId);
             ViewBag.StorePickupStatusId = new SelectList(db.StorePickupStatus, "Id", "Name", storePickupPoint.StorePickupStatusId);
             return View(storePickupPoint);

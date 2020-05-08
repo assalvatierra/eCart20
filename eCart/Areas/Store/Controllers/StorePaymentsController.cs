@@ -16,9 +16,11 @@ namespace eCart.Areas.Store.Controllers
         private StoreContext db = new StoreContext();
 
         // GET: Store/StorePayments
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            var storePayments = db.StorePayments.Include(s => s.StoreDetail).Include(s => s.StorePaymentStatu).Include(s => s.StorePaymentType);
+            var storePayments = db.StorePayments.Include(s => s.StoreDetail).Include(s => s.StorePaymentStatu).Include(s => s.StorePaymentType).Where(s=>s.StoreDetailId == id);
+            ViewBag.StoreId = id;
+
             return View(storePayments.ToList());
         }
 

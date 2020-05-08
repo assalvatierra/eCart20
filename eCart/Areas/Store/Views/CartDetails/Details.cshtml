@@ -12,19 +12,22 @@
 <div class="panel row" style="padding:15px;">
     <div class="panel-body store-cart">
         <div class="row">
+            <h3 class="col-lg-12">
+                Cart # : @Model.Id  &nbsp;
+            </h3>
             <div class="col-lg-4">
-                <h3>
-                    Cart # : @Model.Id  &nbsp;
-                </h3>
                 <p><span class="text-muted"> Status: </span> <span id="cart-status-text"> @Model.CartStatu.Name </span></p>
             </div>
             <div class="col-lg-8">
-                <div class="btn-group pull-right">
+                <div class="btn-group">
+                    <button id="status-processing" class="btn btn-default" onclick="SetCartStatus(@Model.Id, 3, 'Processing')"> Processing </button>
+                    <button id="status-ready" class="btn btn-default" onclick="SetCartStatus(@Model.Id, 4, 'Ready')"> Ready </button>
+                    <button id="status-delivered" class="btn btn-default" onclick="SetCartStatus(@Model.Id, 5, 'Delivered')"> Delivered </button>
+                    <button id="status-cancel" class="btn btn-default" onclick="SetCartStatus(@Model.Id, 6, 'Cancelled')"> Cancel </button>
+                </div>
+                <div class="btn-group  pull-right">
                     <button class="btn btn-default" data-target="#PaymentModal" data-toggle="modal"> Payment </button>
-                    <button class="btn btn-default" onclick="SetCartStatus(@Model.Id, 3, 'Processing')"> Processing </button>
-                    <button class="btn btn-default" onclick="SetCartStatus(@Model.Id, 4, 'Ready')"> Ready </button>
-                    <button class="btn btn-default" onclick="SetCartStatus(@Model.Id, 5, 'Delivered')"> Delivered </button>
-                    <button class="btn btn-default" onclick="SetCartStatus(@Model.Id, 6, 'Cancelled')"> Cancel </button>
+                    @Html.ActionLink("History", "CartHistory", new { id = Model.Id }, new { @class="btn btn-default" })
                 </div>
             </div>
         </div>
@@ -33,9 +36,9 @@
         <h4> <b> Shopper Details </b> </h4>
         <div class="col-lg-12">
             <div class="col-lg-4">
-                <p> <span class="text-muted"> Shopper:</span> @Model.UserDetail.Name </p>
-                <p> <span class="text-muted"> Contact:</span> @Model.UserDetail.Mobile </p>
-                <p> <span class="text-muted"> Email:</span> @Model.UserDetail.Email </p>
+                <p> <span class="text-muted"> Shopper:</span> @Model.UserDetail.Name    </p>
+                <p> <span class="text-muted"> Contact:</span> @Model.UserDetail.Mobile  </p>
+                <p> <span class="text-muted"> Email:</span> @Model.UserDetail.Email     </p>
 
             </div>
 
@@ -163,13 +166,36 @@
 
 
 <script>
+    //on document ready
+    $(function(){
+        //set status
+        var statusId = '@Model.CartStatu.Id';
+        switch (statusId) {
+            case '3':
+                //processing
+                $("#status-processing").addClass("btn-primary");
+                break;
+            case '4':
+                //processing
+                $("#status-ready").addClass("btn-primary");
+                break;
+            case '5':
+                //processing
+                $("#status-delivered").addClass("btn-primary");
+                break;
+            case '6':
+                //processing
+                $("#status-cancel").addClass("btn-primary");
+                break;
+            default:
+                break;
+        }
+    });
+
     function SetCartStatus(cartId, statusId, status) {
         let response = $.get("/Store/CartDetails/SetCartStatus", { id: cartId, statusId, statusId }, (res) => {
-            //if (res.status == 200) {
-                //update status description
                 $("#cart-status-text").text(status);
                 console.log(res);
-            //}
         });
 
     }

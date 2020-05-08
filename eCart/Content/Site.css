@@ -328,6 +328,11 @@ textarea {
     .store-logo{
         width:100%;
     }
+
+    .rider-img{
+        width:0px;
+        display:none;
+    }
 }
 
 

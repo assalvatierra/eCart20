@@ -28,7 +28,7 @@
             </div>
 
             <div class="col-lg-3 col-md-3 col-sm-12">
-                <div class="btn-group-vertical" style="width:100%;margin:10% 0;">
+                <div class="btn-group-vertical" style="width:100%;margin:0;">
                     <a class="btn btn-default" href="@Url.Action("Edit","StoreDetails",new { id = ViewBag.StoreId })">
                         Store Details
                     </a>
@@ -40,6 +40,9 @@
                     </a>
                     <a class="btn btn-default" href="@Url.Action("Index","StorePickupPartners",new { id = ViewBag.StoreId })" style="width:100%;">
                         Pickup Partner
+                    </a>
+                    <a class="btn btn-default" href="@Url.Action("Index","StorePayments",new { id = ViewBag.StoreId })" style="width:100%;">
+                        Subscription
                     </a>
                 </div>
             </div>

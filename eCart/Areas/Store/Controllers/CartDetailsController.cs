@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using eCart.Areas.Store.Models;
 using eCart.Models;
@@ -213,5 +214,29 @@ namespace eCart.Areas.Store.Controllers
             var cartMgr = storeFactory.CartMgr;
             cartMgr.removeCartdelivery(id);
         }
+
+        #region CartHistory
+        public ActionResult CartHistory(int? id)
+        {
+            if (id != null)
+            {
+                var cartMgr = storeFactory.CartMgr;
+                var cartHistory = cartMgr.getCartHistory((int)id);
+                ViewBag.StoreId = id;
+                return View(cartHistory);
+            }
+
+            return RedirectToAction("Index", new { id = id });
+        }
+
+        [HttpGet]
+        public JsonResult GetCartDeliveryActivities(int id)
+        {
+            var cartMgr = storeFactory.CartMgr;
+            var cartDeliveryActivity = cartMgr.getCartDeliveryActivities(id).Select(c => new { Date = c.dtActivity.ToString(), Activity = c.CartActivityType.Name });
+
+            return Json(cartDeliveryActivity, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

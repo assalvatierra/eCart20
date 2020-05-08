@@ -20,6 +20,8 @@ namespace eCart.Interfaces
         List<StorePickupPoint> GetStorePickupPoints(int storeId);
         List<CartDetail> getShopperCarts(int userId);
         List<PaymentReceiver> getPaymentRecievers();
+        List<CartHistory> getCartHistory(int id);
+        List<CartActivity> getCartDeliveryActivities(int id);
 
         void addItemToCart(int id, int qty);
         void addItemToCart(int id, int qty, string itemName, decimal price);

@@ -483,6 +483,17 @@ namespace eCart.Services
             return cartList;
         }
 
+        public List<CartHistory> getCartHistory(int id)
+        {
+            return db.CartHistories.Where(s => s.CartDetailId == id).ToList();
+        }
+
+        public List<CartActivity> getCartDeliveryActivities(int id)
+        {
+            return db.CartActivities.Where(c => c.CartDeliveryId == id).OrderByDescending(s=>s.Id).ToList();
+        }
+
+
         public void addCartHistory(CartDetail cart , CartStatus status, string userId)
         {
             try

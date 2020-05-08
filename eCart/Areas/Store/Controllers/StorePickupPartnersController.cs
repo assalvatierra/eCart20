@@ -18,8 +18,12 @@ namespace eCart.Areas.Store.Controllers
         // GET: Store/StorePickupPartners/{storeId}
         public ActionResult Index(int id)
         {
+            var partneredList = db.StorePickupPartners.Where(p => p.StoreDetailId == id).Select(s => s.StorePickupPointId).ToList();
+            var pickupPointsList = db.StorePickupPoints.Include(s => s.StoreDetail).Where(s=>!partneredList.Contains(s.Id)).ToList().OrderBy(s => s.StoreDetailId);
+
+
             ViewBag.StoreId = id;
-            ViewBag.PickupPoints = db.StorePickupPoints.Include(s=>s.StoreDetail).ToList().OrderBy(s=>s.StoreDetailId);
+            ViewBag.PickupPoints = pickupPointsList;
             var storePickupPartners = db.StorePickupPartners.Where(s=>s.StoreDetailId==id).Include(s => s.StoreDetail).Include(s => s.StorePickupPoint);
             return View(storePickupPartners.ToList());
         }

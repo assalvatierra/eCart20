@@ -508,6 +508,8 @@
     <Content Include="Areas\Store\Views\CartDetails\_ModalCartDeliveryEdit.cshtml" />
     <Content Include="Areas\Rider\Views\RiderDetails\DeliveryDetails.cshtml" />
     <Content Include="Areas\Rider\Views\RiderDetails\_ModalPaymentAdd.cshtml" />
+    <Content Include="Areas\Store\Views\CartDetails\CartHistory.cshtml" />
+    <Content Include="Areas\Store\Views\CartDetails\_ModalCartDeliveryHistory.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Cart\cart.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
