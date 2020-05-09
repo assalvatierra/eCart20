@@ -1,30 +1,26 @@
 ﻿@model IEnumerable<eCart.Models.StorePayment>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Store Payments";
 }
-
 <div class="panel bordered">
     <div class="panel-body">
-        <h1> Store Subscription </h1>
-        <p>
-            @Html.ActionLink("Back to Store", "Index", "Home" , new { id = ViewBag.StoreId } , null)
-        </p>
-    </div>
-</div>
-
-<div class="panel bordered">
-    <div class="panel-body">
-        <h3>Store Payments</h3>
+        <h2>Store Payments </h2>
 
         <p>
-            @Html.ActionLink("Create New", "Create", new { id = ViewBag.StoreId })
+            @Html.ActionLink("Back to Dashboard", "Index", "Home") |
+            @Html.ActionLink("Create New", "Create")
         </p>
-
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.dtPosted)
+                    Date Posted
+                </th>
+                <th>
+                    Store
+                </th>
+                <th>
+                    Status
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.StorePaymentType.Description)
@@ -36,11 +32,9 @@
                     @Html.DisplayNameFor(model => model.Amount)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.StorePaymentStatu.Name)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.Remarks)
                 </th>
+                <th></th>
                 <th></th>
             </tr>
 
@@ -49,6 +43,12 @@
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.dtPosted)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StoreDetail.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StorePaymentStatu.Name)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.StorePaymentType.Description)
@@ -60,18 +60,24 @@
                         @Html.DisplayFor(modelItem => item.Amount)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.StorePaymentStatu.Name)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.Remarks)
                     </td>
                     <td>
                         @if (item.StorePaymentStatusId == 1)
                         {
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <text> | </text>
+
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) 
+                            <text> | </text>
                             @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                         }
-                      
+                    </td>
+
+                    <td>
+                        @if (item.StorePaymentStatusId == 1)
+                        {
+                            <button class="btn btn-primary" onclick="AcceptPayment(@item.Id)"> Accept  </button>
+                        }
+                        
                     </td>
                 </tr>
             }
@@ -79,3 +85,15 @@
         </table>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        function AcceptPayment(paymentId) {
+            $.post("/Admin/StorePayments/AcceptPayment", { id: paymentId }, (result) => {
+                console.log(result);
+                window.location.reload();
+
+            });
+        }
+    </script>
+}

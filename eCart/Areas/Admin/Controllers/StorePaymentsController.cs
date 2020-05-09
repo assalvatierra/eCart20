@@ -6,25 +6,25 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using eCart.Areas.Store.Models;
+using eCart.Areas.Admin.Models;
 using eCart.Models;
+using eCart.Services;
 
-namespace eCart.Areas.Store.Controllers
+namespace eCart.Areas.Admin.Controllers
 {
     public class StorePaymentsController : Controller
     {
-        private StoreContext db = new StoreContext();
+        private AdminDBContext db = new AdminDBContext();
+        private StoreFactory storeFactory = new StoreFactory();
 
-        // GET: Store/StorePayments
-        public ActionResult Index(int id)
+        // GET: Admin/StorePayments
+        public ActionResult Index()
         {
-            var storePayments = db.StorePayments.Include(s => s.StoreDetail).Include(s => s.StorePaymentStatu).Include(s => s.StorePaymentType).Where(s=>s.StoreDetailId == id);
-            ViewBag.StoreId = id;
-
+            var storePayments = db.StorePayments.Include(s => s.StoreDetail).Include(s => s.StorePaymentStatu).Include(s => s.StorePaymentType);
             return View(storePayments.OrderByDescending(s=>s.dtPosted).ToList());
         }
 
-        // GET: Store/StorePayments/Details/5
+        // GET: Admin/StorePayments/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -39,17 +39,16 @@ namespace eCart.Areas.Store.Controllers
             return View(storePayment);
         }
 
-        // GET: Store/StorePayments/Create
-        public ActionResult Create(int id)
+        // GET: Admin/StorePayments/Create
+        public ActionResult Create()
         {
-            ViewBag.StoreId = id;
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", id);
-            ViewBag.StorePaymentStatusId = new SelectList(db.StorePaymentStatus, "Id", "Name", 1);
+            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "Name");
+            ViewBag.StorePaymentStatusId = new SelectList(db.StorePaymentStatus, "Id", "Name");
             ViewBag.StorePaymentTypeId = new SelectList(db.StorePaymentTypes, "Id", "Description");
             return View();
         }
 
-        // POST: Store/StorePayments/Create
+        // POST: Admin/StorePayments/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -60,16 +59,16 @@ namespace eCart.Areas.Store.Controllers
             {
                 db.StorePayments.Add(storePayment);
                 db.SaveChanges();
-                return RedirectToAction("Index", new { id = storePayment.StoreDetailId });
+                return RedirectToAction("Index");
             }
 
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storePayment.StoreDetailId);
+            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "Name", storePayment.StoreDetailId);
             ViewBag.StorePaymentStatusId = new SelectList(db.StorePaymentStatus, "Id", "Name", storePayment.StorePaymentStatusId);
             ViewBag.StorePaymentTypeId = new SelectList(db.StorePaymentTypes, "Id", "Description", storePayment.StorePaymentTypeId);
             return View(storePayment);
         }
 
-        // GET: Store/StorePayments/Edit/5
+        // GET: Admin/StorePayments/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -81,14 +80,13 @@ namespace eCart.Areas.Store.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.StoreId = id;
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storePayment.StoreDetailId);
+            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "Name", storePayment.StoreDetailId);
             ViewBag.StorePaymentStatusId = new SelectList(db.StorePaymentStatus, "Id", "Name", storePayment.StorePaymentStatusId);
             ViewBag.StorePaymentTypeId = new SelectList(db.StorePaymentTypes, "Id", "Description", storePayment.StorePaymentTypeId);
             return View(storePayment);
         }
 
-        // POST: Store/StorePayments/Edit/5
+        // POST: Admin/StorePayments/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -99,15 +97,15 @@ namespace eCart.Areas.Store.Controllers
             {
                 db.Entry(storePayment).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", new { id = storePayment.StoreDetailId });
+                return RedirectToAction("Index");
             }
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId", storePayment.StoreDetailId);
+            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "Name", storePayment.StoreDetailId);
             ViewBag.StorePaymentStatusId = new SelectList(db.StorePaymentStatus, "Id", "Name", storePayment.StorePaymentStatusId);
             ViewBag.StorePaymentTypeId = new SelectList(db.StorePaymentTypes, "Id", "Description", storePayment.StorePaymentTypeId);
             return View(storePayment);
         }
 
-        // GET: Store/StorePayments/Delete/5
+        // GET: Admin/StorePayments/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -122,7 +120,7 @@ namespace eCart.Areas.Store.Controllers
             return View(storePayment);
         }
 
-        // POST: Store/StorePayments/Delete/5
+        // POST: Admin/StorePayments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -130,7 +128,7 @@ namespace eCart.Areas.Store.Controllers
             StorePayment storePayment = db.StorePayments.Find(id);
             db.StorePayments.Remove(storePayment);
             db.SaveChanges();
-            return RedirectToAction("Index", new { id = storePayment.StoreDetailId });
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
@@ -140,6 +138,15 @@ namespace eCart.Areas.Store.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [HttpPost]
+        public void AcceptPayment(int id)
+        {
+            var storePayment = db.StorePayments.Find(id);
+            storePayment.StorePaymentStatusId = 2;  //accepted
+            db.Entry(storePayment).State = EntityState.Modified;
+            db.SaveChanges();
         }
     }
 }

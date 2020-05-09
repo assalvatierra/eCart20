@@ -42,5 +42,11 @@ namespace eCart.Areas.Admin.Models
         public System.Data.Entity.DbSet<eCart.Models.StorePickupPoint> StorePickupPoints { get; set; }
 
         public System.Data.Entity.DbSet<eCart.Models.StorePickupPartner> StorePickupPartners { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.StorePayment> StorePayments { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.StorePaymentStatus> StorePaymentStatus { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.StorePaymentType> StorePaymentTypes { get; set; }
     }
 }

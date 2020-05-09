@@ -10,6 +10,7 @@ insert into PaymentReceivers("Description") values('Store'),('Bank'),('Paypal'),
 insert into PaymentStatus("Name") values('Pending'),('Accepted'),('Cancelled');
 insert into RiderCashParties("Name","Operation") values('Shopper','Cash In'),('Store','Cash Out');
 insert into RiderStatus("Name") values ('Active'),('Inactive');
+insert into StorePaymentStatus([Name]) values ('Pending'),('Accepted');
 
 -- initialize cities
 insert into MasterCities("Name") values ('Davao'),('Tagum'),('Digos');
@@ -36,3 +37,8 @@ insert into ItemCategories("ItemCatGroupId","Name","SortOrder") values
 --rider delivery--
 insert into CartActivityTypes("Name","SortOrder") values
 ('Item Ready', 1),('Item Pickup', 2),('In-Transit', 3),('Delivered', 4); 
+
+-- Store Payment Types -- 
+insert into StorePaymentTypes([Description],[Remarks]) values
+('Cash',''), ('Bank',''), ('Remittance','');
+

@@ -137,6 +137,7 @@
     <Compile Include="Areas\Admin\Controllers\MasterAreasController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterCitiesController.cs" />
     <Compile Include="Areas\Admin\Controllers\StoreDetailsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StorePaymentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserDetailsController.cs" />
     <Compile Include="Areas\Admin\Models\AdminDBContext.cs" />
     <Compile Include="Areas\Rider\Controllers\AccountsController.cs" />
@@ -318,7 +319,9 @@
     </Content>
     <Content Include="Areas\Admin\img\bulleted-list-gray.png" />
     <Content Include="Areas\Admin\img\bulleted-list.png" />
+    <Content Include="Areas\Admin\Scripts\StorePayment.js" />
     <Content Include="Areas\Shopper\Scripts\checkout.js" />
+    <Content Include="Areas\Store\Scripts\StorePayment.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -510,6 +513,11 @@
     <Content Include="Areas\Rider\Views\RiderDetails\_ModalPaymentAdd.cshtml" />
     <Content Include="Areas\Store\Views\CartDetails\CartHistory.cshtml" />
     <Content Include="Areas\Store\Views\CartDetails\_ModalCartDeliveryHistory.cshtml" />
+    <Content Include="Areas\Admin\Views\StorePayments\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\StorePayments\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\StorePayments\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\StorePayments\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\StorePayments\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Cart\cart.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />

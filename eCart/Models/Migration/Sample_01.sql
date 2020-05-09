@@ -82,3 +82,8 @@ values (120, 1, '05/02/2020', 1, 'party info', 1, 'receiver info', 1 );
 --Rider sample --
 insert into RiderDetails([UserId],[Name],[Address],[Mobile],[Remarks],[RiderStatusId],[MasterCityId],[Mobile2] )
 values ('1','John Doe', 'Davao City', '0912-345-6789', 'None', 1, 1, '0998-765-4321');
+
+-- Store Payment --
+insert into StorePayments([StoreDetailId],[dtPayment],[Amount],[StorePaymentTypeId],[Remarks],[dtPosted],[StorePaymentStatusId]) values
+(1,'05/09/2020 3:00 PM', '2500', 1, 'Pending test', '05/09/2020 3:45 PM', 1),
+(2,'05/09/2020 3:00 PM', '2500', 1, 'Accepted test', '05/09/2020 3:45 PM', 2);
