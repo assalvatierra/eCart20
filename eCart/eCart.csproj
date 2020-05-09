@@ -136,6 +136,7 @@
     <Compile Include="Areas\Admin\Controllers\ItemMastersController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterAreasController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterCitiesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RiderDetailsController.cs" />
     <Compile Include="Areas\Admin\Controllers\StoreDetailsController.cs" />
     <Compile Include="Areas\Admin\Controllers\StorePaymentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserDetailsController.cs" />
@@ -518,6 +519,11 @@
     <Content Include="Areas\Admin\Views\StorePayments\Details.cshtml" />
     <Content Include="Areas\Admin\Views\StorePayments\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\StorePayments\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\RiderDetails\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\RiderDetails\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\RiderDetails\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\RiderDetails\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\RiderDetails\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\Cart\cart.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />

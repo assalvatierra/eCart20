@@ -22,7 +22,7 @@ namespace eCart.Areas.Rider.Controllers
         [HttpPost]
         public ActionResult Login(string username, string password)
         {
-            return RedirectToAction("Index", "RiderDetails", new { area = "Rider", id = 2 });
+            return RedirectToAction("Index", "RiderDetails", new { area = "Rider", id = 1 });
         }
 
         public ActionResult Register()
