@@ -264,6 +264,9 @@
     <Compile Include="Models\RiderStatus.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\StoreImage.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
@@ -286,6 +289,12 @@
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StorePickupStatus.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserRolesMapping.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -354,6 +363,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\Migration\Sample_01.sql" />
     <Content Include="Models\Migration\Initialize_01.sql" />
+    <Content Include="Models\Migration\AuthenticationTables.sql" />
     <Content Include="Models\Sql.Reports\Rpt.StoreCart.SQL" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -567,6 +577,8 @@
     <Content Include="Views\Home\_ProductList.cshtml" />
     <Content Include="Views\Home\_StoreList.cshtml" />
     <Content Include="Views\Merchant\ProductDetails.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />

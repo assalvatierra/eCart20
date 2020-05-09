@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/01/2020 16:53:33
+-- Date Created: 05/09/2020 21:30:31
 -- Generated from EDMX file: D:\Projects\eCart20\eCart\Models\ecartdb.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
---USE [ecartdb];
+USE [ecartdb];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -17,53 +17,38 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_UserStatusUserDetail]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserDetails] DROP CONSTRAINT [FK_UserStatusUserDetail];
+IF OBJECT_ID(N'[dbo].[FK__UserRoles__RoleI__45FE52CB]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserRolesMapping] DROP CONSTRAINT [FK__UserRoles__RoleI__45FE52CB];
 GO
-IF OBJECT_ID(N'[dbo].[FK_StoreStatusStoreDetail]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StoreDetails] DROP CONSTRAINT [FK_StoreStatusStoreDetail];
+IF OBJECT_ID(N'[dbo].[FK__UserRoles__RoleI__46F27704]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserRolesMapping] DROP CONSTRAINT [FK__UserRoles__RoleI__46F27704];
 GO
-IF OBJECT_ID(N'[dbo].[FK_StoreCategoryStoreDetail]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StoreDetails] DROP CONSTRAINT [FK_StoreCategoryStoreDetail];
+IF OBJECT_ID(N'[dbo].[FK__UserRoles__UserI__47E69B3D]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserRolesMapping] DROP CONSTRAINT [FK__UserRoles__UserI__47E69B3D];
 GO
-IF OBJECT_ID(N'[dbo].[FK_MasterCityStoreDetail]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StoreDetails] DROP CONSTRAINT [FK_MasterCityStoreDetail];
+IF OBJECT_ID(N'[dbo].[FK_CartActivityTypeCartActivity]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartActivities] DROP CONSTRAINT [FK_CartActivityTypeCartActivity];
 GO
-IF OBJECT_ID(N'[dbo].[FK_MasterCityMasterBarangay]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MasterAreas] DROP CONSTRAINT [FK_MasterCityMasterBarangay];
+IF OBJECT_ID(N'[dbo].[FK_CartDeliveryCartDeliveryActivity]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartActivities] DROP CONSTRAINT [FK_CartDeliveryCartDeliveryActivity];
 GO
-IF OBJECT_ID(N'[dbo].[FK_MasterCityUserDetail]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserDetails] DROP CONSTRAINT [FK_MasterCityUserDetail];
+IF OBJECT_ID(N'[dbo].[FK_CartDetailCartDelivery]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartDeliveries] DROP CONSTRAINT [FK_CartDetailCartDelivery];
 GO
-IF OBJECT_ID(N'[dbo].[FK_ItemCategoryStoreItemCategory]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ItemMasterCategories] DROP CONSTRAINT [FK_ItemCategoryStoreItemCategory];
-GO
-IF OBJECT_ID(N'[dbo].[FK_ItemMasterItemMasterCategory]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ItemMasterCategories] DROP CONSTRAINT [FK_ItemMasterItemMasterCategory];
-GO
-IF OBJECT_ID(N'[dbo].[FK_ItemMasterStoreItem]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StoreItems] DROP CONSTRAINT [FK_ItemMasterStoreItem];
-GO
-IF OBJECT_ID(N'[dbo].[FK_StoreDetailStoreItem]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StoreItems] DROP CONSTRAINT [FK_StoreDetailStoreItem];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserDetailCartDetail]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CartDetails] DROP CONSTRAINT [FK_UserDetailCartDetail];
-GO
-IF OBJECT_ID(N'[dbo].[FK_StoreDetailCartDetail]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CartDetails] DROP CONSTRAINT [FK_StoreDetailCartDetail];
+IF OBJECT_ID(N'[dbo].[FK_CartDetailCartHistory]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartHistories] DROP CONSTRAINT [FK_CartDetailCartHistory];
 GO
 IF OBJECT_ID(N'[dbo].[FK_CartDetailCartItem]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CartItems] DROP CONSTRAINT [FK_CartDetailCartItem];
 GO
-IF OBJECT_ID(N'[dbo].[FK_StoreItemCartItem]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CartItems] DROP CONSTRAINT [FK_StoreItemCartItem];
+IF OBJECT_ID(N'[dbo].[FK_CartDetailPaymentDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PaymentDetails] DROP CONSTRAINT [FK_CartDetailPaymentDetail];
 GO
-IF OBJECT_ID(N'[dbo].[FK_MasterAreaUserDetail]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserDetails] DROP CONSTRAINT [FK_MasterAreaUserDetail];
+IF OBJECT_ID(N'[dbo].[FK_CartDetailRiderCashDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[RiderCashDetails] DROP CONSTRAINT [FK_CartDetailRiderCashDetail];
 GO
-IF OBJECT_ID(N'[dbo].[FK_MasterAreaStoreDetail]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StoreDetails] DROP CONSTRAINT [FK_MasterAreaStoreDetail];
+IF OBJECT_ID(N'[dbo].[FK_CartItemStatusCartItem]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartItems] DROP CONSTRAINT [FK_CartItemStatusCartItem];
 GO
 IF OBJECT_ID(N'[dbo].[FK_CartStatusCartDetail]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CartDetails] DROP CONSTRAINT [FK_CartStatusCartDetail];
@@ -71,68 +56,41 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_CartStatusCartHistory]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CartHistories] DROP CONSTRAINT [FK_CartStatusCartHistory];
 GO
-IF OBJECT_ID(N'[dbo].[FK_CartDetailCartHistory]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CartHistories] DROP CONSTRAINT [FK_CartDetailCartHistory];
-GO
-IF OBJECT_ID(N'[dbo].[FK_CartItemStatusCartItem]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CartItems] DROP CONSTRAINT [FK_CartItemStatusCartItem];
+IF OBJECT_ID(N'[dbo].[FK_ItemCategoryStoreItemCategory]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ItemMasterCategories] DROP CONSTRAINT [FK_ItemCategoryStoreItemCategory];
 GO
 IF OBJECT_ID(N'[dbo].[FK_ItemCatGroupItemCategory]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ItemCategories] DROP CONSTRAINT [FK_ItemCatGroupItemCategory];
 GO
-IF OBJECT_ID(N'[dbo].[FK_StoreDetailStorePickupPoint]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StorePickupPoints] DROP CONSTRAINT [FK_StoreDetailStorePickupPoint];
+IF OBJECT_ID(N'[dbo].[FK_ItemMasterItemImage]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ItemImages] DROP CONSTRAINT [FK_ItemMasterItemImage];
 GO
-IF OBJECT_ID(N'[dbo].[FK_StorePickupPointStorePickupPartner]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StorePickupPartners] DROP CONSTRAINT [FK_StorePickupPointStorePickupPartner];
+IF OBJECT_ID(N'[dbo].[FK_ItemMasterItemMasterCategory]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ItemMasterCategories] DROP CONSTRAINT [FK_ItemMasterItemMasterCategory];
 GO
-IF OBJECT_ID(N'[dbo].[FK_StoreDetailStorePickupPartner]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StorePickupPartners] DROP CONSTRAINT [FK_StoreDetailStorePickupPartner];
+IF OBJECT_ID(N'[dbo].[FK_ItemMasterStoreItem]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreItems] DROP CONSTRAINT [FK_ItemMasterStoreItem];
 GO
-IF OBJECT_ID(N'[dbo].[FK_StorePickupPointCartDetail]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CartDetails] DROP CONSTRAINT [FK_StorePickupPointCartDetail];
+IF OBJECT_ID(N'[dbo].[FK_MasterAreaStoreDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreDetails] DROP CONSTRAINT [FK_MasterAreaStoreDetail];
 GO
-IF OBJECT_ID(N'[dbo].[FK_StorePickupStatusStorePickupPoint]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StorePickupPoints] DROP CONSTRAINT [FK_StorePickupStatusStorePickupPoint];
+IF OBJECT_ID(N'[dbo].[FK_MasterAreaUserDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserDetails] DROP CONSTRAINT [FK_MasterAreaUserDetail];
 GO
-IF OBJECT_ID(N'[dbo].[FK_CartDetailCartDelivery]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CartDeliveries] DROP CONSTRAINT [FK_CartDetailCartDelivery];
-GO
-IF OBJECT_ID(N'[dbo].[FK_RiderStatusRiderDetail]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[RiderDetails] DROP CONSTRAINT [FK_RiderStatusRiderDetail];
+IF OBJECT_ID(N'[dbo].[FK_MasterCityMasterBarangay]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[MasterAreas] DROP CONSTRAINT [FK_MasterCityMasterBarangay];
 GO
 IF OBJECT_ID(N'[dbo].[FK_MasterCityRiderDetail]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[RiderDetails] DROP CONSTRAINT [FK_MasterCityRiderDetail];
 GO
-IF OBJECT_ID(N'[dbo].[FK_RiderDetailCartDelivery]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CartDeliveries] DROP CONSTRAINT [FK_RiderDetailCartDelivery];
+IF OBJECT_ID(N'[dbo].[FK_MasterCityStoreDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreDetails] DROP CONSTRAINT [FK_MasterCityStoreDetail];
 GO
-IF OBJECT_ID(N'[dbo].[FK_CartDeliveryCartDeliveryActivity]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CartActivities] DROP CONSTRAINT [FK_CartDeliveryCartDeliveryActivity];
+IF OBJECT_ID(N'[dbo].[FK_MasterCityUserDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserDetails] DROP CONSTRAINT [FK_MasterCityUserDetail];
 GO
-IF OBJECT_ID(N'[dbo].[FK_CartActivityTypeCartActivity]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CartActivities] DROP CONSTRAINT [FK_CartActivityTypeCartActivity];
-GO
-IF OBJECT_ID(N'[dbo].[FK_StoreDetailStoreImage]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StoreImages] DROP CONSTRAINT [FK_StoreDetailStoreImage];
-GO
-IF OBJECT_ID(N'[dbo].[FK_ItemMasterItemImage]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ItemImages] DROP CONSTRAINT [FK_ItemMasterItemImage];
-GO
-IF OBJECT_ID(N'[dbo].[FK_StoreImgTypeStoreImage]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StoreImages] DROP CONSTRAINT [FK_StoreImgTypeStoreImage];
-GO
-IF OBJECT_ID(N'[dbo].[FK_StorePaymentTypeStorePayment]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StorePayments] DROP CONSTRAINT [FK_StorePaymentTypeStorePayment];
-GO
-IF OBJECT_ID(N'[dbo].[FK_StoreDetailStorePayment]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StorePayments] DROP CONSTRAINT [FK_StoreDetailStorePayment];
-GO
-IF OBJECT_ID(N'[dbo].[FK_StorePaymentStatusStorePayment]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StorePayments] DROP CONSTRAINT [FK_StorePaymentStatusStorePayment];
-GO
-IF OBJECT_ID(N'[dbo].[FK_CartDetailPaymentDetail]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[PaymentDetails] DROP CONSTRAINT [FK_CartDetailPaymentDetail];
+IF OBJECT_ID(N'[dbo].[FK_PaymentPartyPaymentDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PaymentDetails] DROP CONSTRAINT [FK_PaymentPartyPaymentDetail];
 GO
 IF OBJECT_ID(N'[dbo].[FK_PaymentReceiverPaymentDetail]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[PaymentDetails] DROP CONSTRAINT [FK_PaymentReceiverPaymentDetail];
@@ -140,118 +98,124 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_PaymentStatusPaymentDetail]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[PaymentDetails] DROP CONSTRAINT [FK_PaymentStatusPaymentDetail];
 GO
-IF OBJECT_ID(N'[dbo].[FK_RiderDetailRiderCashDetail]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[RiderCashDetails] DROP CONSTRAINT [FK_RiderDetailRiderCashDetail];
-GO
 IF OBJECT_ID(N'[dbo].[FK_RiderCashPartyRiderCashDetail]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[RiderCashDetails] DROP CONSTRAINT [FK_RiderCashPartyRiderCashDetail];
 GO
-IF OBJECT_ID(N'[dbo].[FK_CartDetailRiderCashDetail]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[RiderCashDetails] DROP CONSTRAINT [FK_CartDetailRiderCashDetail];
+IF OBJECT_ID(N'[dbo].[FK_RiderDetailCartDelivery]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartDeliveries] DROP CONSTRAINT [FK_RiderDetailCartDelivery];
 GO
-IF OBJECT_ID(N'[dbo].[FK_PaymentPartyPaymentDetail]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[PaymentDetails] DROP CONSTRAINT [FK_PaymentPartyPaymentDetail];
+IF OBJECT_ID(N'[dbo].[FK_RiderDetailRiderCashDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[RiderCashDetails] DROP CONSTRAINT [FK_RiderDetailRiderCashDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_RiderStatusRiderDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[RiderDetails] DROP CONSTRAINT [FK_RiderStatusRiderDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StoreCategoryStoreDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreDetails] DROP CONSTRAINT [FK_StoreCategoryStoreDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StoreDetailCartDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartDetails] DROP CONSTRAINT [FK_StoreDetailCartDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StoreDetailStoreImage]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreImages] DROP CONSTRAINT [FK_StoreDetailStoreImage];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StoreDetailStoreItem]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreItems] DROP CONSTRAINT [FK_StoreDetailStoreItem];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StoreDetailStorePayment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StorePayments] DROP CONSTRAINT [FK_StoreDetailStorePayment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StoreDetailStorePickupPartner]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StorePickupPartners] DROP CONSTRAINT [FK_StoreDetailStorePickupPartner];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StoreDetailStorePickupPoint]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StorePickupPoints] DROP CONSTRAINT [FK_StoreDetailStorePickupPoint];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StoreImgTypeStoreImage]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreImages] DROP CONSTRAINT [FK_StoreImgTypeStoreImage];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StoreItemCartItem]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartItems] DROP CONSTRAINT [FK_StoreItemCartItem];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StorePaymentStatusStorePayment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StorePayments] DROP CONSTRAINT [FK_StorePaymentStatusStorePayment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StorePaymentTypeStorePayment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StorePayments] DROP CONSTRAINT [FK_StorePaymentTypeStorePayment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StorePickupPointCartDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartDetails] DROP CONSTRAINT [FK_StorePickupPointCartDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StorePickupPointStorePickupPartner]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StorePickupPartners] DROP CONSTRAINT [FK_StorePickupPointStorePickupPartner];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StorePickupStatusStorePickupPoint]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StorePickupPoints] DROP CONSTRAINT [FK_StorePickupStatusStorePickupPoint];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StoreStatusStoreDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreDetails] DROP CONSTRAINT [FK_StoreStatusStoreDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserDetailCartDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CartDetails] DROP CONSTRAINT [FK_UserDetailCartDetail];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserStatusUserDetail]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserDetails] DROP CONSTRAINT [FK_UserStatusUserDetail];
 GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[UserDetails]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[UserDetails];
-GO
-IF OBJECT_ID(N'[dbo].[StoreDetails]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[StoreDetails];
-GO
-IF OBJECT_ID(N'[dbo].[UserStatus]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[UserStatus];
-GO
-IF OBJECT_ID(N'[dbo].[StoreStatus]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[StoreStatus];
-GO
-IF OBJECT_ID(N'[dbo].[StoreCategories]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[StoreCategories];
-GO
-IF OBJECT_ID(N'[dbo].[MasterCities]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[MasterCities];
-GO
-IF OBJECT_ID(N'[dbo].[MasterAreas]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[MasterAreas];
-GO
-IF OBJECT_ID(N'[dbo].[ItemMasters]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ItemMasters];
-GO
-IF OBJECT_ID(N'[dbo].[ItemCategories]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ItemCategories];
-GO
-IF OBJECT_ID(N'[dbo].[ItemMasterCategories]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ItemMasterCategories];
-GO
-IF OBJECT_ID(N'[dbo].[StoreItems]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[StoreItems];
-GO
-IF OBJECT_ID(N'[dbo].[CartDetails]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CartDetails];
-GO
-IF OBJECT_ID(N'[dbo].[CartItems]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CartItems];
-GO
-IF OBJECT_ID(N'[dbo].[CartStatus]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CartStatus];
-GO
-IF OBJECT_ID(N'[dbo].[CartHistories]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CartHistories];
-GO
-IF OBJECT_ID(N'[dbo].[CartItemStatus]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CartItemStatus];
-GO
-IF OBJECT_ID(N'[dbo].[ItemCatGroups]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ItemCatGroups];
-GO
-IF OBJECT_ID(N'[dbo].[StorePickupPoints]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[StorePickupPoints];
-GO
-IF OBJECT_ID(N'[dbo].[StorePickupPartners]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[StorePickupPartners];
-GO
-IF OBJECT_ID(N'[dbo].[StorePickupStatus]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[StorePickupStatus];
-GO
-IF OBJECT_ID(N'[dbo].[CartDeliveries]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CartDeliveries];
-GO
-IF OBJECT_ID(N'[dbo].[RiderDetails]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[RiderDetails];
-GO
-IF OBJECT_ID(N'[dbo].[RiderStatus]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[RiderStatus];
-GO
 IF OBJECT_ID(N'[dbo].[CartActivities]', 'U') IS NOT NULL
     DROP TABLE [dbo].[CartActivities];
 GO
 IF OBJECT_ID(N'[dbo].[CartActivityTypes]', 'U') IS NOT NULL
     DROP TABLE [dbo].[CartActivityTypes];
 GO
-IF OBJECT_ID(N'[dbo].[StoreImages]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[StoreImages];
+IF OBJECT_ID(N'[dbo].[CartDeliveries]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CartDeliveries];
+GO
+IF OBJECT_ID(N'[dbo].[CartDetails]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CartDetails];
+GO
+IF OBJECT_ID(N'[dbo].[CartHistories]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CartHistories];
+GO
+IF OBJECT_ID(N'[dbo].[CartItems]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CartItems];
+GO
+IF OBJECT_ID(N'[dbo].[CartItemStatus]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CartItemStatus];
+GO
+IF OBJECT_ID(N'[dbo].[CartStatus]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CartStatus];
+GO
+IF OBJECT_ID(N'[dbo].[ItemCategories]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ItemCategories];
+GO
+IF OBJECT_ID(N'[dbo].[ItemCatGroups]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ItemCatGroups];
 GO
 IF OBJECT_ID(N'[dbo].[ItemImages]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ItemImages];
 GO
-IF OBJECT_ID(N'[dbo].[StoreImgTypes]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[StoreImgTypes];
+IF OBJECT_ID(N'[dbo].[ItemMasterCategories]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ItemMasterCategories];
 GO
-IF OBJECT_ID(N'[dbo].[StorePayments]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[StorePayments];
+IF OBJECT_ID(N'[dbo].[ItemMasters]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ItemMasters];
 GO
-IF OBJECT_ID(N'[dbo].[StorePaymentTypes]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[StorePaymentTypes];
+IF OBJECT_ID(N'[dbo].[MasterAreas]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[MasterAreas];
 GO
-IF OBJECT_ID(N'[dbo].[StorePaymentStatus]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[StorePaymentStatus];
+IF OBJECT_ID(N'[dbo].[MasterCities]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[MasterCities];
 GO
 IF OBJECT_ID(N'[dbo].[PaymentDetails]', 'U') IS NOT NULL
     DROP TABLE [dbo].[PaymentDetails];
+GO
+IF OBJECT_ID(N'[dbo].[PaymentParties]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PaymentParties];
 GO
 IF OBJECT_ID(N'[dbo].[PaymentReceivers]', 'U') IS NOT NULL
     DROP TABLE [dbo].[PaymentReceivers];
@@ -265,8 +229,62 @@ GO
 IF OBJECT_ID(N'[dbo].[RiderCashParties]', 'U') IS NOT NULL
     DROP TABLE [dbo].[RiderCashParties];
 GO
-IF OBJECT_ID(N'[dbo].[PaymentParties]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[PaymentParties];
+IF OBJECT_ID(N'[dbo].[RiderDetails]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[RiderDetails];
+GO
+IF OBJECT_ID(N'[dbo].[RiderStatus]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[RiderStatus];
+GO
+IF OBJECT_ID(N'[dbo].[Roles]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Roles];
+GO
+IF OBJECT_ID(N'[dbo].[StoreCategories]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StoreCategories];
+GO
+IF OBJECT_ID(N'[dbo].[StoreDetails]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StoreDetails];
+GO
+IF OBJECT_ID(N'[dbo].[StoreImages]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StoreImages];
+GO
+IF OBJECT_ID(N'[dbo].[StoreImgTypes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StoreImgTypes];
+GO
+IF OBJECT_ID(N'[dbo].[StoreItems]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StoreItems];
+GO
+IF OBJECT_ID(N'[dbo].[StorePayments]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StorePayments];
+GO
+IF OBJECT_ID(N'[dbo].[StorePaymentStatus]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StorePaymentStatus];
+GO
+IF OBJECT_ID(N'[dbo].[StorePaymentTypes]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StorePaymentTypes];
+GO
+IF OBJECT_ID(N'[dbo].[StorePickupPartners]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StorePickupPartners];
+GO
+IF OBJECT_ID(N'[dbo].[StorePickupPoints]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StorePickupPoints];
+GO
+IF OBJECT_ID(N'[dbo].[StorePickupStatus]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StorePickupStatus];
+GO
+IF OBJECT_ID(N'[dbo].[StoreStatus]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StoreStatus];
+GO
+IF OBJECT_ID(N'[dbo].[UserDetails]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserDetails];
+GO
+IF OBJECT_ID(N'[dbo].[UserRolesMapping]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserRolesMapping];
+GO
+IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users];
+GO
+IF OBJECT_ID(N'[dbo].[UserStatus]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserStatus];
 GO
 
 -- --------------------------------------------------
@@ -609,6 +627,29 @@ CREATE TABLE [dbo].[PaymentParties] (
 );
 GO
 
+-- Creating table 'Roles'
+CREATE TABLE [dbo].[Roles] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [RoleName] nvarchar(50)  NULL
+);
+GO
+
+-- Creating table 'UserRolesMappings'
+CREATE TABLE [dbo].[UserRolesMappings] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [UserId] int  NULL,
+    [RoleId] int  NULL
+);
+GO
+
+-- Creating table 'Users'
+CREATE TABLE [dbo].[Users] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Username] nvarchar(50)  NULL,
+    [Password] nvarchar(50)  NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -832,6 +873,24 @@ GO
 -- Creating primary key on [Id] in table 'PaymentParties'
 ALTER TABLE [dbo].[PaymentParties]
 ADD CONSTRAINT [PK_PaymentParties]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Roles'
+ALTER TABLE [dbo].[Roles]
+ADD CONSTRAINT [PK_Roles]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'UserRolesMappings'
+ALTER TABLE [dbo].[UserRolesMappings]
+ADD CONSTRAINT [PK_UserRolesMappings]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Users'
+ALTER TABLE [dbo].[Users]
+ADD CONSTRAINT [PK_Users]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -1512,6 +1571,51 @@ GO
 CREATE INDEX [IX_FK_PaymentPartyPaymentDetail]
 ON [dbo].[PaymentDetails]
     ([PaymentPartyId]);
+GO
+
+-- Creating foreign key on [RoleId] in table 'UserRolesMappings'
+ALTER TABLE [dbo].[UserRolesMappings]
+ADD CONSTRAINT [FK__UserRoles__RoleI__45FE52CB]
+    FOREIGN KEY ([RoleId])
+    REFERENCES [dbo].[Roles]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK__UserRoles__RoleI__45FE52CB'
+CREATE INDEX [IX_FK__UserRoles__RoleI__45FE52CB]
+ON [dbo].[UserRolesMappings]
+    ([RoleId]);
+GO
+
+-- Creating foreign key on [RoleId] in table 'UserRolesMappings'
+ALTER TABLE [dbo].[UserRolesMappings]
+ADD CONSTRAINT [FK__UserRoles__RoleI__46F27704]
+    FOREIGN KEY ([RoleId])
+    REFERENCES [dbo].[Roles]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK__UserRoles__RoleI__46F27704'
+CREATE INDEX [IX_FK__UserRoles__RoleI__46F27704]
+ON [dbo].[UserRolesMappings]
+    ([RoleId]);
+GO
+
+-- Creating foreign key on [UserId] in table 'UserRolesMappings'
+ALTER TABLE [dbo].[UserRolesMappings]
+ADD CONSTRAINT [FK__UserRoles__UserI__47E69B3D]
+    FOREIGN KEY ([UserId])
+    REFERENCES [dbo].[Users]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK__UserRoles__UserI__47E69B3D'
+CREATE INDEX [IX_FK__UserRoles__UserI__47E69B3D]
+ON [dbo].[UserRolesMappings]
+    ([UserId]);
 GO
 
 -- --------------------------------------------------

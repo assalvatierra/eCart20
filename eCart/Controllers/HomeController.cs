@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using eCart.Models;
 using eCart.Services;
 using eCart.Interfaces;
@@ -75,6 +76,59 @@ namespace eCart.Controllers
 
 
             return "Cart Created";
+        }
+
+
+        //Authentication
+
+        private readonly ecartdbContainer _dbContext = new ecartdbContainer();
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(Models.User user)
+        {
+            if (ModelState.IsValid)
+            {
+                bool IsValidUser = _dbContext.Users
+               .Any(u => u.Username.ToLower() == user
+               .Username.ToLower() && user
+               .Password == user.Password);
+
+                if (IsValidUser)
+                {
+                    FormsAuthentication.SetAuthCookie(user.Username, false);
+                    Session["User"] = user.Username;
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            ModelState.AddModelError("", "invalid Username or Password");
+            return View();
+        }
+        public ActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(User registerUser)
+        {
+            if (ModelState.IsValid)
+            {
+                _dbContext.Users.Add(registerUser);
+                _dbContext.SaveChanges();
+                return RedirectToAction("Login");
+
+            }
+            return View();
+        }
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login");
         }
 
     }

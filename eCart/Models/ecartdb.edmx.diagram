@@ -87,6 +87,12 @@
         <AssociationConnector Association="ecartdb.CartDetailRiderCashDetail" />
         <EntityTypeShape EntityType="ecartdb.PaymentParty" Width="1.5" PointX="19.25" PointY="1.625" />
         <AssociationConnector Association="ecartdb.PaymentPartyPaymentDetail" />
+        <EntityTypeShape EntityType="ecartdb.Role" Width="1.5" PointX="11.625" PointY="23.375" />
+        <EntityTypeShape EntityType="ecartdb.UserRolesMapping" Width="1.5" PointX="13.875" PointY="23.125" />
+        <EntityTypeShape EntityType="ecartdb.User" Width="1.5" PointX="11.625" PointY="26.375" />
+        <AssociationConnector Association="ecartdb.FK__UserRoles__RoleI__45FE52CB" />
+        <AssociationConnector Association="ecartdb.FK__UserRoles__RoleI__46F27704" />
+        <AssociationConnector Association="ecartdb.FK__UserRoles__UserI__47E69B3D" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

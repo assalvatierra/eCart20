@@ -43,6 +43,9 @@
     <EntitySet Name="RiderCashDetails" EntityType="ecartdb.Store.RiderCashDetails" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="RiderCashParties" EntityType="ecartdb.Store.RiderCashParties" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PaymentParties" EntityType="ecartdb.Store.PaymentParties" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Roles" EntityType="ecartdb.Store.Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserRolesMappings" EntityType="ecartdb.Store.UserRolesMappings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="ecartdb.Store.Users" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserStatusUserDetail" Association="ecartdb.Store.UserStatusUserDetail">
       <End Role="UserStatus" EntitySet="UserStatus" />
       <End Role="UserDetail" EntitySet="UserDetails" />
@@ -223,6 +226,18 @@
       <End Role="PaymentParty" EntitySet="PaymentParties" />
       <End Role="PaymentDetail" EntitySet="PaymentDetails" />
     </AssociationSet>
+    <AssociationSet Name="FK__UserRoles__RoleI__45FE52CB" Association="ecartdb.Store.FK__UserRoles__RoleI__45FE52CB">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserRoles__RoleI__46F27704" Association="ecartdb.Store.FK__UserRoles__RoleI__46F27704">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserRoles__UserI__47E69B3D" Association="ecartdb.Store.FK__UserRoles__UserI__47E69B3D">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserDetails">
     <Key>
@@ -321,7 +336,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ItemMasterId" Type="int" Nullable="false" />
     <Property Name="StoreDetailId" Type="int" Nullable="false" />
-    <Property Name="UnitPrice" Type="decimal" Nullable="false" />
+    <Property Name="UnitPrice" Type="decimal" Nullable="false" Precision="18" Scale="0" />
   </EntityType>
   <EntityType Name="CartDetails">
     <Key>
@@ -342,7 +357,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CartDetailId" Type="int" Nullable="false" />
     <Property Name="StoreItemId" Type="int" Nullable="false" />
-    <Property Name="ItemQty" Type="decimal" Nullable="false" />
+    <Property Name="ItemQty" Type="decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="ItemOrder" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CartItemStatusId" Type="int" Nullable="false" />
     <Property Name="Remarks1" Type="nvarchar" Nullable="true" MaxLength="80" />
@@ -485,7 +500,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="StoreDetailId" Type="int" Nullable="false" />
     <Property Name="dtPayment" Type="datetime" Nullable="false" />
-    <Property Name="Amount" Type="decimal" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="StorePaymentTypeId" Type="int" Nullable="false" />
     <Property Name="Remarks" Type="nvarchar" Nullable="true" MaxLength="150" />
     <Property Name="dtPosted" Type="datetime" Nullable="true" />
@@ -512,7 +527,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CartDetailId" Type="int" Nullable="false" />
-    <Property Name="Amount" Type="decimal" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="dtPayment" Type="datetime" Nullable="false" />
     <Property Name="PaymentReceiverId" Type="int" Nullable="false" />
     <Property Name="ReceiverInfo" Type="nvarchar" Nullable="true" MaxLength="30" />
@@ -541,7 +556,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RiderDetailId" Type="int" Nullable="false" />
     <Property Name="DtCash" Type="datetime" Nullable="false" />
-    <Property Name="Amount" Type="decimal" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Nullable="false" Precision="18" Scale="0" />
     <Property Name="RiderCashPartyId" Type="int" Nullable="false" />
     <Property Name="CartDetailId" Type="int" Nullable="false" />
   </EntityType>
@@ -559,6 +574,29 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="UserRolesMappings">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="true" />
+    <Property Name="RoleId" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" Nullable="true" MaxLength="50" />
   </EntityType>
   <Association Name="UserStatusUserDetail">
     <End Role="UserStatus" Type="ecartdb.Store.UserStatus" Multiplicity="1" />
@@ -1100,6 +1138,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__UserRoles__RoleI__45FE52CB">
+    <End Role="Role" Type="ecartdb.Store.Roles" Multiplicity="0..1" />
+    <End Role="UserRolesMapping" Type="ecartdb.Store.UserRolesMappings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRolesMapping">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserRoles__RoleI__46F27704">
+    <End Role="Role" Type="ecartdb.Store.Roles" Multiplicity="0..1" />
+    <End Role="UserRolesMapping" Type="ecartdb.Store.UserRolesMappings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRolesMapping">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserRoles__UserI__47E69B3D">
+    <End Role="User" Type="ecartdb.Store.Users" Multiplicity="0..1" />
+    <End Role="UserRolesMapping" Type="ecartdb.Store.UserRolesMappings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserRolesMapping">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -1322,18 +1396,33 @@
             <End Role="PaymentParty" EntitySet="PaymentParties" />
             <End Role="PaymentDetail" EntitySet="PaymentDetails" />
           </AssociationSet>
+          <EntitySet Name="Roles" EntityType="ecartdb.Role" />
+          <EntitySet Name="UserRolesMappings" EntityType="ecartdb.UserRolesMapping" />
+          <EntitySet Name="Users" EntityType="ecartdb.User" />
+          <AssociationSet Name="FK__UserRoles__RoleI__45FE52CB" Association="ecartdb.FK__UserRoles__RoleI__45FE52CB">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRoles__RoleI__46F27704" Association="ecartdb.FK__UserRoles__RoleI__46F27704">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UserRoles__UserI__47E69B3D" Association="ecartdb.FK__UserRoles__UserI__47E69B3D">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserDetail">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="20" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" />
-          <Property Name="Address" Type="String" Nullable="true" MaxLength="150" />
-          <Property Name="Email" Type="String" Nullable="true" MaxLength="30" />
-          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="20" />
-          <Property Name="Remarks" Type="String" Nullable="true" MaxLength="50" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Address" Type="String" Nullable="true" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" Nullable="true" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Remarks" Type="String" Nullable="true" MaxLength="50" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="UserStatu" Relationship="ecartdb.UserStatusUserDetail" FromRole="UserDetail" ToRole="UserStatus" />
           <Property Name="UserStatusId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="MasterCity" Relationship="ecartdb.MasterCityUserDetail" FromRole="UserDetail" ToRole="MasterCity" />
@@ -1347,10 +1436,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LoginId" Type="String" Nullable="false" MaxLength="20" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" />
-          <Property Name="Address" Type="String" Nullable="false" MaxLength="150" />
-          <Property Name="Remarks" Type="String" Nullable="false" MaxLength="80" />
+          <Property Name="LoginId" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="Remarks" Type="String" Nullable="false" MaxLength="80" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="StoreStatu" Relationship="ecartdb.StoreStatusStoreDetail" FromRole="StoreDetail" ToRole="StoreStatus" />
           <Property Name="StoreStatusId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="StoreCategory" Relationship="ecartdb.StoreCategoryStoreDetail" FromRole="StoreDetail" ToRole="StoreCategory" />
@@ -1371,7 +1460,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="15" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="15" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="UserDetails" Relationship="ecartdb.UserStatusUserDetail" FromRole="UserStatus" ToRole="UserDetail" />
         </EntityType>
         <Association Name="UserStatusUserDetail">
@@ -1391,7 +1480,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="10" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="StoreDetails" Relationship="ecartdb.StoreStatusStoreDetail" FromRole="StoreStatus" ToRole="StoreDetail" />
         </EntityType>
         <Association Name="StoreStatusStoreDetail">
@@ -1411,8 +1500,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" />
-          <Property Name="SortOrder" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="SortOrder" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="StoreDetails" Relationship="ecartdb.StoreCategoryStoreDetail" FromRole="StoreCategory" ToRole="StoreDetail" />
         </EntityType>
         <Association Name="StoreCategoryStoreDetail">
@@ -1432,7 +1521,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="StoreDetails" Relationship="ecartdb.MasterCityStoreDetail" FromRole="MasterCity" ToRole="StoreDetail" />
           <NavigationProperty Name="MasterBarangays" Relationship="ecartdb.MasterCityMasterBarangay" FromRole="MasterCity" ToRole="MasterBarangay" />
           <NavigationProperty Name="UserDetails" Relationship="ecartdb.MasterCityUserDetail" FromRole="MasterCity" ToRole="UserDetail" />
@@ -1443,7 +1532,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="MasterCity" Relationship="ecartdb.MasterCityMasterBarangay" FromRole="MasterBarangay" ToRole="MasterCity" />
           <Property Name="MasterCityId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="UserDetails" Relationship="ecartdb.MasterAreaUserDetail" FromRole="MasterArea" ToRole="UserDetail" />
@@ -1490,7 +1579,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="80" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="80" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="ItemMasterCategories" Relationship="ecartdb.ItemMasterItemMasterCategory" FromRole="ItemMaster" ToRole="ItemMasterCategory" />
           <NavigationProperty Name="StoreItems" Relationship="ecartdb.ItemMasterStoreItem" FromRole="ItemMaster" ToRole="StoreItem" />
           <NavigationProperty Name="ItemImages" Relationship="ecartdb.ItemMasterItemImage" FromRole="ItemMaster" ToRole="ItemImage" />
@@ -1500,7 +1589,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="StoreItemCategories" Relationship="ecartdb.ItemCategoryStoreItemCategory" FromRole="ItemCategory" ToRole="StoreItemCategory" />
           <Property Name="SortOrder" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ItemCatGroup" Relationship="ecartdb.ItemCatGroupItemCategory" FromRole="ItemCategory" ToRole="ItemCatGroup" />
@@ -1549,7 +1638,7 @@
           <Property Name="ItemMasterId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="StoreDetail" Relationship="ecartdb.StoreDetailStoreItem" FromRole="StoreItem" ToRole="StoreDetail" />
           <Property Name="StoreDetailId" Type="Int32" Nullable="false" />
-          <Property Name="UnitPrice" Type="Decimal" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <NavigationProperty Name="CartItems" Relationship="ecartdb.StoreItemCartItem" FromRole="StoreItem" ToRole="CartItem" />
         </EntityType>
         <Association Name="ItemMasterStoreItem">
@@ -1592,8 +1681,8 @@
           <NavigationProperty Name="StorePickupPoint" Relationship="ecartdb.StorePickupPointCartDetail" FromRole="CartDetail" ToRole="StorePickupPoint" />
           <Property Name="StorePickupPointId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CartDeliveries" Relationship="ecartdb.CartDetailCartDelivery" FromRole="CartDetail" ToRole="CartDelivery" />
-          <Property Name="DtPickup" Type="DateTime" Nullable="false" />
-          <Property Name="DeliveryType" Type="String" Nullable="false" MaxLength="10" />
+          <Property Name="DtPickup" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeliveryType" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="PaymentDetails" Relationship="ecartdb.CartDetailPaymentDetail" FromRole="CartDetail" ToRole="PaymentDetail" />
           <NavigationProperty Name="RiderCashDetails" Relationship="ecartdb.CartDetailRiderCashDetail" FromRole="CartDetail" ToRole="RiderCashDetail" />
         </EntityType>
@@ -1630,12 +1719,12 @@
           <Property Name="CartDetailId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="StoreItem" Relationship="ecartdb.StoreItemCartItem" FromRole="CartItem" ToRole="StoreItem" />
           <Property Name="StoreItemId" Type="Int32" Nullable="false" />
-          <Property Name="ItemQty" Type="Decimal" Nullable="false" />
+          <Property Name="ItemQty" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <NavigationProperty Name="CartItemStatu" Relationship="ecartdb.CartItemStatusCartItem" FromRole="CartItem" ToRole="CartItemStatus" />
-          <Property Name="ItemOrder" Type="String" Nullable="false" />
+          <Property Name="ItemOrder" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="CartItemStatusId" Type="Int32" Nullable="false" />
-          <Property Name="Remarks1" Type="String" Nullable="true" MaxLength="80" />
-          <Property Name="Remarks2" Type="String" Nullable="true" MaxLength="80" />
+          <Property Name="Remarks1" Type="String" Nullable="true" MaxLength="80" Unicode="true" FixedLength="false" />
+          <Property Name="Remarks2" Type="String" Nullable="true" MaxLength="80" Unicode="true" FixedLength="false" />
         </EntityType>
         <Association Name="CartDetailCartItem">
           <End Type="ecartdb.CartDetail" Role="CartDetail" Multiplicity="1" />
@@ -1690,7 +1779,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="10" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="CartDetails" Relationship="ecartdb.CartStatusCartDetail" FromRole="CartStatus" ToRole="CartDetail" />
           <NavigationProperty Name="CartHistories" Relationship="ecartdb.CartStatusCartHistory" FromRole="CartStatus" ToRole="CartHistory" />
         </EntityType>
@@ -1703,8 +1792,8 @@
           <Property Name="CartStatusId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CartDetail" Relationship="ecartdb.CartDetailCartHistory" FromRole="CartHistory" ToRole="CartDetail" />
           <Property Name="CartDetailId" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="20" />
-          <Property Name="dtStatus" Type="DateTime" Nullable="false" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="dtStatus" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="CartStatusCartDetail">
           <End Type="ecartdb.CartStatus" Role="CartStatus" Multiplicity="1" />
@@ -1747,7 +1836,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="10" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="CartItems" Relationship="ecartdb.CartItemStatusCartItem" FromRole="CartItemStatus" ToRole="CartItem" />
         </EntityType>
         <Association Name="CartItemStatusCartItem">
@@ -1767,7 +1856,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="ItemCategories" Relationship="ecartdb.ItemCatGroupItemCategory" FromRole="ItemCatGroup" ToRole="ItemCategory" />
           <Property Name="SortOrder" Type="Int32" Nullable="false" />
         </EntityType>
@@ -1791,8 +1880,8 @@
           <NavigationProperty Name="StoreDetail" Relationship="ecartdb.StoreDetailStorePickupPoint" FromRole="StorePickupPoint" ToRole="StoreDetail" />
           <Property Name="StoreDetailId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="StorePickupPartners" Relationship="ecartdb.StorePickupPointStorePickupPartner" FromRole="StorePickupPoint" ToRole="StorePickupPartner" />
-          <Property Name="Address" Type="String" Nullable="false" MaxLength="250" />
-          <Property Name="Remarks" Type="String" Nullable="true" MaxLength="150" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Remarks" Type="String" Nullable="true" MaxLength="150" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="CartDetails" Relationship="ecartdb.StorePickupPointCartDetail" FromRole="StorePickupPoint" ToRole="CartDetail" />
           <NavigationProperty Name="StorePickupStatu" Relationship="ecartdb.StorePickupStatusStorePickupPoint" FromRole="StorePickupPoint" ToRole="StorePickupStatus" />
           <Property Name="StorePickupStatusId" Type="Int32" Nullable="false" />
@@ -1860,7 +1949,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="10" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="StorePickupPoints" Relationship="ecartdb.StorePickupStatusStorePickupPoint" FromRole="StorePickupStatus" ToRole="StorePickupPoint" />
         </EntityType>
         <Association Name="StorePickupStatusStorePickupPoint">
@@ -1881,9 +1970,9 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CartDetailId" Type="Int32" Nullable="false" />
-          <Property Name="dtDelivery" Type="DateTime" Nullable="false" />
-          <Property Name="Address" Type="String" Nullable="false" MaxLength="250" />
-          <Property Name="Remarks" Type="String" Nullable="true" MaxLength="180" />
+          <Property Name="dtDelivery" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Remarks" Type="String" Nullable="true" MaxLength="180" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="CartDetail" Relationship="ecartdb.CartDetailCartDelivery" FromRole="CartDelivery" ToRole="CartDetail" />
           <NavigationProperty Name="RiderDetail" Relationship="ecartdb.RiderDetailCartDelivery" FromRole="CartDelivery" ToRole="RiderDetail" />
           <Property Name="RiderDetailId" Type="Int32" Nullable="false" />
@@ -1906,17 +1995,17 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" />
-          <Property Name="Address" Type="String" Nullable="false" MaxLength="180" />
-          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="20" />
-          <Property Name="Remarks" Type="String" Nullable="true" MaxLength="180" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="180" Unicode="true" FixedLength="false" />
+          <Property Name="Mobile" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Remarks" Type="String" Nullable="true" MaxLength="180" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="RiderStatu" Relationship="ecartdb.RiderStatusRiderDetail" FromRole="RiderDetail" ToRole="RiderStatus" />
           <Property Name="RiderStatusId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="MasterCity" Relationship="ecartdb.MasterCityRiderDetail" FromRole="RiderDetail" ToRole="MasterCity" />
           <Property Name="MasterCityId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CartDeliveries" Relationship="ecartdb.RiderDetailCartDelivery" FromRole="RiderDetail" ToRole="CartDelivery" />
-          <Property Name="Mobile2" Type="String" Nullable="true" MaxLength="20" />
+          <Property Name="Mobile2" Type="String" Nullable="true" MaxLength="20" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="RiderCashDetails" Relationship="ecartdb.RiderDetailRiderCashDetail" FromRole="RiderDetail" ToRole="RiderCashDetail" />
         </EntityType>
         <EntityType Name="RiderStatus">
@@ -1924,7 +2013,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="10" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="RiderDetails" Relationship="ecartdb.RiderStatusRiderDetail" FromRole="RiderStatus" ToRole="RiderDetail" />
         </EntityType>
         <Association Name="RiderStatusRiderDetail">
@@ -1970,7 +2059,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="CartDelivery" Relationship="ecartdb.CartDeliveryCartDeliveryActivity" FromRole="CartDeliveryActivity" ToRole="CartDelivery" />
           <Property Name="CartDeliveryId" Type="Int32" Nullable="false" />
-          <Property Name="dtActivity" Type="DateTime" Nullable="false" />
+          <Property Name="dtActivity" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="CartActivityType" Relationship="ecartdb.CartActivityTypeCartActivity" FromRole="CartActivity" ToRole="CartActivityType" />
           <Property Name="CartActivityTypeId" Type="Int32" Nullable="false" />
         </EntityType>
@@ -1991,7 +2080,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="CartActivities" Relationship="ecartdb.CartActivityTypeCartActivity" FromRole="CartActivityType" ToRole="CartActivity" />
           <Property Name="SortOrder" Type="Int32" Nullable="false" />
         </EntityType>
@@ -2014,7 +2103,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="StoreDetail" Relationship="ecartdb.StoreDetailStoreImage" FromRole="StoreImage" ToRole="StoreDetail" />
           <Property Name="StoreDetailId" Type="Int32" Nullable="false" />
-          <Property Name="ImageUrl" Type="String" Nullable="false" MaxLength="250" />
+          <Property Name="ImageUrl" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="StoreImgType" Relationship="ecartdb.StoreImgTypeStoreImage" FromRole="StoreImage" ToRole="StoreImgType" />
           <Property Name="StoreImgTypeId" Type="Int32" Nullable="false" />
         </EntityType>
@@ -2037,7 +2126,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="ItemMaster" Relationship="ecartdb.ItemMasterItemImage" FromRole="ItemImage" ToRole="ItemMaster" />
           <Property Name="ItemMasterId" Type="Int32" Nullable="false" />
-          <Property Name="ImageUrl" Type="String" Nullable="false" MaxLength="250" />
+          <Property Name="ImageUrl" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
         </EntityType>
         <Association Name="ItemMasterItemImage">
           <End Type="ecartdb.ItemMaster" Role="ItemMaster" Multiplicity="1" />
@@ -2056,7 +2145,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="StoreImages" Relationship="ecartdb.StoreImgTypeStoreImage" FromRole="StoreImgType" ToRole="StoreImage" />
         </EntityType>
         <Association Name="StoreImgTypeStoreImage">
@@ -2077,13 +2166,13 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StoreDetailId" Type="Int32" Nullable="false" />
-          <Property Name="dtPayment" Type="DateTime" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Nullable="false" />
+          <Property Name="dtPayment" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <NavigationProperty Name="StorePaymentType" Relationship="ecartdb.StorePaymentTypeStorePayment" FromRole="StorePayment" ToRole="StorePaymentType" />
           <Property Name="StorePaymentTypeId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="StoreDetail" Relationship="ecartdb.StoreDetailStorePayment" FromRole="StorePayment" ToRole="StoreDetail" />
-          <Property Name="Remarks" Type="String" Nullable="true" MaxLength="150" />
-          <Property Name="dtPosted" Type="DateTime" Nullable="true" />
+          <Property Name="Remarks" Type="String" Nullable="true" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="dtPosted" Type="DateTime" Nullable="true" Precision="3" />
           <NavigationProperty Name="StorePaymentStatu" Relationship="ecartdb.StorePaymentStatusStorePayment" FromRole="StorePayment" ToRole="StorePaymentStatus" />
           <Property Name="StorePaymentStatusId" Type="Int32" Nullable="false" />
         </EntityType>
@@ -2092,9 +2181,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="150" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="StorePayments" Relationship="ecartdb.StorePaymentTypeStorePayment" FromRole="StorePaymentType" ToRole="StorePayment" />
-          <Property Name="Remarks" Type="String" Nullable="true" MaxLength="200" />
+          <Property Name="Remarks" Type="String" Nullable="true" MaxLength="200" Unicode="true" FixedLength="false" />
         </EntityType>
         <Association Name="StorePaymentTypeStorePayment">
           <End Type="ecartdb.StorePaymentType" Role="StorePaymentType" Multiplicity="1" />
@@ -2125,7 +2214,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="StorePayments" Relationship="ecartdb.StorePaymentStatusStorePayment" FromRole="StorePaymentStatus" ToRole="StorePayment" />
         </EntityType>
         <Association Name="StorePaymentStatusStorePayment">
@@ -2147,15 +2236,15 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="CartDetail" Relationship="ecartdb.CartDetailPaymentDetail" FromRole="PaymentDetail" ToRole="CartDetail" />
           <Property Name="CartDetailId" Type="Int32" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <NavigationProperty Name="PaymentReceiver" Relationship="ecartdb.PaymentReceiverPaymentDetail" FromRole="PaymentDetail" ToRole="PaymentReceiver" />
-          <Property Name="dtPayment" Type="DateTime" Nullable="false" />
+          <Property Name="dtPayment" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="PaymentStatu" Relationship="ecartdb.PaymentStatusPaymentDetail" FromRole="PaymentDetail" ToRole="PaymentStatus" />
           <Property Name="PaymentReceiverId" Type="Int32" Nullable="false" />
-          <Property Name="ReceiverInfo" Type="String" Nullable="true" MaxLength="30" />
+          <Property Name="ReceiverInfo" Type="String" Nullable="true" MaxLength="30" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="PaymentParty" Relationship="ecartdb.PaymentPartyPaymentDetail" FromRole="PaymentDetail" ToRole="PaymentParty" />
           <Property Name="PaymentPartyId" Type="Int32" Nullable="false" />
-          <Property Name="PartyInfo" Type="String" Nullable="true" MaxLength="30" />
+          <Property Name="PartyInfo" Type="String" Nullable="true" MaxLength="30" Unicode="true" FixedLength="false" />
           <Property Name="PaymentStatusId" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="CartDetailPaymentDetail">
@@ -2175,7 +2264,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="PaymentDetails" Relationship="ecartdb.PaymentReceiverPaymentDetail" FromRole="PaymentReceiver" ToRole="PaymentDetail" />
         </EntityType>
         <Association Name="PaymentReceiverPaymentDetail">
@@ -2196,7 +2285,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="PaymentDetails" Relationship="ecartdb.PaymentStatusPaymentDetail" FromRole="PaymentStatus" ToRole="PaymentDetail" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="10" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
         </EntityType>
         <Association Name="PaymentStatusPaymentDetail">
           <End Type="ecartdb.PaymentStatus" Role="PaymentStatus" Multiplicity="1" />
@@ -2217,8 +2306,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="RiderDetail" Relationship="ecartdb.RiderDetailRiderCashDetail" FromRole="RiderCashDetail" ToRole="RiderDetail" />
           <Property Name="RiderDetailId" Type="Int32" Nullable="false" />
-          <Property Name="DtCash" Type="DateTime" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Nullable="false" />
+          <Property Name="DtCash" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <NavigationProperty Name="RiderCashParty" Relationship="ecartdb.RiderCashPartyRiderCashDetail" FromRole="RiderCashDetail" ToRole="RiderCashParty" />
           <Property Name="RiderCashPartyId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CartDetail" Relationship="ecartdb.CartDetailRiderCashDetail" FromRole="RiderCashDetail" ToRole="CartDetail" />
@@ -2241,9 +2330,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="RiderCashDetails" Relationship="ecartdb.RiderCashPartyRiderCashDetail" FromRole="RiderCashParty" ToRole="RiderCashDetail" />
-          <Property Name="Operation" Type="String" Nullable="false" MaxLength="10" />
+          <Property Name="Operation" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
         </EntityType>
         <Association Name="RiderCashPartyRiderCashDetail">
           <End Type="ecartdb.RiderCashParty" Role="RiderCashParty" Multiplicity="1" />
@@ -2274,7 +2363,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="PaymentDetails" Relationship="ecartdb.PaymentPartyPaymentDetail" FromRole="PaymentParty" ToRole="PaymentDetail" />
         </EntityType>
         <Association Name="PaymentPartyPaymentDetail">
@@ -2286,6 +2375,71 @@
             </Principal>
             <Dependent Role="PaymentDetail">
               <PropertyRef Name="PaymentPartyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserRolesMappings" Relationship="ecartdb.FK__UserRoles__RoleI__45FE52CB" FromRole="Role" ToRole="UserRolesMapping" />
+          <NavigationProperty Name="UserRolesMappings1" Relationship="ecartdb.FK__UserRoles__RoleI__46F27704" FromRole="Role" ToRole="UserRolesMapping" />
+        </EntityType>
+        <EntityType Name="UserRolesMapping">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="Role" Relationship="ecartdb.FK__UserRoles__RoleI__45FE52CB" FromRole="UserRolesMapping" ToRole="Role" />
+          <NavigationProperty Name="Role1" Relationship="ecartdb.FK__UserRoles__RoleI__46F27704" FromRole="UserRolesMapping" ToRole="Role" />
+          <NavigationProperty Name="User" Relationship="ecartdb.FK__UserRoles__UserI__47E69B3D" FromRole="UserRolesMapping" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserRolesMappings" Relationship="ecartdb.FK__UserRoles__UserI__47E69B3D" FromRole="User" ToRole="UserRolesMapping" />
+        </EntityType>
+        <Association Name="FK__UserRoles__RoleI__45FE52CB">
+          <End Type="ecartdb.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="ecartdb.UserRolesMapping" Role="UserRolesMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRolesMapping">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRoles__RoleI__46F27704">
+          <End Type="ecartdb.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="ecartdb.UserRolesMapping" Role="UserRolesMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRolesMapping">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UserRoles__UserI__47E69B3D">
+          <End Type="ecartdb.User" Role="User" Multiplicity="0..1" />
+          <End Type="ecartdb.UserRolesMapping" Role="UserRolesMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRolesMapping">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2668,6 +2822,32 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.Role)">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRolesMappings">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.UserRolesMapping)">
+        <MappingFragment StoreEntitySet="UserRolesMappings">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -2684,6 +2864,7 @@
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
         <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
       </DesignerInfoPropertySet>
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
