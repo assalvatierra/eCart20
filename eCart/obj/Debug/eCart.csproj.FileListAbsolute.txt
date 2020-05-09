@@ -236,3 +236,4 @@ C:\Users\VILLOSA\source\repos\eCart20\eCart\obj\Debug\eCart.csproj.CoreCompileIn
 C:\Users\VILLOSA\source\repos\eCart20\eCart\obj\Debug\eCart.csproj.CopyComplete
 C:\Users\VILLOSA\source\repos\eCart20\eCart\obj\Debug\eCart.dll
 C:\Users\VILLOSA\source\repos\eCart20\eCart\obj\Debug\eCart.pdb
+D:\Projects\eCart20\eCart\obj\Debug\eCart.csprojAssemblyReference.cache
