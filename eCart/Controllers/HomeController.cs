@@ -94,9 +94,7 @@ namespace eCart.Controllers
             if (ModelState.IsValid)
             {
                 bool IsValidUser = _dbContext.Users
-               .Any(u => u.Username.ToLower() == user
-               .Username.ToLower() && user
-               .Password == user.Password);
+               .Any(u => u.Username.ToLower() == user.Username.ToLower() && u.Password == user.Password);
 
                 if (IsValidUser)
                 {
