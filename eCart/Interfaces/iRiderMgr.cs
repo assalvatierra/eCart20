@@ -8,7 +8,7 @@ using eCart.Models;
 
 namespace eCart.Interfaces
 {
-    interface iRiderMgr
+    public interface iRiderMgr
     {
 
         void AddCartPayment(RiderCashDetail cashDetail);

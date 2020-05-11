@@ -8,12 +8,17 @@ using eCart.Models;
 
 namespace eCart.Interfaces
 {
-    interface iAccMgr
+    public interface iAccMgr
     {
 
-        int checkLoginCredentials(string username, string password);
-        string getUserName(int userId);
+        int CheckLoginCredentials(string username, string password);
+        string GetUserName(int userId);
+        UserDetail GetUserDetail(int userId);
 
-        void registerAccount(AccountRegistration newAccount);
+        void RegisterAccount(AccountRegistration newAccount);
+        void RegisterStore(StoreRegistration newStore);
+
+        string CreateUser(string username, string password);
+        void SetUserRole(int userId, int roleId);
     }
 }

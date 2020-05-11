@@ -33,15 +33,15 @@ namespace eCart.Services
         }
 
 
-        //public iAccMgr AccMgr
-        //{
-        //    get { return this.accMgr; }
-        //}
+        public iAccMgr AccMgr
+        {
+            get { return this.accMgr; }
+        }
 
-        //public iRiderMgr RiderMgr
-        //{
-        //    get { return this.riderMgr; }
-        //}
+        public iRiderMgr RiderMgr
+        {
+            get { return this.riderMgr; }
+        }
 
     }
 }

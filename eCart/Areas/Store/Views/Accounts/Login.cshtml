@@ -1,14 +1,14 @@
-﻿
+﻿@model eCart.Models.User
 @{
     ViewBag.Title = "Login";
 }
 
 
 <div class="row login-panel" style="margin-top:100px;">
-    
+
 
     <div class="col-md-6 login-form" style="bottom:50px;left:40px;">
-        <img src="~/img/store/storefront.png" class="login-image-side" /> 
+        <img src="~/img/store/storefront.png" class="login-image-side" />
     </div>
 
     <div class="col-md-6 login-form" style="top:0px;">
@@ -16,12 +16,17 @@
 
         @using (Html.BeginForm())
         {
+            @Html.AntiForgeryToken()
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="email" />
+                @*<input type="text" class="form-control" placeholder="email" />*@
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @placeholder = "email" } })
+                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
             </div>
 
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="password" />
+                @*<input type="password" class="form-control" placeholder="password" />*@
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "email", @type = "Password" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
 
             <button class="btn btn-primary" type="submit"> Login </button>
@@ -36,3 +41,7 @@
 
 
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

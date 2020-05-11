@@ -26,7 +26,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if (Session["USER"] != null)
                     {
-                        <li>@Html.ActionLink(" Hi " + Session["USER"], "Login", "Accounts", new { area = "Shopper" }, null)</li>
+                        <li>@Html.ActionLink(" Hi " + Session["USER"], "Index", "UserDetails", new { area = "Shopper" , id = Session["USERID"] }, null)</li>
                         <li>@Html.ActionLink("MyCart", "CartCheckout", "CartDetails", new { area = "Shopper" }, null)</li>
                         <li>@Html.ActionLink("Log-out", "Logout", "Accounts", new { area = "Shopper" }, null)</li>
                     }
