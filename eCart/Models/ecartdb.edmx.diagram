@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8cd14a5799894a709cfb67a00cf48bfa" Name="Diagram1" ZoomLevel="74" >
+      <Diagram DiagramId="8cd14a5799894a709cfb67a00cf48bfa" Name="Diagram1" ZoomLevel="73" >
         <EntityTypeShape EntityType="ecartdb.UserDetail" Width="1.5" PointX="5.625" PointY="4.25" />
         <EntityTypeShape EntityType="ecartdb.StoreDetail" Width="1.5" PointX="5.625" PointY="8.75" />
         <EntityTypeShape EntityType="ecartdb.UserStatus" Width="1.5" PointX="2.875" PointY="3.25" />
@@ -87,9 +87,14 @@
         <AssociationConnector Association="ecartdb.CartDetailRiderCashDetail" />
         <EntityTypeShape EntityType="ecartdb.PaymentParty" Width="1.5" PointX="19.25" PointY="1.625" />
         <AssociationConnector Association="ecartdb.PaymentPartyPaymentDetail" />
-        <EntityTypeShape EntityType="ecartdb.Role" Width="1.5" PointX="11.625" PointY="23.375" />
-        <EntityTypeShape EntityType="ecartdb.UserRolesMapping" Width="1.5" PointX="13.875" PointY="23.125" />
-        <EntityTypeShape EntityType="ecartdb.User" Width="1.5" PointX="11.625" PointY="26.375" />
+        <EntityTypeShape EntityType="ecartdb.StoreQue" Width="1.5" PointX="8.75" PointY="7.5" />
+        <AssociationConnector Association="ecartdb.StoreDetailStoreQue" />
+        <EntityTypeShape EntityType="ecartdb.StoreQueOrder" Width="1.5" PointX="11.125" PointY="7.375" />
+        <AssociationConnector Association="ecartdb.StoreQueStoreQueOrder" />
+        <AssociationConnector Association="ecartdb.CartDetailStoreQueOrder" />
+        <EntityTypeShape EntityType="ecartdb.Role" Width="1.5" PointX="12.625" PointY="23.75" />
+        <EntityTypeShape EntityType="ecartdb.UserRolesMapping" Width="1.5" PointX="14.875" PointY="23.5" />
+        <EntityTypeShape EntityType="ecartdb.User" Width="1.5" PointX="12.625" PointY="21.375" />
         <AssociationConnector Association="ecartdb.FK__UserRoles__RoleI__45FE52CB" />
         <AssociationConnector Association="ecartdb.FK__UserRoles__RoleI__46F27704" />
         <AssociationConnector Association="ecartdb.FK__UserRoles__UserI__47E69B3D" />

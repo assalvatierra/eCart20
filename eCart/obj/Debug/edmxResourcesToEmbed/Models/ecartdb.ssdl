@@ -38,6 +38,8 @@
     <EntitySet Name="RiderCashDetails" EntityType="ecartdb.Store.RiderCashDetails" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="RiderCashParties" EntityType="ecartdb.Store.RiderCashParties" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PaymentParties" EntityType="ecartdb.Store.PaymentParties" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StoreQues" EntityType="ecartdb.Store.StoreQues" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StoreQueOrders" EntityType="ecartdb.Store.StoreQueOrders" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Roles" EntityType="ecartdb.Store.Roles" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserRolesMappings" EntityType="ecartdb.Store.UserRolesMappings" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users" EntityType="ecartdb.Store.Users" store:Type="Tables" Schema="dbo" />
@@ -220,6 +222,18 @@
     <AssociationSet Name="PaymentPartyPaymentDetail" Association="ecartdb.Store.PaymentPartyPaymentDetail">
       <End Role="PaymentParty" EntitySet="PaymentParties" />
       <End Role="PaymentDetail" EntitySet="PaymentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="StoreDetailStoreQue" Association="ecartdb.Store.StoreDetailStoreQue">
+      <End Role="StoreDetail" EntitySet="StoreDetails" />
+      <End Role="StoreQue" EntitySet="StoreQues" />
+    </AssociationSet>
+    <AssociationSet Name="StoreQueStoreQueOrder" Association="ecartdb.Store.StoreQueStoreQueOrder">
+      <End Role="StoreQue" EntitySet="StoreQues" />
+      <End Role="StoreQueOrder" EntitySet="StoreQueOrders" />
+    </AssociationSet>
+    <AssociationSet Name="CartDetailStoreQueOrder" Association="ecartdb.Store.CartDetailStoreQueOrder">
+      <End Role="CartDetail" EntitySet="CartDetails" />
+      <End Role="StoreQueOrder" EntitySet="StoreQueOrders" />
     </AssociationSet>
     <AssociationSet Name="FK__UserRoles__RoleI__45FE52CB" Association="ecartdb.Store.FK__UserRoles__RoleI__45FE52CB">
       <End Role="Role" EntitySet="Roles" />
@@ -569,6 +583,24 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="StoreQues">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StoreDetailId" Type="int" Nullable="false" />
+    <Property Name="StationDesc" Type="nvarchar" Nullable="false" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="StoreQueOrders">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StoreQueId" Type="int" Nullable="false" />
+    <Property Name="Customer" Type="nvarchar" Nullable="true" MaxLength="30" />
+    <Property Name="DtOrder" Type="datetime" Nullable="false" />
+    <Property Name="CartDetailId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
@@ -1130,6 +1162,42 @@
       </Principal>
       <Dependent Role="PaymentDetail">
         <PropertyRef Name="PaymentPartyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StoreDetailStoreQue">
+    <End Role="StoreDetail" Type="ecartdb.Store.StoreDetails" Multiplicity="1" />
+    <End Role="StoreQue" Type="ecartdb.Store.StoreQues" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreQue">
+        <PropertyRef Name="StoreDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StoreQueStoreQueOrder">
+    <End Role="StoreQue" Type="ecartdb.Store.StoreQues" Multiplicity="1" />
+    <End Role="StoreQueOrder" Type="ecartdb.Store.StoreQueOrders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreQue">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreQueOrder">
+        <PropertyRef Name="StoreQueId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CartDetailStoreQueOrder">
+    <End Role="CartDetail" Type="ecartdb.Store.CartDetails" Multiplicity="1" />
+    <End Role="StoreQueOrder" Type="ecartdb.Store.StoreQueOrders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CartDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreQueOrder">
+        <PropertyRef Name="CartDetailId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

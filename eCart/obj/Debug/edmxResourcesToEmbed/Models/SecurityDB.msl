@@ -1,29 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="ecartdbModelStoreContainer" CdmEntityContainer="ecartdbEntities">
+<Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+  <Alias Key="Model" Value="SecurityDB" />
+  <Alias Key="Target" Value="SecurityDB.Store" />
+  <EntityContainerMapping CdmEntityContainer="SecurityDBContainer" StorageEntityContainer="SecurityDBStoreContainer">
     <EntitySetMapping Name="Roles">
-      <EntityTypeMapping TypeName="ecartdbModel.Role">
+      <EntityTypeMapping TypeName="SecurityDB.Role">
         <MappingFragment StoreEntitySet="Roles">
-          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="UserRolesMappings">
-      <EntityTypeMapping TypeName="ecartdbModel.UserRolesMapping">
+      <EntityTypeMapping TypeName="SecurityDB.UserRolesMapping">
         <MappingFragment StoreEntitySet="UserRolesMapping">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="ecartdbModel.User">
+      <EntityTypeMapping TypeName="SecurityDB.User">
         <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Username" ColumnName="Username" />
           <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

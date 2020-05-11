@@ -21,7 +21,7 @@ namespace eCart.Controllers
         }
 
         //Authentication
-        private readonly ecartdbContainer _dbContext = new ecartdbContainer();
+        private readonly SecurityDBContext _dbContext = new SecurityDBContext();
 
         /// <summary>
         /// Login function 

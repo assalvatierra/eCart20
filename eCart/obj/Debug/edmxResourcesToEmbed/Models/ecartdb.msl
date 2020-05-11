@@ -374,6 +374,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="StoreQues">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreQue)">
+        <MappingFragment StoreEntitySet="StoreQues">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StoreDetailId" ColumnName="StoreDetailId" />
+          <ScalarProperty Name="StationDesc" ColumnName="StationDesc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StoreQueOrders">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreQueOrder)">
+        <MappingFragment StoreEntitySet="StoreQueOrders">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StoreQueId" ColumnName="StoreQueId" />
+          <ScalarProperty Name="Customer" ColumnName="Customer" />
+          <ScalarProperty Name="DtOrder" ColumnName="DtOrder" />
+          <ScalarProperty Name="CartDetailId" ColumnName="CartDetailId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Roles">
       <EntityTypeMapping TypeName="IsTypeOf(ecartdb.Role)">
         <MappingFragment StoreEntitySet="Roles">
