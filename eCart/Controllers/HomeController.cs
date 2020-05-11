@@ -8,6 +8,7 @@ using eCart.Models;
 using eCart.Services;
 using eCart.Interfaces;
 using eCart.Areas.Shopper.Models;
+using System.Collections;
 
 namespace eCart.Controllers
 {
@@ -106,8 +107,15 @@ namespace eCart.Controllers
             ModelState.AddModelError("", "invalid Username or Password");
             return View();
         }
-        public ActionResult Register()
+
+        /// <summary>
+        /// Login function 
+        /// </summary>
+        /// <param name="usertype">Integer: 15-admin, 1-Store, 0 or 2-shopper, 3-rider </param>
+        /// <returns></returns>
+        public ActionResult Register(int usertype)
         {
+            ViewBag.UserType = usertype;
             return View();
         }
         [HttpPost]
