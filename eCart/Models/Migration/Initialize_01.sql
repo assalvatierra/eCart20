@@ -42,3 +42,20 @@ insert into CartActivityTypes("Name","SortOrder") values
 insert into StorePaymentTypes([Description],[Remarks]) values
 ('Cash',''), ('Bank',''), ('Remittance','');
 
+--User--
+insert into Users([Username],[Password]) values
+('Admin@gmail.com','12345'),
+('StoreAdmin@gmail.com','12345'),
+('Merchandiser@gmail.com','12345'),
+('Shopper@gmail.com','12345'),
+('Rider@gmail.com','12345');
+
+
+--User Roles--
+insert into Roles([RoleName]) values
+('Admin'),('Store Admin'),('Merchandiser'),('Shopper'),('Rider');
+
+insert into UserRolesMapping([UserId],[RoleId]) values
+(1,1),(3,1),(4,1),(5,2),(6,3),(7,4),(8,5);
+
+

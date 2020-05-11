@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "PendingCarts";
+    eCart.Models.UserDetail user = ViewBag.UserDetails as eCart.Models.UserDetail;
 }
 
 <h2>Pending Carts</h2>
@@ -9,9 +10,9 @@
 <div class="panel bordered">
     <div class="panel-body">
         <h3> Shopper Details </h3>
-        <p> Name: <b>Guest User</b> </p>
-        <p> Address: <b> Davao City </b> </p>
-        <p> Contact No.:  </p>
+        <p> Name: <b> @user.Name  </b> </p>
+        <p> Address: <b>@user.Address </b> </p>
+        <p> Contact No.:  <b>@user.Mobile </b> </p>
     </div>
 </div>
 

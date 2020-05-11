@@ -16,6 +16,7 @@ namespace eCart.Areas.Shopper.Controllers
     {
         private ecartdbContainer db = new ecartdbContainer();
         private CartMgr cartMgr = new CartMgr();
+        private StoreFactory storeFactory = new StoreFactory();
 
         // GET: Shopper/CartDetails
         public ActionResult Index()
@@ -306,6 +307,7 @@ namespace eCart.Areas.Shopper.Controllers
         {
             var userId = cartMgr.getUserId(); 
             var myCarts = cartMgr.getShopperCarts(userId).OrderByDescending(s=>s.Id).ToList();
+            ViewBag.UserDetails = storeFactory.AccMgr.GetUserDetail(userId);
 
             return View(myCarts);
         }

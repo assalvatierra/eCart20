@@ -16,10 +16,11 @@ namespace eCart.Areas.Shopper.Controllers
         private ecartdbContainer db = new ecartdbContainer();
 
         // GET: Shopper/UserDetails
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            var userDetails = db.UserDetails.Include(u => u.MasterArea).Include(u => u.MasterCity).Include(u => u.UserStatu);
-            return View(userDetails.ToList());
+            var user = db.Users.Find(id);
+            var userDetails = db.UserDetails.Find(user.Id);
+            return View(userDetails);
         }
 
         // GET: Shopper/UserDetails/Details/5
@@ -95,7 +96,7 @@ namespace eCart.Areas.Shopper.Controllers
             {
                 db.Entry(userDetail).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index" , new { id = userDetail.Id });
             }
             ViewBag.MasterAreaId = new SelectList(db.MasterAreas, "Id", "Name", userDetail.MasterAreaId);
             ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", userDetail.MasterCityId);

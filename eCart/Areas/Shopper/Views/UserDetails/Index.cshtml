@@ -1,81 +1,78 @@
-﻿@model IEnumerable<eCart.Models.UserDetail>
+﻿@model eCart.Models.UserDetail
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "User Details";
 }
 
-<h2>Index</h2>
+<style>
+    .User-Account label {
+        color:gray;
+    }
+    .User-Account p{
+        font-size:25px;
+    }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MasterArea.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MasterCity.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserStatu.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Mobile)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Remarks)
-        </th>
-        <th></th>
-    </tr>
+</style>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.MasterArea.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MasterCity.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserStatu.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Mobile)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Remarks)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>
+<div class="panel bordered">
+    <div class="panel-body">
+        <div class="col-lg-12">
+            <h2 class="col-lg-3">
+                Account Details
+            </h2>
+            <div class="col-lg-offset-6 col-lg-3 btn-group" style="top:15px;">
+                <a href="@Url.Action("PendingCarts","CartDetails", new { area="Shopper", id = Model.Id })" class="btn btn-default"> View myCarts </a>
+                <a href="@Url.Action("Edit","UserDetails", new { area="Shopper", id = Model.Id })" class="btn btn-default"> Edit </a>
+            </div>
+            <hr class="row col-lg-12" />
+        </div>
+        <div class="col-lg-5 User-Account">
+            <label> Name </label>
+            <p>
+                @Model.Name
+            </p>
+        </div>
+        <div class="col-lg-6 User-Account">
+            <label> Address </label>
+            <p>
+                @Model.Address
+            </p>
+        </div>
+        <div class="col-lg-5 User-Account">
+            <label> Email </label>
+            <p>
+                @Model.Email
+            </p>
+        </div>
+        <div class="col-lg-6 User-Account">
+            <label> Mobile </label>
+            <p>
+                @Model.Mobile
+            </p>
+        </div>
+        <div class="col-lg-5 User-Account">
+            <label> Status </label>
+            <p>
+                @Model.UserStatu.Name
+            </p>
+        </div>
+        <div class="col-lg-6 User-Account">
+            <label> City </label>
+            <p>
+                @Model.MasterCity.Name
+            </p>
+        </div>
+        <div class="col-lg-5 User-Account">
+            <label> Area </label>
+            <p>
+                @Model.MasterArea.Name
+            </p>
+        </div>
+        <div class="col-lg-6 User-Account">
+            <label> Remarks </label>
+            <p>
+                @Model.Remarks
+            </p>
+        </div>
+    </div>
+</div>

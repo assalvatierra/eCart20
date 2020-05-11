@@ -11,7 +11,7 @@ namespace eCart.Services
     {
         ecartdbContainer db = new ecartdbContainer();
 
-        public int checkLoginCredentials(string username, string password)
+        public int CheckLoginCredentials(string username, string password)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace eCart.Services
             }
         }
 
-        public string getUserName(int userId)
+        public string GetUserName(int userId)
         {
             try
             {
@@ -47,13 +47,13 @@ namespace eCart.Services
             }
         }
 
-        public void registerAccount(AccountRegistration newAccount)
+        public void RegisterAccount(AccountRegistration newAccount)
         {
             try
             {
                 UserDetail user = new UserDetail()
                 {
-                    UserId = "1",
+                    UserId = newAccount.UserId,
                     Name = newAccount.Name,
                     Email = newAccount.Email,
                     Address = newAccount.Address,
@@ -65,6 +65,97 @@ namespace eCart.Services
                 };
 
                 db.UserDetails.Add(user);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public string CreateUser(string username, string password)
+        {
+            try
+            {
+                var newUser = new User
+                {
+                    Username = username,
+                    Password = password
+                };
+
+                db.Users.Add(newUser);
+                db.SaveChanges();
+
+                return newUser.Id.ToString();
+            }
+            catch (Exception)
+            {
+                return "Error";
+            }
+        }
+
+        public void SetUserRole(int userId, int roleId)
+        {
+            //try
+            //{
+            //    var userRoles = new UserRolesMapping { 
+                    
+            //        UserId = userId,
+            //        RoleId = roleId
+            //    };
+            //    db.UserRolesMappings.Add(userRoles);
+            //    db.SaveChanges();
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
+        }
+
+        public UserDetail GetUserDetail(int userId)
+        {
+            if (db.Users.Find(userId) != null )
+            {
+                var user = db.Users.Find(userId);
+                var userdetails = db.UserDetails.Find(user.Id);
+                return userdetails;
+            }
+
+            var guestUser = new UserDetail
+            {
+               Name = "Guest",
+               Address = "N/A",
+               Email = "N/A,",
+               MasterAreaId = 1,
+               MasterCityId = 1,
+               Mobile = "NA",
+               Remarks = "NA",
+               UserStatusId = 1,
+               UserId = "0"
+            };
+
+            return guestUser;
+        }
+
+        public void RegisterStore(StoreRegistration newStore)
+        {
+            try
+            {
+                StoreDetail store = new StoreDetail()
+                {
+                    Id = 0,
+                    LoginId = newStore.LoginId,
+                    Name = newStore.Name,
+                    Address = newStore.Address,
+                    MasterAreaId = newStore.MasterAreaId,
+                    MasterCityId = newStore.MasterCityId,
+                    Remarks = newStore.Remarks,
+                    StoreCategoryId = newStore.StoreCategoryId,
+                    StoreStatusId = 1,
+                };
+
+                db.StoreDetails.Add(store);
                 db.SaveChanges();
             }
             catch (Exception ex)
