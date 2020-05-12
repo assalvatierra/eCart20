@@ -23,10 +23,15 @@
     <div class="panel bordered">
         <div class="panel-body">
             <div class="cart-summary-store">
-                <div>
-                    <h3> @cart.StoreDetail.Name </h3>
+                <div class="pull-left" style="display:flex;flex-direction:column;padding:8px 0px;">
+                    <img src="@cart.StoreDetail.StoreImages.FirstOrDefault().ImageUrl"   style="width:40px;margin:auto;" />
+                    <h3 style="margin-top:5px;"> @cart.StoreDetail.Name </h3>
                 </div>
                 <div class="cart-summary-pickup">
+                    <p>
+                        <span> Delivery Type </span>
+                        <a href=""> @cart.DeliveryType </a>
+                    </p>
                     <span> Pickup Point: </span>
                     <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetail.Id')" id="pickupAddress-@cart.Id" value="@cart.StorePickupPoint.Id">
                         @cart.StorePickupPoint.Address
@@ -34,11 +39,22 @@
                 </div>
                 <div class="cart-summary-pickup">
                     <span> DateTime Pickup: </span>
-                    <a href=""> @cart.DtPickup.ToString("MMM dd yyyy h:mm tt") </a>
+                    <p>
+                        <a href=""> @cart.DtPickup.ToString("MMM dd yyyy h:mm tt") </a>
+                    </p>
                 </div>
                 <div class="cart-summary-pickup">
-                    <span> Payment: </span>
-                    <a href="" id="paymentMode-@cart.StoreDetail.Id"> On Pickup </a>
+                    <span> Payment:</span>
+                    <a href="" id="paymentMode-@cart.StoreDetail.Id">
+                        @if (cart.PaymentDetails.FirstOrDefault() != null)
+                        {
+                            @cart.PaymentDetails.LastOrDefault().PaymentReceiver.Description
+                        }
+                        else
+                        {
+                            <p>On Pickup </p>
+                        }
+                    </a>
                 </div>
             </div>
             <table class="table">

@@ -139,7 +139,7 @@ namespace eCart.Areas.Admin.Controllers
         {
             var cartDetail = db.CartDetails.Find(id);
 
-            ViewBag.RiderId = cartDetail.StoreDetailId;
+            ViewBag.RiderId = riderId;
             ViewBag.StoreId = cartDetail.StoreDetailId;
             ViewBag.Store = cartDetail.StoreDetail.Name;
             //ViewBag.PaymentReceiverList = db.PaymentReceivers.ToList();

@@ -218,7 +218,8 @@ namespace eCart.Services
                 StorePickupPointId = cart.PickupPointId,
                 DeliveryType = cart.DeliveryType,
                 DtPickup = cart.DtPickup,
-                CartItems = getCartItems(cart)
+                CartItems = getCartItems(cart),
+                PaymentDetails = getPaymentDetails(cart)
             };
 
             return cartDetails;
@@ -254,6 +255,35 @@ namespace eCart.Services
             }
 
             return items;
+        }
+
+
+        //transfer to db cartItem object
+        public List<PaymentDetail> getPaymentDetails(cCartDetails cart)
+        {
+
+            if (cart.cartPayments != null)
+            {
+
+                var paymentDetails = new List<PaymentDetail>();
+
+                foreach (var item in cart.cartPayments)
+                {
+                    paymentDetails.Add(new PaymentDetail
+                    {
+                      Amount = 0,
+                      CartDetailId = cart.Id,
+                      dtPayment = DateTime.Now,
+                      PaymentPartyId = item.PaymentPartyId,
+                      PartyInfo = "",
+                      PaymentReceiverId = item.PaymentRecieverId,
+                      PaymentStatusId = 1,  //pending
+                      ReceiverInfo = ""
+                    });
+                }
+                return paymentDetails;
+            }
+            return null;
         }
 
         public void updateCartPickupPoint(int cartId, int pickupPointId)
