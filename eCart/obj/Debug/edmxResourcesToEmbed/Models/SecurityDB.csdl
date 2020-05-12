@@ -1,13 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="ecartdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="SecurityDB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="SecurityDBContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Roles" EntityType="SecurityDB.Role" />
+    <EntitySet Name="UserRolesMappings" EntityType="SecurityDB.UserRolesMapping" />
+    <EntitySet Name="Users" EntityType="SecurityDB.User" />
+    <AssociationSet Name="FK__UserRoles__RoleI__45FE52CB" Association="SecurityDB.FK__UserRoles__RoleI__45FE52CB">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserRoles__RoleI__46F27704" Association="SecurityDB.FK__UserRoles__RoleI__46F27704">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserRoles__UserI__47E69B3D" Association="SecurityDB.FK__UserRoles__UserI__47E69B3D">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
+    </AssociationSet>
+  </EntityContainer>
   <EntityType Name="Role">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="UserRolesMappings" Relationship="Self.FK__UserRoles__RoleI__45FE52CB" FromRole="Roles" ToRole="UserRolesMapping" />
-    <NavigationProperty Name="UserRolesMappings1" Relationship="Self.FK__UserRoles__RoleI__46F27704" FromRole="Roles" ToRole="UserRolesMapping" />
+    <NavigationProperty Name="UserRolesMappings" Relationship="SecurityDB.FK__UserRoles__RoleI__45FE52CB" FromRole="Role" ToRole="UserRolesMapping" />
+    <NavigationProperty Name="UserRolesMappings1" Relationship="SecurityDB.FK__UserRoles__RoleI__46F27704" FromRole="Role" ToRole="UserRolesMapping" />
   </EntityType>
   <EntityType Name="UserRolesMapping">
     <Key>
@@ -16,9 +33,9 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UserId" Type="Int32" />
     <Property Name="RoleId" Type="Int32" />
-    <NavigationProperty Name="Role" Relationship="Self.FK__UserRoles__RoleI__45FE52CB" FromRole="UserRolesMapping" ToRole="Roles" />
-    <NavigationProperty Name="Role1" Relationship="Self.FK__UserRoles__RoleI__46F27704" FromRole="UserRolesMapping" ToRole="Roles" />
-    <NavigationProperty Name="User" Relationship="Self.FK__UserRoles__UserI__47E69B3D" FromRole="UserRolesMapping" ToRole="Users" />
+    <NavigationProperty Name="Role" Relationship="SecurityDB.FK__UserRoles__RoleI__45FE52CB" FromRole="UserRolesMapping" ToRole="Role" />
+    <NavigationProperty Name="Role1" Relationship="SecurityDB.FK__UserRoles__RoleI__46F27704" FromRole="UserRolesMapping" ToRole="Role" />
+    <NavigationProperty Name="User" Relationship="SecurityDB.FK__UserRoles__UserI__47E69B3D" FromRole="UserRolesMapping" ToRole="User" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -27,13 +44,13 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="UserRolesMappings" Relationship="Self.FK__UserRoles__UserI__47E69B3D" FromRole="Users" ToRole="UserRolesMapping" />
+    <NavigationProperty Name="UserRolesMappings" Relationship="SecurityDB.FK__UserRoles__UserI__47E69B3D" FromRole="User" ToRole="UserRolesMapping" />
   </EntityType>
   <Association Name="FK__UserRoles__RoleI__45FE52CB">
-    <End Role="Roles" Type="Self.Role" Multiplicity="0..1" />
-    <End Role="UserRolesMapping" Type="Self.UserRolesMapping" Multiplicity="*" />
+    <End Type="SecurityDB.Role" Role="Role" Multiplicity="0..1" />
+    <End Type="SecurityDB.UserRolesMapping" Role="UserRolesMapping" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Roles">
+      <Principal Role="Role">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="UserRolesMapping">
@@ -42,10 +59,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__UserRoles__RoleI__46F27704">
-    <End Role="Roles" Type="Self.Role" Multiplicity="0..1" />
-    <End Role="UserRolesMapping" Type="Self.UserRolesMapping" Multiplicity="*" />
+    <End Type="SecurityDB.Role" Role="Role" Multiplicity="0..1" />
+    <End Type="SecurityDB.UserRolesMapping" Role="UserRolesMapping" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Roles">
+      <Principal Role="Role">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="UserRolesMapping">
@@ -54,10 +71,10 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK__UserRoles__UserI__47E69B3D">
-    <End Role="Users" Type="Self.User" Multiplicity="0..1" />
-    <End Role="UserRolesMapping" Type="Self.UserRolesMapping" Multiplicity="*" />
+    <End Type="SecurityDB.User" Role="User" Multiplicity="0..1" />
+    <End Type="SecurityDB.UserRolesMapping" Role="UserRolesMapping" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Users">
+      <Principal Role="User">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="UserRolesMapping">
@@ -65,21 +82,4 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="ecartdbEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Roles" EntityType="Self.Role" />
-    <EntitySet Name="UserRolesMappings" EntityType="Self.UserRolesMapping" />
-    <EntitySet Name="Users" EntityType="Self.User" />
-    <AssociationSet Name="FK__UserRoles__RoleI__45FE52CB" Association="Self.FK__UserRoles__RoleI__45FE52CB">
-      <End Role="Roles" EntitySet="Roles" />
-      <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
-    </AssociationSet>
-    <AssociationSet Name="FK__UserRoles__RoleI__46F27704" Association="Self.FK__UserRoles__RoleI__46F27704">
-      <End Role="Roles" EntitySet="Roles" />
-      <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
-    </AssociationSet>
-    <AssociationSet Name="FK__UserRoles__UserI__47E69B3D" Association="Self.FK__UserRoles__UserI__47E69B3D">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
-    </AssociationSet>
-  </EntityContainer>
 </Schema>

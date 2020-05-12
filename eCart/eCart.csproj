@@ -176,6 +176,7 @@
     <Compile Include="Interfaces\iRiderMgr.cs" />
     <Compile Include="Interfaces\iStoreMgr.cs" />
     <Compile Include="Models\AccountLogin.cs" />
+    <Compile Include="Models\Accounts\SecurityDBContext.cs" />
     <Compile Include="Models\CartActivity.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
@@ -289,6 +290,12 @@
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StorePickupStatus.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StoreQue.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StoreQueOrder.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
