@@ -211,7 +211,7 @@ namespace eCart.Services
                 var random = new Random();
                 var storeListCount = db.StoreDetails.ToList().Count();
 
-                var selectedID = random.Next(1, storeListCount+1);
+                var selectedID = random.Next(1, storeListCount);
                 var store = db.StoreDetails.Find(selectedID);
 
                 return store;

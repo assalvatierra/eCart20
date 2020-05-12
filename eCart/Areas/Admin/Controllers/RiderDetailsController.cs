@@ -133,5 +133,24 @@ namespace eCart.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        public ActionResult CartDetails(int id, int riderId)
+        {
+            var cartDetail = db.CartDetails.Find(id);
+
+            ViewBag.RiderId = cartDetail.StoreDetailId;
+            ViewBag.StoreId = cartDetail.StoreDetailId;
+            ViewBag.Store = cartDetail.StoreDetail.Name;
+            //ViewBag.PaymentReceiverList = db.PaymentReceivers.ToList();
+            //ViewBag.PaymentPartyList = db.PaymentParties.ToList();
+            //ViewBag.PaymentStatusList = db.PaymentStatus.ToList();
+            ViewBag.PaymentDetails = db.PaymentDetails.Where(s => s.CartDetailId == id).ToList();
+            //ViewBag.CartDelivery = db.CartDeliveries.Where(s => s.CartDetailId == id).ToList();
+            ViewBag.RiderList = db.RiderDetails.Where(r => r.RiderStatusId == 1).ToList();
+
+
+            return View(cartDetail);
+        }
     }
 }

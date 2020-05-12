@@ -20,6 +20,22 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "AboutHow", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Session["RIDERID"] != null)
+                    {
+                        <li> Hi @Session["RIDER"]!  </li>
+                        <li>@Html.ActionLink("MyAccount", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Log Out", "Login", "Accounts")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Shopper", "Login", "Accounts", new { area = "Shopper" }, null)</li>
+                        <li>@Html.ActionLink("Rider", "Login", "Accounts", new { area = "Store" }, null)</li>
+                    }
                 </ul>
             </div>
         </div>

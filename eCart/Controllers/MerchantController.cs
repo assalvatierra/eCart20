@@ -26,10 +26,11 @@ namespace eCart.Controllers
                 int storeId = (int)id;
                 var storeItems= storeMgr.getStoreItems(storeId);
                 var storeDetails = storeMgr.getStoreDetails(storeId);
+                var defaultImg = "/img/placeholders/placeholder-product.png";
 
                 ViewBag.StoreName = storeDetails.Name;
                 ViewBag.StoreAddress = storeDetails.Address;
-                ViewBag.StoreImg = storeDetails.StoreImages.FirstOrDefault().ImageUrl;
+                ViewBag.StoreImg = storeDetails.StoreImages.FirstOrDefault() != null ? storeDetails.StoreImages.FirstOrDefault().ImageUrl : defaultImg;
 
                 //Get next suggested Store
                 StoreDetail store = new StoreDetail();

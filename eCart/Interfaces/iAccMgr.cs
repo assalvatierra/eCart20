@@ -10,13 +10,14 @@ namespace eCart.Interfaces
 {
     public interface iAccMgr
     {
-
+        bool VerifyUserRole(User user, int roleId);
         int CheckLoginCredentials(string username, string password);
         string GetUserName(int userId);
         UserDetail GetUserDetail(int userId);
 
         void RegisterAccount(AccountRegistration newAccount);
         void RegisterStore(StoreRegistration newStore);
+        void RegisterRider(RiderRegistration newRider);
 
         string CreateUser(string username, string password);
         void SetUserRole(int userId, int roleId);

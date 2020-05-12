@@ -106,6 +106,7 @@ namespace eCart.Areas.Shopper.Controllers
 
         public ActionResult Logout()
         {
+            Session["CARTDETAILS"] = null;
             Session["USER"] = null;
             return RedirectToAction("Login");
         }

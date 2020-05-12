@@ -11,15 +11,38 @@ namespace eCart.Services
     {
         ecartdbContainer db = new ecartdbContainer();
 
+        public bool VerifyUserRole(User user, int roleId)
+        {
+            //roleId = 5;
+            //try{
+
+                var userLogin = db.Users.Where(u => u.Username.ToLower() == user.Username.ToLower() && u.Password == user.Password).FirstOrDefault();
+                var isUserInRole = db.UserRolesMappings.Where(r => r.UserId == userLogin.Id && r.RoleId == roleId).FirstOrDefault();
+
+                if (db.UserRolesMappings.Any(r => r.UserId == userLogin.Id && r.RoleId == roleId))
+                {
+                    return true;
+                }
+
+                //invalid login
+                return false;
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex);
+            //    return false;
+            //}
+        }
+
         public int CheckLoginCredentials(string username, string password)
         {
             try
             {
                 var user = db.UserDetails.Where(s => s.Email == username).FirstOrDefault();
-
-                if (user != null)
+                
+                //verify user by password
+                if (db.Users.Any(u=>u.Username == username && u.Password == password))
                 {
-                    //verify user by password,
                     //then return userID
                     return user.Id;
                 }
@@ -156,6 +179,32 @@ namespace eCart.Services
                 };
 
                 db.StoreDetails.Add(store);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void RegisterRider(RiderRegistration newRider)
+        {
+            try
+            {
+                RiderDetail rider = new RiderDetail()
+                {
+                    Id = 0,
+                    UserId = newRider.UserId,
+                    Name = newRider.Name,
+                    Address = newRider.Address,
+                    Mobile = newRider.Mobile,
+                    Mobile2 = newRider.Mobile2,
+                    MasterCityId = newRider.MasterCityId,
+                    Remarks = newRider.Remarks,
+                    RiderStatusId = 1,
+                };
+
+                db.RiderDetails.Add(rider);
                 db.SaveChanges();
             }
             catch (Exception ex)

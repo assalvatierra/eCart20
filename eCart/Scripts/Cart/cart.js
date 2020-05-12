@@ -54,7 +54,7 @@ function AddtoCart_Submit(e, itemId, itemName, price) {
             $("#Cart-Summary").append(cartItem);
         }
     });
-    //console.log(res);
+    console.log(res);
     //Show buttons
     $(e).parent().siblings().removeClass('hidden');   //show Add Cart Button
     $(e).parent().addClass('hidden');      //hide add cart button

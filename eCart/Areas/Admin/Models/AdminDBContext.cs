@@ -52,5 +52,7 @@ namespace eCart.Areas.Admin.Models
         public System.Data.Entity.DbSet<eCart.Models.RiderDetail> RiderDetails { get; set; }
 
         public System.Data.Entity.DbSet<eCart.Models.RiderStatus> RiderStatus { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.PaymentDetail> PaymentDetails { get; set; }
     }
 }

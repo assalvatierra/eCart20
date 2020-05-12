@@ -180,7 +180,6 @@ namespace eCart.Areas.Shopper.Controllers
             try
             {
                 cartMgr.addItemToCart(id, qty, itemName, itemPrice);
-
                 return "1";
             }catch (Exception ex)
             {

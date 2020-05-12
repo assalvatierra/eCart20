@@ -49,7 +49,7 @@ namespace eCart.Controllers
         // PartialView for Store List View
         public PartialViewResult _StoreList()
         {
-            var featuredStores = storeMgr.getFeaturedStores();
+            var featuredStores = storeMgr.getFeaturedStores().Take(3);
 
             return PartialView(featuredStores);
         }
@@ -57,7 +57,7 @@ namespace eCart.Controllers
         // PartialView for Store List View
         public PartialViewResult _ProductList()
         {
-            var featuredItems = storeMgr.getFeaturedItems();
+            var featuredItems = storeMgr.getFeaturedItems().Take(12);
 
             return PartialView(featuredItems);
         }

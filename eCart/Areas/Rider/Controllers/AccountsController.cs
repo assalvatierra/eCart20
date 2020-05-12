@@ -1,4 +1,5 @@
 ﻿using eCart.Models;
+using eCart.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,11 @@ namespace eCart.Areas.Rider.Controllers
 {
     public class AccountsController : Controller
     {
+        private int RIDER = 5;
+
         //Authentication
         private readonly ecartdbContainer _dbContext = new ecartdbContainer();
+        private AccMgr accMgr = new AccMgr();
 
         // GET: Rider/Account
         public ActionResult Index()
@@ -55,8 +59,15 @@ namespace eCart.Areas.Rider.Controllers
                 {
                     FormsAuthentication.SetAuthCookie(user.Username, false);
                     Session["USER"] = user.Username;
+                    var userAcc = _dbContext.Users.Where(u => u.Username.ToLower() == user.Username.ToLower() && u.Password == user.Password).First();
+                    var rider = _dbContext.RiderDetails.Where(s => s.UserId == userAcc.Id.ToString()).FirstOrDefault();
 
-                    return RedirectToAction("Index", "RiderDetails", new { area = "Rider", id = 1 });
+                    if(user.Username == "admin@gmail.com")
+                    {
+                        return RedirectToAction("Index", "RiderDetails", new { area = "Rider", id = 1 });
+                    }
+
+                    return RedirectToAction("Index", "RiderDetails", new { area = "Rider", id = rider.Id });
 
                 }
             }
@@ -67,14 +78,30 @@ namespace eCart.Areas.Rider.Controllers
 
         public ActionResult Register()
         {
+            ViewBag.MasterCityId = new SelectList(_dbContext.MasterCities, "Id", "Name");
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Register(RiderRegistration riderReg)
+        {
+            if (ModelState.IsValid)
+            {
+
+                riderReg.UserId = accMgr.CreateUser(riderReg.Email, riderReg.Password);
+                accMgr.RegisterRider(riderReg);
+                return RedirectToAction("Login", "Accounts", new { area = "Rider" });
+            }
+
+            ViewBag.MasterCityId = new SelectList(_dbContext.MasterCities, "Id", "Name", riderReg.MasterCityId);
+            return View(riderReg);
         }
 
 
         public ActionResult Logout()
         {
             Session["USER"] = null;
-            return RedirectToAction("Login", "Accounts", new { area = "Store" });
+            return RedirectToAction("Login", "Accounts", new { area = "Rider" });
         }
 
     }

@@ -5,77 +5,53 @@
 }
 
 <h2>Details</h2>
+@Html.ActionLink("Back to List", "Index", "RiderDetails")
 
-<div>
-    <h4>RiderDetail</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.MasterCity.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MasterCity.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RiderStatu.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RiderStatu.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Mobile)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Mobile)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Remarks)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Remarks)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Mobile2)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Mobile2)
-        </dd>
-
-    </dl>
+<div class="panel">
+    <div class="panel-body">
+        <div class="col-lg-6">
+            <h3 style="font-weight:bold;"> @Model.Name </h3>
+            <p style="font-size:20px;"> @Model.Mobile / @Model.Mobile2 </p>
+            <p> @Model.Address ( @Model.MasterCity.Name ) </p>
+        </div>
+        <div class="col-lg-6">
+            <br /><br /><br />
+            <p> <span class="text-muted"> Status: </span> @Model.RiderStatu.Name </p>
+            <p> <span class="text-muted"> Remarks: </span> @Model.Remarks </p>
+        </div>
+    </div>
 </div>
+
+<h3>Delivery List  </h3>
+<div class="panel">
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th> Delivery Date </th>
+                    <th> Address </th>
+                    <th> Remarks </th>
+                    <th>  </th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var delivery in Model.CartDeliveries as IEnumerable<eCart.Models.CartDelivery>)
+                {
+                    <tr>
+                        <td> @delivery.dtDelivery.ToString("MMM dd yyyy hh:mm tt") </td>
+                        <td> @delivery.Address </td>
+                        <td> @delivery.Remarks </td>
+                        <td> @Html.ActionLink("Cart Details", "CartDetails", new { id = delivery.CartDetailId, riderId = delivery.RiderDetailId }) </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
