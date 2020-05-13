@@ -34,19 +34,35 @@
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <span> Pickup Point: </span>
-                    <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetail.Id')" id="pickupAddress-@cart.Id" value="@cart.StorePickupPoint.Id">
+                    <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetail.Id')" id="pickupAddress-@cart.StoreDetailId" value="@cart.StorePickupPoint.Id">
                         @cart.StorePickupPoint.Address
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <span> DateTime Pickup: </span>
-                    <span class="hidden" id="cartID"> @cart.Id </span>
+                    <span  id="cartID"> @cart.Id </span>
                     <input type="text" name="pickup-date" value="@cart.DtPickup"  class="date-link"  >
                 </div>
                 <div class="col-lg-3 col-md-5 col-sm-12">
                     <span> Payment: </span>
-                    <a href="" id="paymentMode-@cart.Id" data-toggle="modal" data-target="#paymentModal" onclick="getPaymentReceivers(@cart.Id)">
-                        Cash On Delivery
+                    <a href="" id="paymentMode-@cart.StoreDetailId" data-toggle="modal" data-target="#paymentModal" onclick="getPaymentReceivers(@cart.StoreDetailId)">
+                        @if (cart.PaymentDetails != null)
+                        {
+                            switch (cart.PaymentDetails.LastOrDefault().PaymentReceiverId)
+                            {
+                                case 1: <text> Store </text> break;
+                                case 2: <text> Bank  </text> break;
+                                case 3: <text> Paypal </text> break;
+                                case 4: <text> Padala </text> break;
+                                case 0: <text> Cash On Delivery </text> break;
+                            }
+                        }
+                        else
+                        {
+                            <span> On Pickup </span>
+                        }
+
+
                     </a>
                 </div>
             </div>
@@ -110,7 +126,7 @@
             <div class="col-lg-2">
                 @if (cart.CartStatusId == 1)
                 {
-                    <button class="btn btn-primary" style="width:100%;" onclick="SubmitOrder(this, @cart.Id);" name="Checkout">
+                    <button class="btn btn-primary" style="width:100%;" onclick="SubmitOrder(this, @cart.StoreDetailId);" name="Checkout">
                         Checkout
                     </button>
                 }
@@ -163,6 +179,8 @@
 <script src="~/Scripts/DateRangePicker/daterangepicker.js"></script>
 <link href="~/Content/daterangepicker.css" rel="stylesheet" />
 <script>
+
+
     $('input[name="pickup-date"]').daterangepicker({
         singleDatePicker: true,
         startDate: moment().add('hours', 4),
@@ -195,6 +213,7 @@
 
     });
 
-    
+
+
 </script>
 

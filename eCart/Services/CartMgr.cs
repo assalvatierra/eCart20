@@ -46,6 +46,7 @@ namespace eCart.Services
                 //create cartDetails
                 var newCart = new cCartDetails
                 {
+                    CheckedOut = "false",
                     StoreId = newItem.StoreId,
                     CartStatus = 1,
                     DeliveryType = "Pickup",
@@ -70,7 +71,7 @@ namespace eCart.Services
                         }
                         else
                         {
-                            newCart.Id = cartList.LastOrDefault().Id;
+                            newCart.Id = cartList.Count() + 1;
                             cartList.Add(newCart);
                             isAssigned = true;
                         }
@@ -79,6 +80,7 @@ namespace eCart.Services
 
                 if (isAssigned == false)
                 {
+                    newCart.Id = cartList.Count() + 1;
                     cartList.Add(newCart);
                 }
 
@@ -101,15 +103,18 @@ namespace eCart.Services
             }
         }
 
-        public void addCartDetailToDb(CartDetail cartDetail)
+        public bool addCartDetailToDb(CartDetail cartDetail)
         {
             try
             {
                 db.CartDetails.Add(cartDetail);
+                db.SaveChanges();
+                return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                //throw ex;
+                return false;
             }
         }
 
@@ -286,11 +291,11 @@ namespace eCart.Services
             return null;
         }
 
-        public void updateCartPickupPoint(int cartId, int pickupPointId)
+        public void updateCartPickupPoint(int storeId, int pickupPointId)
         {
             try
             {
-                var cart = getCartDetails().Find(s => s.Id == cartId);
+                var cart = getCartDetails().Find(s => s.StoreId == storeId);
                 cart.PickupPointId = pickupPointId;
                 cart.DeliveryType = "Pickup";
 
@@ -306,7 +311,7 @@ namespace eCart.Services
         {
             try
             {
-                var cart = getCartDetails().Find(s => s.Id == cartId);
+                var cart = getCartDetails().Where(s => s.Id == cartId).FirstOrDefault();
                 cart.PickupPointId = db.StoreDetails.Find(cart.StoreId).StorePickupPoints.FirstOrDefault().Id;
                 cart.DeliveryType = "Delivery";
 
@@ -360,13 +365,18 @@ namespace eCart.Services
                     {
                         var cartStatus = db.CartStatus.Find(2);  //Submitted
                         cart.CartStatu = cartStatus;
-                        addCartDetailToDb(cart);
-
+                        if (addCartDetailToDb(cart)) { 
+                        
                         //add cart history
                         addCartHistory(cart, cartStatus, userId.ToString());
 
                         //updateCartDetailsStatus(cart.Id, "Submitted");
                         removeCartSession(cart.Id);
+                        }
+                        else
+                        {
+                            return "Order NOT Submitted";
+                        }
                     }
                 }
 
@@ -391,17 +401,21 @@ namespace eCart.Services
                 {
                     var cartStatus = db.CartStatus.Find(2);  //Submitted
                     cart.CartStatu = db.CartStatus.Find(2);  //Submitted
-                    addCartDetailToDb(cart);
+             
+                    if (addCartDetailToDb(cart))
+                    {
+                        //add cart history
+                        addCartHistory(cart, cartStatus, userId.ToString());
 
-                    //add cart history
-                    addCartHistory(cart, cartStatus, userId.ToString());
-
-                    //updateCartDetailsStatus(cart.Id, "Submitted");
-                    removeCartSession(cart.Id);
+                        //updateCartDetailsStatus(cart.Id, "Submitted");
+                        removeCartSession(cart.StoreDetailId);
+                    }
+                    else
+                    {
+                        return "Order NOT Submitted";
+                    }
                 }
                
-                db.SaveChanges();
-
                 return "Order Submitted";
             }
             catch (Exception ex)
@@ -420,7 +434,7 @@ namespace eCart.Services
         }
 
 
-        public string setCartPaymentReceiver(int cartId, int recieverId)
+        public string setCartPaymentReceiver(int storeId, int recieverId)
         {
             try
             {
@@ -440,7 +454,7 @@ namespace eCart.Services
                 var cartList = getCartDetails();
 
                 cartList.ForEach((c) => {
-                    if (c.Id == cartId)
+                    if (c.StoreId == storeId)
                     {
                         c.PaymentMode = db.PaymentReceivers.Find(recieverId).Description;
 
@@ -480,7 +494,9 @@ namespace eCart.Services
         public void removeCartSession(int id)
         {
             var cartlist = getCartDetails();
-            cartlist.Remove(cartlist.Find(c=>c.Id == id));
+            var cart = cartlist.Where(s=>s.StoreId == id).FirstOrDefault();
+            cart.CheckedOut = "true";
+            cartlist.Remove(cart);
         }
 
         public List<StorePickupPoint> GetStorePickupPoints(int storeId)

@@ -31,6 +31,7 @@ namespace eCart.Areas.Shopper.Models
         public string PaymentMode { get; set; }
         public List<cCart> cartItems { get; set; }
         public List<cCartPayment> cartPayments { get; set; }
+        public string CheckedOut { get; set; }
 
     }
 

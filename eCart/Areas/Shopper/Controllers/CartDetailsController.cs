@@ -205,10 +205,10 @@ namespace eCart.Areas.Shopper.Controllers
         {
             try
             {
-                var msg = "0";
+                var msg = "Order Submitted";
                
                 int cartDetailId = id;
-                var cartDetail = cartMgr.getCartDetailsSummary().Find(s => s.Id == id);
+                var cartDetail = cartMgr.getCartDetailsSummary().Find(s => s.StoreDetailId == id);
                 msg = cartMgr.saveOrder(cartDetail);  //save to db
 
                 return msg;
@@ -254,9 +254,9 @@ namespace eCart.Areas.Shopper.Controllers
         }
 
         [HttpPost]
-        public void UpdatePickupPoint(int cartId, int pickupPointId)
+        public void UpdatePickupPoint(int storeId, int pickupPointId)
         {
-            cartMgr.updateCartPickupPoint(cartId, pickupPointId);
+            cartMgr.updateCartPickupPoint(storeId, pickupPointId);
 
         }
 
@@ -274,10 +274,10 @@ namespace eCart.Areas.Shopper.Controllers
         }
 
         [HttpPost]
-        public string SetPaymentReceiver(int cartId, int receiverId)
+        public string SetPaymentReceiver(int storeId, int receiverId)
         {
            receiverId = receiverId != 0 ? receiverId : 1;
-           return cartMgr.setCartPaymentReceiver(cartId, receiverId);
+           return cartMgr.setCartPaymentReceiver(storeId, receiverId);
         }
 
         [HttpPost]
