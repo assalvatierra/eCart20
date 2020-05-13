@@ -13,8 +13,6 @@ namespace eCart.Services
 
         public bool VerifyUserRole(User user, int roleId)
         {
-            //roleId = 5;
-            //try{
 
                 var userLogin = db.Users.Where(u => u.Username.ToLower() == user.Username.ToLower() && u.Password == user.Password).FirstOrDefault();
                 var isUserInRole = db.UserRolesMappings.Where(r => r.UserId == userLogin.Id && r.RoleId == roleId).FirstOrDefault();
@@ -26,12 +24,7 @@ namespace eCart.Services
 
                 //invalid login
                 return false;
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex);
-            //    return false;
-            //}
+
         }
 
         public int CheckLoginCredentials(string username, string password)

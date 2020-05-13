@@ -20,11 +20,11 @@ namespace eCart.Areas.Shopper.Controllers
         private readonly ecartdbContainer _dbContext = new ecartdbContainer();
 
         // User Roles
-        private int ADMIN = 1;
-        private int STORE_ADMIN = 2;
-        private int STORE_MERCHANDISER = 3;
+        //private int ADMIN = 1;
+        //private int STORE_ADMIN = 2;
+        //private int STORE_MERCHANDISER = 3;
         private int SHOPPER = 4;
-        private int RIDER = 5;
+        //private int RIDER = 5;
 
         // GET: Shopper/Accounts
         public ActionResult Index()

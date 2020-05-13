@@ -25,7 +25,7 @@ namespace eCart.Services
             return pickupPoint.Id;
         }
 
-        public void addItemToCart(int id, int qty, string itemName, decimal price)
+        public bool addItemToCart(int id, int qty, decimal price)
         {
             try
             {
@@ -85,10 +85,12 @@ namespace eCart.Services
                     cartList.Add(newCart);
                 }
 
+                return true;
+
             }
             catch (Exception)
             {
-                throw new NotImplementedException();
+                return false;
             }
         }
 
@@ -327,29 +329,38 @@ namespace eCart.Services
         }
 
 
-        public void removeCartItem(int id)
+        public bool removeCartItem(int id)
         {
             try
             {
                 var cartList = getCartDetails();
-                cartList.ForEach( (cart) => {
-                   
-                    //find the item and remove from the cart list
-                    var selected = cart.cartItems.Find(i => i.Id == id);
-                    cart.cartItems.Remove(selected);
 
-                    //check if cart is empty, delete cart
-                    if(cart.cartItems.Count == 0)
+                foreach(var cart in cartList)
+                {
+                    foreach (var item in cart.cartItems)
                     {
-                        cartList.Remove(cart);
+                        if (item.Id == id)
+                        {
+                            //find the item and remove from the cart list
+                            cart.cartItems.Remove(item);
+
+                            //check if cart is empty, delete cart
+                            if (cart.cartItems.Count == 0)
+                            {
+                                cartList.Remove(cart);
+                            }
+
+                            return true;
+                        }
                     }
-                });
-
-
+                }
+                
+                //no item found
+                return false;
             }
             catch (Exception)
             {
-                throw new NotImplementedException();
+                return false;
             }
         }
 

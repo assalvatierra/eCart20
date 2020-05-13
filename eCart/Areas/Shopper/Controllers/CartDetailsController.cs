@@ -175,13 +175,17 @@ namespace eCart.Areas.Shopper.Controllers
         }
        
         [HttpPost]
-        public string AddToCart(int id, int qty, string itemName, decimal itemPrice)
+        public string AddToCart(int id, int qty, decimal itemPrice)
         {
             try
             {
-                cartMgr.addItemToCart(id, qty, itemName, itemPrice);
-                return "1";
-            }catch (Exception ex)
+                if(cartMgr.addItemToCart(id, qty, itemPrice))
+                {
+                    return "Added";
+                }
+                return "Error";
+            }
+            catch (Exception ex)
             {
                 return ex.ToString();
             }
@@ -192,10 +196,13 @@ namespace eCart.Areas.Shopper.Controllers
         {
             try
             {
-                cartMgr.removeCartItem(id);
+                if (cartMgr.removeCartItem(id)) {
+                    return "Removed";
+                }
 
-                return "1";
-            }catch(Exception ex)
+                return "Error";
+            }
+            catch(Exception ex)
             {
                 return ex.ToString();
             }

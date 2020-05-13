@@ -11,7 +11,7 @@ namespace eCart.Areas.Rider.Controllers
 {
     public class AccountsController : Controller
     {
-        private int RIDER = 5;
+        //private int RIDER = 5;
 
         //Authentication
         private readonly ecartdbContainer _dbContext = new ecartdbContainer();
