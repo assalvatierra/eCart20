@@ -35,7 +35,7 @@ namespace eCart.Interfaces
         void updateCartDetailsStatus(int cartId, string status);
         void updateCartDelivery(CartDelivery cartDelivery);
         void setCartPickupDate(int cartId, DateTime pickupdate);
-        string setCartPaymentReceiver(int storeId, int recieverId);
+        string setCartPaymentReceiver(int cartId, int recieverId);
         string setDBCartStatus(int cartId, int cartStatusId, string userId);
         string setCartStatusCancelled(int cartId, string userId);
 

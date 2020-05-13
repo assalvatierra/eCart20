@@ -48,14 +48,14 @@
     function updateLocation(cartId, storeId, pickupPointId) {
 
 
-        $.post('/Shopper/CartDetails/UpdatePickupPoint', { storeId: storeId, pickupPointId: pickupPointId });
+        $.post('/Shopper/CartDetails/UpdatePickupPoint', { cartId: cartId, pickupPointId: pickupPointId });
 
         $.getJSON('/Shopper/CartDetails/GetStorePickupAddress', { id: pickupPointId }, (address) => {
 
             console.log(address);
 
-            $("#pickupAddress-" + storeId).val(pickupPointId);
-            $("#pickupAddress-" + storeId).text(address);
+            $("#pickupAddress-" + cartId).val(pickupPointId);
+            $("#pickupAddress-" + cartId).text(address);
 
             $("#pickupModal").modal('hide');
         });

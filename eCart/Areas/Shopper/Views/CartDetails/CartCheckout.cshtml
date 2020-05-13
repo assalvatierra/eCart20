@@ -34,18 +34,17 @@
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <span> Pickup Point: </span>
-                    <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetail.Id')" id="pickupAddress-@cart.StoreDetailId" value="@cart.StorePickupPoint.Id">
+                    <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetail.Id')" id="pickupAddress-@cart.Id" value="@cart.StorePickupPoint.Id">
                         @cart.StorePickupPoint.Address
                     </a>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <span> DateTime Pickup: </span>
-                    <span  id="cartID"> @cart.Id </span>
                     <input type="text" name="pickup-date" value="@cart.DtPickup"  class="date-link"  >
                 </div>
                 <div class="col-lg-3 col-md-5 col-sm-12">
                     <span> Payment: </span>
-                    <a href="" id="paymentMode-@cart.StoreDetailId" data-toggle="modal" data-target="#paymentModal" onclick="getPaymentReceivers(@cart.StoreDetailId)">
+                    <a href="" id="paymentMode-@cart.Id" data-toggle="modal" data-target="#paymentModal" onclick="getPaymentReceivers(@cart.Id)">
                         @if (cart.PaymentDetails != null)
                         {
                             switch (cart.PaymentDetails.LastOrDefault().PaymentReceiverId)
@@ -66,6 +65,7 @@
                     </a>
                 </div>
             </div>
+             @*<span  id="cartID"> CARTID:  @cart.Id </span>*@
             <table class="table">
                 <thead>
                     <tr>
@@ -126,7 +126,7 @@
             <div class="col-lg-2">
                 @if (cart.CartStatusId == 1)
                 {
-                    <button class="btn btn-primary" style="width:100%;" onclick="SubmitOrder(this, @cart.StoreDetailId);" name="Checkout">
+                    <button class="btn btn-primary" style="width:100%;" onclick="SubmitOrder(this, @cart.Id);" name="Checkout">
                         Checkout
                     </button>
                 }
