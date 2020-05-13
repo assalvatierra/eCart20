@@ -38,8 +38,8 @@
     <EntitySet Name="RiderCashDetails" EntityType="ecartdb.Store.RiderCashDetails" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="RiderCashParties" EntityType="ecartdb.Store.RiderCashParties" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PaymentParties" EntityType="ecartdb.Store.PaymentParties" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="StoreQues" EntityType="ecartdb.Store.StoreQues" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="StoreQueOrders" EntityType="ecartdb.Store.StoreQueOrders" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StoreKiosks" EntityType="ecartdb.Store.StoreKiosks" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StoreKioskOrders" EntityType="ecartdb.Store.StoreKioskOrders" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Roles" EntityType="ecartdb.Store.Roles" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserRolesMappings" EntityType="ecartdb.Store.UserRolesMappings" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users" EntityType="ecartdb.Store.Users" store:Type="Tables" Schema="dbo" />
@@ -225,15 +225,11 @@
     </AssociationSet>
     <AssociationSet Name="StoreDetailStoreQue" Association="ecartdb.Store.StoreDetailStoreQue">
       <End Role="StoreDetail" EntitySet="StoreDetails" />
-      <End Role="StoreQue" EntitySet="StoreQues" />
-    </AssociationSet>
-    <AssociationSet Name="StoreQueStoreQueOrder" Association="ecartdb.Store.StoreQueStoreQueOrder">
-      <End Role="StoreQue" EntitySet="StoreQues" />
-      <End Role="StoreQueOrder" EntitySet="StoreQueOrders" />
+      <End Role="StoreQue" EntitySet="StoreKiosks" />
     </AssociationSet>
     <AssociationSet Name="CartDetailStoreQueOrder" Association="ecartdb.Store.CartDetailStoreQueOrder">
       <End Role="CartDetail" EntitySet="CartDetails" />
-      <End Role="StoreQueOrder" EntitySet="StoreQueOrders" />
+      <End Role="StoreQueOrder" EntitySet="StoreKioskOrders" />
     </AssociationSet>
     <AssociationSet Name="FK__UserRoles__RoleI__45FE52CB" Association="ecartdb.Store.FK__UserRoles__RoleI__45FE52CB">
       <End Role="Role" EntitySet="Roles" />
@@ -246,6 +242,10 @@
     <AssociationSet Name="FK__UserRoles__UserI__47E69B3D" Association="ecartdb.Store.FK__UserRoles__UserI__47E69B3D">
       <End Role="User" EntitySet="Users" />
       <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
+    </AssociationSet>
+    <AssociationSet Name="StoreKioskStoreKioskOrder" Association="ecartdb.Store.StoreKioskStoreKioskOrder">
+      <End Role="StoreKiosk" EntitySet="StoreKiosks" />
+      <End Role="StoreKioskOrder" EntitySet="StoreKioskOrders" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserDetails">
@@ -584,23 +584,23 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="20" />
   </EntityType>
-  <EntityType Name="StoreQues">
+  <EntityType Name="StoreKiosks">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="StoreDetailId" Type="int" Nullable="false" />
-    <Property Name="StationDesc" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="KioskName" Type="nvarchar" Nullable="false" MaxLength="20" />
   </EntityType>
-  <EntityType Name="StoreQueOrders">
+  <EntityType Name="StoreKioskOrders">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="StoreQueId" Type="int" Nullable="false" />
     <Property Name="Customer" Type="nvarchar" Nullable="true" MaxLength="30" />
     <Property Name="DtOrder" Type="datetime" Nullable="false" />
     <Property Name="CartDetailId" Type="int" Nullable="false" />
+    <Property Name="StoreKioskId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
@@ -1167,7 +1167,7 @@
   </Association>
   <Association Name="StoreDetailStoreQue">
     <End Role="StoreDetail" Type="ecartdb.Store.StoreDetails" Multiplicity="1" />
-    <End Role="StoreQue" Type="ecartdb.Store.StoreQues" Multiplicity="*" />
+    <End Role="StoreQue" Type="ecartdb.Store.StoreKiosks" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="StoreDetail">
         <PropertyRef Name="Id" />
@@ -1177,21 +1177,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="StoreQueStoreQueOrder">
-    <End Role="StoreQue" Type="ecartdb.Store.StoreQues" Multiplicity="1" />
-    <End Role="StoreQueOrder" Type="ecartdb.Store.StoreQueOrders" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="StoreQue">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="StoreQueOrder">
-        <PropertyRef Name="StoreQueId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="CartDetailStoreQueOrder">
     <End Role="CartDetail" Type="ecartdb.Store.CartDetails" Multiplicity="1" />
-    <End Role="StoreQueOrder" Type="ecartdb.Store.StoreQueOrders" Multiplicity="*" />
+    <End Role="StoreQueOrder" Type="ecartdb.Store.StoreKioskOrders" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CartDetail">
         <PropertyRef Name="Id" />
@@ -1234,6 +1222,18 @@
       </Principal>
       <Dependent Role="UserRolesMapping">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StoreKioskStoreKioskOrder">
+    <End Role="StoreKiosk" Type="ecartdb.Store.StoreKiosks" Multiplicity="1" />
+    <End Role="StoreKioskOrder" Type="ecartdb.Store.StoreKioskOrders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreKiosk">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreKioskOrder">
+        <PropertyRef Name="StoreKioskId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

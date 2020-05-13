@@ -43,8 +43,8 @@
     <EntitySet Name="RiderCashDetails" EntityType="ecartdb.Store.RiderCashDetails" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="RiderCashParties" EntityType="ecartdb.Store.RiderCashParties" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PaymentParties" EntityType="ecartdb.Store.PaymentParties" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="StoreQues" EntityType="ecartdb.Store.StoreQues" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="StoreQueOrders" EntityType="ecartdb.Store.StoreQueOrders" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StoreKiosks" EntityType="ecartdb.Store.StoreKiosks" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StoreKioskOrders" EntityType="ecartdb.Store.StoreKioskOrders" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Roles" EntityType="ecartdb.Store.Roles" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserRolesMappings" EntityType="ecartdb.Store.UserRolesMappings" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users" EntityType="ecartdb.Store.Users" store:Type="Tables" Schema="dbo" />
@@ -230,15 +230,11 @@
     </AssociationSet>
     <AssociationSet Name="StoreDetailStoreQue" Association="ecartdb.Store.StoreDetailStoreQue">
       <End Role="StoreDetail" EntitySet="StoreDetails" />
-      <End Role="StoreQue" EntitySet="StoreQues" />
-    </AssociationSet>
-    <AssociationSet Name="StoreQueStoreQueOrder" Association="ecartdb.Store.StoreQueStoreQueOrder">
-      <End Role="StoreQue" EntitySet="StoreQues" />
-      <End Role="StoreQueOrder" EntitySet="StoreQueOrders" />
+      <End Role="StoreQue" EntitySet="StoreKiosks" />
     </AssociationSet>
     <AssociationSet Name="CartDetailStoreQueOrder" Association="ecartdb.Store.CartDetailStoreQueOrder">
       <End Role="CartDetail" EntitySet="CartDetails" />
-      <End Role="StoreQueOrder" EntitySet="StoreQueOrders" />
+      <End Role="StoreQueOrder" EntitySet="StoreKioskOrders" />
     </AssociationSet>
     <AssociationSet Name="FK__UserRoles__RoleI__45FE52CB" Association="ecartdb.Store.FK__UserRoles__RoleI__45FE52CB">
       <End Role="Role" EntitySet="Roles" />
@@ -251,6 +247,10 @@
     <AssociationSet Name="FK__UserRoles__UserI__47E69B3D" Association="ecartdb.Store.FK__UserRoles__UserI__47E69B3D">
       <End Role="User" EntitySet="Users" />
       <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
+    </AssociationSet>
+    <AssociationSet Name="StoreKioskStoreKioskOrder" Association="ecartdb.Store.StoreKioskStoreKioskOrder">
+      <End Role="StoreKiosk" EntitySet="StoreKiosks" />
+      <End Role="StoreKioskOrder" EntitySet="StoreKioskOrders" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserDetails">
@@ -589,23 +589,23 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="20" />
   </EntityType>
-  <EntityType Name="StoreQues">
+  <EntityType Name="StoreKiosks">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="StoreDetailId" Type="int" Nullable="false" />
-    <Property Name="StationDesc" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="KioskName" Type="nvarchar" Nullable="false" MaxLength="20" />
   </EntityType>
-  <EntityType Name="StoreQueOrders">
+  <EntityType Name="StoreKioskOrders">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="StoreQueId" Type="int" Nullable="false" />
     <Property Name="Customer" Type="nvarchar" Nullable="true" MaxLength="30" />
     <Property Name="DtOrder" Type="datetime" Nullable="false" />
     <Property Name="CartDetailId" Type="int" Nullable="false" />
+    <Property Name="StoreKioskId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
@@ -1172,7 +1172,7 @@
   </Association>
   <Association Name="StoreDetailStoreQue">
     <End Role="StoreDetail" Type="ecartdb.Store.StoreDetails" Multiplicity="1" />
-    <End Role="StoreQue" Type="ecartdb.Store.StoreQues" Multiplicity="*" />
+    <End Role="StoreQue" Type="ecartdb.Store.StoreKiosks" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="StoreDetail">
         <PropertyRef Name="Id" />
@@ -1182,21 +1182,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="StoreQueStoreQueOrder">
-    <End Role="StoreQue" Type="ecartdb.Store.StoreQues" Multiplicity="1" />
-    <End Role="StoreQueOrder" Type="ecartdb.Store.StoreQueOrders" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="StoreQue">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="StoreQueOrder">
-        <PropertyRef Name="StoreQueId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="CartDetailStoreQueOrder">
     <End Role="CartDetail" Type="ecartdb.Store.CartDetails" Multiplicity="1" />
-    <End Role="StoreQueOrder" Type="ecartdb.Store.StoreQueOrders" Multiplicity="*" />
+    <End Role="StoreQueOrder" Type="ecartdb.Store.StoreKioskOrders" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CartDetail">
         <PropertyRef Name="Id" />
@@ -1239,6 +1227,18 @@
       </Principal>
       <Dependent Role="UserRolesMapping">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StoreKioskStoreKioskOrder">
+    <End Role="StoreKiosk" Type="ecartdb.Store.StoreKiosks" Multiplicity="1" />
+    <End Role="StoreKioskOrder" Type="ecartdb.Store.StoreKioskOrders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreKiosk">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreKioskOrder">
+        <PropertyRef Name="StoreKioskId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1464,19 +1464,15 @@
             <End Role="PaymentParty" EntitySet="PaymentParties" />
             <End Role="PaymentDetail" EntitySet="PaymentDetails" />
           </AssociationSet>
-          <EntitySet Name="StoreQues" EntityType="ecartdb.StoreQue" />
+          <EntitySet Name="StoreKiosks" EntityType="ecartdb.StoreKiosk" />
           <AssociationSet Name="StoreDetailStoreQue" Association="ecartdb.StoreDetailStoreQue">
             <End Role="StoreDetail" EntitySet="StoreDetails" />
-            <End Role="StoreQue" EntitySet="StoreQues" />
+            <End Role="StoreQue" EntitySet="StoreKiosks" />
           </AssociationSet>
-          <EntitySet Name="StoreQueOrders" EntityType="ecartdb.StoreQueOrder" />
-          <AssociationSet Name="StoreQueStoreQueOrder" Association="ecartdb.StoreQueStoreQueOrder">
-            <End Role="StoreQue" EntitySet="StoreQues" />
-            <End Role="StoreQueOrder" EntitySet="StoreQueOrders" />
-          </AssociationSet>
+          <EntitySet Name="StoreKioskOrders" EntityType="ecartdb.StoreKioskOrder" />
           <AssociationSet Name="CartDetailStoreQueOrder" Association="ecartdb.CartDetailStoreQueOrder">
             <End Role="CartDetail" EntitySet="CartDetails" />
-            <End Role="StoreQueOrder" EntitySet="StoreQueOrders" />
+            <End Role="StoreQueOrder" EntitySet="StoreKioskOrders" />
           </AssociationSet>
           <EntitySet Name="Roles" EntityType="ecartdb.Role" />
           <EntitySet Name="UserRolesMappings" EntityType="ecartdb.UserRolesMapping" />
@@ -1492,6 +1488,10 @@
           <AssociationSet Name="FK__UserRoles__UserI__47E69B3D" Association="ecartdb.FK__UserRoles__UserI__47E69B3D">
             <End Role="User" EntitySet="Users" />
             <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
+          </AssociationSet>
+          <AssociationSet Name="StoreKioskStoreKioskOrder" Association="ecartdb.StoreKioskStoreKioskOrder">
+            <End Role="StoreKiosk" EntitySet="StoreKiosks" />
+            <End Role="StoreKioskOrder" EntitySet="StoreKioskOrders" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="UserDetail">
@@ -2462,19 +2462,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="StoreQue">
+        <EntityType Name="StoreKiosk">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="StoreDetail" Relationship="ecartdb.StoreDetailStoreQue" FromRole="StoreQue" ToRole="StoreDetail" />
           <Property Name="StoreDetailId" Type="Int32" Nullable="false" />
-          <Property Name="StationDesc" Type="String" Nullable="false" MaxLength="20" />
-          <NavigationProperty Name="StoreQueOrders" Relationship="ecartdb.StoreQueStoreQueOrder" FromRole="StoreQue" ToRole="StoreQueOrder" />
+          <Property Name="KioskName" Type="String" Nullable="false" MaxLength="20" />
+          <NavigationProperty Name="StoreKioskOrders" Relationship="ecartdb.StoreKioskStoreKioskOrder" FromRole="StoreKiosk" ToRole="StoreKioskOrder" />
         </EntityType>
         <Association Name="StoreDetailStoreQue">
           <End Type="ecartdb.StoreDetail" Role="StoreDetail" Multiplicity="1" />
-          <End Type="ecartdb.StoreQue" Role="StoreQue" Multiplicity="*" />
+          <End Type="ecartdb.StoreKiosk" Role="StoreQue" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StoreDetail">
               <PropertyRef Name="Id" />
@@ -2484,33 +2484,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="StoreQueOrder">
+        <EntityType Name="StoreKioskOrder">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="StoreQue" Relationship="ecartdb.StoreQueStoreQueOrder" FromRole="StoreQueOrder" ToRole="StoreQue" />
-          <Property Name="StoreQueId" Type="Int32" Nullable="false" />
           <Property Name="Customer" Type="String" Nullable="true" MaxLength="30" />
           <Property Name="DtOrder" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="CartDetail" Relationship="ecartdb.CartDetailStoreQueOrder" FromRole="StoreQueOrder" ToRole="CartDetail" />
           <Property Name="CartDetailId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="StoreKiosk" Relationship="ecartdb.StoreKioskStoreKioskOrder" FromRole="StoreKioskOrder" ToRole="StoreKiosk" />
+          <Property Name="StoreKioskId" Type="Int32" Nullable="false" />
         </EntityType>
-        <Association Name="StoreQueStoreQueOrder">
-          <End Type="ecartdb.StoreQue" Role="StoreQue" Multiplicity="1" />
-          <End Type="ecartdb.StoreQueOrder" Role="StoreQueOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StoreQue">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="StoreQueOrder">
-              <PropertyRef Name="StoreQueId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="CartDetailStoreQueOrder">
           <End Type="ecartdb.CartDetail" Role="CartDetail" Multiplicity="1" />
-          <End Type="ecartdb.StoreQueOrder" Role="StoreQueOrder" Multiplicity="*" />
+          <End Type="ecartdb.StoreKioskOrder" Role="StoreQueOrder" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CartDetail">
               <PropertyRef Name="Id" />
@@ -2582,6 +2570,18 @@
             </Principal>
             <Dependent Role="UserRolesMapping">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StoreKioskStoreKioskOrder">
+          <End Type="ecartdb.StoreKiosk" Role="StoreKiosk" Multiplicity="1" />
+          <End Type="ecartdb.StoreKioskOrder" Role="StoreKioskOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StoreKiosk">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="StoreKioskOrder">
+              <PropertyRef Name="StoreKioskId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2964,23 +2964,23 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="StoreQues">
-      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreQue)">
-        <MappingFragment StoreEntitySet="StoreQues">
+    <EntitySetMapping Name="StoreKiosks">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreKiosk)">
+        <MappingFragment StoreEntitySet="StoreKiosks">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="StoreDetailId" ColumnName="StoreDetailId" />
-          <ScalarProperty Name="StationDesc" ColumnName="StationDesc" />
+          <ScalarProperty Name="KioskName" ColumnName="KioskName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="StoreQueOrders">
-      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreQueOrder)">
-        <MappingFragment StoreEntitySet="StoreQueOrders">
+    <EntitySetMapping Name="StoreKioskOrders">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreKioskOrder)">
+        <MappingFragment StoreEntitySet="StoreKioskOrders">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="StoreQueId" ColumnName="StoreQueId" />
           <ScalarProperty Name="Customer" ColumnName="Customer" />
           <ScalarProperty Name="DtOrder" ColumnName="DtOrder" />
           <ScalarProperty Name="CartDetailId" ColumnName="CartDetailId" />
+          <ScalarProperty Name="StoreKioskId" ColumnName="StoreKioskId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

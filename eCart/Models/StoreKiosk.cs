@@ -12,20 +12,20 @@ namespace eCart.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class StoreQue
+    public partial class StoreKiosk
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public StoreQue()
+        public StoreKiosk()
         {
-            this.StoreQueOrders = new HashSet<StoreQueOrder>();
+            this.StoreKioskOrders = new HashSet<StoreKioskOrder>();
         }
     
         public int Id { get; set; }
         public int StoreDetailId { get; set; }
-        public string StationDesc { get; set; }
+        public string KioskName { get; set; }
     
         public virtual StoreDetail StoreDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StoreQueOrder> StoreQueOrders { get; set; }
+        public virtual ICollection<StoreKioskOrder> StoreKioskOrders { get; set; }
     }
 }

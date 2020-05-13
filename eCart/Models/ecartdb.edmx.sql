@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/11/2020 19:02:08
+-- Date Created: 05/12/2020 20:52:14
 -- Generated from EDMX file: D:\Projects\eCart20\eCart\Models\ecartdb.edmx
 -- --------------------------------------------------
 
@@ -161,6 +161,15 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_CartDetailStoreQueOrder]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[StoreQueOrders] DROP CONSTRAINT [FK_CartDetailStoreQueOrder];
 GO
+IF OBJECT_ID(N'[dbo].[FK__UserRoles__RoleI__45FE52CB]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserRolesMappings] DROP CONSTRAINT [FK__UserRoles__RoleI__45FE52CB];
+GO
+IF OBJECT_ID(N'[dbo].[FK__UserRoles__RoleI__46F27704]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserRolesMappings] DROP CONSTRAINT [FK__UserRoles__RoleI__46F27704];
+GO
+IF OBJECT_ID(N'[dbo].[FK__UserRoles__UserI__47E69B3D]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserRolesMappings] DROP CONSTRAINT [FK__UserRoles__UserI__47E69B3D];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -282,6 +291,15 @@ IF OBJECT_ID(N'[dbo].[StoreQues]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[StoreQueOrders]', 'U') IS NOT NULL
     DROP TABLE [dbo].[StoreQueOrders];
+GO
+IF OBJECT_ID(N'[dbo].[Roles]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Roles];
+GO
+IF OBJECT_ID(N'[dbo].[UserRolesMappings]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserRolesMappings];
+GO
+IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users];
 GO
 
 -- --------------------------------------------------
@@ -624,21 +642,21 @@ CREATE TABLE [dbo].[PaymentParties] (
 );
 GO
 
--- Creating table 'StoreQues'
-CREATE TABLE [dbo].[StoreQues] (
+-- Creating table 'StoreKiosks'
+CREATE TABLE [dbo].[StoreKiosks] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [StoreDetailId] int  NOT NULL,
-    [StationDesc] nvarchar(20)  NOT NULL
+    [KioskName] nvarchar(20)  NOT NULL
 );
 GO
 
--- Creating table 'StoreQueOrders'
-CREATE TABLE [dbo].[StoreQueOrders] (
+-- Creating table 'StoreKioskOrders'
+CREATE TABLE [dbo].[StoreKioskOrders] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [StoreQueId] int  NOT NULL,
     [Customer] nvarchar(30)  NULL,
     [DtOrder] datetime  NOT NULL,
-    [CartDetailId] int  NOT NULL
+    [CartDetailId] int  NOT NULL,
+    [StoreKioskId] int  NOT NULL
 );
 GO
 
@@ -891,15 +909,15 @@ ADD CONSTRAINT [PK_PaymentParties]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'StoreQues'
-ALTER TABLE [dbo].[StoreQues]
-ADD CONSTRAINT [PK_StoreQues]
+-- Creating primary key on [Id] in table 'StoreKiosks'
+ALTER TABLE [dbo].[StoreKiosks]
+ADD CONSTRAINT [PK_StoreKiosks]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'StoreQueOrders'
-ALTER TABLE [dbo].[StoreQueOrders]
-ADD CONSTRAINT [PK_StoreQueOrders]
+-- Creating primary key on [Id] in table 'StoreKioskOrders'
+ALTER TABLE [dbo].[StoreKioskOrders]
+ADD CONSTRAINT [PK_StoreKioskOrders]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -1600,8 +1618,8 @@ ON [dbo].[PaymentDetails]
     ([PaymentPartyId]);
 GO
 
--- Creating foreign key on [StoreDetailId] in table 'StoreQues'
-ALTER TABLE [dbo].[StoreQues]
+-- Creating foreign key on [StoreDetailId] in table 'StoreKiosks'
+ALTER TABLE [dbo].[StoreKiosks]
 ADD CONSTRAINT [FK_StoreDetailStoreQue]
     FOREIGN KEY ([StoreDetailId])
     REFERENCES [dbo].[StoreDetails]
@@ -1611,27 +1629,12 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_StoreDetailStoreQue'
 CREATE INDEX [IX_FK_StoreDetailStoreQue]
-ON [dbo].[StoreQues]
+ON [dbo].[StoreKiosks]
     ([StoreDetailId]);
 GO
 
--- Creating foreign key on [StoreQueId] in table 'StoreQueOrders'
-ALTER TABLE [dbo].[StoreQueOrders]
-ADD CONSTRAINT [FK_StoreQueStoreQueOrder]
-    FOREIGN KEY ([StoreQueId])
-    REFERENCES [dbo].[StoreQues]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_StoreQueStoreQueOrder'
-CREATE INDEX [IX_FK_StoreQueStoreQueOrder]
-ON [dbo].[StoreQueOrders]
-    ([StoreQueId]);
-GO
-
--- Creating foreign key on [CartDetailId] in table 'StoreQueOrders'
-ALTER TABLE [dbo].[StoreQueOrders]
+-- Creating foreign key on [CartDetailId] in table 'StoreKioskOrders'
+ALTER TABLE [dbo].[StoreKioskOrders]
 ADD CONSTRAINT [FK_CartDetailStoreQueOrder]
     FOREIGN KEY ([CartDetailId])
     REFERENCES [dbo].[CartDetails]
@@ -1641,7 +1644,7 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_CartDetailStoreQueOrder'
 CREATE INDEX [IX_FK_CartDetailStoreQueOrder]
-ON [dbo].[StoreQueOrders]
+ON [dbo].[StoreKioskOrders]
     ([CartDetailId]);
 GO
 
@@ -1688,6 +1691,21 @@ GO
 CREATE INDEX [IX_FK__UserRoles__UserI__47E69B3D]
 ON [dbo].[UserRolesMappings]
     ([UserId]);
+GO
+
+-- Creating foreign key on [StoreKioskId] in table 'StoreKioskOrders'
+ALTER TABLE [dbo].[StoreKioskOrders]
+ADD CONSTRAINT [FK_StoreKioskStoreKioskOrder]
+    FOREIGN KEY ([StoreKioskId])
+    REFERENCES [dbo].[StoreKiosks]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_StoreKioskStoreKioskOrder'
+CREATE INDEX [IX_FK_StoreKioskStoreKioskOrder]
+ON [dbo].[StoreKioskOrders]
+    ([StoreKioskId]);
 GO
 
 -- --------------------------------------------------

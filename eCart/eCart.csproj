@@ -274,6 +274,12 @@
     <Compile Include="Models\StoreImgType.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StoreKiosk.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StoreKioskOrder.cs">
+      <DependentUpon>ecartdb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\StorePayment.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
@@ -290,12 +296,6 @@
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StorePickupStatus.cs">
-      <DependentUpon>ecartdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\StoreQue.cs">
-      <DependentUpon>ecartdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\StoreQueOrder.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">

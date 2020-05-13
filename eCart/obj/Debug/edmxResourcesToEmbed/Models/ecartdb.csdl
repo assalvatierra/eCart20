@@ -218,19 +218,15 @@
       <End Role="PaymentParty" EntitySet="PaymentParties" />
       <End Role="PaymentDetail" EntitySet="PaymentDetails" />
     </AssociationSet>
-    <EntitySet Name="StoreQues" EntityType="ecartdb.StoreQue" />
+    <EntitySet Name="StoreKiosks" EntityType="ecartdb.StoreKiosk" />
     <AssociationSet Name="StoreDetailStoreQue" Association="ecartdb.StoreDetailStoreQue">
       <End Role="StoreDetail" EntitySet="StoreDetails" />
-      <End Role="StoreQue" EntitySet="StoreQues" />
+      <End Role="StoreQue" EntitySet="StoreKiosks" />
     </AssociationSet>
-    <EntitySet Name="StoreQueOrders" EntityType="ecartdb.StoreQueOrder" />
-    <AssociationSet Name="StoreQueStoreQueOrder" Association="ecartdb.StoreQueStoreQueOrder">
-      <End Role="StoreQue" EntitySet="StoreQues" />
-      <End Role="StoreQueOrder" EntitySet="StoreQueOrders" />
-    </AssociationSet>
+    <EntitySet Name="StoreKioskOrders" EntityType="ecartdb.StoreKioskOrder" />
     <AssociationSet Name="CartDetailStoreQueOrder" Association="ecartdb.CartDetailStoreQueOrder">
       <End Role="CartDetail" EntitySet="CartDetails" />
-      <End Role="StoreQueOrder" EntitySet="StoreQueOrders" />
+      <End Role="StoreQueOrder" EntitySet="StoreKioskOrders" />
     </AssociationSet>
     <EntitySet Name="Roles" EntityType="ecartdb.Role" />
     <EntitySet Name="UserRolesMappings" EntityType="ecartdb.UserRolesMapping" />
@@ -246,6 +242,10 @@
     <AssociationSet Name="FK__UserRoles__UserI__47E69B3D" Association="ecartdb.FK__UserRoles__UserI__47E69B3D">
       <End Role="User" EntitySet="Users" />
       <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
+    </AssociationSet>
+    <AssociationSet Name="StoreKioskStoreKioskOrder" Association="ecartdb.StoreKioskStoreKioskOrder">
+      <End Role="StoreKiosk" EntitySet="StoreKiosks" />
+      <End Role="StoreKioskOrder" EntitySet="StoreKioskOrders" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserDetail">
@@ -1216,19 +1216,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="StoreQue">
+  <EntityType Name="StoreKiosk">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <NavigationProperty Name="StoreDetail" Relationship="ecartdb.StoreDetailStoreQue" FromRole="StoreQue" ToRole="StoreDetail" />
     <Property Name="StoreDetailId" Type="Int32" Nullable="false" />
-    <Property Name="StationDesc" Type="String" Nullable="false" MaxLength="20" />
-    <NavigationProperty Name="StoreQueOrders" Relationship="ecartdb.StoreQueStoreQueOrder" FromRole="StoreQue" ToRole="StoreQueOrder" />
+    <Property Name="KioskName" Type="String" Nullable="false" MaxLength="20" />
+    <NavigationProperty Name="StoreKioskOrders" Relationship="ecartdb.StoreKioskStoreKioskOrder" FromRole="StoreKiosk" ToRole="StoreKioskOrder" />
   </EntityType>
   <Association Name="StoreDetailStoreQue">
     <End Type="ecartdb.StoreDetail" Role="StoreDetail" Multiplicity="1" />
-    <End Type="ecartdb.StoreQue" Role="StoreQue" Multiplicity="*" />
+    <End Type="ecartdb.StoreKiosk" Role="StoreQue" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="StoreDetail">
         <PropertyRef Name="Id" />
@@ -1238,33 +1238,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="StoreQueOrder">
+  <EntityType Name="StoreKioskOrder">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <NavigationProperty Name="StoreQue" Relationship="ecartdb.StoreQueStoreQueOrder" FromRole="StoreQueOrder" ToRole="StoreQue" />
-    <Property Name="StoreQueId" Type="Int32" Nullable="false" />
     <Property Name="Customer" Type="String" Nullable="true" MaxLength="30" />
     <Property Name="DtOrder" Type="DateTime" Nullable="false" />
     <NavigationProperty Name="CartDetail" Relationship="ecartdb.CartDetailStoreQueOrder" FromRole="StoreQueOrder" ToRole="CartDetail" />
     <Property Name="CartDetailId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="StoreKiosk" Relationship="ecartdb.StoreKioskStoreKioskOrder" FromRole="StoreKioskOrder" ToRole="StoreKiosk" />
+    <Property Name="StoreKioskId" Type="Int32" Nullable="false" />
   </EntityType>
-  <Association Name="StoreQueStoreQueOrder">
-    <End Type="ecartdb.StoreQue" Role="StoreQue" Multiplicity="1" />
-    <End Type="ecartdb.StoreQueOrder" Role="StoreQueOrder" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="StoreQue">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="StoreQueOrder">
-        <PropertyRef Name="StoreQueId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="CartDetailStoreQueOrder">
     <End Type="ecartdb.CartDetail" Role="CartDetail" Multiplicity="1" />
-    <End Type="ecartdb.StoreQueOrder" Role="StoreQueOrder" Multiplicity="*" />
+    <End Type="ecartdb.StoreKioskOrder" Role="StoreQueOrder" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CartDetail">
         <PropertyRef Name="Id" />
@@ -1336,6 +1324,18 @@
       </Principal>
       <Dependent Role="UserRolesMapping">
         <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StoreKioskStoreKioskOrder">
+    <End Type="ecartdb.StoreKiosk" Role="StoreKiosk" Multiplicity="1" />
+    <End Type="ecartdb.StoreKioskOrder" Role="StoreKioskOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StoreKiosk">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StoreKioskOrder">
+        <PropertyRef Name="StoreKioskId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

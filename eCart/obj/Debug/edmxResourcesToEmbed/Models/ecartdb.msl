@@ -374,23 +374,23 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="StoreQues">
-      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreQue)">
-        <MappingFragment StoreEntitySet="StoreQues">
+    <EntitySetMapping Name="StoreKiosks">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreKiosk)">
+        <MappingFragment StoreEntitySet="StoreKiosks">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="StoreDetailId" ColumnName="StoreDetailId" />
-          <ScalarProperty Name="StationDesc" ColumnName="StationDesc" />
+          <ScalarProperty Name="KioskName" ColumnName="KioskName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="StoreQueOrders">
-      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreQueOrder)">
-        <MappingFragment StoreEntitySet="StoreQueOrders">
+    <EntitySetMapping Name="StoreKioskOrders">
+      <EntityTypeMapping TypeName="IsTypeOf(ecartdb.StoreKioskOrder)">
+        <MappingFragment StoreEntitySet="StoreKioskOrders">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="StoreQueId" ColumnName="StoreQueId" />
           <ScalarProperty Name="Customer" ColumnName="Customer" />
           <ScalarProperty Name="DtOrder" ColumnName="DtOrder" />
           <ScalarProperty Name="CartDetailId" ColumnName="CartDetailId" />
+          <ScalarProperty Name="StoreKioskId" ColumnName="StoreKioskId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

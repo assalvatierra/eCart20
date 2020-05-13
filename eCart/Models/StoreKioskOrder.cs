@@ -12,15 +12,15 @@ namespace eCart.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class StoreQueOrder
+    public partial class StoreKioskOrder
     {
         public int Id { get; set; }
-        public int StoreQueId { get; set; }
         public string Customer { get; set; }
         public System.DateTime DtOrder { get; set; }
         public int CartDetailId { get; set; }
+        public int StoreKioskId { get; set; }
     
-        public virtual StoreQue StoreQue { get; set; }
         public virtual CartDetail CartDetail { get; set; }
+        public virtual StoreKiosk StoreKiosk { get; set; }
     }
 }

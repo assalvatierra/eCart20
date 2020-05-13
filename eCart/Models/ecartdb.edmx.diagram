@@ -87,10 +87,9 @@
         <AssociationConnector Association="ecartdb.CartDetailRiderCashDetail" />
         <EntityTypeShape EntityType="ecartdb.PaymentParty" Width="1.5" PointX="19.25" PointY="1.625" />
         <AssociationConnector Association="ecartdb.PaymentPartyPaymentDetail" />
-        <EntityTypeShape EntityType="ecartdb.StoreQue" Width="1.5" PointX="8.75" PointY="7.5" />
+        <EntityTypeShape EntityType="ecartdb.StoreKiosk" Width="1.5" PointX="8.75" PointY="7.5" />
         <AssociationConnector Association="ecartdb.StoreDetailStoreQue" />
-        <EntityTypeShape EntityType="ecartdb.StoreQueOrder" Width="1.5" PointX="11.125" PointY="7.375" />
-        <AssociationConnector Association="ecartdb.StoreQueStoreQueOrder" />
+        <EntityTypeShape EntityType="ecartdb.StoreKioskOrder" Width="1.5" PointX="11.125" PointY="7.375" />
         <AssociationConnector Association="ecartdb.CartDetailStoreQueOrder" />
         <EntityTypeShape EntityType="ecartdb.Role" Width="1.5" PointX="12.625" PointY="23.75" />
         <EntityTypeShape EntityType="ecartdb.UserRolesMapping" Width="1.5" PointX="14.875" PointY="23.5" />
@@ -98,6 +97,7 @@
         <AssociationConnector Association="ecartdb.FK__UserRoles__RoleI__45FE52CB" />
         <AssociationConnector Association="ecartdb.FK__UserRoles__RoleI__46F27704" />
         <AssociationConnector Association="ecartdb.FK__UserRoles__UserI__47E69B3D" />
+        <AssociationConnector Association="ecartdb.StoreKioskStoreKioskOrder" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
