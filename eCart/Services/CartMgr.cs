@@ -46,6 +46,7 @@ namespace eCart.Services
                 //create cartDetails
                 var newCart = new cCartDetails
                 {
+                    Id = 1,
                     CheckedOut = "false",
                     StoreId = newItem.StoreId,
                     CartStatus = 1,
@@ -71,7 +72,7 @@ namespace eCart.Services
                         }
                         else
                         {
-                            newCart.Id = cartList.Count() + 1;
+                            newCart.Id = cartList.LastOrDefault().Id + 1;
                             cartList.Add(newCart);
                             isAssigned = true;
                         }
@@ -214,6 +215,7 @@ namespace eCart.Services
             var pickup = db.StorePickupPoints.Find(cart.PickupPointId);
             CartDetail cartDetails = new CartDetail
             {
+                Id = cart.Id,
                 UserDetailId = getUserId(),  
                 StoreDetailId = cart.StoreId,
                 StoreDetail = tempStore,
@@ -291,11 +293,11 @@ namespace eCart.Services
             return null;
         }
 
-        public void updateCartPickupPoint(int storeId, int pickupPointId)
+        public void updateCartPickupPoint(int cartId, int pickupPointId)
         {
             try
             {
-                var cart = getCartDetails().Find(s => s.StoreId == storeId);
+                var cart = getCartDetails().Find(s => s.Id == cartId);
                 cart.PickupPointId = pickupPointId;
                 cart.DeliveryType = "Pickup";
 
@@ -434,7 +436,7 @@ namespace eCart.Services
         }
 
 
-        public string setCartPaymentReceiver(int storeId, int recieverId)
+        public string setCartPaymentReceiver(int cartId, int recieverId)
         {
             try
             {
@@ -454,7 +456,7 @@ namespace eCart.Services
                 var cartList = getCartDetails();
 
                 cartList.ForEach((c) => {
-                    if (c.StoreId == storeId)
+                    if (c.Id == cartId)
                     {
                         c.PaymentMode = db.PaymentReceivers.Find(recieverId).Description;
 

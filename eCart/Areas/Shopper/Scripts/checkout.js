@@ -18,9 +18,9 @@ function UpdatePrice(removedsubtotal) {
     $('#Total-Price').text(totalPrice.toLocaleString('en-US', { minimumFractionDigits: 2 }));
 }
 
-function SubmitOrder(e, storeId) {
+function SubmitOrder(e, cartId) {
 
-    $.post("/Shopper/CartDetails/SubmitOrder", { id: storeId }, (result) => {
+    $.post("/Shopper/CartDetails/SubmitOrder", { id: cartId }, (result) => {
         console.log(result);
         $(e).attr("disabled", true);
         $("#CheckOutSuccessModal").modal('show');

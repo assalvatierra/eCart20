@@ -208,7 +208,7 @@ namespace eCart.Areas.Shopper.Controllers
                 var msg = "Order Submitted";
                
                 int cartDetailId = id;
-                var cartDetail = cartMgr.getCartDetailsSummary().Find(s => s.StoreDetailId == id);
+                var cartDetail = cartMgr.getCartDetailsSummary().Find(s => s.Id == id);
                 msg = cartMgr.saveOrder(cartDetail);  //save to db
 
                 return msg;
@@ -254,9 +254,9 @@ namespace eCart.Areas.Shopper.Controllers
         }
 
         [HttpPost]
-        public void UpdatePickupPoint(int storeId, int pickupPointId)
+        public void UpdatePickupPoint(int cartId, int pickupPointId)
         {
-            cartMgr.updateCartPickupPoint(storeId, pickupPointId);
+            cartMgr.updateCartPickupPoint(cartId, pickupPointId);
 
         }
 
@@ -274,10 +274,10 @@ namespace eCart.Areas.Shopper.Controllers
         }
 
         [HttpPost]
-        public string SetPaymentReceiver(int storeId, int receiverId)
+        public string SetPaymentReceiver(int cartId, int receiverId)
         {
            receiverId = receiverId != 0 ? receiverId : 1;
-           return cartMgr.setCartPaymentReceiver(storeId, receiverId);
+           return cartMgr.setCartPaymentReceiver(cartId, receiverId);
         }
 
         [HttpPost]
@@ -289,9 +289,10 @@ namespace eCart.Areas.Shopper.Controllers
         }
 
 
-        public List<cCartDetails> getCart()
+        public JsonResult getCart()
         {
-            return (List<cCartDetails>)Session["CARTDETAILS"] ?? new List<cCartDetails>();
+            var cartList  = (List<cCartDetails>)Session["CARTDETAILS"] ?? new List<cCartDetails>();
+            return Json(cartList, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult getCurrentCart()
