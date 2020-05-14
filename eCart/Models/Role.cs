@@ -18,7 +18,6 @@ namespace eCart.Models
         public Role()
         {
             this.UserRolesMappings = new HashSet<UserRolesMapping>();
-            this.UserRolesMappings1 = new HashSet<UserRolesMapping>();
         }
     
         public int Id { get; set; }
@@ -26,7 +25,5 @@ namespace eCart.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRolesMapping> UserRolesMappings { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserRolesMapping> UserRolesMappings1 { get; set; }
     }
 }

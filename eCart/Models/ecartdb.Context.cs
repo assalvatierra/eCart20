@@ -64,8 +64,8 @@ namespace eCart.Models
         public virtual DbSet<PaymentParty> PaymentParties { get; set; }
         public virtual DbSet<StoreKiosk> StoreKiosks { get; set; }
         public virtual DbSet<StoreKioskOrder> StoreKioskOrders { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<UserRolesMapping> UserRolesMappings { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Role> Roles1 { get; set; }
+        public virtual DbSet<UserRolesMapping> UserRolesMappings { get; set; }
     }
 }
