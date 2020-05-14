@@ -74,16 +74,16 @@ namespace eCart.Areas.Shopper.Controllers
                             if (checkUserRole(userId, 4))
                             {
 
-                                Session["USERID"] = userDetailID;
-                                Session["USER"] = user.Username;
 
                                 if (CreateCart())
                                 {
-                                return RedirectToAction("Index", "Home", new { area = "Shopper" });
+                                    Session["USERID"] = userDetailID;
+                                    Session["USER"] = user.Username;
+                                    return RedirectToAction("Index", "Home", new { area = "Shopper" });
                                 }
                             }
                         }
-                        else
+                        else if(userDetailID  == 0)
                         {
                             //handle if user is not registered on Shopper Table ( UserDetails )
                             var new_userDetailID = CreateUserDetails(userId);
@@ -91,12 +91,12 @@ namespace eCart.Areas.Shopper.Controllers
                             {
                                 if (SetUserRoles(userId, SHOPPER))
                                 {
-                                    Session["USERID"] = userDetailID;
-                                    Session["USER"] = user.Username;
 
                                     if (CreateCart())
                                     {
-                                        return RedirectToAction("Edit", "UserDetails", new { area = "Shopper", id = userDetailID });
+                                        Session["USERID"] = new_userDetailID;
+                                        Session["USER"] = user.Username;
+                                        return RedirectToAction("Edit", "UserDetails", new { area = "Shopper", id = new_userDetailID });
                                     }
                                 }
                             }

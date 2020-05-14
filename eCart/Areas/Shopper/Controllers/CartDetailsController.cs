@@ -162,6 +162,8 @@ namespace eCart.Areas.Shopper.Controllers
         {
             var cartDetails = cartMgr.getCartDetailsSummary();
             ViewBag.PaymentParties = cartMgr.getPaymentRecievers();
+            var userDetailId = cartMgr.getUserId();
+            ViewBag.UserDetails = db.UserDetails.Find(userDetailId);
         
             return PartialView(cartDetails);
         }
@@ -314,7 +316,9 @@ namespace eCart.Areas.Shopper.Controllers
         {
             var userId = cartMgr.getUserId(); 
             var myCarts = cartMgr.getShopperCarts(userId).OrderByDescending(s=>s.Id).ToList();
-            ViewBag.UserDetails = storeFactory.AccMgr.GetUserDetail(userId);
+
+            var userDetailId = cartMgr.getUserId();
+            ViewBag.UserDetails = db.UserDetails.Find(userDetailId);
 
             return View(myCarts);
         }

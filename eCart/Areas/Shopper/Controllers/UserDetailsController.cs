@@ -20,8 +20,7 @@ namespace eCart.Areas.Shopper.Controllers
         // GET: Shopper/UserDetails
         public ActionResult Index(int id)
         {
-            var user = db.Users.Find(id);
-            var userDetails = db.UserDetails.Find(user.Id);
+            var userDetails = db.UserDetails.Find(id);
             return View(userDetails);
         }
 

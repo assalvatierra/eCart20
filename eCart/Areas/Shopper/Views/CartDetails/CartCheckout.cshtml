@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Cart Checkout";
     Layout = "~/Areas/Shopper/Views/Shared/_Layout.cshtml";
+    var userDetails = ViewBag.UserDetails as eCart.Models.UserDetail;
 }
 
 <h2>Cart Page</h2>
@@ -16,9 +17,9 @@
 <div class="panel bordered">
     <div class="panel-body">
         <h3> Shopper Details </h3>
-        <p> Name: <b>   </b> </p>
-        <p> Address: <b>   </b> </p>
-        <p> Contact No.:  </p>
+        <p> Name: <b> @userDetails.Name </b> </p>
+        <p> Address: <b>  @userDetails.Address </b> </p>
+        <p> Contact No.: <b> @userDetails.Mobile</b> </p>
     </div>
 </div>
 

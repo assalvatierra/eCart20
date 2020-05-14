@@ -32,17 +32,26 @@ namespace eCart.Services
             try
             {
                 //verify user by password
-                if (db.Users.Any(u=>u.Username == username && u.Password == password))
+                if (db.Users.Any(u=>u.Username.ToLower() == username.ToLower() && u.Password == password))
                 {
-                    var user = db.Users.Where(u => u.Username == username && u.Password == password).FirstOrDefault();
-                    var userDetail = db.UserDetails.Where(s => s.UserId == user.Id.ToString()).FirstOrDefault();
+                    var user = db.Users.Where(u => u.Username.ToLower() == username.ToLower() && u.Password == password).FirstOrDefault();
 
-                    //then return userID
-                    return userDetail.Id;
+                    //find user in userDetails
+                    if (db.UserDetails.Any(s => s.UserId == user.Id.ToString()))
+                    {
+                        var userDetail = db.UserDetails.Where(s => s.UserId == user.Id.ToString()).FirstOrDefault();
+
+                        //then return userID
+                        return userDetail.Id;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
                 }
                 
                 //invalid login
-                return 0;
+                return -1;
             }
             catch (Exception)
             {
