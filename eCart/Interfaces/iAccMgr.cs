@@ -15,7 +15,7 @@ namespace eCart.Interfaces
         string GetUserName(int userId);
         UserDetail GetUserDetail(int userId);
 
-        void RegisterAccount(AccountRegistration newAccount);
+        bool RegisterAccount(AccountRegistration newAccount);
         void RegisterStore(StoreRegistration newStore);
         void RegisterRider(RiderRegistration newRider);
 

@@ -31,13 +31,14 @@ namespace eCart.Services
         {
             try
             {
-                var user = db.UserDetails.Where(s => s.Email == username).FirstOrDefault();
-                
                 //verify user by password
                 if (db.Users.Any(u=>u.Username == username && u.Password == password))
                 {
+                    var user = db.Users.Where(u => u.Username == username && u.Password == password).FirstOrDefault();
+                    var userDetail = db.UserDetails.Where(s => s.UserId == user.Id.ToString()).FirstOrDefault();
+
                     //then return userID
-                    return user.Id;
+                    return userDetail.Id;
                 }
                 
                 //invalid login
@@ -63,7 +64,7 @@ namespace eCart.Services
             }
         }
 
-        public void RegisterAccount(AccountRegistration newAccount)
+        public bool RegisterAccount(AccountRegistration newAccount)
         {
             try
             {
@@ -82,10 +83,13 @@ namespace eCart.Services
 
                 db.UserDetails.Add(user);
                 db.SaveChanges();
+
+                return true;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                throw ex;
+                //throw ex;
+                return false;
             }
         }
 
@@ -112,21 +116,22 @@ namespace eCart.Services
 
         public void SetUserRole(int userId, int roleId)
         {
-            //try
-            //{
-            //    var userRoles = new UserRolesMapping { 
-                    
-            //        UserId = userId,
-            //        RoleId = roleId
-            //    };
-            //    db.UserRolesMappings.Add(userRoles);
-            //    db.SaveChanges();
+            try
+            {
+                var userRoles = new UserRolesMapping
+                {
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw ex;
-            //}
+                    UserId = userId,
+                    RoleId = roleId
+                };
+                db.UserRolesMappings.Add(userRoles);
+                db.SaveChanges();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public UserDetail GetUserDetail(int userId)

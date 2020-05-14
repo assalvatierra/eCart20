@@ -37,5 +37,7 @@ namespace eCart.Areas.Shopper
         public System.Data.Entity.DbSet<eCart.Models.MasterCity> MasterCities { get; set; }
 
         public System.Data.Entity.DbSet<eCart.Models.MasterArea> MasterAreas  { get; set; }
+
+        public System.Data.Entity.DbSet<eCart.Models.UserRolesMapping> userRolesMappings { get; set; }
     }
 }

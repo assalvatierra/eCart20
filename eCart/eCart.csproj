@@ -542,7 +542,7 @@
     <Content Include="Areas\Admin\Views\RiderDetails\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\RiderDetails\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\Cart\cart.js" />
+    <Content Include="Areas\Shopper\Scripts\cart.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -589,6 +589,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Scripts\Cart\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
