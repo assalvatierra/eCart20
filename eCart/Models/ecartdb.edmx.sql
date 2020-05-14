@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/12/2020 20:52:14
+-- Date Created: 05/14/2020 19:56:27
 -- Generated from EDMX file: D:\Projects\eCart20\eCart\Models\ecartdb.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
---USE [ecartdb];
+USE [ecartdb];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -153,22 +153,13 @@ IF OBJECT_ID(N'[dbo].[FK_PaymentPartyPaymentDetail]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[PaymentDetails] DROP CONSTRAINT [FK_PaymentPartyPaymentDetail];
 GO
 IF OBJECT_ID(N'[dbo].[FK_StoreDetailStoreQue]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StoreQues] DROP CONSTRAINT [FK_StoreDetailStoreQue];
-GO
-IF OBJECT_ID(N'[dbo].[FK_StoreQueStoreQueOrder]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StoreQueOrders] DROP CONSTRAINT [FK_StoreQueStoreQueOrder];
+    ALTER TABLE [dbo].[StoreKiosks] DROP CONSTRAINT [FK_StoreDetailStoreQue];
 GO
 IF OBJECT_ID(N'[dbo].[FK_CartDetailStoreQueOrder]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[StoreQueOrders] DROP CONSTRAINT [FK_CartDetailStoreQueOrder];
+    ALTER TABLE [dbo].[StoreKioskOrders] DROP CONSTRAINT [FK_CartDetailStoreQueOrder];
 GO
-IF OBJECT_ID(N'[dbo].[FK__UserRoles__RoleI__45FE52CB]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserRolesMappings] DROP CONSTRAINT [FK__UserRoles__RoleI__45FE52CB];
-GO
-IF OBJECT_ID(N'[dbo].[FK__UserRoles__RoleI__46F27704]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserRolesMappings] DROP CONSTRAINT [FK__UserRoles__RoleI__46F27704];
-GO
-IF OBJECT_ID(N'[dbo].[FK__UserRoles__UserI__47E69B3D]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserRolesMappings] DROP CONSTRAINT [FK__UserRoles__UserI__47E69B3D];
+IF OBJECT_ID(N'[dbo].[FK_StoreKioskStoreKioskOrder]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[StoreKioskOrders] DROP CONSTRAINT [FK_StoreKioskStoreKioskOrder];
 GO
 
 -- --------------------------------------------------
@@ -286,20 +277,11 @@ GO
 IF OBJECT_ID(N'[dbo].[PaymentParties]', 'U') IS NOT NULL
     DROP TABLE [dbo].[PaymentParties];
 GO
-IF OBJECT_ID(N'[dbo].[StoreQues]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[StoreQues];
+IF OBJECT_ID(N'[dbo].[StoreKiosks]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StoreKiosks];
 GO
-IF OBJECT_ID(N'[dbo].[StoreQueOrders]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[StoreQueOrders];
-GO
-IF OBJECT_ID(N'[dbo].[Roles]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Roles];
-GO
-IF OBJECT_ID(N'[dbo].[UserRolesMappings]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[UserRolesMappings];
-GO
-IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Users];
+IF OBJECT_ID(N'[dbo].[StoreKioskOrders]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StoreKioskOrders];
 GO
 
 -- --------------------------------------------------
@@ -660,8 +642,16 @@ CREATE TABLE [dbo].[StoreKioskOrders] (
 );
 GO
 
--- Creating table 'Roles'
-CREATE TABLE [dbo].[Roles] (
+-- Creating table 'Users'
+CREATE TABLE [dbo].[Users] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Username] nvarchar(50)  NULL,
+    [Password] nvarchar(50)  NULL
+);
+GO
+
+-- Creating table 'Roles1'
+CREATE TABLE [dbo].[Roles1] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [RoleName] nvarchar(50)  NULL
 );
@@ -670,16 +660,8 @@ GO
 -- Creating table 'UserRolesMappings'
 CREATE TABLE [dbo].[UserRolesMappings] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [UserId] int  NULL,
-    [RoleId] int  NULL
-);
-GO
-
--- Creating table 'Users'
-CREATE TABLE [dbo].[Users] (
-    [Id] int IDENTITY(1,1) NOT NULL,
-    [Username] nvarchar(50)  NULL,
-    [Password] nvarchar(50)  NULL
+    [UserId] int  NOT NULL,
+    [RoleId] int  NOT NULL
 );
 GO
 
@@ -921,21 +903,21 @@ ADD CONSTRAINT [PK_StoreKioskOrders]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'Roles'
-ALTER TABLE [dbo].[Roles]
-ADD CONSTRAINT [PK_Roles]
+-- Creating primary key on [Id] in table 'Users'
+ALTER TABLE [dbo].[Users]
+ADD CONSTRAINT [PK_Users]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Roles1'
+ALTER TABLE [dbo].[Roles1]
+ADD CONSTRAINT [PK_Roles1]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
 -- Creating primary key on [Id] in table 'UserRolesMappings'
 ALTER TABLE [dbo].[UserRolesMappings]
 ADD CONSTRAINT [PK_UserRolesMappings]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
-
--- Creating primary key on [Id] in table 'Users'
-ALTER TABLE [dbo].[Users]
-ADD CONSTRAINT [PK_Users]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -1648,51 +1630,6 @@ ON [dbo].[StoreKioskOrders]
     ([CartDetailId]);
 GO
 
--- Creating foreign key on [RoleId] in table 'UserRolesMappings'
-ALTER TABLE [dbo].[UserRolesMappings]
-ADD CONSTRAINT [FK__UserRoles__RoleI__45FE52CB]
-    FOREIGN KEY ([RoleId])
-    REFERENCES [dbo].[Roles]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK__UserRoles__RoleI__45FE52CB'
-CREATE INDEX [IX_FK__UserRoles__RoleI__45FE52CB]
-ON [dbo].[UserRolesMappings]
-    ([RoleId]);
-GO
-
--- Creating foreign key on [RoleId] in table 'UserRolesMappings'
-ALTER TABLE [dbo].[UserRolesMappings]
-ADD CONSTRAINT [FK__UserRoles__RoleI__46F27704]
-    FOREIGN KEY ([RoleId])
-    REFERENCES [dbo].[Roles]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK__UserRoles__RoleI__46F27704'
-CREATE INDEX [IX_FK__UserRoles__RoleI__46F27704]
-ON [dbo].[UserRolesMappings]
-    ([RoleId]);
-GO
-
--- Creating foreign key on [UserId] in table 'UserRolesMappings'
-ALTER TABLE [dbo].[UserRolesMappings]
-ADD CONSTRAINT [FK__UserRoles__UserI__47E69B3D]
-    FOREIGN KEY ([UserId])
-    REFERENCES [dbo].[Users]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK__UserRoles__UserI__47E69B3D'
-CREATE INDEX [IX_FK__UserRoles__UserI__47E69B3D]
-ON [dbo].[UserRolesMappings]
-    ([UserId]);
-GO
-
 -- Creating foreign key on [StoreKioskId] in table 'StoreKioskOrders'
 ALTER TABLE [dbo].[StoreKioskOrders]
 ADD CONSTRAINT [FK_StoreKioskStoreKioskOrder]
@@ -1706,6 +1643,36 @@ GO
 CREATE INDEX [IX_FK_StoreKioskStoreKioskOrder]
 ON [dbo].[StoreKioskOrders]
     ([StoreKioskId]);
+GO
+
+-- Creating foreign key on [UserId] in table 'UserRolesMappings'
+ALTER TABLE [dbo].[UserRolesMappings]
+ADD CONSTRAINT [FK_UserUserRolesMapping]
+    FOREIGN KEY ([UserId])
+    REFERENCES [dbo].[Users]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserUserRolesMapping'
+CREATE INDEX [IX_FK_UserUserRolesMapping]
+ON [dbo].[UserRolesMappings]
+    ([UserId]);
+GO
+
+-- Creating foreign key on [RoleId] in table 'UserRolesMappings'
+ALTER TABLE [dbo].[UserRolesMappings]
+ADD CONSTRAINT [FK_RoleUserRolesMapping]
+    FOREIGN KEY ([RoleId])
+    REFERENCES [dbo].[Roles1]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_RoleUserRolesMapping'
+CREATE INDEX [IX_FK_RoleUserRolesMapping]
+ON [dbo].[UserRolesMappings]
+    ([RoleId]);
 GO
 
 -- --------------------------------------------------
