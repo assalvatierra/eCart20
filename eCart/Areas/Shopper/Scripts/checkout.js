@@ -21,17 +21,37 @@ function UpdatePrice(removedsubtotal) {
 function SubmitOrder(e, cartId) {
 
     $.post("/Shopper/CartDetails/SubmitOrder", { id: cartId }, (result) => {
-        console.log(result);
-        $(e).attr("disabled", true);
-        $("#CheckOutSuccessModal").modal('show');
-    });
+        
+        if (result == "Order Submitted") {
+            //on success, disable button and show success modal
+            $(e).attr("disabled", true);
+            $("#CheckOutSuccessModal").modal('show');
+        } else if (result == "Order NOT Submitted") {
+            //on error : order not submitted, error on saving on db
+            $("#cart-alert-box-" + cartId).children('p').text("We cannot process you cart. Please try again later.");
+            $("#cart-alert-box-"+cartId).show();
+        } else {
+            //on error, other errors
+            $("#cart-alert-box-" + cartId).children('p').text("We cannot process this cart at this moment. Please try again later.");
+            $("#cart-alert-box-" + cartId).show();
+        } 
+
+    })
 }
 
 function SubmitAllOrder() {
     $.post("/Shopper/CartDetails/SubmitAllOrder", null, (result) => {
         console.log(result);
-        $(":button").attr("disabled", "disabled");
-        $("#CheckOutSuccessModal").modal('show');
+        if (result == 'Order Submitted') {
+            //all order submitted successfully
+            $(".btn-primary").attr("disabled", "disabled");
+            $("#CheckOutSuccessModal").modal('show');
+        } else {
+            //alert("An error has occured while processing your cart.")
+            $("#cart-alert-box-all").children('p').text("An error has occured while processing your cart.");
+            $("#cart-alert-box-all").show();
+        }
+
     });
 }
 

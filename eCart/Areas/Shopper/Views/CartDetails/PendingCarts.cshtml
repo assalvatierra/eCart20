@@ -22,10 +22,17 @@
     decimal subtotalAmount = 0;
     <div class="panel bordered">
         <div class="panel-body">
-            <div class="cart-summary-store">
-                <div class="pull-left" style="display:flex;flex-direction:column;padding:8px 0px;">
-                    <img src="@cart.StoreDetail.StoreImages.FirstOrDefault().ImageUrl"   style="width:40px;margin:auto;" />
-                    <h3 style="margin-top:5px;"> @cart.StoreDetail.Name </h3>
+
+            <div class="row">
+                <div class="col-lg-12 cart-ID-div">
+                    <p> Cart #: <span class="Cart-ID"> @cart.Id.ToString("0000")  </span></p>
+                </div>
+            </div>
+
+            <div class="cart-summary-store" >
+                <div class="pull-left" style="display:flex;flex-direction:row;">
+                    <img src="@cart.StoreDetail.StoreImages.FirstOrDefault().ImageUrl" style="width:60px;" />
+                    <h3 style="flex:1;" class="pull-right"> @cart.StoreDetail.Name </h3>
                 </div>
                 <div class="cart-summary-pickup">
                     <p>
@@ -74,7 +81,7 @@
                         var subtotal = qty * unitprice;
                         subtotalAmount += subtotal;
                         <tr>
-                            <td>
+                            <td style="display:flex;flex-direction:row;">
                                 @if (item.StoreItem.ItemMaster.ItemImages.FirstOrDefault() != null)
                                 {
                                     var image = item.StoreItem.ItemMaster.ItemImages.FirstOrDefault();
@@ -85,8 +92,11 @@
                                     <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail" width="50" />
                                 }
 
-                                <b> @item.StoreItem.ItemMaster.Name </b>
-                                <span class="text-muted">  @item.Remarks1 </span>
+                                <span style="display:flex;flex-direction:column;padding-left:5px;">
+                                    <span class="item-ID"> Item #:  @item.StoreItemId </span>
+                                    <b> @item.StoreItem.ItemMaster.Name </b>
+                                    <span class="text-muted">  @item.Remarks1 </span>
+                                </span>
                             </td>
                             <td> @item.ItemQty </td>
                             <td> Php @item.StoreItem.UnitPrice.ToString("0.00") </td>
@@ -94,7 +104,6 @@
                             <td width="20">
 
                             <td>
-                             
                             </td>
 
                         </tr>

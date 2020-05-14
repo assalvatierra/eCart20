@@ -244,7 +244,7 @@ textarea {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
 }
 
 .cart-summary-pickup {
@@ -253,10 +253,25 @@ textarea {
     flex: 1;
 }
 
+.cart-ID-div p {
+    font-size: 18px;
+    font-weight: 400;
+    color: gray;
+    margin: 5px 12px;
+}
+
+.Cart-ID {
+    color: green;
+}
+
+.item-ID {
+    font-size: 12px;
+    font-weight: 100;
+    color: gray;
+}
 
 
 /*Login-Resgister*/
-
 .register-panel {
     margin-top: 100px;
     display: flex;
@@ -360,3 +375,4 @@ textarea {
 .badge-categories:hover {
    background-color:dodgerblue;
 }
+

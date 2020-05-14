@@ -239,6 +239,14 @@ namespace eCart.Services
             return HttpContext.Current.Session["USERID"] != null ? (int)HttpContext.Current.Session["USERID"] : 0;
         }
 
+        public string getUserAccID()
+        {
+
+            var UserDetailID = getUserId();
+            var userDetail = db.UserDetails.Find(UserDetailID);
+            return userDetail.UserId;
+        }
+
 
         //transfer to db cartItem object
         public List<CartItem> getCartItems(cCartDetails cart)
@@ -368,7 +376,8 @@ namespace eCart.Services
         {
             try
             {
-                var userId = getUserId(); 
+                var userID = getUserAccID();
+                var isValid = false;
 
                 foreach (var cart in cartDetails)
                 {
@@ -376,15 +385,20 @@ namespace eCart.Services
                     //and save to the db
                     if (cart.CartStatusId == 1 )
                     {
+                        //update cart status to Submitted
                         var cartStatus = db.CartStatus.Find(2);  //Submitted
                         cart.CartStatu = cartStatus;
-                        if (addCartDetailToDb(cart)) { 
-                        
-                        //add cart history
-                        addCartHistory(cart, cartStatus, userId.ToString());
 
-                        //updateCartDetailsStatus(cart.Id, "Submitted");
-                        removeCartSession(cart.Id);
+                        if (addCartDetailToDb(cart)) {
+
+                            if (addCartHistory(cart, cartStatus, userID))
+                            {
+                                if (removeCartSession(cart.StoreDetailId))
+                                {
+                                    isValid = true;
+                                }
+                            }
+
                         }
                         else
                         {
@@ -393,9 +407,13 @@ namespace eCart.Services
                     }
                 }
 
-                db.SaveChanges();
+                if (isValid)
+                {
+                    db.SaveChanges();
+                    return "Order Submitted";
+                }
 
-                return "Order Submitted";
+                return "Order NOT Submitted";
             }
             catch (Exception ex)
             {
@@ -407,29 +425,41 @@ namespace eCart.Services
         {
             try
             {
-                var userId = getUserId(); 
+                var userID = getUserAccID();
+                var isValid = false;
+
                 //check if cart is active, then change status to submitted 
                 //and save to the db
                 if (cart.CartStatusId == 1)
                 {
                     var cartStatus = db.CartStatus.Find(2);  //Submitted
-                    cart.CartStatu = db.CartStatus.Find(2);  //Submitted
+                    cart.CartStatu = cartStatus;  //Submitted
              
                     if (addCartDetailToDb(cart))
                     {
                         //add cart history
-                        addCartHistory(cart, cartStatus, userId.ToString());
+                        if(addCartHistory(cart, cartStatus, userID))
+                        {
+                            if (removeCartSession(cart.StoreDetailId))
+                            {
+                                isValid = true;
+                            }
+                        }
 
-                        //updateCartDetailsStatus(cart.Id, "Submitted");
-                        removeCartSession(cart.StoreDetailId);
                     }
                     else
                     {
                         return "Order NOT Submitted";
                     }
                 }
-               
-                return "Order Submitted";
+
+                if (isValid)
+                {
+                    db.SaveChanges();
+                    return "Order Submitted";
+                }
+
+                return "Order NOT Submitted";
             }
             catch (Exception ex)
             {
@@ -504,12 +534,20 @@ namespace eCart.Services
         }
 
 
-        public void removeCartSession(int id)
+        public bool removeCartSession(int storeId)
         {
-            var cartlist = getCartDetails();
-            var cart = cartlist.Where(s=>s.StoreId == id).FirstOrDefault();
-            cart.CheckedOut = "true";
-            cartlist.Remove(cart);
+            try
+            {
+                var cartlist = getCartDetails();
+                var cart = cartlist.Where(s=>s.StoreId == storeId).FirstOrDefault();
+            
+                cartlist.Remove(cart);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public List<StorePickupPoint> GetStorePickupPoints(int storeId)
@@ -553,7 +591,7 @@ namespace eCart.Services
         }
 
 
-        public void addCartHistory(CartDetail cart , CartStatus status, string userId)
+        public bool addCartHistory(CartDetail cart , CartStatus status, string userId)
         {
             try
             {
@@ -567,10 +605,12 @@ namespace eCart.Services
 
                 db.CartHistories.Add(cartHistory);
                 db.SaveChanges();
+
+                return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
         }
 
@@ -581,11 +621,13 @@ namespace eCart.Services
                 CartDetail cart = db.CartDetails.Find(cartId);
                 CartStatus cartStatus = db.CartStatus.Find(cartStatusId);
 
+                var userID = getUserAccID();
+
                 cart.CartStatu = cartStatus;
                 db.Entry(cart).State = EntityState.Modified;
                 db.SaveChanges();
 
-                addCartHistory(cart, cartStatus, getUserId().ToString());
+                addCartHistory(cart, cartStatus, userID);
                 return "cart status updated";
             }
             catch (Exception ex)

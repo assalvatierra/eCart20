@@ -27,7 +27,7 @@ namespace eCart.Interfaces
         bool addItemToCart(int id, int qty, decimal price);
         void addCartItemToDb(CartItem cartItem);
         bool addCartDetailToDb(CartDetail cartDetail);
-        void addCartHistory(CartDetail cart, CartStatus status, string userId);
+        bool addCartHistory(CartDetail cart, CartStatus status, string userId);
         void addDeliveryDetails(int id, DateTime date, string address, int riderId, string remarks);
 
         void updateCartPickupPoint(int storeId, int pickupPoint);
@@ -42,6 +42,7 @@ namespace eCart.Interfaces
         bool removeCartItem(int id);
         void removeDBCartItem(int id, int statusId);
         void removeCartdelivery(int id);
+        bool removeCartSession(int storeId);
 
         string saveOrder(List<CartDetail> cartDetails);
         string saveOrder(CartDetail cart);
