@@ -56,6 +56,6 @@ insert into Roles([RoleName]) values
 ('Admin'),('Store Admin'),('Merchandiser'),('Shopper'),('Rider');
 
 insert into UserRolesMappings([UserId],[RoleId]) values
-(1,1),(3,1),(4,1),(5,2),(6,3),(7,4),(8,5),(9,4);
+(1,1),(2,2),(3,3),(4,4),(5,5);
 
 

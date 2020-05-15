@@ -1,10 +1,10 @@
 ﻿-- sample data for testing
 
 insert into UserDetails([UserId], [Name], [Address], [Email], [Mobile], [Remarks], [UserStatusId], [MasterCityId], [MasterAreaId] )
-values (1, 'Admin', 'Davao City', 'admin@gmail.com', '0912-345-6789', 'Admin User', 1, 1, 1);
+values ('1', 'Admin', 'Davao City', 'admin@gmail.com', '0912-345-6789', 'Admin User', 1, 1, 1);
 
 insert into UserDetails([UserId], [Name], [Address], [Email], [Mobile], [Remarks], [UserStatusId], [MasterCityId], [MasterAreaId] )
-values (1, 'Tester', 'Davao City', 'tester@gmail.com', '0912-345-6789', 'Tester User', 1, 1, 1);
+values ('4', 'Shopper', 'Davao City', 'shopper@gmail.com', '0912-345-6789', 'Shopper User', 1, 1, 1);
 
 -- create stores --
 insert into StoreDetails([LoginId],[Name],[Address],[Remarks],[StoreStatusId],[StoreCategoryId],[MasterCityId],[MasterAreaId]) 
@@ -81,7 +81,7 @@ values (120, 1, '05/02/2020', 1, 'party info', 1, 'receiver info', 1 );
 
 --Rider sample --
 insert into RiderDetails([UserId],[Name],[Address],[Mobile],[Remarks],[RiderStatusId],[MasterCityId],[Mobile2] )
-values ('1','John Doe', 'Davao City', '0912-345-6789', 'None', 1, 1, '0998-765-4321');
+values ('5','John Doe', 'Davao City', '0912-345-6789', 'None', 1, 1, '0998-765-4321');
 
 -- Store Payment --
 insert into StorePayments([StoreDetailId],[dtPayment],[Amount],[StorePaymentTypeId],[Remarks],[dtPosted],[StorePaymentStatusId]) values
