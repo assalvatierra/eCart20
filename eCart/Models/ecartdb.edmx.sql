@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/14/2020 19:56:27
+-- Date Created: 05/14/2020 20:40:07
 -- Generated from EDMX file: D:\Projects\eCart20\eCart\Models\ecartdb.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [ecartdb];
+--USE [ecartdb];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -161,6 +161,12 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_StoreKioskStoreKioskOrder]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[StoreKioskOrders] DROP CONSTRAINT [FK_StoreKioskStoreKioskOrder];
 GO
+IF OBJECT_ID(N'[dbo].[FK_UserUserRolesMapping]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserRolesMappings] DROP CONSTRAINT [FK_UserUserRolesMapping];
+GO
+IF OBJECT_ID(N'[dbo].[FK_RoleUserRolesMapping]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserRolesMappings] DROP CONSTRAINT [FK_RoleUserRolesMapping];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -282,6 +288,15 @@ IF OBJECT_ID(N'[dbo].[StoreKiosks]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[StoreKioskOrders]', 'U') IS NOT NULL
     DROP TABLE [dbo].[StoreKioskOrders];
+GO
+IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users];
+GO
+IF OBJECT_ID(N'[dbo].[Roles1]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Roles1];
+GO
+IF OBJECT_ID(N'[dbo].[UserRolesMappings]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserRolesMappings];
 GO
 
 -- --------------------------------------------------
@@ -650,8 +665,8 @@ CREATE TABLE [dbo].[Users] (
 );
 GO
 
--- Creating table 'Roles1'
-CREATE TABLE [dbo].[Roles1] (
+-- Creating table 'Roles'
+CREATE TABLE [dbo].[Roles] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [RoleName] nvarchar(50)  NULL
 );
@@ -909,9 +924,9 @@ ADD CONSTRAINT [PK_Users]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'Roles1'
-ALTER TABLE [dbo].[Roles1]
-ADD CONSTRAINT [PK_Roles1]
+-- Creating primary key on [Id] in table 'Roles'
+ALTER TABLE [dbo].[Roles]
+ADD CONSTRAINT [PK_Roles]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -1664,7 +1679,7 @@ GO
 ALTER TABLE [dbo].[UserRolesMappings]
 ADD CONSTRAINT [FK_RoleUserRolesMapping]
     FOREIGN KEY ([RoleId])
-    REFERENCES [dbo].[Roles1]
+    REFERENCES [dbo].[Roles]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
