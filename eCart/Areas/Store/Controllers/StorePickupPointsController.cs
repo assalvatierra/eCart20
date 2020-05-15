@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using eCart.Areas.Store.Models;
 using eCart.Models;
+using eCart.Services;
 
 namespace eCart.Areas.Store.Controllers
 {

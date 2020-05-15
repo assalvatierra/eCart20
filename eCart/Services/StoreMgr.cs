@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using eCart.Models;
+using eCart.Areas.Store.Models;
 
 namespace eCart.Services
 {
     public class StoreMgr : Interfaces.iStoreMgr    
     {
-       public ecartdbContainer db = new ecartdbContainer();
 
-       public List<Models.StoreDetail> getFeaturedStores()
+        public ecartdbContainer db = new ecartdbContainer();
+        public StoreDBLayer storeDb = new StoreDBLayer();
+
+
+        #region For Revision
+
+        public List<Models.StoreDetail> getFeaturedStores()
         {
             try
             {
@@ -40,7 +46,6 @@ namespace eCart.Services
             }
 
         }
-
 
         public List<Models.StoreItem> getStoreItems(int id)
         {
@@ -124,7 +129,6 @@ namespace eCart.Services
             }
         }
         
-
         public void updateStoreItem(int storeItemId, string itemName, decimal price)
         {
                 
@@ -143,7 +147,6 @@ namespace eCart.Services
                 throw ex;
             }
         }
-
 
         public void updateStoreItemImage(int storeItemId, string imageUrl) 
         {
@@ -227,12 +230,27 @@ namespace eCart.Services
             
         }
 
-
         public List<CartDetail> getStoreActiveCarts(int id)
         {
             var storeCarts = db.CartDetails.Where(s => s.StoreDetailId == id && s.CartStatusId <= 5); //active
 
             return storeCarts.ToList();
         }
+
+        #endregion
+
+        public bool CreateStore(StoreDetail storeDetail)
+        {
+            return storeDb.CreateStoreDetail(storeDetail);
+            
+        }
+
+        public bool EditStore(StoreDetail storeDetail)
+        {
+            return storeDb.CreateStoreDetail(storeDetail);
+
+        }
+
+
     }
 }

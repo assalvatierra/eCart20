@@ -10,7 +10,7 @@ namespace eCart.Areas.Store.Controllers
 {
     public class HomeController : Controller
     {
-        StoreDB sdb = new StoreDB();
+        StoreDBLayer sdb = new StoreDBLayer();
         StoreFactory storeFactory = new StoreFactory();
 
         // GET: Store/Home

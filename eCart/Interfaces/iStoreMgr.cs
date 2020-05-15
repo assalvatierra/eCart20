@@ -24,5 +24,9 @@ namespace eCart.Interfaces
 
         void updateStoreItem(int storeItemId, string itemName, decimal price );
         void updateStoreItemImage(int storeItemId, string imageUrl);
+
+        //Business Layer
+        bool CreateStore(StoreDetail storeDetail);
+        bool EditStore(StoreDetail storeDetail);
     }
 }

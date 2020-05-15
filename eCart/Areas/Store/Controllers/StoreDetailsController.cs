@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using eCart.Areas.Store.Models;
 using eCart.Models;
+using eCart.Services;
 
 namespace eCart.Areas.Store.Controllers
 {
@@ -16,6 +17,8 @@ namespace eCart.Areas.Store.Controllers
     {
         private StoreContext db = new StoreContext();
         private ecartdbContainer edb = new ecartdbContainer();
+
+        private StoreFactory storeFactory = new StoreFactory();
 
         // GET: Store/StoreDetails
         public ActionResult Index(int id)
@@ -64,8 +67,11 @@ namespace eCart.Areas.Store.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.StoreDetails.Add(storeDetail);
-                db.SaveChanges();
+                //db.StoreDetails.Add(storeDetail);
+                //db.SaveChanges();
+
+                storeFactory.StoreMgr.CreateStore(storeDetail);
+
                 return RedirectToAction("Index");
             }
 
@@ -122,9 +128,11 @@ namespace eCart.Areas.Store.Controllers
 
                 }
 
-                db.Entry(storeDetail).State = EntityState.Modified;
-                
-                db.SaveChanges();
+                //db.Entry(storeDetail).State = EntityState.Modified;
+                //db.SaveChanges();
+
+                storeFactory.StoreMgr.EditStore(storeDetail);
+
                 return RedirectToAction("Index", "Home",new { area="Store", id = storeDetail.Id });
             }
             ViewBag.MasterAreaId = new SelectList(db.MasterAreas, "Id", "Name", storeDetail.MasterAreaId);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using eCart.Areas.Store.Models;
 using eCart.Interfaces;
 
 namespace eCart.Services
@@ -13,12 +14,16 @@ namespace eCart.Services
         iRiderMgr riderMgr;
         iAccMgr accMgr;
 
+        iStoreDb storeDb;
+
         public StoreFactory()
         {
             this.storemgr = new Services.StoreMgr();
             this.cartmgr = new Services.CartMgr();
             this.accMgr = new Services.AccMgr();
             this.riderMgr = new Services.RiderMgr();
+
+            this.storeDb = new StoreDBLayer();
         }
 
         public iStoreMgr StoreMgr
@@ -43,5 +48,9 @@ namespace eCart.Services
             get { return this.riderMgr; }
         }
 
+        public iStoreDb StoreDb
+        {
+            get { return this.storeDb; }
+        }
     }
 }
