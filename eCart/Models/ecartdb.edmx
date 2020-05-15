@@ -46,7 +46,7 @@
     <EntitySet Name="StoreKiosks" EntityType="ecartdb.Store.StoreKiosks" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="StoreKioskOrders" EntityType="ecartdb.Store.StoreKioskOrders" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users" EntityType="ecartdb.Store.Users" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Roles" EntityType="ecartdb.Store.Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Roles1" EntityType="ecartdb.Store.Roles1" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserRolesMappings" EntityType="ecartdb.Store.UserRolesMappings" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserStatusUserDetail" Association="ecartdb.Store.UserStatusUserDetail">
       <End Role="UserStatus" EntitySet="UserStatus" />
@@ -245,7 +245,7 @@
       <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
     </AssociationSet>
     <AssociationSet Name="RoleUserRolesMapping" Association="ecartdb.Store.RoleUserRolesMapping">
-      <End Role="Role" EntitySet="Roles" />
+      <End Role="Role" EntitySet="Roles1" />
       <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
     </AssociationSet>
   </EntityContainer>
@@ -611,7 +611,7 @@
     <Property Name="Username" Type="nvarchar" Nullable="true" MaxLength="50" />
     <Property Name="Password" Type="nvarchar" Nullable="true" MaxLength="50" />
   </EntityType>
-  <EntityType Name="Roles">
+  <EntityType Name="Roles1">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
@@ -1215,7 +1215,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="RoleUserRolesMapping">
-    <End Role="Role" Type="ecartdb.Store.Roles" Multiplicity="1" />
+    <End Role="Role" Type="ecartdb.Store.Roles1" Multiplicity="1" />
     <End Role="UserRolesMapping" Type="ecartdb.Store.UserRolesMappings" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Role">
@@ -1463,14 +1463,14 @@
             <End Role="StoreKioskOrder" EntitySet="StoreKioskOrders" />
           </AssociationSet>
           <EntitySet Name="Users" EntityType="ecartdb.User" />
-          <EntitySet Name="Roles" EntityType="ecartdb.Role" />
+          <EntitySet Name="Roles1" EntityType="ecartdb.Role" />
           <EntitySet Name="UserRolesMappings" EntityType="ecartdb.UserRolesMapping" />
           <AssociationSet Name="UserUserRolesMapping" Association="ecartdb.UserUserRolesMapping">
             <End Role="User" EntitySet="Users" />
             <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
           </AssociationSet>
           <AssociationSet Name="RoleUserRolesMapping" Association="ecartdb.RoleUserRolesMapping">
-            <End Role="Role" EntitySet="Roles" />
+            <End Role="Role" EntitySet="Roles1" />
             <End Role="UserRolesMapping" EntitySet="UserRolesMappings" />
           </AssociationSet>
         </EntityContainer>
@@ -2959,9 +2959,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Roles">
+    <EntitySetMapping Name="Roles1">
       <EntityTypeMapping TypeName="IsTypeOf(ecartdb.Role)">
-        <MappingFragment StoreEntitySet="Roles">
+        <MappingFragment StoreEntitySet="Roles1">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="RoleName" ColumnName="RoleName" />
         </MappingFragment>
