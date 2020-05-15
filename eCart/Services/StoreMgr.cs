@@ -247,7 +247,7 @@ namespace eCart.Services
 
         public bool EditStore(StoreDetail storeDetail)
         {
-            return storeDb.CreateStoreDetail(storeDetail);
+            return storeDb.EditStoreDetail(storeDetail);
 
         }
 
