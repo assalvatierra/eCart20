@@ -47,5 +47,16 @@ namespace eCart.Areas.Store.Models
                 return false;
             }
         }
+
+        public StoreDetail GetStoreByUserId(string id)
+        {
+        
+                if (sdb.StoreDetails.Any(s => s.LoginId == id))
+                {
+                    return sdb.StoreDetails.Where(s => s.LoginId == id).FirstOrDefault();
+                }
+                return null;
+          
+        }
     }
 }

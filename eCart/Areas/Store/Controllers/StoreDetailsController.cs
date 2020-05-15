@@ -89,11 +89,14 @@ namespace eCart.Areas.Store.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            StoreDetail storeDetail = db.StoreDetails.Find(id);
+
+            StoreDetail storeDetail = storeFactory.StoreMgr.getStoreDetails((int)id);
+
             if (storeDetail == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.StoreId = id;
             ViewBag.MasterAreaId = new SelectList(db.MasterAreas, "Id", "Name", storeDetail.MasterAreaId);
             ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", storeDetail.MasterCityId);

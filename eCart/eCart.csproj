@@ -171,11 +171,13 @@
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\MerchantController.cs" />
+    <Compile Include="Interfaces\iAccDb.cs" />
     <Compile Include="Interfaces\iAccMgr.cs" />
     <Compile Include="Interfaces\iCartMgr.cs" />
     <Compile Include="Interfaces\iRiderMgr.cs" />
     <Compile Include="Interfaces\iStoreDb.cs" />
     <Compile Include="Interfaces\iStoreMgr.cs" />
+    <Compile Include="Models\AccDb.cs" />
     <Compile Include="Models\AccountLogin.cs" />
     <Compile Include="Models\Accounts\SecurityDBContext.cs" />
     <Compile Include="Models\CartActivity.cs">

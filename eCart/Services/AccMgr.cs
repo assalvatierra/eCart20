@@ -9,6 +9,7 @@ namespace eCart.Services
 {
     public class AccMgr : iAccMgr
     {
+        #region For Revision
         ecartdbContainer db = new ecartdbContainer();
 
         public bool VerifyUserRole(User user, int roleId)
@@ -215,6 +216,52 @@ namespace eCart.Services
                 db.SaveChanges();
             }
             catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+        AccDb adb = new AccDb();
+
+        public bool IsUserValid(User user)
+        {
+
+            var userList = adb.GetUserList();
+            if (userList.Any(u=>u.Username.ToLower() == user.Username.ToLower() && u.Password == user.Password))
+            {
+                return true;
+            }
+            return false;
+          
+        }
+
+        public User GetUser(string username, string password)
+        {
+            try
+            {
+                return adb.GetUser(username, password);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool IsUserInRole(int userId, int roleId)
+        {
+            try
+            {
+                var userRoles = adb.GetUserRoles(userId);
+
+                if (userRoles.Any(s=>s.RoleId == roleId))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch(Exception ex)
             {
                 throw ex;
             }

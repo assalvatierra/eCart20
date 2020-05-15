@@ -6,11 +6,20 @@ values ('1', 'Admin', 'Davao City', 'admin@gmail.com', '0912-345-6789', 'Admin U
 insert into UserDetails([UserId], [Name], [Address], [Email], [Mobile], [Remarks], [UserStatusId], [MasterCityId], [MasterAreaId] )
 values ('4', 'Shopper', 'Davao City', 'shopper@gmail.com', '0912-345-6789', 'Shopper User', 1, 1, 1);
 
+-- store admin login --
+insert into Users ([Username],[Password]) 
+values	('nccc.admin'	,'12345'),
+		('sm.admin'		,'12345'),
+		('gaisano.admin','12345');
+		
+insert into UserRolesMappings([UserId],[RoleId]) values
+(6,2),(7,2),(8,2);
+
 -- create stores --
 insert into StoreDetails([LoginId],[Name],[Address],[Remarks],[StoreStatusId],[StoreCategoryId],[MasterCityId],[MasterAreaId]) 
-values	(1, 'NCCC Mall', 'Matina Crossing, Davao City','', 1, 3, 1, 1),
-		(2, 'SM Mall', 'Ecoland, Davao City','', 1, 3, 1, 1),
-		(3, 'Gaisano Mall', 'Sta Ana, Davao City','', 1, 3, 2, 1);
+values	(6, 'NCCC Mall', 'Matina Crossing, Davao City','', 1, 3, 1, 1),
+		(7, 'SM Mall', 'Ecoland, Davao City','', 1, 3, 1, 1),
+		(8, 'Gaisano Mall', 'Sta Ana, Davao City','', 1, 3, 2, 1);
 
 -- store images --
 insert into StoreImages([StoreDetailId],[StoreImgTypeId],[ImageUrl]) values

@@ -16,6 +16,8 @@ namespace eCart.Areas.Store.Controllers
         private StoreContext db = new StoreContext();
         private StoreFactory storeFactory = new StoreFactory();
 
+        private int STOREADMIN = 2;
+
         //Authentication
         private readonly ecartdbContainer _dbContext = new ecartdbContainer();
 
@@ -24,26 +26,6 @@ namespace eCart.Areas.Store.Controllers
         {
             return View();
         }
-
-        //public ActionResult Login() {
-
-        //    var storeTest = db.StoreDetails.FirstOrDefault();
-
-        //    ViewBag.username = "";
-
-        //    return View();
-        //}
-
-        //// Store/Accounts/Login
-        //[HttpPost]
-        //public ActionResult Login( string username, string password )
-        //{
-        //    Session["STOREID"] = "1";   //For test only
-        //    var LoginId = 1;
-
-        //    return RedirectToAction("Index", "Home", new { area = "Store", id = LoginId });
-        //}
-
 
         /// <summary>
         /// Login function 
@@ -61,28 +43,28 @@ namespace eCart.Areas.Store.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool IsValidUser = _dbContext.Users
-               .Any(u => u.Username.ToLower() == user.Username.ToLower() && u.Password == user.Password);
+                var accMgr = storeFactory.AccMgr;
 
-                if (IsValidUser)
+                if (accMgr.IsUserValid(user))
                 {
-                    FormsAuthentication.SetAuthCookie(user.Username, false);
-                    Session["USER"] = user.Username;
+                    var login = accMgr.GetUser(user.Username, user.Password);
 
-                    var login = _dbContext.Users.Where(u => u.Username.ToLower() == user.Username.ToLower() && u.Password == user.Password).FirstOrDefault();
-                    var store = _dbContext.StoreDetails.Where(s => s.LoginId == login.Id.ToString()).FirstOrDefault();
+                    if (accMgr.IsUserInRole(login.Id, STOREADMIN))
+                    {
+                        var store = storeFactory.StoreMgr.GetStoreDetailByLoginId(login.Id.ToString());
+                        if (store != null)
+                        {
+                            FormsAuthentication.SetAuthCookie(user.Username, false);
+                            Session["USER"] = user.Username;
+                            Session["STOREID"] = store.Id;   //For test only
 
-                    //Session["STOREID"] = store.Id.ToString();  
-                    //var LoginId = store.Id;
-
-                    Session["STOREID"] = 1;   //For test only
-                    var LoginId = 1;          //For test only
-
-                    return RedirectToAction("Index", "Home", new { area = "Store", id = LoginId });
-
+                            return RedirectToAction("Index", "Home", new { area = "Store", id = store.Id });
+                        }
+                    }
                 }
             }
-            ModelState.AddModelError("", "invalid Username or Password");
+
+            ModelState.AddModelError("Password", "invalid Username or Password");
             return View();
         }
 

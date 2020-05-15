@@ -28,5 +28,6 @@ namespace eCart.Interfaces
         //Business Layer
         bool CreateStore(StoreDetail storeDetail);
         bool EditStore(StoreDetail storeDetail);
+        StoreDetail GetStoreDetailByLoginId(string loginId);
     }
 }

@@ -21,5 +21,10 @@ namespace eCart.Interfaces
 
         string CreateUser(string username, string password);
         void SetUserRole(int userId, int roleId);
+
+        User GetUser(string username, string password);
+        bool IsUserValid(User user);
+        bool IsUserInRole(int userId, int roleId);
+
     }
 }

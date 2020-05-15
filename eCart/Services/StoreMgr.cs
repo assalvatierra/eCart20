@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using eCart.Models;
 using eCart.Areas.Store.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace eCart.Services
 {
@@ -242,15 +243,21 @@ namespace eCart.Services
         public bool CreateStore(StoreDetail storeDetail)
         {
             return storeDb.CreateStoreDetail(storeDetail);
-            
         }
 
         public bool EditStore(StoreDetail storeDetail)
         {
             return storeDb.EditStoreDetail(storeDetail);
-
         }
 
-
+        public StoreDetail GetStoreDetailByLoginId(string loginId)
+        {
+            if (!loginId.IsNullOrWhiteSpace())
+            {
+                return storeDb.GetStoreByUserId(loginId);
+            }
+            return null;
+          
+        }
     }
 }
