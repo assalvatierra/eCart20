@@ -73,8 +73,6 @@ namespace eCart.Areas.Shopper.Controllers
                         {
                             if (checkUserRole(userId, 4))
                             {
-
-
                                 if (CreateCart())
                                 {
                                     Session["USERID"] = userDetailID;

@@ -5,6 +5,7 @@ using System.Web;
 using eCart.Models;
 using eCart.Areas.Store.Models;
 using Microsoft.Ajax.Utilities;
+using System.Data.Entity;
 
 namespace eCart.Services
 {
@@ -246,20 +247,6 @@ namespace eCart.Services
             return storeDb.CreateStoreDetail(storeDetail);
         }
 
-        public bool EditStore(StoreDetail storeDetail)
-        {
-            return storeDb.EditStoreDetail(storeDetail);
-        }
-
-        public StoreDetail GetStoreDetailByLoginId(string loginId)
-        {
-            if (!loginId.IsNullOrWhiteSpace())
-            {
-                return storeDb.GetStoreByUserId(loginId);
-            }
-            return null;
-        }
-
         public bool RegisterStore(StoreRegistration newStore)
         {
             try
@@ -282,6 +269,108 @@ namespace eCart.Services
                 throw ex;
             }
         }
+
+        public bool EditStore(StoreDetail storeDetail)
+        {
+            return storeDb.EditStoreDetail(storeDetail);
+        }
+
+        public bool EditStoreImg(int storeId, string imgUrl, int imgTypeId)
+        {
+            try
+            {
+                //get store img ref
+                var storeImg = db.StoreImages.Where(s => s.StoreDetailId == storeId && s.StoreImgTypeId == imgTypeId).FirstOrDefault();
+
+                storeImg.ImageUrl = imgUrl;
+                db.Entry(storeImg).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public StoreDetail GetStoreDetailByLoginId(string loginId)
+        {
+            if (!loginId.IsNullOrWhiteSpace())
+            {
+                return storeDb.GetStoreByUserId(loginId);
+            }
+            return null;
+        }
+
+        public StoreImage GetStoreImg(int storeId)
+        {
+            int IMAGEFRONT = 1;
+
+            if (storeDb.IsStoreImgExist(storeId))
+            {
+                return storeDb.GetStoreImg(storeId, IMAGEFRONT);
+            }
+
+            //return placeholder
+            return new StoreImage() { 
+                Id = 0,
+                StoreDetailId = storeId,
+                StoreImgTypeId = 1,
+                ImageUrl = "/img/placeholders/placeholder-product.png"
+            };
+            
+        }
+
+        public bool IsStoreImgExist(int storeId)
+        {
+            return storeDb.IsStoreImgExist(storeId);
+        }
+
+        public bool CreatStoreImg(int storeId, string imgUrl, int ImgTypeId)
+        {
+            StoreImage storeImage = new StoreImage()
+            {
+                ImageUrl = imgUrl,
+                StoreImgTypeId = ImgTypeId,
+                StoreDetailId = storeId,
+            };
+
+            storeDb.CreateStoreImg(storeImage);
+
+            return true;
+        }
+
+        public bool ValidateStoreImg(int storeId, string ImgUrl)
+        {
+
+            if (!ImgUrl.IsNullOrWhiteSpace())
+            {
+                //check if there is existing storeImg
+                if (IsStoreImgExist(storeId))
+                {
+                    //update store Img
+                    EditStoreImg(storeId, ImgUrl, 1);
+                }
+                else
+                {
+                    //create storeImg
+                    CreatStoreImg(storeId, ImgUrl, 1);
+                }
+            }
+            else
+            {
+                if (IsStoreImgExist(storeId))
+                {
+                    //when imgeUrl is empty and Previous img exists throw error
+                    return false;
+                }
+
+            }
+
+            return true;
+        }
+
 
 
         #endregion

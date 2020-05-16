@@ -15,5 +15,9 @@ namespace eCart.Interfaces
         bool CreateStoreDetail(StoreDetail storeDetail);
         bool EditStoreDetail(StoreDetail storeDetail);
 
+        bool IsStoreImgExist(int storeId);
+        StoreImage GetStoreImg(int storeId, int imgTypeId);
+        bool CreateStoreImg(StoreImage storeImage);
+
     }
 }

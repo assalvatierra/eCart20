@@ -60,8 +60,39 @@ namespace eCart.Areas.Store.Models
                 }
                 return null;
         }
+
         #endregion
 
+
+        #region Store Edit
+        public bool IsStoreImgExist(int storeId)
+        {
+            return db.StoreImages.Any(s => s.StoreDetailId == storeId);
+        }
+
+        public StoreImage GetStoreImg(int storeId, int imgTypeId)
+        {
+            return db.StoreImages.Where(s => s.StoreDetailId == storeId && s.StoreImgTypeId == imgTypeId).FirstOrDefault();
+        }
+
+        public bool CreateStoreImg(StoreImage storeImage)
+        {
+            try
+            {
+                db.StoreImages.Add(storeImage);
+                db.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+
+        #endregion
 
     }
 }

@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using eCart.Areas.Store.Models;
 using eCart.Models;
 using eCart.Services;
+using Microsoft.Ajax.Utilities;
 
 namespace eCart.Areas.Store.Controllers
 {
@@ -102,7 +103,10 @@ namespace eCart.Areas.Store.Controllers
             ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", storeDetail.MasterCityId);
             ViewBag.StoreCategoryId = new SelectList(db.StoreCategories, "Id", "Name", storeDetail.StoreCategoryId);
             ViewBag.StoreStatusId = new SelectList(db.StoreStatus, "Id", "Name", storeDetail.StoreStatusId);
-            ViewBag.StoreImg = storeDetail.StoreImages.LastOrDefault().ImageUrl;
+
+            var storeImg = storeFactory.StoreMgr.GetStoreImg(storeDetail.Id);
+            ViewBag.StoreImg = storeImg;
+
             return View(storeDetail);
         }
 
@@ -115,50 +119,59 @@ namespace eCart.Areas.Store.Controllers
         {
             if (ModelState.IsValid)
             {
+                var storeMgr = storeFactory.StoreMgr;
+
                 if (storeDetail.Remarks == null)
                 {
                     storeDetail.Remarks = " ";
-
                 }
 
-                if (ImgUrl != null)
+                if (ValidateEditFields(storeDetail))
                 {
-                    //update store Img
-                    //storeDetail.StoreImages.FirstOrDefault().ImageUrl = ImgUrl;
-                    var storeImg = db.StoreImages.Where(s => s.StoreDetailId == storeDetail.Id).FirstOrDefault();
-                    storeImg.ImageUrl = ImgUrl;
-                    db.Entry(storeImg).State = EntityState.Modified;
-
+                    if(storeMgr.ValidateStoreImg(storeDetail.Id, ImgUrl))
+                    {
+                        //var editResult = storeMgr.EditStore(storeDetail);
+                        //if (editResult)
+                        //{
+                            return RedirectToAction("Index", "Home", new { area = "Store", id = storeDetail.Id });
+                        //}
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Store Image cannot be empty.");
+                    }
                 }
-
-                //db.Entry(storeDetail).State = EntityState.Modified;
-                //db.SaveChanges();
-
-                storeFactory.StoreMgr.EditStore(storeDetail);
-
-                return RedirectToAction("Index", "Home",new { area="Store", id = storeDetail.Id });
             }
+
             ViewBag.MasterAreaId = new SelectList(db.MasterAreas, "Id", "Name", storeDetail.MasterAreaId);
             ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name", storeDetail.MasterCityId);
             ViewBag.StoreCategoryId = new SelectList(db.StoreCategories, "Id", "Name", storeDetail.StoreCategoryId);
             ViewBag.StoreStatusId = new SelectList(db.StoreStatus, "Id", "Name", storeDetail.StoreStatusId);
+            var storeImg = storeFactory.StoreMgr.GetStoreImg(storeDetail.Id);
+            ViewBag.StoreImg = storeImg;
             return View(storeDetail);
         }
 
-
-        public void AddStoreImg(int id, string ImgUrl )
+        private bool ValidateEditFields(StoreDetail store)
         {
-            var StoreImage = new StoreImage()
+            var isValid = true;
+            if (store.Name.IsNullOrWhiteSpace())
             {
-                ImageUrl = ImgUrl,
-                StoreImgTypeId = 1,
-                StoreDetailId = id
-            };
+                ModelState.AddModelError("Name", "Store Name cannot be empty.");
+                isValid = false;
+            }
 
+            if (store.Address.IsNullOrWhiteSpace())
+            {
+                ModelState.AddModelError("Address", "Store Address cannot be empty.");
+                isValid = false;
+            }
 
-            db.StoreImages.Add(StoreImage);
-            db.SaveChanges();
+            return isValid;
         }
+
+
+
 
         // GET: Store/StoreDetails/Delete/5
         public ActionResult Delete(int? id)

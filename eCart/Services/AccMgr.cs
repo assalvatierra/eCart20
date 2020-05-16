@@ -14,22 +14,6 @@ namespace eCart.Services
         #region For Revision
         ecartdbContainer db = new ecartdbContainer();
 
-        public bool VerifyUserRole(User user, int roleId)
-        {
-
-                var userLogin = db.Users.Where(u => u.Username.ToLower() == user.Username.ToLower() && u.Password == user.Password).FirstOrDefault();
-                var isUserInRole = db.UserRolesMappings.Where(r => r.UserId == userLogin.Id && r.RoleId == roleId).FirstOrDefault();
-
-                if (db.UserRolesMappings.Any(r => r.UserId == userLogin.Id && r.RoleId == roleId))
-                {
-                    return true;
-                }
-
-                //invalid login
-                return false;
-
-        }
-
         public int CheckLoginCredentials(string username, string password)
         {
             try
@@ -60,45 +44,6 @@ namespace eCart.Services
             {
                 return -1;
             }
-        }
-
-        public string GetUserName(int userId)
-        {
-            try
-            {
-                var user = db.UserDetails.Find(userId);
-
-                return user.Name;
-            }
-            catch (Exception)
-            {
-                return "NULL";
-            }
-        }
-
-        public UserDetail GetUserDetail(int userId)
-        {
-            if (db.Users.Find(userId) != null )
-            {
-                var user = db.Users.Find(userId);
-                var userdetails = db.UserDetails.Find(user.Id);
-                return userdetails;
-            }
-
-            var guestUser = new UserDetail
-            {
-               Name = "Guest",
-               Address = "N/A",
-               Email = "N/A,",
-               MasterAreaId = 1,
-               MasterCityId = 1,
-               Mobile = "NA",
-               Remarks = "NA",
-               UserStatusId = 1,
-               UserId = "0"
-            };
-
-            return guestUser;
         }
 
         public bool RegisterAccount(AccountRegistration newAccount)
@@ -155,6 +100,7 @@ namespace eCart.Services
                 throw ex;
             }
         }
+
         #endregion
 
         public bool IsUserValid(User user)

@@ -31,7 +31,12 @@ namespace eCart.Interfaces
         bool CreateStore(StoreDetail storeDetail);
         bool RegisterStore(StoreRegistration newStore);
         bool EditStore(StoreDetail storeDetail);
+        bool EditStoreImg(int storeId, string imgUrl, int imgTypeId);
         StoreDetail GetStoreDetailByLoginId(string loginId);
+        StoreImage GetStoreImg(int storeId);
+        bool IsStoreImgExist(int storeId);
+        bool CreatStoreImg(int storeId, string imgUrl, int ImgTypeId);
+        bool ValidateStoreImg(int storeId, string imgUrl);
 
     }
 }
