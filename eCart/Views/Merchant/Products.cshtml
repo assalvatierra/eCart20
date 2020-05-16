@@ -12,10 +12,10 @@
                 <p class="text-muted">  Address: @ViewBag.StoreAddress  </p>
             </div>
         </div>
-        <div class="col-lg-2 " >
+        <div class="col-lg-2 ">
             <h4>Featured Store: </h4>
 
-            <a href="@Url.Action("Products",new { id = ViewBag.nextStoreId })" >
+            <a href="@Url.Action("Products",new { id = ViewBag.nextStoreId })">
                 <img src="@ViewBag.nextStoreImg" style="width:50%;margin-left:20px;" class="store-hover" />
             </a>
         </div>
@@ -31,15 +31,15 @@
     {
 
         <div class="col-sm-2 item-list">
-             @if (item.ItemMaster.ItemImages.FirstOrDefault() != null)
-              {
-                  var image = item.ItemMaster.ItemImages.FirstOrDefault(); 
-                  <img src="@image.ImageUrl" class="item-image" width="60" />
-              }
-              else
-              {
-                  <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail" width="60" />
-              }
+            @if (item.ItemMaster.ItemImages.FirstOrDefault() != null)
+            {
+                var image = item.ItemMaster.ItemImages.FirstOrDefault();
+                <img src="@image.ImageUrl" class="item-image" width="60" />
+            }
+            else
+            {
+                <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail" width="60" />
+            }
             <div class="item-desc">
                 <h4> @item.ItemMaster.Name </h4>
                 <b class="text-success"> Php @item.UnitPrice.ToString("0.00") </b>
@@ -62,7 +62,8 @@
 
 @{ Html.RenderAction("_CartSummary", "CartDetails", new { area = "Shopper" }); }
 
-<script src="~/Scripts/Cart/cart.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Areas/Shopper/Scripts/cart.js"></script>
 <script>
      //On Add to Cart Button Click
     function AddtoCart(e) {
