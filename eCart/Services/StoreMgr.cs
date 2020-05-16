@@ -6,14 +6,20 @@ using eCart.Models;
 using eCart.Areas.Store.Models;
 using Microsoft.Ajax.Utilities;
 using System.Data.Entity;
+using eCart.Interfaces;
 
 namespace eCart.Services
 {
     public class StoreMgr : Interfaces.iStoreMgr    
     {
 
-        public ecartdbContainer db = new ecartdbContainer();
-        public StoreDBLayer storeDb = new StoreDBLayer();
+        private ecartdbContainer db = new ecartdbContainer();
+        private iStoreDb storeDb = new StoreDBLayer(); //utilizing interfaces
+
+        public void setDbLayer(iStoreDb storedblayer)
+        {
+            this.storeDb = storedblayer;
+        }
 
         #region For Revision
 

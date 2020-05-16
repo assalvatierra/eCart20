@@ -9,6 +9,7 @@ namespace eCart.Interfaces
 {
     public interface iStoreMgr
     {
+        void setDbLayer(iStoreDb storedblayer);
         List<Models.StoreDetail> getFeaturedStores();
         List<Models.StoreItem> getFeaturedItems();
         List<Models.StoreItem> getStoreItems(int id);
@@ -27,7 +28,7 @@ namespace eCart.Interfaces
 
         //Business Layer
 
-        //Store Registration
+       //Store Registration
         bool CreateStore(StoreDetail storeDetail);
         bool RegisterStore(StoreRegistration newStore);
         bool EditStore(StoreDetail storeDetail);

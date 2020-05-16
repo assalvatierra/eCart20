@@ -12,13 +12,12 @@ namespace eCart.Controllers
 {
     public class HomeController : Controller
     {
-        StoreMgr storeMgr = new StoreMgr();
+        //StoreMgr storeMgr = new StoreMgr();
+        Services.StoreFactory store = new Services.StoreFactory();
 
         public ActionResult Index()
         {
-            Services.StoreFactory store = new Services.StoreFactory();
-
-            List<Models.StoreDetail> featuredstores = store.StoreMgr.getFeaturedStores();
+            List<Models.StoreDetail> featuredstores = store.StoreMgr.getFeaturedStores(); //using the factory
 
             // Session["USER"] = "Admin";   //For test only
             //  CreateCart();
@@ -49,16 +48,16 @@ namespace eCart.Controllers
         // PartialView for Store List View
         public PartialViewResult _StoreList()
         {
-            var featuredStores = storeMgr.getFeaturedStores().Take(3);
-
+            //var featuredStores = storeMgr.getFeaturedStores().Take(3);
+            var featuredStores = store.StoreMgr.getFeaturedStores().Take(3); //using the factory
             return PartialView(featuredStores);
         }
 
         // PartialView for Store List View
         public PartialViewResult _ProductList()
         {
-            var featuredItems = storeMgr.getFeaturedItems().Take(12);
-
+            //var featuredItems = storeMgr.getFeaturedItems().Take(12);
+            var featuredItems = store.StoreMgr.getFeaturedItems().Take(12); //using the factory
             return PartialView(featuredItems);
         }
 

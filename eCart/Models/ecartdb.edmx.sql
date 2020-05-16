@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/14/2020 19:56:27
+-- Date Created: 05/15/2020 15:53:08
 -- Generated from EDMX file: D:\Projects\eCart20\eCart\Models\ecartdb.edmx
 -- --------------------------------------------------
 
@@ -161,6 +161,12 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_StoreKioskStoreKioskOrder]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[StoreKioskOrders] DROP CONSTRAINT [FK_StoreKioskStoreKioskOrder];
 GO
+IF OBJECT_ID(N'[dbo].[FK_UserUserRolesMapping]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserRolesMappings] DROP CONSTRAINT [FK_UserUserRolesMapping];
+GO
+IF OBJECT_ID(N'[dbo].[FK_RoleUserRolesMapping]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[UserRolesMappings] DROP CONSTRAINT [FK_RoleUserRolesMapping];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -282,6 +288,15 @@ IF OBJECT_ID(N'[dbo].[StoreKiosks]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[StoreKioskOrders]', 'U') IS NOT NULL
     DROP TABLE [dbo].[StoreKioskOrders];
+GO
+IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Users];
+GO
+IF OBJECT_ID(N'[dbo].[Roles1]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Roles1];
+GO
+IF OBJECT_ID(N'[dbo].[UserRolesMappings]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserRolesMappings];
 GO
 
 -- --------------------------------------------------
