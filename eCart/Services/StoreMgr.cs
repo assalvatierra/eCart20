@@ -14,7 +14,6 @@ namespace eCart.Services
         public ecartdbContainer db = new ecartdbContainer();
         public StoreDBLayer storeDb = new StoreDBLayer();
 
-
         #region For Revision
 
         public List<Models.StoreDetail> getFeaturedStores()
@@ -240,6 +239,8 @@ namespace eCart.Services
 
         #endregion
 
+        #region Store Registration
+
         public bool CreateStore(StoreDetail storeDetail)
         {
             return storeDb.CreateStoreDetail(storeDetail);
@@ -257,7 +258,32 @@ namespace eCart.Services
                 return storeDb.GetStoreByUserId(loginId);
             }
             return null;
-          
         }
+
+        public bool RegisterStore(StoreRegistration newStore)
+        {
+            try
+            {
+                StoreDetail store = new StoreDetail();
+                store.Name = newStore.Name;
+                store.Address = newStore.Address;
+                store.LoginId = newStore.LoginId;
+                store.MasterAreaId = newStore.MasterAreaId;
+                store.MasterCityId = newStore.MasterCityId;
+                store.StoreCategoryId = newStore.StoreCategoryId;
+                store.Remarks = newStore.Remarks ?? " ";
+                store.StoreStatusId = newStore.StoreStatusId;
+
+                return storeDb.CreateStoreDetail(store);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        #endregion
     }
 }

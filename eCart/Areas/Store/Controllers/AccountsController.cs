@@ -7,6 +7,7 @@ using System.Web.Security;
 using eCart.Areas.Store.Models;
 using eCart.Models;
 using eCart.Services;
+using Microsoft.Ajax.Utilities;
 
 namespace eCart.Areas.Store.Controllers
 {
@@ -79,33 +80,111 @@ namespace eCart.Areas.Store.Controllers
 
         public ActionResult Register()
         {
+            //Sample data
+            StoreRegistration store = new StoreRegistration()
+            {
+                Address = "Bangkal, Davao City",
+                MasterAreaId = 1,
+                MasterCityId = 1,
+                Name = "Seven Eleven Bangkal",
+                Password = "12345",
+                Password2 = "12345",
+                StoreCategoryId = 2,
+                Username = "SevenEleven",
+
+            };
+
             ViewBag.StoreCategoryId = new SelectList(db.StoreCategories, "Id", "Name");
             ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name");
             ViewBag.MasterAreaId = new SelectList(db.MasterAreas, "Id", "Name");
-            return View();
+            return View(store);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(StoreRegistration store)
         {
 
-            var accMgr = storeFactory.AccMgr;
-
-            if (accMgr.CheckLoginCredentials(store.Email, store.Password) > 0)
+            if (validateRegistrationFields(store))
             {
-                //create user for store
-                var userId = accMgr.CreateUser(store.Email, store.Password);
-                store.LoginId = userId; 
+                var accMgr = storeFactory.AccMgr;
+                if (!accMgr.IsUserExists(store.Username))
+                {
+                    //create user for store
+                    var userId = accMgr.CreateUser(store.Username, store.Password);
+                    if (int.Parse(userId) > 0)
+                    {
+                        accMgr.SetUserRole(int.Parse(userId), STOREADMIN);
+                            
+                        store.LoginId = userId;
+                        store.StoreStatusId = 1;
+                         
+                        //register store
+                        var newStore = storeFactory.StoreMgr.RegisterStore(store);
 
-                //register store
-                accMgr.RegisterStore(store);
-                return RedirectToAction("Login");
+                        if (newStore)
+                        {
+                            return RedirectToAction("Login");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Invalid Store Details");
+                        }
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("Username", "Username already exists");
+                }
             }
 
             ViewBag.StoreCategoryId = new SelectList(db.StoreCategories, "Id", "Name");
             ViewBag.MasterCityId = new SelectList(db.MasterCities, "Id", "Name");
             ViewBag.MasterAreaId = new SelectList(db.MasterAreas, "Id", "Name");
             return View();
+        }
+
+        public bool validateRegistrationFields(StoreRegistration store)
+        {
+            bool isValid = true;
+            if (store.Password != store.Password2)
+            {
+                ModelState.AddModelError("Password", "Password does not match");
+                isValid = false;
+            }
+
+            if (store.Username.IsNullOrWhiteSpace())
+            {
+                ModelState.AddModelError("Username", "Username cannot be empty");
+                isValid = false;
+            }
+
+            if (store.Password.IsNullOrWhiteSpace())
+            {
+                ModelState.AddModelError("Password", "Password cannot be empty");
+                isValid = false;
+            }
+
+            if (store.Password2.IsNullOrWhiteSpace())
+            {
+                ModelState.AddModelError("Password2", "Password cannot be empty");
+                isValid = false;
+            }
+
+            if (store.Name.IsNullOrWhiteSpace())
+            {
+                ModelState.AddModelError("Name", "Store Name cannot be empty");
+                isValid = false;
+            }
+
+            if (store.Address.IsNullOrWhiteSpace())
+            {
+                ModelState.AddModelError("Address", "Address cannot be empty");
+                isValid = false;
+            }
+
+
+            return isValid;
         }
     }
 }

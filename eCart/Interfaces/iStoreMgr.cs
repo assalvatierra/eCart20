@@ -26,8 +26,12 @@ namespace eCart.Interfaces
         void updateStoreItemImage(int storeItemId, string imageUrl);
 
         //Business Layer
+
+        //Store Registration
         bool CreateStore(StoreDetail storeDetail);
+        bool RegisterStore(StoreRegistration newStore);
         bool EditStore(StoreDetail storeDetail);
         StoreDetail GetStoreDetailByLoginId(string loginId);
+
     }
 }

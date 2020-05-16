@@ -9,6 +9,8 @@ namespace eCart.Services
 {
     public class AccMgr : iAccMgr
     {
+        AccDb adb = new AccDb();
+
         #region For Revision
         ecartdbContainer db = new ecartdbContainer();
 
@@ -33,7 +35,7 @@ namespace eCart.Services
             try
             {
                 //verify user by password
-                if (db.Users.Any(u=>u.Username.ToLower() == username.ToLower() && u.Password == password))
+                if (db.Users.Any(u=>u.Username.ToLower() == username.ToLower()))
                 {
                     var user = db.Users.Where(u => u.Username.ToLower() == username.ToLower() && u.Password == password).FirstOrDefault();
 
@@ -74,76 +76,6 @@ namespace eCart.Services
             }
         }
 
-        public bool RegisterAccount(AccountRegistration newAccount)
-        {
-            try
-            {
-                UserDetail user = new UserDetail()
-                {
-                    UserId = newAccount.UserId,
-                    Name = newAccount.Name,
-                    Email = newAccount.Email,
-                    Address = newAccount.Address,
-                    Mobile = newAccount.Mobile,
-                    MasterAreaId = newAccount.MasterAreaId,
-                    MasterCityId = newAccount.MasterCityId,
-                    Remarks= " ",
-                    UserStatusId = newAccount.UserStatusId
-                };
-
-                db.UserDetails.Add(user);
-                db.SaveChanges();
-
-                return true;
-            }
-            catch (Exception )
-            {
-                //throw ex;
-                return false;
-            }
-        }
-
-        public string CreateUser(string username, string password)
-        {
-            try
-            {
-                var newUser = new User
-                {
-                    Username = username,
-                    Password = password
-                };
-
-                db.Users.Add(newUser);
-                db.SaveChanges();
-
-                return newUser.Id.ToString();
-            }
-            catch (Exception)
-            {
-                return "Error";
-            }
-        }
-
-        public void SetUserRole(int userId, int roleId)
-        {
-            try
-            {
-                var userRoles = new UserRolesMapping
-                {
-
-                    UserId = userId,
-                    RoleId = roleId
-                };
-                db.UserRolesMappings.Add(userRoles);
-                db.SaveChanges();
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
         public UserDetail GetUserDetail(int userId)
         {
             if (db.Users.Find(userId) != null )
@@ -169,29 +101,32 @@ namespace eCart.Services
             return guestUser;
         }
 
-        public void RegisterStore(StoreRegistration newStore)
+        public bool RegisterAccount(AccountRegistration newAccount)
         {
             try
             {
-                StoreDetail store = new StoreDetail()
+                UserDetail user = new UserDetail()
                 {
-                    Id = 0,
-                    LoginId = newStore.LoginId,
-                    Name = newStore.Name,
-                    Address = newStore.Address,
-                    MasterAreaId = newStore.MasterAreaId,
-                    MasterCityId = newStore.MasterCityId,
-                    Remarks = newStore.Remarks,
-                    StoreCategoryId = newStore.StoreCategoryId,
-                    StoreStatusId = 1,
+                    UserId = newAccount.UserId,
+                    Name = newAccount.Name,
+                    Email = newAccount.Email,
+                    Address = newAccount.Address,
+                    Mobile = newAccount.Mobile,
+                    MasterAreaId = newAccount.MasterAreaId,
+                    MasterCityId = newAccount.MasterCityId,
+                    Remarks = " ",
+                    UserStatusId = newAccount.UserStatusId
                 };
 
-                db.StoreDetails.Add(store);
+                db.UserDetails.Add(user);
                 db.SaveChanges();
+
+                return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                //throw ex;
+                return false;
             }
         }
 
@@ -222,18 +157,14 @@ namespace eCart.Services
         }
         #endregion
 
-        AccDb adb = new AccDb();
-
         public bool IsUserValid(User user)
         {
-
             var userList = adb.GetUserList();
             if (userList.Any(u=>u.Username.ToLower() == user.Username.ToLower() && u.Password == user.Password))
             {
                 return true;
             }
             return false;
-          
         }
 
         public User GetUser(string username, string password)
@@ -261,10 +192,75 @@ namespace eCart.Services
 
                 return false;
             }
-            catch(Exception ex)
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool IsUserExists(string username)
+        {
+            try
+            {
+                var userList = adb.GetUserList();
+
+                if(userList.Any(u=>u.Username.ToLower() == username.ToLower()))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public string CreateUser(string username, string password)
+        {
+            try
+            {
+                var newUser = new User
+                {
+                    Username = username,
+                    Password = password
+                };
+
+                var result = adb.AddUser(newUser);
+
+                if (result)
+                {
+                    return newUser.Id.ToString();
+                }
+
+                return "0";
+
+            }
+            catch (Exception)
+            {
+                return "0";
+            }
+        }
+
+        public bool SetUserRole(int userId, int roleId)
+        {
+            try
+            {
+                var userRoles = new UserRolesMapping
+                {
+                    UserId = userId,
+                    RoleId = roleId
+                };
+
+                return adb.AddUserRole(userRoles);
+
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
         }
+
     }
 }

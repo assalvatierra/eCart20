@@ -11,31 +11,37 @@
         <h1 style="color:royalblue;margin-left:90px;"> Store </h1>
         <h3 style="margin-left:30px;"> Register an Account</h3>
         <br />
-        <div class="form-group">
-            <label class="control-label"> Store Name </label>
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Store" } })
-        </div>
 
+        @Html.AntiForgeryToken()
         <div class="form-group">
-            <label class="control-label"> Email </label>
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "email" } })
+            <label class="control-label"> Username </label>
+            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @placeholder = "email" } })
+            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
             <label class="control-label"> Password </label>
             @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "password", @type = "password" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
             <label class="control-label"> Re-type Password </label>
-            <input type="password" class="form-control" placeholder="retype password" />
+            @Html.EditorFor(model => model.Password2, new { htmlAttributes = new { @class = "form-control", @placeholder = "re-type password", @type = "password" } })
+            @Html.ValidationMessageFor(model => model.Password2, "", new { @class = "text-danger" })
         </div>
 
         <hr />
+        <div class="form-group">
+            <label class="control-label"> Store Name </label>
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @placeholder = "Store" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
 
         <div class="form-group">
             <label class="control-label"> Address </label>
             @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @placeholder = "Address" } })
+            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">

@@ -13,5 +13,12 @@ namespace eCart.Interfaces
         User GetUser(string username, string password);
         List<User> GetUserList();
         List<UserRolesMapping> GetUserRoles(int id);
+
+        bool AddUser(User user);
+        bool AddUserRole(UserRolesMapping userRolesMapping);
+
+
+
+
     }
 }

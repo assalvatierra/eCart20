@@ -11,7 +11,9 @@ namespace eCart.Areas.Store.Models
     public class StoreDBLayer : iStoreDb
     {
         StoreContext sdb = new StoreContext();
+        ecartdbContainer db = new ecartdbContainer();
 
+        #region Store Registration
         public StoreDetail GetStoreDetails(int id)
         {
             var store = sdb.StoreDetails.Find(id);
@@ -22,14 +24,15 @@ namespace eCart.Areas.Store.Models
         {
             try
             {
-                sdb.StoreDetails.Add(storeDetail);
-                sdb.SaveChanges();
+                db.StoreDetails.Add(storeDetail);
+                db.SaveChanges();
 
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
-                return false;
+                throw ex;
+                //return false;
             }
         }
 
@@ -42,21 +45,23 @@ namespace eCart.Areas.Store.Models
 
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                throw ex;
                 return false;
             }
         }
 
         public StoreDetail GetStoreByUserId(string id)
         {
-        
                 if (sdb.StoreDetails.Any(s => s.LoginId == id))
                 {
                     return sdb.StoreDetails.Where(s => s.LoginId == id).FirstOrDefault();
                 }
                 return null;
-          
         }
+        #endregion
+
+
     }
 }

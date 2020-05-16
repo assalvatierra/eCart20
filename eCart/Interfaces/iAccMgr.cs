@@ -16,15 +16,16 @@ namespace eCart.Interfaces
         UserDetail GetUserDetail(int userId);
 
         bool RegisterAccount(AccountRegistration newAccount);
-        void RegisterStore(StoreRegistration newStore);
         void RegisterRider(RiderRegistration newRider);
 
+
         string CreateUser(string username, string password);
-        void SetUserRole(int userId, int roleId);
+        bool SetUserRole(int userId, int roleId);
 
         User GetUser(string username, string password);
         bool IsUserValid(User user);
         bool IsUserInRole(int userId, int roleId);
+        bool IsUserExists(string username);
 
     }
 }

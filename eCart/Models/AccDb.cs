@@ -12,6 +12,20 @@ namespace eCart.Models
     {
         ecartdbContainer db = new ecartdbContainer();
 
+        public bool AddUser(User user)
+        {
+            try
+            {
+                db.Users.Add(user);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public User GetUser(int id)
         {
             return db.Users.Find(id);
@@ -35,6 +49,22 @@ namespace eCart.Models
             }
 
             return null;
+        }
+
+        public bool AddUserRole(UserRolesMapping userRolesMapping)
+        {
+            try
+            {
+                db.UserRolesMappings.Add(userRolesMapping);
+                db.SaveChanges();
+
+                return true;
+
+            }catch
+            {
+                return false;
+            }
+
         }
     }
 }

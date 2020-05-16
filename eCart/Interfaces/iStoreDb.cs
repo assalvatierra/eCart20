@@ -13,7 +13,6 @@ namespace eCart.Interfaces
         StoreDetail GetStoreByUserId(string id);
 
         bool CreateStoreDetail(StoreDetail storeDetail);
-
         bool EditStoreDetail(StoreDetail storeDetail);
 
     }
