@@ -38,7 +38,7 @@
 
             <div class="row">
                 <div class="col-lg-12 cart-ID-div">
-                    <p> Cart #: <span class="Cart-ID"> @cart.Id.ToString("0000")  </span></p>
+                    <p> Cart #: <span class="Cart-ID" id="cartID"> @cart.Id.ToString("0000")  </span></p>
                 </div>
             </div>
 
@@ -48,22 +48,33 @@
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <span> Pickup Point: </span> <br />
-                    <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetail.Id')" id="pickupAddress-@cart.Id" value="@cart.StorePickupPoint.Id">
-                        @cart.StorePickupPoint.Address
-                    </a>
+                    @if (cart.DeliveryType == "Delivery")
+                    {
+                        <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="0">
+                            Delivery
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="" data-toggle="modal" data-target="#pickupModal" onclick="getPickupPoints('@cart.Id','@cart.StoreDetailId')" id="pickupAddress-@cart.Id" value="@cart.StorePickupPointId">
+                             @cart.StorePickupPoint.Address
+                        </a>
+                    }
+
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-12">
                     <span> DateTime Pickup: </span>
-                    <input type="text" name="pickup-date" value="@cart.DtPickup" class="date-link">
+                    <input type="text" name="pickup-date" value="@cart.DtPickup" class="date-link" onchange="dateChanged(@cart.Id)">
+                    <span id="cartID" hidden> @cart.Id </span>
                 </div>
                 <div class="col-lg-3 col-md-5 col-sm-12">
                     <span> Payment: </span> <br />
                     <a href="" id="paymentMode-@cart.Id" data-toggle="modal" data-target="#paymentModal" onclick="getPaymentReceivers(@cart.Id)">
-                       @if (cart.PaymentDetails != null)
+                        @if (cart.PaymentDetails != null)
                         {
                             switch (cart.PaymentDetails.LastOrDefault().PaymentReceiverId)
                             {
-                                case 1:<text> Store </text> break;
+                                case 1: <text> Store </text> break;
                                 case 2: <text> Bank  </text> break;
                                 case 3: <text> Paypal </text> break;
                                 case 4: <text> Padala </text> break;
@@ -108,7 +119,7 @@
                                     <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail" width="50" />
                                 }
 
-                                <span style="display:flex;flex-direction:column;padding-left:5px;" >
+                                <span style="display:flex;flex-direction:column;padding-left:5px;">
                                     <span class="item-ID"> Item #:  @item.StoreItemId </span>
                                     <b> @item.StoreItem.ItemMaster.Name </b>
                                     <span class="text-muted">  @item.Remarks1 </span>
@@ -198,45 +209,80 @@
 @section Scripts{
     <script src="~/Scripts/Cart/cart.js"></script>
     <script src="~/Areas/Shopper/Scripts/checkout.js"></script>
-
-    @*<script src="~/Scripts/DateRangePicker/moment.min.js"></script>
-        <script src="~/Scripts/DateRangePicker/daterangepicker.js"></script>
-        <link href="~/Content/daterangepicker.css" rel="stylesheet" />*@
+    <script src="~/Areas/Shopper/Scripts/checkoutPickup.js"></script>
+    <script src="~/Areas/Shopper/Scripts/checkoutPayment.js"></script>
     <script>
 
-
+        // Cart Checkout Date
         $('input[name="pickup-date"]').daterangepicker({
             singleDatePicker: true,
             startDate: moment().add('hours', 4),
             showDropdowns: true,
             timePicker: true,
             timePicker24Hour: false,
-            timePickerIncrement: 10,
+            timePickerIncrement: 1,
             autoUpdateInput: true,
             locale: {
                 format: 'MMM DD,YYYY h:mm A'
             },
         });
 
-        $('input[name="pickup-date"]').on('change', () => {
+        function dateChanged(cartId) {
             let paymentDate = $('input[name="pickup-date"]').val();
-            let cartId = $('input[name="pickup-date"]').siblings('#cartID').text();
             let now = moment();
 
-
             let dateComparision = moment(paymentDate).diff(now, 'minutes');
-            console.log(dateComparision);
+            //console.log(dateComparision);
             if (dateComparision > 120) {    //at least 120 minutes or 2 hours from now
+               
                 //update date on session
-                let result = $.post('/Shopper/CartDetails/SetCartPickupDate', { cartId: cartId, date: paymentDate });
-                console.log(result);
+                $.post('/Shopper/CartDetails/SetCartPickupDate', { cartId: cartId, date: paymentDate },
+                    (result) => {
+                        //console.log(result);
+                        if (result != 'True') {
+                            $('input[name="pickup-date"]').val(moment().add('hours', 4).format('MMM DD,YYYY h:mm A'));
+                            alert('Invalid Date, please input a valid date for the date and time pickup.');
+                        } 
+                    }
+                );
             } else {
                 $('input[name="pickup-date"]').val(moment().add('hours', 4).format('MMM DD,YYYY h:mm A'));
                 alert('Invalid Date, please input a valid date for the date and time pickup.');
             }
+        }
 
-        });
+        //$('input[name="pickup-date"]').on('change', () => {
+        //    let paymentDate = $('input[name="pickup-date"]').val();
+        //    let cartId = $(this).val();
+        //    let now = moment();
 
+        //    console.log(cartId);
+
+        //    let dateComparision = moment(paymentDate).diff(now, 'minutes');
+        //    console.log(dateComparision);
+        //    if (dateComparision > 120) {    //at least 120 minutes or 2 hours from now
+        //        console.log('updating date time');
+        //        //update date on session
+        //      var res =  $.post('/Shopper/CartDetails/SetCartPickupDate', { cartId: cartId, date: paymentDate },
+        //            (result) => {
+        //                console.log(result);
+        //                if (result != 'True') {
+        //                    $('input[name="pickup-date"]').val(moment().add('hours', 4).format('MMM DD,YYYY h:mm A'));
+        //                    alert('Invalid Date, please input a valid date for the date and time pickup.');
+        //                } else {
+        //                    console.log('set pickup date failed.');
+        //                }
+        //            }
+        //        );
+
+        //        console.log(res);
+               
+        //    } else {
+        //        $('input[name="pickup-date"]').val(moment().add('hours', 4).format('MMM DD,YYYY h:mm A'));
+        //        alert('Invalid Date, please input a valid date for the date and time pickup.');
+        //    }
+
+        //});
 
 
     </script>

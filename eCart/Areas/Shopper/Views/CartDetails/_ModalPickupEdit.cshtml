@@ -1,5 +1,4 @@
-﻿
-<!-- Change Pickup Location Modal -->
+﻿<!-- Change Pickup Location Modal -->
 <div id="pickupModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -11,7 +10,6 @@
             </div>
             <div class="modal-body">
                 <ul class="list-group" id="pickupLocList">
-
                 </ul>
             </div>
             <div class="modal-footer">
@@ -23,55 +21,3 @@
 </div>
 
 
-<script src="~/Scripts/jquery-3.4.1.min.js"> </script>
-<script>
-    //TODO: get pickup Locations based on stores - ajax
-
-    function getPickupPoints(cartId ,StoreId) {
-        $.getJSON("/Shopper/CartDetails/GetStorePickups", { storeId: StoreId }, (result) => {
-            $("#pickupLocList").children().remove();
-
-            for (var i = 0; i < result.length; i++) {
-          
-
-                var location = "<li type='button' class='list-group-item btn btn-default' value='" + result[i]['Id'] + "'" +
-                    " onclick='updateLocation(" + cartId +"," + StoreId + "," + result[i]['Id'] +")' >" + result[i]['Address'] + "</li>";
-                $("#pickupLocList").append(location);
-            }
-
-
-            var Delivery = "<li  type='button' class='list-group-item btn btn-default' value='0' onclick='updateAsDelivery(" + StoreId + ", " + cartId +")' > Delivery </li>";
-            $("#pickupLocList").append(Delivery);
-        });
-    }
-     
-    function updateLocation(cartId, storeId, pickupPointId) {
-
-
-        $.post('/Shopper/CartDetails/UpdatePickupPoint', { cartId: cartId, pickupPointId: pickupPointId });
-
-        $.getJSON('/Shopper/CartDetails/GetStorePickupAddress', { id: pickupPointId }, (address) => {
-
-            console.log(address);
-
-            $("#pickupAddress-" + cartId).val(pickupPointId);
-            $("#pickupAddress-" + cartId).text(address);
-
-            $("#pickupModal").modal('hide');
-        });
-
-        //$("#pickupAddress-" + storeId).val(pickup);
-        //$("#pickupAddress-" + storeId).text(pickup['Address']);
-    }
-
-    function updateAsDelivery(storeId, cartId) {
-        console.log("Delivery");
-
-        $.post('/Shopper/CartDetails/UpdateCartAsDelivery', { cartId: cartId });
-
-        $("#pickupAddress-" + cartId).val(0);
-        $("#pickupAddress-" + cartId).text("Delivery");
-        $("#pickupModal").modal('hide');
-    }
-
-</script>

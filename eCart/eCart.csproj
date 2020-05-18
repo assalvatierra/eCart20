@@ -173,6 +173,7 @@
     <Compile Include="Controllers\MerchantController.cs" />
     <Compile Include="Interfaces\iAccDb.cs" />
     <Compile Include="Interfaces\iAccMgr.cs" />
+    <Compile Include="Interfaces\iCartDb.cs" />
     <Compile Include="Interfaces\iCartMgr.cs" />
     <Compile Include="Interfaces\iRiderMgr.cs" />
     <Compile Include="Interfaces\iStoreDb.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Models\CartActivityType.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CartDbLayer.cs" />
     <Compile Include="Models\CartDelivery.cs">
       <DependentUpon>ecartdb.tt</DependentUpon>
     </Compile>
@@ -341,6 +343,8 @@
     <Content Include="Areas\Admin\img\bulleted-list.png" />
     <Content Include="Areas\Admin\Scripts\StorePayment.js" />
     <Content Include="Areas\Shopper\Scripts\checkout.js" />
+    <Content Include="Areas\Shopper\Scripts\checkoutPayment.js" />
+    <Content Include="Areas\Shopper\Scripts\checkoutPickup.js" />
     <Content Include="Areas\Store\Scripts\StorePayment.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

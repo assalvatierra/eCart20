@@ -21,39 +21,3 @@
 
     </div>
 </div>
-
-<script>
-
-    function getPaymentReceivers(cartId) {
-        $("#Receiver-list").children().remove();
-
-        $.get("/Shopper/CartDetails/GetPaymentRecievers", null, (result) => {
-            console.log(result);
-            for (var i = 0; i < result.length; i++ ) {
-                var button = "<button class='list-group-item' value='" + result[i]["Id"] + "' style='display:flex;' onclick='selectPayment(this," + result[i]["Id"] + "," + cartId + ")' > "+ 
-                   "<span style='margin:auto;' >"+ result[i]["Description"] +"</span></button>";
-                $("#Receiver-list").append(button);
-            }
-
-            //add default
-            var button = "<button class='list-group-item' style='display:flex;'  value='0' onclick='selectPayment(this, 0, " + cartId + ")' > " +
-                 "<span style='margin:auto;'> Cash On Delivery </span></button>";
-            $("#Receiver-list").append(button);
-
-        });
-    }
-
-    function selectPayment(e, receiverId, cartId) {
-
-        var res = $.post("/Shopper/CartDetails/SetPaymentReceiver", { cartId: cartId, receiverId: receiverId }, (result) => {
-            console.log("set PAyment:" + result);
-        })
-
-        console.log(res);
-
-        //udpate display text
-        var description = $(e).text();
-        $("#paymentMode-" + cartId).text(description);
-        $("#paymentModal").modal('hide');
-    }
-</script>

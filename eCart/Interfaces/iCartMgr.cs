@@ -27,15 +27,15 @@ namespace eCart.Interfaces
         bool addItemToCart(int id, int qty, decimal price);
         void addCartItemToDb(CartItem cartItem);
         bool addCartDetailToDb(CartDetail cartDetail);
-        bool addCartHistory(CartDetail cart, CartStatus status, string userId);
+        bool addCartHistory(CartDetail cart, int statusId, string userId);
         void addDeliveryDetails(int id, DateTime date, string address, int riderId, string remarks);
 
-        void updateCartPickupPoint(int storeId, int pickupPoint);
-        void updateCartAsDelivery(int cartId);
+        bool updateCartPickupPoint(int storeId, int pickupPoint);
+        bool updateCartAsDelivery(int cartId);
         void updateCartDetailsStatus(int cartId, string status);
         void updateCartDelivery(CartDelivery cartDelivery);
-        void setCartPickupDate(int cartId, DateTime pickupdate);
-        string setCartPaymentReceiver(int cartId, int recieverId);
+        bool setCartPickupDate(int cartId, DateTime pickupdate);
+        bool setCartPaymentReceiver(int cartId, int recieverId);
         string setDBCartStatus(int cartId, int cartStatusId, string userId);
         string setCartStatusCancelled(int cartId, string userId);
 
@@ -44,8 +44,8 @@ namespace eCart.Interfaces
         void removeCartdelivery(int id);
         bool removeCartSession(int storeId);
 
-        string saveOrder(List<CartDetail> cartDetails);
-        string saveOrder(CartDetail cart);
+        bool saveOrder(List<CartDetail> cartDetails);
+        bool saveOrder(CartDetail cart);
 
     }
 }

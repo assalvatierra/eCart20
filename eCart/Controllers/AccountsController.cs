@@ -79,6 +79,9 @@ namespace eCart.Controllers
 
         public ActionResult Logout()
         {
+            Session["USER"] = null;
+            Session["USERID"] = null;
+            Session["STOREID"] = null;
             FormsAuthentication.SignOut();
             return RedirectToAction("Login");
         }

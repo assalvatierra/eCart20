@@ -158,14 +158,19 @@ namespace eCart.Areas.Shopper.Controllers
             return PartialView(cartItems);
         }
 
-        public PartialViewResult CartCheckout()
+        public ActionResult CartCheckout()
         {
-            var cartDetails = cartMgr.getCartDetailsSummary();
-            ViewBag.PaymentParties = cartMgr.getPaymentRecievers();
-            var userDetailId = cartMgr.getUserId();
-            ViewBag.UserDetails = db.UserDetails.Find(userDetailId);
+            if (cartMgr.getUserId() != 0 )
+            {
+                var cartDetails = cartMgr.getCartDetailsSummary();
+                ViewBag.PaymentParties = cartMgr.getPaymentRecievers();
+                var userDetailId = cartMgr.getUserId();
+                ViewBag.UserDetails = db.UserDetails.Find(userDetailId);
         
-            return PartialView(cartDetails);
+                return PartialView(cartDetails);
+            }
+
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
 
@@ -210,38 +215,44 @@ namespace eCart.Areas.Shopper.Controllers
             }
         }
 
-        public string SubmitOrder(int id)
+        public bool SubmitOrder(int id)
         {
             try
             {
-                var msg = "Order Submitted";
-               
-                int cartDetailId = id;
-                var cartDetail = cartMgr.getCartDetailsSummary().Find(s => s.Id == id);
-                msg = cartMgr.saveOrder(cartDetail);  //save to db
+                if(cartMgr.getCartDetailsSummary().Find(s => s.Id == id) == null)
+                {
+                    return false;
+                }
 
-                return msg;
+                var cartDetail = cartMgr.getCartDetailsSummary().Find(s => s.Id == id);
+
+                if (cartDetail == null)
+                {
+                    return false;
+                }
+
+                return cartMgr.saveOrder(cartDetail);  //save to db
+
             }
-            catch (Exception ex)
+            catch
             {
-                return ex.Message;
+                return false;
             }
 
 
         }
 
-        public string SubmitAllOrder()
+        public bool SubmitAllOrder()
         {
             try
             {
                 var cartDetails = cartMgr.getCartDetailsSummary();
-                var msg = cartMgr.saveOrder(cartDetails); //save to db
+                return cartMgr.saveOrder(cartDetails); //save to db
 
-                return msg;
             }
-            catch (Exception ex)
+            catch 
             {
-                return ex.Message;
+                return false;
             }
 
         }
@@ -263,16 +274,29 @@ namespace eCart.Areas.Shopper.Controllers
         }
 
         [HttpPost]
-        public void UpdatePickupPoint(int cartId, int pickupPointId)
+        public bool UpdatePickupPoint(int cartId, int pickupPointId)
         {
-            cartMgr.updateCartPickupPoint(cartId, pickupPointId);
-
+            try
+            {
+               return cartMgr.updateCartPickupPoint(cartId, pickupPointId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public void UpdateCartAsDelivery(int cartId)
+        public bool UpdateCartAsDelivery(int cartId)
         {
-            cartMgr.updateCartAsDelivery(cartId);
-
+            try
+            {
+                return cartMgr.updateCartAsDelivery(cartId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
         [HttpGet]
@@ -283,18 +307,24 @@ namespace eCart.Areas.Shopper.Controllers
         }
 
         [HttpPost]
-        public string SetPaymentReceiver(int cartId, int receiverId)
+        public bool SetPaymentReceiver(int cartId, int receiverId)
         {
-           receiverId = receiverId != 0 ? receiverId : 1;
-           return cartMgr.setCartPaymentReceiver(cartId, receiverId);
+            try
+            {
+                receiverId = receiverId != 0 ? receiverId : 1;
+                return cartMgr.setCartPaymentReceiver(cartId, receiverId);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         [HttpPost]
-        public void SetCartPickupDate(int cartId, DateTime date)
+        public bool SetCartPickupDate(int cartId, DateTime date)
         {
-          
-           cartMgr.setCartPickupDate(cartId, date);
-          
+               return  cartMgr.setCartPickupDate(cartId, date);
+           
         }
 
 

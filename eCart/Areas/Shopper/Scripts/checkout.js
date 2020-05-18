@@ -1,4 +1,8 @@
-﻿function RemoveItem(e, Id, subtotal) {
+﻿/*
+ *  Cart Checkout View
+ */ 
+
+function RemoveItem(e, Id, subtotal) {
     var data = {
         id: Id
     }
@@ -11,7 +15,6 @@
     $(e).parent().parent().remove();
 }
 
-
 function UpdatePrice(removedsubtotal) {
     var totalPrice = parseFloat($('#Total-Price').text());
     totalPrice -= removedsubtotal;
@@ -19,10 +22,9 @@ function UpdatePrice(removedsubtotal) {
 }
 
 function SubmitOrder(e, cartId) {
-
     $.post("/Shopper/CartDetails/SubmitOrder", { id: cartId }, (result) => {
-        
-        if (result == "Order Submitted") {
+        console.log(result);
+        if (result == "True") {
             //on success, disable button and show success modal
             $(e).attr("disabled", true);
             $("#CheckOutSuccessModal").modal('show');
@@ -30,19 +32,14 @@ function SubmitOrder(e, cartId) {
             //on error : order not submitted, error on saving on db
             $("#cart-alert-box-" + cartId).children('p').text("We cannot process you cart. Please try again later.");
             $("#cart-alert-box-"+cartId).show();
-        } else {
-            //on error, other errors
-            $("#cart-alert-box-" + cartId).children('p').text("We cannot process this cart at this moment. Please try again later.");
-            $("#cart-alert-box-" + cartId).show();
         } 
-
     })
 }
 
 function SubmitAllOrder() {
     $.post("/Shopper/CartDetails/SubmitAllOrder", null, (result) => {
-        console.log(result);
-        if (result == 'Order Submitted') {
+        console.log(result == "True");
+        if (result == "True") {
             //all order submitted successfully
             $(".btn-primary").attr("disabled", "disabled");
             $("#CheckOutSuccessModal").modal('show');

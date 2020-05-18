@@ -57,7 +57,7 @@ namespace eCart.Areas.Store.Controllers
                         {
                             FormsAuthentication.SetAuthCookie(user.Username, false);
                             Session["USER"] = user.Username;
-                            Session["STOREID"] = store.Id;   //For test only
+                            Session["STOREID"] = store.Id;  
 
                             return RedirectToAction("Index", "Home", new { area = "Store", id = store.Id });
                         }

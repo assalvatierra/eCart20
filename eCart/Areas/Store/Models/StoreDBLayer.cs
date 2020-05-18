@@ -45,9 +45,9 @@ namespace eCart.Areas.Store.Models
 
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                //throw ex;
                 return false;
             }
         }
