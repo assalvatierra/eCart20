@@ -69,9 +69,15 @@ namespace eCart.Areas.Store.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.StoreItems.Add(storeItem);
-                db.SaveChanges();
-                return RedirectToAction("Index", new { id = storeItem.StoreDetailId });
+                //db.StoreItems.Add(storeItem);
+                //db.SaveChanges();
+
+                if (storeFactory.StoreMgr.AddStoreItem(storeItem))
+                {
+                    return RedirectToAction("Index", new { id = storeItem.StoreDetailId });
+                }
+
+                ModelState.AddModelError("", "Unable to add new item.");
             }
 
             ViewBag.ItemMasterId = new SelectList(db.ItemMasters, "Id", "Name", storeItem.ItemMasterId);
@@ -150,27 +156,28 @@ namespace eCart.Areas.Store.Controllers
         }
 
 
-        public PartialViewResult _ModalAddItem()
-        {
-            StoreItem item = new StoreItem();
-            ViewBag.ItemMasterId = new SelectList(db.ItemMasters, "Id", "Name");
-            ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId");
+        //public PartialViewResult _ModalCreateItem()
+        //{
+        //    StoreItem item = new StoreItem();
+        //    ViewBag.ItemMasterId = new SelectList(db.ItemMasters, "Id", "Name");
+        //    ViewBag.StoreDetailId = new SelectList(db.StoreDetails, "Id", "LoginId");
            
-            return PartialView(item);
-        }
+        //    return PartialView(item);
+        //}
 
 
         [HttpPost]
-        public void AddStoreItem(int storeId, string itemName, decimal price, string imgUrl)
+        public bool AddStoreItem(int storeId, string itemName, decimal price, string imgUrl)
         {
             try
             {
                 var storeMgr = storeFactory.StoreMgr;
-                storeMgr.addNewStoreItem(storeId, itemName, price, imgUrl);
+                storeMgr.AddNewStoreItem(storeId, itemName, price, imgUrl);
+                return true;
             }
-            catch (Exception)
+            catch
             {
-              
+                return false;
             }
         }
 
@@ -191,6 +198,14 @@ namespace eCart.Areas.Store.Controllers
             return Json(jsonItem, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public JsonResult GetItemMasters(int id)
+        {
+            var storeMgr = storeFactory.StoreMgr;
+            var itemList = db.ItemMasterCategories.Where(s=>s.ItemCategoryId == id).ToList().Select(s => new { s.ItemMasterId, s.ItemMaster.Name });
+
+            return Json(itemList, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         public void UpdateStoreItem(int storeItemId, string itemName, decimal price, string imageUrl)
@@ -214,7 +229,7 @@ namespace eCart.Areas.Store.Controllers
         }
 
         [HttpPost]
-        public void AddItemCategory(int itemId, int categoryId)
+        public bool AddItemCategory(int itemId, int categoryId)
         {
             try
             {
@@ -230,10 +245,12 @@ namespace eCart.Areas.Store.Controllers
 
                 db.ItemMasterCategories.Add(mastercategory);
                 db.SaveChanges();
+
+                return true;
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                return false;
             }
 
         }

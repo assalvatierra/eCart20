@@ -84,10 +84,9 @@ namespace eCart.Services
             {
                 throw new NotImplementedException();
             }
-
         }
 
-        public void addNewStoreItem(int storeId, string itemName, decimal price, string imgUrl)
+        public bool AddNewStoreItem(int storeId, string itemName, decimal price, string imgUrl)
         {
             try
             {
@@ -97,15 +96,12 @@ namespace eCart.Services
                     Name = itemName,
                 };
 
-                db.ItemMasters.Add(item);
 
                 //add item image
                 ItemImage itemImage = new ItemImage() {
                     ItemMaster = item,
                     ImageUrl = imgUrl
                 };
-                db.ItemImages.Add(itemImage);
-
 
                 StoreItem storeItem = new StoreItem()
                 {
@@ -113,13 +109,28 @@ namespace eCart.Services
                     StoreDetailId = storeId,
                     UnitPrice = price
                 };
-                db.StoreItems.Add(storeItem);
 
-                db.SaveChanges();
+
+                if (storeDb.AddItemMaster(item))
+                {
+                    if (storeDb.AddItemImage(itemImage))
+                    {
+                        if (storeDb.AddStoreItem(storeItem))
+                        {
+                            if (storeDb.SaveChanges())
+                            {
+                                return true;
+
+                            }
+                        }
+                    }
+                }
+
+                return false;
             }
-            catch (Exception ex) 
+            catch 
             { 
-                throw ex; 
+                return false; 
             }
             
         }
@@ -379,6 +390,25 @@ namespace eCart.Services
 
 
 
+        #endregion
+
+        #region Store Items
+        public bool AddStoreItem(StoreItem storeItem)
+        {
+            try
+            {
+                if (storeItem != null)
+                {
+                    storeDb.AddStoreItem(storeItem);
+                    return true;
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         #endregion
     }
 }

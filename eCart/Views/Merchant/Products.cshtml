@@ -40,11 +40,23 @@
             {
                 <img src="~/img/placeholders/placeholder-product.png" class="img-thumbnail" width="60" />
             }
-            <div class="item-desc">
-                <h4> @item.ItemMaster.Name </h4>
-                <b class="text-success"> Php @item.UnitPrice.ToString("0.00") </b>
+        <div class="item-desc">
+            <span style="font-size:9px;color:royalblue;"> @item.StoreDetail.Name </span>
+            <h4 style="margin-top:0px;">
 
-            </div>
+                @if (item.ItemMaster.Name.Length < 17)
+                {
+                    @item.ItemMaster.Name
+                }
+                else
+                {
+                    @item.ItemMaster.Name.Substring(0, 17)
+                    <text>... </text>
+                }
+            </h4>
+            <b class="text-success"> Php @item.UnitPrice.ToString("0.00") </b>
+
+        </div>
             <div class="add-to-Cart">
                 <button class="btn btn-primary" onclick="AddtoCart(this)" style="width:100%;"> Add to Cart </button>
                 <div class="btn-group hidden">

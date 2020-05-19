@@ -19,7 +19,6 @@ namespace eCart.Interfaces
         Models.StorePickupPoint getDefaultPickupPoint(int StoreId);
         StoreDetail getRandomStore();
 
-        void addNewStoreItem(int storeId, string itemName, decimal price, string imgUrl);
         string addPaymentDetails(string date, int partyId, string partyInfo, int receiverId, string receiverInfo, int statusId, decimal amount, int cartDetailId);
         void addCartDeliveryActivity(int cartId, int statusId);
 
@@ -39,5 +38,8 @@ namespace eCart.Interfaces
         bool CreatStoreImg(int storeId, string imgUrl, int ImgTypeId);
         bool ValidateStoreImg(int storeId, string imgUrl);
 
+        //Store Items
+        bool AddStoreItem(StoreItem storeItem);
+        bool AddNewStoreItem(int storeId, string itemName, decimal price, string imgUrl);
     }
 }

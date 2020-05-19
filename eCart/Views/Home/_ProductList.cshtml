@@ -29,13 +29,13 @@
             <span style="font-size:9px;color:royalblue;"> @item.StoreDetail.Name </span>
             <h4 style="margin-top:0px;">
 
-                @if (item.ItemMaster.Name.Length < 20)
+                @if (item.ItemMaster.Name.Length < 17)
                 {
                     @item.ItemMaster.Name
                 }
                 else
                 {
-                    @item.ItemMaster.Name.Substring(0, 20)
+                    @item.ItemMaster.Name.Substring(0, 17)
                     <text>... </text>
                 }
             </h4>

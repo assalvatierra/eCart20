@@ -13,6 +13,19 @@ namespace eCart.Areas.Store.Models
         StoreContext sdb = new StoreContext();
         ecartdbContainer db = new ecartdbContainer();
 
+        public bool SaveChanges()
+        {
+            try
+            {
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         #region Store Registration
         public StoreDetail GetStoreDetails(int id)
         {
@@ -62,8 +75,7 @@ namespace eCart.Areas.Store.Models
         }
 
         #endregion
-
-
+        
         #region Store Edit
         public bool IsStoreImgExist(int storeId)
         {
@@ -88,6 +100,55 @@ namespace eCart.Areas.Store.Models
             {
                 return false;
             }
+        }
+
+
+        #endregion
+
+        #region Store Item
+
+        public bool AddStoreItem(StoreItem storeItem)
+        {
+            try
+            {
+                db.StoreItems.Add(storeItem);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool AddItemMaster(ItemMaster itemMaster)
+        {
+            try
+            {
+                db.ItemMasters.Add(itemMaster);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool AddItemImage(ItemImage itemImage)
+        {
+            try
+            {
+                db.ItemImages.Add(itemImage);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool EditStoreItem(StoreImage storeImage)
+        {
+            throw new NotImplementedException();
         }
 
 
