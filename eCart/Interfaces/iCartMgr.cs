@@ -10,6 +10,7 @@ namespace eCart.Interfaces
 {
     public interface iCartMgr
     {
+        void setDbLayer(iCartDb cartdblayer);
         int getUserId();
         int getCartInfo(int id);
         int getDefaultPickupPointId(int storeId);

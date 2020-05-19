@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using eCart.Areas.Store.Models;
 using eCart.Interfaces;
+using eCart.Models;
 
 namespace eCart.Services
 {
@@ -21,6 +22,8 @@ namespace eCart.Services
             this.storemgr.setDbLayer(new StoreDBLayer());
 
             this.cartmgr = new Services.CartMgr();
+            this.cartmgr.setDbLayer(new CartDbLayer());
+
             this.accMgr = new Services.AccMgr();
             this.riderMgr = new Services.RiderMgr();
 

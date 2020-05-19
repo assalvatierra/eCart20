@@ -182,19 +182,15 @@ namespace eCart.Areas.Shopper.Controllers
         }
        
         [HttpPost]
-        public string AddToCart(int id, int qty, decimal itemPrice)
+        public bool AddToCart(int id, int qty, decimal itemPrice)
         {
             try
             {
-                if(cartMgr.addItemToCart(id, qty, itemPrice))
-                {
-                    return "Added";
-                }
-                return "Error";
+                return cartMgr.addItemToCart(id, qty, itemPrice);
             }
-            catch (Exception ex)
+            catch
             {
-                return ex.ToString();
+                return false;
             }
         }
 

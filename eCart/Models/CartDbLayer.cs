@@ -17,7 +17,7 @@ namespace eCart.Models
             try
             {
                 db.CartDetails.Add(cartDetail);
-                db.SaveChanges();
+                //db.SaveChanges();
 
                 return true;
             }
@@ -34,7 +34,7 @@ namespace eCart.Models
             {
 
                 db.CartHistories.Add(cartHistory);
-                db.SaveChanges();
+                //db.SaveChanges();
 
                 return true;
             }
@@ -91,6 +91,19 @@ namespace eCart.Models
             catch
             {
                 return null;
+            }
+        }
+
+        public bool Save()
+        {
+            try
+            {
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
     }

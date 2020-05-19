@@ -73,6 +73,7 @@ namespace eCart.Areas.Store.Controllers
         public ActionResult Logout()
         {
             Session["CARTDETAILS"] = null;
+            Session["USERID"] = null;
             Session["USER"] = null;
             Session["STOREID"] = null;
             return RedirectToAction("Login", "Accounts", new { area = "Store" });

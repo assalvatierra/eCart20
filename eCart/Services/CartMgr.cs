@@ -12,7 +12,12 @@ namespace eCart.Services
     public class CartMgr: iCartMgr
     {
         protected ecartdbContainer db = new ecartdbContainer();
-        private CartDbLayer cartdb = new CartDbLayer();
+        private iCartDb cartdb = new CartDbLayer();
+
+        public void setDbLayer(iCartDb cartdblayer)
+        {
+            this.cartdb = cartdblayer;
+        }
 
         public void addItemToCart(int id, int qty)
         {
@@ -30,33 +35,13 @@ namespace eCart.Services
         {
             try
             {
-                var item = db.StoreItems.Find(id);
-
                 //create cartItem
-                var newItem = new cCart
-                {
-                    Id = id,
-                    Name = item.ItemMaster.Name,
-                    Price = price,
-                    Qty = qty,
-                    StoreId = item.StoreDetailId,
-                    ItemImage = item.ItemMaster.ItemImages.FirstOrDefault() != null ? item.ItemMaster.ItemImages.FirstOrDefault().ImageUrl : "",
-                    CartItemStatusId = 1    
-                };
+                var newItem = CreateCartItem(id, qty);
 
                 //create cartDetails
-                var newCart = new cCartDetails
-                {
-                    Id = 1,
-                    CheckedOut = "false",
-                    StoreId = newItem.StoreId,
-                    CartStatus = 1,
-                    DeliveryType = "Pickup",
-                    DtPickup = DateTime.Now.AddHours(4),
-                    PickupPointId = getDefaultPickupPointId(newItem.StoreId),
-                    cartItems = new List<cCart> { newItem }
-                };
+                var newCart = CreateCart(newItem);
 
+                //get current cart from session
                 var cartList = getCartDetails();
                 var isAssigned = false;
 
@@ -89,15 +74,49 @@ namespace eCart.Services
                 {
                     newCart.Id = cartList.Count() + 1;
                     cartList.Add(newCart);
+                    isAssigned = true;
                 }
 
-                return true;
+                return isAssigned;
 
             }
-            catch (Exception)
+            catch
             {
                 return false;
             }
+        }
+
+        //create default cart
+        private cCartDetails CreateCart( cCart cartItem)
+        {
+            return new cCartDetails
+            {
+                Id = 1,
+                CheckedOut = "false",
+                StoreId = cartItem.StoreId,
+                CartStatus = 1,
+                DeliveryType = "Pickup",
+                DtPickup = DateTime.Now.AddHours(4),
+                PickupPointId = getDefaultPickupPointId(cartItem.StoreId),
+                cartItems = new List<cCart> { cartItem }
+            };
+        }
+
+        //create default cart item
+        private cCart CreateCartItem(int id, int qty)
+        {
+            var item = db.StoreItems.Find(id);
+
+            return new cCart
+            {
+                Id = id,
+                Name = item.ItemMaster.Name,
+                Price = item.UnitPrice,
+                Qty = qty,
+                StoreId = item.StoreDetailId,
+                ItemImage = item.ItemMaster.ItemImages.FirstOrDefault() != null ? item.ItemMaster.ItemImages.FirstOrDefault().ImageUrl : "",
+                CartItemStatusId = 1
+            };
         }
 
         public void addCartItemToDb(CartItem cartItem)
@@ -236,7 +255,7 @@ namespace eCart.Services
                 Id = cart.Id,
                 UserDetailId = getUserId(),  
                 StoreDetailId = cart.StoreId,
-                StoreDetail = cartdb.GetStoreDetail(cart.Id),
+                StoreDetail = cartdb.GetStoreDetail(cart.StoreId),
                 CartStatusId = cart.CartStatus,               //default: active
                 CartStatu = cartdb.GetCartStatus(cart.CartStatus),
                 StorePickupPoint = cartdb.GetStorePickupPoint(cart.PickupPointId),
@@ -426,7 +445,10 @@ namespace eCart.Services
 
                 if (isValid)
                 {
-                    return true;
+                    if (cartdb.Save())
+                    {
+                        return true;
+                    }
                 }
                 return false;
             }
@@ -460,7 +482,10 @@ namespace eCart.Services
                             var remResult = removeCartSession(storeID);
                             if (remResult)
                             {
-                                return true;
+                                if (cartdb.Save())
+                                {
+                                    return true;
+                                }
                             }
                         }
                     }

@@ -37,8 +37,8 @@
                     else if (Session["STOREID"] != null)
                     {
                         <li>@Html.ActionLink(" Hi " + Session["USER"], "Index", "Home", new { area = "Store", id = Session["STOREID"] }, null)</li>
-                        <li>@Html.ActionLink("Shopper", "Login", "Accounts", new { area = "Shopper" }, null)</li>
-                        <li>@Html.ActionLink("Store", "Login", "Accounts", new { area = "Store" }, null)</li>
+                        <li>@Html.ActionLink("Store", "Index", "Home", new { area = "Store" }, null)</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Accounts", new { area = "Store" }, null)</li>
 
                     }
                     else

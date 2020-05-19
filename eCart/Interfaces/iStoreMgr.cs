@@ -28,7 +28,7 @@ namespace eCart.Interfaces
 
         //Business Layer
 
-       //Store Registration
+        //Store Registration
         bool CreateStore(StoreDetail storeDetail);
         bool RegisterStore(StoreRegistration newStore);
         bool EditStore(StoreDetail storeDetail);

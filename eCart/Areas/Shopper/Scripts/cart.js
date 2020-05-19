@@ -37,10 +37,9 @@ function AddtoCart_Submit(e, itemId, itemName, price) {
     var itemImg = $(e).parent().parent().siblings('img').attr('src');
 
     //add item with qty to cart
-   var res = $.post("/Shopper/CartDetails/AddToCart", data, (response) => { 
-        
-       if (response == 'Added') {
-
+    $.post("/Shopper/CartDetails/AddToCart", data, (response) => {
+        console.log(response);
+       if (response == 'True') {
            //add item to cart summary at footer
            cartItem = "<div class='col-sm-2 cart-item'> " +
                "<img src='" + itemImg + "' width='35' class='col-sm-4 img-thumbnail' style='height:50px;width:50px;'>" +
