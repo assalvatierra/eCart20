@@ -10,7 +10,7 @@ using eCart.Interfaces;
 
 namespace eCart.Services
 {
-    public class StoreMgr : Interfaces.iStoreMgr    
+    public class StoreMgr : iStoreMgr
     {
 
         private ecartdbContainer db = new ecartdbContainer();
@@ -120,7 +120,6 @@ namespace eCart.Services
                             if (storeDb.SaveChanges())
                             {
                                 return true;
-
                             }
                         }
                     }
@@ -140,44 +139,6 @@ namespace eCart.Services
             try
             {
                 return db.StoreItems.Find(id);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        
-        public void updateStoreItem(int storeItemId, string itemName, decimal price)
-        {
-                
-            try
-            {
-                var storeItem = db.StoreItems.Find(storeItemId);
-                storeItem.UnitPrice = price;
-                storeItem.ItemMaster.Name = itemName;
-
-                db.Entry(storeItem).State = System.Data.Entity.EntityState.Modified;
-
-                db.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public void updateStoreItemImage(int storeItemId, string imageUrl) 
-        {
-            try
-            {
-                var storeItem = getStoreItem(storeItemId);
-                var item = db.ItemMasters.Find(storeItem.Id);
-                var itemImg = item.ItemImages.FirstOrDefault();
-                itemImg.ImageUrl = imageUrl;
-
-                db.Entry(itemImg).State = System.Data.Entity.EntityState.Modified;
-
-                db.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -399,8 +360,11 @@ namespace eCart.Services
             {
                 if (storeItem != null)
                 {
-                    storeDb.AddStoreItem(storeItem);
-                    return true;
+                    if (storeDb.AddStoreItem(storeItem))
+                    {
+                        return storeDb.SaveChanges();
+                    }
+                    return false;
                 }
                 return false;
             }
@@ -409,6 +373,124 @@ namespace eCart.Services
                 return false;
             }
         }
+
+        public bool AddStoreItem(int storeID, int itemId, decimal price)
+        {
+
+            try
+            {
+                var storeItem = new StoreItem
+                {
+                    ItemMasterId = itemId,
+                    StoreDetailId = storeID,
+                    UnitPrice = price
+                };
+
+                if (storeDb.AddStoreItem(storeItem))
+                {
+                    return storeDb.SaveChanges();
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public ItemMaster GetItemMaster(int id)
+        {
+            try
+            {
+                return storeDb.GetItemMaster(id);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<ItemCatGroup> GetItemCatGroups()
+        {
+            try
+            {
+                var itemCatGroup = storeDb.GetItemCatGroups().ToList();
+
+                return itemCatGroup;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<ItemCategory> GetItemCategories(int itemCatGroupId)
+        {
+            try
+            {
+                var itemCategories = storeDb.GetItemCategories().Where(c=>c.Id == itemCatGroupId).ToList();
+               
+                return itemCategories;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public bool EditStoreItem(int storeItemId, string itemName, decimal price)
+        {
+
+            try
+            {
+                var storeItem = storeDb.GetStoreItem(storeItemId);
+                storeItem.UnitPrice = price;
+                storeItem.ItemMaster.Name = itemName;
+
+                return storeDb.EditStoreItem(storeItem);
+            }
+            catch 
+            {
+                return false;
+            }
+        }
+
+        public bool EditStoreItemImage(int storeItemId, string imageUrl)
+        {
+            try
+            {
+                var storeItem = storeDb.GetStoreItem(storeItemId);
+                var item = storeDb.GetItemMaster(storeItem.ItemMasterId);
+                var itemImg = storeDb.GetItemImage(item.Id);
+                itemImg.ImageUrl = imageUrl;
+
+                return storeDb.EditStoreItemImg(itemImg);
+            }
+            catch 
+            {
+                return false;
+            }
+        }
+
+        public bool RemoveStoreItem(int id)
+        {
+            try
+            {
+                var storeItem = storeDb.GetStoreItem(id);
+                if(storeItem != null)
+                {
+                    return storeDb.RemoveStoreItem(storeItem);
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
         #endregion
+
     }
 }

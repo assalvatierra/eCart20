@@ -45,7 +45,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <button type="submit" value="Update" class="btn btn-default" onclick="UpdateItem()"> Update </button>
+                            <button type="submit" value="Update" class="btn btn-default" onclick="UpdateItem()"> Save </button>
                         </div>
                     </div>
                 </div>
@@ -76,17 +76,17 @@
                     imageUrl: imageUrl
                 }
 
-                var result = $.post("/Store/StoreItems/UpdateStoreItem", Item, (data) => {
-                    if (result.status == 200) {
-                        console.log("OK");
+                var result = $.post("/Store/StoreItems/EditStoreItem", Item, (res) => {
+                    //console.log(res);
+                    if (res == 'True') {
                         window.location.reload();
                     } else {
-                        console.log("error");
+                        $("#edit-warning").show();
                     }
                 });
 
                 //console.log(result);
-                console.log("OK");
+               
             } else {
                 $("#edit-warning-price").show();
             }
@@ -94,9 +94,7 @@
             $("#edit-warning").show();
         }
     }
-
-
-
+    
     function getItem(Id) {
         //GetStoreItem
         var result = $.get("/Store/StoreItems/GetStoreItem", { id : Id}, (data) => {

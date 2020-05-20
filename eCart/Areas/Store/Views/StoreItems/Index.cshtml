@@ -78,9 +78,9 @@
                     <td>
 
                         <a data-target="#EditItem" data-toggle="modal" onclick="getItem(@item.Id)"> Edit </a> |
+                        <a data-target="#RemoveItem" data-toggle="modal" onclick="SetRemoveItem(@item.Id)"> Remove </a> 
                         @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
                     </td>
                 </tr>
             }
@@ -98,9 +98,12 @@
 
 @{Html.RenderPartial("_ModalAddCategory", null, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } }); }
 
+@{Html.RenderPartial("_ModalRemoveItem", null, new ViewDataDictionary { { "StoreId", ViewBag.StoreId } }); }
+
 
 @section Scripts {
     <script src="~/Areas/Store/Scripts/StoreItems/CreateItem.js"></script>
+    <script src="~/Areas/Store/Scripts/StoreItems/AddItem.js"></script>
     <script>
         function RemoveItemCategory(e, categoryId) {
             $.post("/Store/StoreItems/RemoveItemCategory", { Id: categoryId }).then(() => {
@@ -112,64 +115,5 @@
         }
     </script>
 
-    <script>
-        //Add Item
-
-        function PrepAddItemModal() {
-            console.log("Preparing Modal");
-            $('#addItem-category-list').show();
-            $('#addItem-list').hide();
-            $('#addItem-price').hide();
-            $('#addItem-category-list').children().remove();
-
-            $.get('/Store/StoreItems/GetItemCategories', null,
-                (result) => {
-                    console.log(result);
-                    for (let i = 0; i < result.length; i++) {
-                        let category = "<button class='list-group-item' value='" + result[i]['Id'] + "' onclick='AddItemCatSelect(this);'> " + result[i]['Name'] + " </button>";
-
-                        $('#addItem-category-list').append(category);
-                    }
-                }
-            );
-        }
-
-        function AddItemCatSelect(e) {
-
-            $('#addItem-category-list').hide();
-            $('#addItem-list').show();
-
-            //set selected as active
-            $(e).addClass('active');
-
-            var categoryId = $('#addItem-category-list').find('.active').val();
-            console.log('category selected' + categoryId);
-
-            $('#addItem-list').children().remove();
-            //search for items under category
-            $.get('/Store/StoreItems/GetItemMasters', { id : categoryId },
-                (result) => {
-                    console.log(result);
-                    for (let i = 0; i < result.length; i++) {
-                        let item = "<button class='list-group-item' value='" + result[i]['ItemMasterId'] + "' onclick='AddItemSelect(this);'> " + result[i]['Name'] + " </button>";
-
-                        $('#addItem-list').append(item);
-                    }
-
-                    if (result.length == 0) {
-                        $('#addItem-list').append("<p> No Item Found</p>");
-                    }
-                }
-            );
-        }
-
-        function AddItemSelect(e) {
-            $('#addItem-list').hide();
-            $('#addItem-price').show();
-
-            //set selected as active
-            $(e).addClass('active');
-        }
-    </script>
 
 }

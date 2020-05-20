@@ -181,6 +181,22 @@ namespace eCart.Areas.Store.Controllers
             }
         }
 
+
+        [HttpPost]
+        public bool AddItemToStore(int storeId, int itemMasterId, decimal price)
+        {
+            try
+            {
+                var storeMgr = storeFactory.StoreMgr;
+                storeMgr.AddStoreItem(storeId, itemMasterId, price);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         [HttpGet]
         public JsonResult GetStoreItem(int id)
         {
@@ -207,18 +223,56 @@ namespace eCart.Areas.Store.Controllers
             return Json(itemList, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public JsonResult GetItemMasterDetails(int id)
+        {
+            var storeMgr = storeFactory.StoreMgr;
+            var item = storeMgr.GetItemMaster(id);
+
+
+            var jsonItem = new jsonStoreItem
+            {
+                Id = id,
+                ItemName = item.Name,
+                ImageUrl = item.ItemImages.FirstOrDefault().ImageUrl
+            };
+
+            return Json(item, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
-        public void UpdateStoreItem(int storeItemId, string itemName, decimal price, string imageUrl)
+        public bool EditStoreItem(int storeItemId, string itemName, decimal price, string imageUrl)
         {
             try
             {
                 var storeMgr = storeFactory.StoreMgr;
-                storeMgr.updateStoreItem(storeItemId, itemName, price);
-                storeMgr.updateStoreItemImage(storeItemId,imageUrl);
+                if(storeMgr.EditStoreItem(storeItemId, itemName, price))
+                {
+                    if (storeMgr.EditStoreItemImage(storeItemId, imageUrl))
+                    {
+                        return true;
+                    }
+                }
+                return false;
             }
-            catch (Exception)
+            catch 
             {
+                return false;
             }
+        }
+
+        [HttpGet]
+        public JsonResult GetItemCategoryGroups()
+        {
+            var categoryGroups = storeFactory.StoreMgr.GetItemCatGroups().Select(c=> new { c.Id, c.Name });
+            return Json(categoryGroups, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult GetItemCategoriesById(int id)
+        {
+            var categories = storeFactory.StoreMgr.GetItemCategories(id).Select(c => new { c.Id, c.Name });
+            return Json(categories, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -255,6 +309,24 @@ namespace eCart.Areas.Store.Controllers
 
         }
 
+        [HttpPost]
+        public bool RemoveStoreItem(int Id)
+        {
+            try
+            {
+                var storeMgr = storeFactory.StoreMgr;
+                if (storeMgr.RemoveStoreItem(Id))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch 
+            {
+                return false;
+            }
+
+        }
 
         [HttpPost]
         public void RemoveItemCategory(int Id)
@@ -279,4 +351,10 @@ public class jsonStoreItem {
     public string ItemName { get; set; }
     public decimal UnitPrice { get; set; }
     public string ImageUrl { get; set; }
+}
+
+public class AnonymousType
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
 }

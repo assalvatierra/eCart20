@@ -22,8 +22,6 @@ namespace eCart.Interfaces
         string addPaymentDetails(string date, int partyId, string partyInfo, int receiverId, string receiverInfo, int statusId, decimal amount, int cartDetailId);
         void addCartDeliveryActivity(int cartId, int statusId);
 
-        void updateStoreItem(int storeItemId, string itemName, decimal price );
-        void updateStoreItemImage(int storeItemId, string imageUrl);
 
         //Business Layer
 
@@ -40,6 +38,14 @@ namespace eCart.Interfaces
 
         //Store Items
         bool AddStoreItem(StoreItem storeItem);
+        bool AddStoreItem(int storeID, int itemId, decimal price);
         bool AddNewStoreItem(int storeId, string itemName, decimal price, string imgUrl);
+        ItemMaster GetItemMaster(int id);
+        List<ItemCatGroup> GetItemCatGroups();
+        List<ItemCategory> GetItemCategories(int itemCatGroupId);
+        bool EditStoreItem(int storeItemId, string itemName, decimal price);
+        bool EditStoreItemImage(int storeItemId, string imageUrl);
+        bool RemoveStoreItem(int id);
+
     }
 }

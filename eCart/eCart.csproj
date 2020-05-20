@@ -345,6 +345,7 @@
     <Content Include="Areas\Shopper\Scripts\checkout.js" />
     <Content Include="Areas\Shopper\Scripts\checkoutPayment.js" />
     <Content Include="Areas\Shopper\Scripts\checkoutPickup.js" />
+    <Content Include="Areas\Store\Scripts\StoreItems\AddItem.js" />
     <Content Include="Areas\Store\Scripts\StoreItems\CreateItem.js" />
     <Content Include="Areas\Store\Scripts\StorePayment.js" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -550,6 +551,7 @@
     <Content Include="Areas\Admin\Views\RiderDetails\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\RiderDetails\Index.cshtml" />
     <Content Include="Areas\Store\Views\StoreItems\_ModalAddItem.cshtml" />
+    <Content Include="Areas\Store\Views\StoreItems\_ModalRemoveItem.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Areas\Shopper\Scripts\cart.js" />
     <Content Include="Scripts\DateRangePicker\daterangepicker.js" />

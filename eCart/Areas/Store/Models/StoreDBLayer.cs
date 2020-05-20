@@ -151,6 +151,108 @@ namespace eCart.Areas.Store.Models
             throw new NotImplementedException();
         }
 
+        public StoreItem GetStoreItem(int id)
+        {
+            try
+            {
+                return db.StoreItems.Find(id);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public ItemMaster GetItemMaster(int id)
+        {
+            try
+            {
+                return db.ItemMasters.Find(id);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public IQueryable<ItemCatGroup> GetItemCatGroups()
+        {
+            try
+            {
+                return db.ItemCatGroups;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public IQueryable<ItemCategory> GetItemCategories()
+        {
+            try
+            {
+                return db.ItemCategories;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public bool EditStoreItem(StoreItem storeItem)
+        {
+            try
+            {
+                db.Entry(storeItem).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool EditStoreItemImg(ItemImage itemImage)
+        {
+            try
+            {
+                db.Entry(itemImage).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public ItemImage GetItemImage(int itemMasterId)
+        {
+            try
+            {
+                return db.ItemImages.Where(s => s.ItemMasterId == itemMasterId).FirstOrDefault();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public bool RemoveStoreItem(StoreItem storeItem)
+        {
+            try
+            {
+                db.StoreItems.Remove(storeItem);
+                db.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
 
         #endregion
