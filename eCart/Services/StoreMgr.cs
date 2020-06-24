@@ -32,9 +32,9 @@ namespace eCart.Services
                 
                 return stores.ToList();
             }
-            catch
+            catch (Exception ex)
             { 
-                throw new NotImplementedException();
+                throw ex;
             }
         }
 
@@ -47,9 +47,9 @@ namespace eCart.Services
 
                 return items.ToList();
             }
-            catch
+            catch (Exception ex)
             {
-                throw new NotImplementedException();
+                throw ex;
             }
 
         }
